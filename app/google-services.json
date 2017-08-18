@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "817839810717",
+    "firebase_url": "https://tourit-176321.firebaseio.com",
+    "project_id": "tourit-176321",
+    "storage_bucket": "tourit-176321.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817839810717:android:48a28f9039dc23cc",
+        "android_client_info": {
+          "package_name": "br.com.marcus.fernanda.andre.tourit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817839810717-7ugv2oda5pgdaqe9p69gs3svngr78pge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.marcus.fernanda.andre.tourit",
+            "certificate_hash": "1db6dc85addcfb3abaf040a577de513a09c12342"
+          }
+        },
+        {
+          "client_id": "817839810717-ipjtqbk708i0pis1h2j8agtopldja55g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhDHvn0qNd90MzEH0CnEf2axM6sq5sNEU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817839810717-ipjtqbk708i0pis1h2j8agtopldja55g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
