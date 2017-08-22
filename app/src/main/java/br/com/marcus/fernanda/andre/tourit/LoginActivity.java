@@ -141,7 +141,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            irParaTelaPrincipal();
+                            if(Usuario.usuarioExiste(mAuth.getCurrentUser().getUid())){
+                                irParaTelaPrincipal();
+                            }
+                            else{
+                                //irParaCriacaoUsuario();
+                            }
                         }else{
                             Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_SHORT).show();
                         }
