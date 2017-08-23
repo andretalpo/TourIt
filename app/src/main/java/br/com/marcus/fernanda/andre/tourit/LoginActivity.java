@@ -164,11 +164,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(dataSnapshot.getValue(Usuario.class) != null){
                     irParaTelaPrincipal();
                 }else{
-                    FirebaseAuth.getInstance().signOut();
-                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                    mGoogleApiClient.disconnect();
-                    mGoogleApiClient.connect();//tirar
-                    Toast.makeText(LoginActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                    irParaCriacaoUsuario();
+//                    FirebaseAuth.getInstance().signOut();
+//                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+//                    mGoogleApiClient.disconnect();
+//                    mGoogleApiClient.connect();//tirar
                 }
             }
 
@@ -177,5 +177,16 @@ public class LoginActivity extends AppCompatActivity {
                 //Sei la
             }
         });
+    }
+
+    private void irParaCriacaoUsuario(){
+        Intent intent = new Intent(this, CreateUserActivity.class);
+        FirebaseUser user = mAuth.getCurrentUser();
+        intent.putExtra("idGoogle", user.getUid());
+        intent.putExtra("nomeUsuario", user.getDisplayName());
+        intent.putExtra("email", user.getEmail());
+        intent.putExtra("urlFotoUsuario", user.getPhotoUrl().toString());
+        startActivity(intent);
+        finish();
     }
 }
