@@ -21,6 +21,10 @@ public class Usuario {
         this.fotoUsuario = fotoUsuario;
     }
 
+    public Usuario(){
+        //Construtor vazio para firebase
+    }
+
     public String getIdGoogle() {
         return idGoogle;
     }
@@ -61,8 +65,4 @@ public class Usuario {
         this.fotoUsuario = fotoUsuario;
     }
 
-    public static boolean usuarioExiste(String id){
-        UsuarioDAO usuarioDAO = new UsuarioDAO(id);
-        return usuarioDAO.consultarUsuario() != null;
-    }
 }
