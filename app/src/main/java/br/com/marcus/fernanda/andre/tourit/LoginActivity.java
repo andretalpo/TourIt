@@ -116,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void irParaTelaPrincipal() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("idUsuario", mAuth.getCurrentUser().getUid());
         startActivity(intent);
         finish();
     }
