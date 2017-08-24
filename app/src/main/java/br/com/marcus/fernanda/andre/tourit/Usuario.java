@@ -11,9 +11,9 @@ public class Usuario {
     private String username;
     private String nomeUsuario;
     private String emailUsuario;
-    private Bitmap fotoUsuario;
+    private String fotoUsuario;
 
-    public Usuario(String idGoogle, String username, String nomeUsuario, String emailUsuario, Bitmap fotoUsuario) {
+    public Usuario(String idGoogle, String username, String nomeUsuario, String emailUsuario, String fotoUsuario) {
         this.idGoogle = idGoogle;
         this.username = username;
         this.nomeUsuario = nomeUsuario;
@@ -57,11 +57,11 @@ public class Usuario {
         this.emailUsuario = emailUsuario;
     }
 
-    public Bitmap getFotoUsuario() {
+    public String getFotoUsuario() {
         return fotoUsuario;
     }
 
-    public void setFotoUsuario(Bitmap fotoUsuario) {
+    public void setFotoUsuario(String fotoUsuario) {
         this.fotoUsuario = fotoUsuario;
     }
 

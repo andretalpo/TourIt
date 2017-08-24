@@ -184,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         intent.putExtra("idGoogle", user.getUid());
         intent.putExtra("nomeUsuario", user.getDisplayName());
-        intent.putExtra("email", user.getEmail());
+        intent.putExtra("emailUsuario", user.getEmail());
         intent.putExtra("urlFotoUsuario", user.getPhotoUrl().toString());
         startActivity(intent);
         finish();
