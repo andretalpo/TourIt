@@ -62,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //Listener de mudança de estado do login para fazer algo
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -72,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     // User is signed out
                 }
-
+                // ...
             }
         };
 
@@ -119,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void irParaTelaPrincipal() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("idGoogle", mAuth.getCurrentUser().getUid());
         startActivity(intent);
         finish();
     }
@@ -126,8 +126,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
 
         progressDialog = ProgressDialog.show(this, "Aguarde", "O André foi ao banheiro.", true, false);
 

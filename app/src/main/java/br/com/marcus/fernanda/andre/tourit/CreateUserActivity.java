@@ -1,14 +1,13 @@
 package br.com.marcus.fernanda.andre.tourit;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -32,6 +30,7 @@ public class CreateUserActivity extends AppCompatActivity {
     EditText usernameEditText;
     DatabaseReference database;
     Bitmap imagemUsuarioGoogle;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,7 @@ public class CreateUserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = usernameEditText.getText().toString();
                 if(username.length() >= 4) {
+                    progressDialog = ProgressDialog.show(CreateUserActivity.this, "Aguarde", "A vontade do Marcus.", true, false);
                     username = username.toLowerCase();
                     listenerBuscaUsername(username);
                 }else{
@@ -63,6 +63,7 @@ public class CreateUserActivity extends AppCompatActivity {
         database.child("Usuarios").orderByChild("username").equalTo(username).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                progressDialog.dismiss();
                 if(dataSnapshot.getValue(Usuario.class) == null){
                     criarUsuario(username);
                     irParaTelaPrincipal();
@@ -81,7 +82,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private void irParaTelaPrincipal() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("idUsuario", getIntent().getStringExtra("idGoogle"));
+        intent.putExtra("idGoogle", getIntent().getStringExtra("idGoogle"));
         startActivity(intent);
         finish();
     }

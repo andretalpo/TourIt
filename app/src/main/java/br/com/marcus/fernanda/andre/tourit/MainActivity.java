@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,12 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView textView;
+    private DatabaseReference database;
+    private Usuario usuario;
+    private MenuItem configuracoesUsuarioAdmItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +34,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        textView = (TextView) findViewById(R.id.textView);
-        textView.setText(getIntent().getStringExtra("nomeUsuario"));
+        database = FirebaseDatabase.getInstance().getReference();
+
+        listenerBuscaIdUsuario(getIntent().getStringExtra("idGoogle"));
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        configuracoesUsuarioAdmItem = navigationView.getMenu().findItem(R.id.configuracoesUsuarioAdm);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -43,9 +56,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -67,7 +77,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar configuracoesUsuarioAdmItem clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -83,25 +93,42 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle navigation view configuracoesUsuarioAdmItem clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.configuracoesUsuarioComum) {
+            irParaTelaConfiguracoes(getIntent().getStringExtra("idGoogle"));
+        } else if (id == R.id.configuracoesUsuarioAdm) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void listenerBuscaIdUsuario(final String idGoogle){
+        database.child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    usuario = childSnapshot.getValue(Usuario.class);
+                }
+                if(usuario.isAdmnistrador()){
+                    configuracoesUsuarioAdmItem.setVisible(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //Sei la
+            }
+        });
+    }
+
+    private void irParaTelaConfiguracoes(String idGoogle){
+        Intent intent = new Intent(this, ConfiguracoesActivity.class);
+        intent.putExtra("idGoogle", idGoogle);
+        startActivity(intent);
     }
 }
