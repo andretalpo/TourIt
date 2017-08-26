@@ -12,13 +12,17 @@ public class Usuario {
     private String nomeUsuario;
     private String emailUsuario;
     private String fotoUsuario;
+    private boolean admnistrador;
+    private boolean ativo;
 
-    public Usuario(String idGoogle, String username, String nomeUsuario, String emailUsuario, String fotoUsuario) {
+    public Usuario(String idGoogle, String username, String nomeUsuario, String emailUsuario, String fotoUsuario, boolean admnistrador, boolean ativo) {
         this.idGoogle = idGoogle;
         this.username = username;
         this.nomeUsuario = nomeUsuario;
         this.emailUsuario = emailUsuario;
         this.fotoUsuario = fotoUsuario;
+        this.admnistrador = admnistrador;
+        this.ativo = ativo;
     }
 
     public Usuario(){
@@ -65,4 +69,19 @@ public class Usuario {
         this.fotoUsuario = fotoUsuario;
     }
 
+    public boolean isAdmnistrador() {
+        return admnistrador;
+    }
+
+    public void setAdmnistrador(boolean admnistrador) {
+        this.admnistrador = admnistrador;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 }

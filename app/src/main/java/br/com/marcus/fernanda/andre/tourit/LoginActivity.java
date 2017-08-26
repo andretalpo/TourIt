@@ -1,5 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     private GoogleApiClient mGoogleApiClient;
     private DatabaseReference database;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +127,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
+
+        progressDialog = ProgressDialog.show(this, "Aguarde", "O André foi ao banheiro.", true, false);
+
         // Resultado da intent de login
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -134,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 //Login do Google falhou
                 Toast.makeText(this, "Falha no login", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
             }
         }
     }
@@ -149,8 +157,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             listenerBuscaUsuario(mAuth.getCurrentUser().getUid());
-                        }else{
+                        }else {
                             Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_SHORT).show();
+                            Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                            mGoogleApiClient.disconnect();
+                            mGoogleApiClient.connect();
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -160,14 +172,12 @@ public class LoginActivity extends AppCompatActivity {
         database.child("Usuarios").orderByChild("idGoogle").equalTo(idUsuario).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                progressDialog.dismiss();
                 if(dataSnapshot.getValue(Usuario.class) != null){
                     irParaTelaPrincipal();
                 }else{
                     irParaCriacaoUsuario();
 //                    FirebaseAuth.getInstance().signOut();
-//                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-//                    mGoogleApiClient.disconnect();
-//                    mGoogleApiClient.connect();//tirar
                 }
             }
 

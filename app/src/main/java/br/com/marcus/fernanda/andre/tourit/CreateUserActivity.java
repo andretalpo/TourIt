@@ -92,6 +92,8 @@ public class CreateUserActivity extends AppCompatActivity {
         usuario.setEmailUsuario(getIntent().getStringExtra("emailUsuario"));
         usuario.setNomeUsuario(getIntent().getStringExtra("nomeUsuario"));
         usuario.setUsername(username);
+        usuario.setAdmnistrador(false);
+        usuario.setAtivo(true);
         database.child("Usuarios").push().setValue(usuario);
         armazenarImagem(usuario.getIdGoogle());
     }
@@ -102,7 +104,7 @@ public class CreateUserActivity extends AppCompatActivity {
         byte[] imagemBytes = stream.toByteArray();
 
         StorageReference storage = FirebaseStorage.getInstance().getReference();
-        storage.child("imagens/" + idGoogle + ".jpeg").putBytes(imagemBytes);
+        storage.child("imagemUsuario/" + idGoogle + ".jpeg").putBytes(imagemBytes);
     }
 
     private class BaixarImagemTask extends AsyncTask<String, Void, Bitmap> {
