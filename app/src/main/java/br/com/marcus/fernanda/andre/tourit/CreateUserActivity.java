@@ -49,7 +49,12 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String username = usernameEditText.getText().toString();
-                listenerBuscaUsername(username);
+                if(username.length() >= 4) {
+                    username = username.toLowerCase();
+                    listenerBuscaUsername(username);
+                }else{
+                    Toast.makeText(CreateUserActivity.this, "Seu username deve conter no mínimo quatro dígitos", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
