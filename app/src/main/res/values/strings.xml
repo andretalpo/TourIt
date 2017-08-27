@@ -81,4 +81,5 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_usuario_adm">UsuarioAdmActivity</string>
+    <string name="continuar">Continuar</string>
 </resources>

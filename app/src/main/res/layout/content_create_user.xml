@@ -1,24 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="br.com.marcus.fernanda.andre.tourit.CreateUserActivity"
     tools:showIn="@layout/activity_create_user">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/usernameTextInputLayoutCriarUsuario"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/touritImageViewCriarUsuario"
+        android:src="@drawable/ic_tourit"/>
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/usernameTextInputLayoutCriarUsuario"
         android:hint="@string/hint_username">
 
         <EditText
-            android:id="@+id/usernameEditText"
+            android:id="@+id/usernameEditTextCriarUsuario"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
             android:maxLength="12"
             android:maxLines="1" />
 
     </android.support.design.widget.TextInputLayout>
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/botaoCriarUsuario"
+        android:layout_below="@id/usernameTextInputLayoutCriarUsuario"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
+        android:background="@drawable/bordas_botao"
+        android:gravity="center"
+        android:paddingLeft="@dimen/paddingLateralBotao"
+        android:paddingRight="@dimen/paddingLateralBotao"
+        android:textStyle="bold"
+        android:text="@string/continuar"
+        android:textAllCaps="true"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="@dimen/tamanhoFonteBotaoCriarUsuario" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/backgroundImageViewCriarUsuario"
+        android:src="@drawable/background_imagem"/>
+
+</RelativeLayout>
