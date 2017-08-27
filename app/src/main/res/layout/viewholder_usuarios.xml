@@ -2,15 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/usuariosAdmImageView"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/usuariosAdmImageView"
         android:id="@+id/usuariosAdmUsernameTextView"
         android:text="username"/>
 
@@ -19,7 +13,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/usuariosAdmEmailTextView"
         android:layout_below="@id/usuariosAdmUsernameTextView"
-        android:layout_toRightOf="@id/usuariosAdmImageView"
         android:text="e-mail"/>
 
     <TextView
@@ -27,14 +20,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/usuariosAdmNomeTextView"
         android:layout_below="@id/usuariosAdmEmailTextView"
-        android:layout_toRightOf="@id/usuariosAdmImageView"
         android:text="nome"/>
 
     <Switch
         android:id="@+id/usuariosAdmAtivoSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/usuariosAdmImageView"
+        android:text="Ativo"
         android:layout_below="@id/usuariosAdmNomeTextView"/>
 
 </RelativeLayout>

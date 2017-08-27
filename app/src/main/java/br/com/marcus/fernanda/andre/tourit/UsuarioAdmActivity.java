@@ -1,15 +1,20 @@
 package br.com.marcus.fernanda.andre.tourit;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +22,9 @@ import java.util.List;
 public class UsuarioAdmActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-
+    private DatabaseReference database;
+    private List<Usuario> listaUsuarios;
+    private UsuariosAtivosAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,8 @@ public class UsuarioAdmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_usuario_adm);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        database = FirebaseDatabase.getInstance().getReference();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -37,21 +46,45 @@ public class UsuarioAdmActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.usuariosAdmRecyclerView);
 
-        List<Usuario> listaUsuarios = new ArrayList<>();//pegar de busca
-        //-----------------------------------------------------------------
-        Usuario usuario = new Usuario();
-        usuario.setAtivo(false);
-        usuario.setUsername("andre");
-        usuario.setEmailUsuario("andre.talpo@gmail.com");
-        usuario.setNomeUsuario("André");
-        usuario.setFotoUsuario(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round));
-        listaUsuarios.add(usuario);
-        //----------------------------------------------------------------
+        listaUsuarios = new ArrayList<>();
 
-        recyclerView.setAdapter(new UsuariosAtivosAdapter(listaUsuarios, this));
+        adapter = new UsuariosAtivosAdapter(listaUsuarios, this);
+        recyclerView.setAdapter(adapter);
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
+
+        final SearchView searchView = (SearchView) findViewById(R.id.usuariosAdmSearchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                listenerBuscaUsuarioUsername(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+    private void listenerBuscaUsuarioUsername(final String username){
+        database.child("Usuarios").orderByChild("username").startAt(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listaUsuarios.clear();
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    listaUsuarios.add(childSnapshot.getValue(Usuario.class));
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //vazio
+            }
+        });
     }
 
 }

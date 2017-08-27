@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity
 
     private void irParaTelaUsuarios(String idGoogle){
         Intent intent = new Intent(this, UsuarioAdmActivity.class);
-        intent.putExtra("idGoogle", idGoogle);
         startActivity(intent);
     }
 

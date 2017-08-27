@@ -32,7 +32,6 @@ class UsuariosAtivosAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         UsuariosAtivosViewHolder usuariosHolder = (UsuariosAtivosViewHolder) holder;
         Usuario usuario = usuarios.get(position);
-        usuariosHolder.imageView.setImageBitmap(usuario.getFotoUsuario());
         usuariosHolder.usernameTextView.setText(usuario.getUsername());
         usuariosHolder.nomeTextView.setText(usuario.getNomeUsuario());
         usuariosHolder.emailTextView.setText(usuario.getEmailUsuario());

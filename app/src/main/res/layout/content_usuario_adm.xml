@@ -9,7 +9,8 @@
     <Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <SearchView
+
+    <android.support.v7.widget.SearchView
         android:id="@+id/usuariosAdmSearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

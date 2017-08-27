@@ -11,7 +11,6 @@ import android.widget.TextView;
  */
 
 public class UsuariosAtivosViewHolder extends RecyclerView.ViewHolder {
-    ImageView imageView;
     TextView usernameTextView;
     TextView emailTextView;
     TextView nomeTextView;
@@ -19,7 +18,6 @@ public class UsuariosAtivosViewHolder extends RecyclerView.ViewHolder {
 
     public UsuariosAtivosViewHolder(View itemView) {
         super(itemView);
-        imageView = (ImageView) itemView.findViewById(R.id.usuariosAdmImageView);
         usernameTextView = (TextView) itemView.findViewById(R.id.usuariosAdmUsernameTextView);
         emailTextView = (TextView) itemView.findViewById(R.id.usuariosAdmEmailTextView);
         nomeTextView = (TextView) itemView.findViewById(R.id.usuariosAdmNomeTextView);
