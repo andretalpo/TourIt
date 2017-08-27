@@ -6,27 +6,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/usuariosAdmUsernameTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:gravity="center"
         android:text="username"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/usuariosAdmEmailTextView"
+        android:id="@+id/usuariosAdmNomeTextView"
         android:layout_below="@id/usuariosAdmUsernameTextView"
-        android:text="e-mail"/>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:gravity="center"
+        android:text="nome"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/usuariosAdmNomeTextView"
-        android:layout_below="@id/usuariosAdmEmailTextView"
-        android:text="nome"/>
+        android:id="@+id/usuariosAdmEmailTextView"
+        android:layout_below="@id/usuariosAdmNomeTextView"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:text="e-mail"/>
 
     <Switch
         android:id="@+id/usuariosAdmAtivoSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ativo"
-        android:layout_below="@id/usuariosAdmNomeTextView"/>
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_below="@id/usuariosAdmEmailTextView"/>
 
 </RelativeLayout>

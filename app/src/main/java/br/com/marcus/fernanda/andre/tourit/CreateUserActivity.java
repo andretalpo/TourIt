@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -39,14 +40,14 @@ public class CreateUserActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        usernameEditText = (EditText) findViewById(R.id.usernameEditText);
+        usernameEditText = (EditText) findViewById(R.id.usernameEditTextCriarUsuario);
 
         new BaixarImagemTask().execute(getIntent().getStringExtra("urlFotoUsuario"));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button) findViewById(R.id.botaoCriarUsuario);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 String username = usernameEditText.getText().toString();
                 if(username.length() >= 4) {
                     progressDialog = ProgressDialog.show(CreateUserActivity.this, "Aguarde", "A vontade do Marcus.", true, false);

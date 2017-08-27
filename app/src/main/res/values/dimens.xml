@@ -9,4 +9,5 @@
     <dimen name="tamanhoFonteBotaoCriarUsuario">20dp</dimen>
     <dimen name="radiusBotao">5dp</dimen>
     <dimen name="paddingLateralBotao">30dp</dimen>
+    <dimen name="marginItensBuscaUsuariosAdm">2dp</dimen>
 </resources>

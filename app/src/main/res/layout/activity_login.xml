@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context="br.com.marcus.fernanda.andre.tourit.LoginActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_tourit"
+        android:id="@+id/touritImageViewLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/loginButton"/>
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginButton"
         android:layout_width="300dp"
@@ -13,5 +21,12 @@
         android:onClick="signIn">
 
     </com.google.android.gms.common.SignInButton>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/background_imagem"
+        android:id="@+id/backgroundImageViewLogin"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
