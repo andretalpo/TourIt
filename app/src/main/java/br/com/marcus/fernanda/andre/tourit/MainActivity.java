@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.configuracoesUsuarioComum) {
             irParaTelaConfiguracoes(getIntent().getStringExtra("idGoogle"));
         } else if (id == R.id.configuracoesUsuarioAdm) {
-
+            irParaTelaUsuarios(getIntent().getStringExtra("idGoogle"));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -146,6 +146,12 @@ public class MainActivity extends AppCompatActivity
 
     private void irParaTelaConfiguracoes(String idGoogle){
         Intent intent = new Intent(this, ConfiguracoesActivity.class);
+        intent.putExtra("idGoogle", idGoogle);
+        startActivity(intent);
+    }
+
+    private void irParaTelaUsuarios(String idGoogle){
+        Intent intent = new Intent(this, UsuarioAdmActivity.class);
         intent.putExtra("idGoogle", idGoogle);
         startActivity(intent);
     }

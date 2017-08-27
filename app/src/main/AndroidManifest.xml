@@ -29,6 +29,10 @@
         <activity
             android:name=".ConfiguracoesActivity"
             android:label="@string/title_activity_configuracoes" />
+        <activity
+            android:name=".UsuarioAdmActivity"
+            android:label="@string/title_activity_usuario_adm"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
