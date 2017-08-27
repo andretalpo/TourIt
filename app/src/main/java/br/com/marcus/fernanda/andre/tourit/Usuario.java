@@ -11,11 +11,11 @@ public class Usuario {
     private String username;
     private String nomeUsuario;
     private String emailUsuario;
-    private String fotoUsuario;
+    private Bitmap fotoUsuario;
     private boolean admnistrador;
     private boolean ativo;
 
-    public Usuario(String idGoogle, String username, String nomeUsuario, String emailUsuario, String fotoUsuario, boolean admnistrador, boolean ativo) {
+    public Usuario(String idGoogle, String username, String nomeUsuario, String emailUsuario, Bitmap fotoUsuario, boolean admnistrador, boolean ativo) {
         this.idGoogle = idGoogle;
         this.username = username;
         this.nomeUsuario = nomeUsuario;
@@ -26,7 +26,7 @@ public class Usuario {
     }
 
     public Usuario(){
-        //Construtor vazio para firebase
+        //vazio
     }
 
     public String getIdGoogle() {
@@ -61,11 +61,11 @@ public class Usuario {
         this.emailUsuario = emailUsuario;
     }
 
-    public String getFotoUsuario() {
+    public Bitmap getFotoUsuario() {
         return fotoUsuario;
     }
 
-    public void setFotoUsuario(String fotoUsuario) {
+    public void setFotoUsuario(Bitmap fotoUsuario) {
         this.fotoUsuario = fotoUsuario;
     }
 
