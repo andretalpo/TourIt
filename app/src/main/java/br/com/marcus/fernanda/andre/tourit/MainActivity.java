@@ -1,6 +1,9 @@
 package br.com.marcus.fernanda.andre.tourit;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity
 
         database = FirebaseDatabase.getInstance().getReference();
 
+        registrarBroadcastReceiver();
+
         listenerBuscaIdUsuario(getIntent().getStringExtra("idGoogle"));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -56,6 +61,19 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void registrarBroadcastReceiver() {
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("finishActivity")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("finishActivity"));
     }
 
     @Override
@@ -131,4 +149,5 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("idGoogle", idGoogle);
         startActivity(intent);
     }
+
 }

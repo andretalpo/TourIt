@@ -1,6 +1,9 @@
 package br.com.marcus.fernanda.andre.tourit;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +11,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,9 +35,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         desativarUsuarioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //colocar dialog de confirmação
-                progressDialog = ProgressDialog.show(ConfiguracoesActivity.this, "Desativando usuário", "", true, false);
-                listenerBuscarKeyUsuario(getIntent().getStringExtra("idGoogle"));
+                confirmarBloqueio();
             }
         });
 
@@ -51,15 +51,10 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                     keyUsuario = childSnapshot.getKey();
                 }
                 database.child("Usuarios").child(keyUsuario).child("ativo").setValue(false);
-
-                mAuth.signOut();
-                //Achar forma de logout
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-                mGoogleApiClient.disconnect();
-                mGoogleApiClient.connect();
-
                 progressDialog.dismiss();
-                //Toast.makeText(ConfiguracoesActivity.this, "Usuário desativado", Toast.LENGTH_LONG).show();
+                Toast.makeText(ConfiguracoesActivity.this, "Usuário desativado", Toast.LENGTH_LONG).show();
+                irParaTelaLogin();
+                finishMainActivity();
             }
 
             @Override
@@ -67,5 +62,30 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 //Sei la
             }
         });
+    }
+
+    private void irParaTelaLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("usuarioInativado", true);
+        startActivity(intent);
+        finish();
+    }
+
+    private void finishMainActivity(){
+        Intent intent = new Intent("finishActivity");
+        sendBroadcast(intent);
+    }
+
+    private void confirmarBloqueio() {
+        new AlertDialog.Builder(this)
+                .setTitle("Bloqueio de conta")
+                .setMessage("Você realmente deseja bloquear sua conta?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int qualBotao) {
+                        progressDialog = ProgressDialog.show(ConfiguracoesActivity.this, "Desativando usuário", "", true, false);
+                        listenerBuscarKeyUsuario(getIntent().getStringExtra("idGoogle"));
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
     }
 }
