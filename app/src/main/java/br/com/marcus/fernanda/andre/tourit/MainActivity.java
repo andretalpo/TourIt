@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
 
         registrarBroadcastReceiver();
 
+        listenerAtivarUsuario(getIntent().getStringExtra("idGoogle"));
+
         listenerBuscaIdUsuario(getIntent().getStringExtra("idGoogle"));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.configuracoesUsuarioComum) {
             irParaTelaConfiguracoes(getIntent().getStringExtra("idGoogle"));
         } else if (id == R.id.configuracoesUsuarioAdm) {
-            irParaTelaUsuarios(getIntent().getStringExtra("idGoogle"));
+            irParaTelaUsuarios();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -150,9 +152,27 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void irParaTelaUsuarios(String idGoogle){
+    private void irParaTelaUsuarios(){
         Intent intent = new Intent(this, UsuarioAdmActivity.class);
         startActivity(intent);
+    }
+
+    public void listenerAtivarUsuario(final String idGoogle) {
+        database.child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String keyUsuario = null;
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    keyUsuario = childSnapshot.getKey();
+                }
+                database.child("Usuarios").child(keyUsuario).child("ativo").setValue(true);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //Vazio
+            }
+        });
     }
 
 }

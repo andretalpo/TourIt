@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 
 import java.util.List;
 
@@ -31,11 +32,18 @@ class UsuariosAtivosAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         UsuariosAtivosViewHolder usuariosHolder = (UsuariosAtivosViewHolder) holder;
-        Usuario usuario = usuarios.get(position);
+        final Usuario usuario = usuarios.get(position);
         usuariosHolder.usernameTextView.setText(usuario.getUsername());
         usuariosHolder.nomeTextView.setText(usuario.getNomeUsuario());
         usuariosHolder.emailTextView.setText(usuario.getEmailUsuario());
         usuariosHolder.ativoSwith.setChecked(usuario.isAtivo());
+        usuariosHolder.ativoSwith.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Switch ativoSwich = (Switch) view;
+                UsuarioAdmActivity.listenerAtualizarUsuario(usuario.getIdGoogle(), ativoSwich.isChecked());
+            }
+        });
     }
 
     @Override

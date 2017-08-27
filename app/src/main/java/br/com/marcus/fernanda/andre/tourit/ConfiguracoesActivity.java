@@ -53,6 +53,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 database.child("Usuarios").child(keyUsuario).child("ativo").setValue(false);
                 progressDialog.dismiss();
                 Toast.makeText(ConfiguracoesActivity.this, "Usuário desativado", Toast.LENGTH_LONG).show();
+                LoginActivity.signOut(ConfiguracoesActivity.this);
                 irParaTelaLogin();
                 finishMainActivity();
             }
@@ -66,7 +67,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
     private void irParaTelaLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("usuarioInativado", true);
         startActivity(intent);
         finish();
     }

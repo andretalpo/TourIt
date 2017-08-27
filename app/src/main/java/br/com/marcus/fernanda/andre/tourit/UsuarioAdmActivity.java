@@ -87,4 +87,21 @@ public class UsuarioAdmActivity extends AppCompatActivity {
         });
     }
 
+    public static void listenerAtualizarUsuario(final String idGoogle, final boolean ativo) {
+        FirebaseDatabase.getInstance().getReference().child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String keyUsuario = null;
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    keyUsuario = childSnapshot.getKey();
+                }
+                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(keyUsuario).child("ativo").setValue(ativo);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //Vazio
+            }
+        });
+    }
 }
