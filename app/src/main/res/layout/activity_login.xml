@@ -10,15 +10,16 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_tourit"
         android:id="@+id/touritImageViewLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/loginButton"/>
+        android:layout_centerHorizontal="true" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:onClick="signIn">
+        android:onClick="signIn"
+        android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
+        android:layout_below="@id/touritImageViewLogin">
 
     </com.google.android.gms.common.SignInButton>
 
