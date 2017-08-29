@@ -30,13 +30,22 @@
         android:layout_above="@id/usernameTextInputLayoutCriarUsuario"
         android:layout_centerHorizontal="true"
         android:id="@+id/touritImageViewCriarUsuario"
-        android:src="@drawable/ic_tourit"/>
+        android:layout_marginBottom="@dimen/marginBotaoCriarUsuario"
+        android:src="@drawable/ic_tourit_new2"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/backgroundImageViewCriarUsuario"
+        android:src="@drawable/bg_390"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/botaoCriarUsuario"
-        android:layout_below="@id/usernameTextInputLayoutCriarUsuario"
+        android:layout_above="@id/backgroundImageViewCriarUsuario"
+        android:layout_marginBottom="@dimen/marginBottomBotaoCriarUsuario"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
         android:background="@drawable/bordas_botao"
@@ -49,11 +58,6 @@
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="@dimen/tamanhoFonteBotaoCriarUsuario" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/backgroundImageViewCriarUsuario"
-        android:src="@drawable/background_imagem"/>
+
 
 </RelativeLayout>

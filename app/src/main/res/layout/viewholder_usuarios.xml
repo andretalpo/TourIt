@@ -3,13 +3,41 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/usuariosAdmUsernameLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:textStyle="bold"
+        android:text="@string/username" />
+
+    <TextView
+        android:id="@+id/usuariosAdmNomeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usuariosAdmUsernameLabelTextView"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:textStyle="bold"
+        android:text="@string/nome" />
+
+    <TextView
+        android:id="@+id/usuariosAdmEmailLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usuariosAdmNomeLabelTextView"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:textStyle="bold"
+        android:text="@string/email" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/usuariosAdmUsernameTextView"
-        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
         android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
-        android:gravity="center"
         android:text="username"/>
 
     <TextView
@@ -17,9 +45,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/usuariosAdmNomeTextView"
         android:layout_below="@id/usuariosAdmUsernameTextView"
+        android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
         android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:gravity="center"
         android:text="nome"/>
 
     <TextView
@@ -27,8 +56,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/usuariosAdmEmailTextView"
         android:layout_below="@id/usuariosAdmNomeTextView"
+        android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
         android:text="e-mail"/>
 

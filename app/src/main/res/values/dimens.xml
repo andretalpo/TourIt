@@ -10,4 +10,6 @@
     <dimen name="radiusBotao">5dp</dimen>
     <dimen name="paddingLateralBotao">30dp</dimen>
     <dimen name="marginItensBuscaUsuariosAdm">2dp</dimen>
+    <dimen name="paddingLeftBotaoLogin">50dp</dimen>
+    <dimen name="marginBottomBotaoCriarUsuario">5dp</dimen>
 </resources>

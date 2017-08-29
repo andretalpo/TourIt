@@ -83,4 +83,8 @@
     <string name="title_activity_usuario_adm">Usuários</string>
 
     <string name="continuar">Continuar</string>
+    <string name="logout">Logout</string>
+    <string name="username">Username:</string>
+    <string name="nome">Nome:</string>
+    <string name="email">Email:</string>
 </resources>

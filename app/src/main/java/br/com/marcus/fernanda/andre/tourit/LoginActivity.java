@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -58,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         //Listener para chamar método login quando apertar botão
-        SignInButton signInButton = (SignInButton) findViewById(R.id.loginButton);
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();

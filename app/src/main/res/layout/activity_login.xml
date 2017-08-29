@@ -8,25 +8,34 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_tourit"
+        android:src="@drawable/ic_tourit_new2"
         android:id="@+id/touritImageViewLogin"
+        android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
         android:layout_centerHorizontal="true" />
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/loginButton"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:onClick="signIn"
+        android:layout_below="@id/touritImageViewLogin"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
-        android:layout_below="@id/touritImageViewLogin">
-
-    </com.google.android.gms.common.SignInButton>
+        android:background="@drawable/bordas_botao"
+        android:drawablePadding="10dp"
+        android:drawableRight="@drawable/logo_google_x32"
+        android:gravity="center"
+        android:paddingLeft="@dimen/paddingLeftBotaoLogin"
+        android:paddingRight="@dimen/paddingLateralBotao"
+        android:text="Login"
+        android:textAllCaps="true"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="@dimen/tamanhoFonteBotaoCriarUsuario"
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/background_imagem"
+        android:src="@drawable/bg_390"
         android:id="@+id/backgroundImageViewLogin"
         android:layout_alignParentBottom="true"/>
 
