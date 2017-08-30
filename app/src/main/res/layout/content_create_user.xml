@@ -31,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/touritImageViewCriarUsuario"
         android:layout_marginBottom="@dimen/marginBotaoCriarUsuario"
-        android:src="@drawable/ic_tourit_new2"/>
+        android:src="@drawable/ic_tourit"/>
 
     <ImageView
         android:layout_width="match_parent"

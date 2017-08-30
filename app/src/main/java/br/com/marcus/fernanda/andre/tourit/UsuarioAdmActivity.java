@@ -61,7 +61,7 @@ public class UsuarioAdmActivity extends AppCompatActivity {
     }
 
     private void listenerBuscaUsuarioUsername(final String username){
-        database.child("Usuarios").orderByChild("username").startAt(username).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.child("Usuarios").orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listaUsuarios.clear();

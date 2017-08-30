@@ -87,4 +87,6 @@
     <string name="username">Username:</string>
     <string name="nome">Nome:</string>
     <string name="email">Email:</string>
+    <string name="nome_usuario_logado">Usuário</string>
+    <string name="username_logado">Username</string>
 </resources>

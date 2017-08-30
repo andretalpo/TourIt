@@ -12,4 +12,6 @@
     <dimen name="marginItensBuscaUsuariosAdm">2dp</dimen>
     <dimen name="paddingLeftBotaoLogin">50dp</dimen>
     <dimen name="marginBottomBotaoCriarUsuario">5dp</dimen>
+    <dimen name="elevation_geral">5dp</dimen>
+    <dimen name="padding_geral">6dp</dimen>
 </resources>

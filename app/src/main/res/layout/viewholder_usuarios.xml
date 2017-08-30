@@ -1,75 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_geral">
 
     <TextView
         android:id="@+id/usuariosAdmUsernameLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:textStyle="bold"
-        android:text="@string/username" />
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:text="@string/username"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/usuariosAdmNomeLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/usuariosAdmUsernameLabelTextView"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:textStyle="bold"
-        android:text="@string/nome" />
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:text="@string/nome"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/usuariosAdmEmailLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/usuariosAdmNomeLabelTextView"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:textStyle="bold"
-        android:text="@string/email" />
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:text="@string/email"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/usuariosAdmUsernameTextView"
-        android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
-        android:text="username"/>
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:text="username" />
+
+    <TextView
         android:id="@+id/usuariosAdmNomeTextView"
-        android:layout_below="@id/usuariosAdmUsernameTextView"
-        android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:text="nome"/>
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/usuariosAdmEmailTextView"
-        android:layout_below="@id/usuariosAdmNomeTextView"
-        android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
+        android:layout_below="@id/usuariosAdmUsernameTextView"
         android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:text="e-mail"/>
+        android:layout_toRightOf="@id/usuariosAdmNomeLabelTextView"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:text="nome" />
+
+    <TextView
+        android:id="@+id/usuariosAdmEmailTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usuariosAdmNomeTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_toRightOf="@id/usuariosAdmEmailLabelTextView"
+        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:text="e-mail" />
 
     <Switch
         android:id="@+id/usuariosAdmAtivoSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ativo"
+        android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
+        android:layout_centerInParent="true"
         android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:layout_below="@id/usuariosAdmEmailTextView"/>
+        android:gravity="center" />
 
 </RelativeLayout>

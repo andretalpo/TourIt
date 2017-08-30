@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +31,10 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference database;
     private Usuario usuario;
     private MenuItem configuracoesUsuarioAdmItem;
+    private ImageView navHeaderUsuarioImageView;
+    private TextView navHeaderNomeUsuarioTextView;
+    private TextView navHeaderUsernameTextView;
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +49,15 @@ public class MainActivity extends AppCompatActivity
 
         listenerAtivarUsuario(getIntent().getStringExtra("idGoogle"));
 
-        listenerBuscaIdUsuario(getIntent().getStringExtra("idGoogle"));
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         configuracoesUsuarioAdmItem = navigationView.getMenu().findItem(R.id.configuracoesUsuarioAdm);
+        View view = navigationView.getHeaderView(0);
+        navHeaderUsuarioImageView = (ImageView) view.findViewById(R.id.navHeaderUsuarioImageView);
+        navHeaderNomeUsuarioTextView = (TextView) view.findViewById(R.id.navHeaderNomeUsuarioTextView);
+        navHeaderUsernameTextView = (TextView) view.findViewById(R.id.navHeaderUsernameTextView);
+
+        listenerBuscaIdUsuario(getIntent().getStringExtra("idGoogle"));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void registrarBroadcastReceiver() {
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent intent) {
                 String action = intent.getAction();
@@ -120,11 +130,20 @@ public class MainActivity extends AppCompatActivity
             irParaTelaConfiguracoes(getIntent().getStringExtra("idGoogle"));
         } else if (id == R.id.configuracoesUsuarioAdm) {
             irParaTelaUsuarios();
+        } else if(id == R.id.logoutMenu){;
+            irParaTelaLogin();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void irParaTelaLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("idUsuarioDeslogado", getIntent().getStringExtra("idGoogle"));
+        startActivity(intent);
+        finish();
     }
 
     private void listenerBuscaIdUsuario(final String idGoogle){
@@ -137,6 +156,7 @@ public class MainActivity extends AppCompatActivity
                 if(usuario.isAdmnistrador()){
                     configuracoesUsuarioAdmItem.setVisible(true);
                 }
+                personalizarMenu();
             }
 
             @Override
@@ -144,6 +164,11 @@ public class MainActivity extends AppCompatActivity
                 //Sei la
             }
         });
+    }
+
+    private void personalizarMenu() {
+        navHeaderUsernameTextView.setText(usuario.getUsername());
+        navHeaderNomeUsuarioTextView.setText(usuario.getNomeUsuario());
     }
 
     private void irParaTelaConfiguracoes(String idGoogle){
@@ -175,4 +200,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
 }

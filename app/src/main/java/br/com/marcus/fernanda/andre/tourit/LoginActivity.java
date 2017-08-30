@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final int RC_SIGN_IN = 1;
-    private static GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient;
     private DatabaseReference database;
     private ProgressDialog progressDialog;
 
@@ -52,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
 
         //Autenticador do firebase
         mAuth = FirebaseAuth.getInstance();
+
+        if(getIntent().getStringExtra("idUsuarioDeslogado") != null){
+            signOut();
+        }
 
         //Se já estiver logado, abre outra Activity e encerra a de login
         if(mAuth.getCurrentUser()!= null){
@@ -200,9 +204,9 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    public static void signOut(Context context){
-        final ProgressDialog dialog = ProgressDialog.show(context, "Desativando Usuário", "Aguarde", true, false);
-        FirebaseAuth.getInstance().signOut();
+    public void signOut(){
+        final ProgressDialog dialog = ProgressDialog.show(this, "Deslogando usuário", "Aguarde", true, false);
+        mAuth.signOut();
         mGoogleApiClient.connect();
         mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
@@ -211,8 +215,9 @@ public class LoginActivity extends AppCompatActivity {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
-                            if(status.isSuccess())
+                            if(status.isSuccess()) {
                                 dialog.dismiss();
+                            }
                         }
                     });
                 }

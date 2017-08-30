@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,7 +52,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 database.child("Usuarios").child(keyUsuario).child("ativo").setValue(false);
                 progressDialog.dismiss();
                 Toast.makeText(ConfiguracoesActivity.this, "Usuário desativado", Toast.LENGTH_LONG).show();
-                LoginActivity.signOut(ConfiguracoesActivity.this);
                 irParaTelaLogin();
                 finishMainActivity();
             }
@@ -67,6 +65,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
     private void irParaTelaLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("idUsuarioDeslogado", getIntent().getStringExtra("idGoogle"));
         startActivity(intent);
         finish();
     }

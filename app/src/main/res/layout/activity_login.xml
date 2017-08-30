@@ -3,26 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme.NoActionBar"
     tools:context="br.com.marcus.fernanda.andre.tourit.LoginActivity">
 
     <ImageView
+        android:id="@+id/touritImageViewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_tourit_new2"
-        android:id="@+id/touritImageViewLogin"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/ic_tourit" />
 
     <Button
         android:id="@+id/loginButton"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/touritImageViewLogin"
+        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
         android:background="@drawable/bordas_botao"
         android:drawablePadding="10dp"
         android:drawableRight="@drawable/logo_google_x32"
+        android:elevation="@dimen/elevation_geral"
         android:gravity="center"
         android:paddingLeft="@dimen/paddingLeftBotaoLogin"
         android:paddingRight="@dimen/paddingLateralBotao"
@@ -33,10 +35,10 @@
         android:textStyle="bold" />
 
     <ImageView
+        android:id="@+id/backgroundImageViewLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/bg_390"
-        android:id="@+id/backgroundImageViewLogin"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/bg_390" />
 
 </RelativeLayout>

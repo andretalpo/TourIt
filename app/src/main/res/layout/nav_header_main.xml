@@ -22,7 +22,7 @@
         android:layout_below="@id/navHeaderUsuarioImageView"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Android Studio"
+        android:text="@string/nome_usuario_logado"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
@@ -32,6 +32,6 @@
         android:layout_below="@id/navHeaderNomeUsuarioTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
-        android:text="android.studio@android.com" />
+        android:text="@string/username_logado" />
 
 </RelativeLayout>

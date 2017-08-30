@@ -50,7 +50,7 @@ public class CreateUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = usernameEditText.getText().toString();
                 if(username.length() >= 4) {
-                    progressDialog = ProgressDialog.show(CreateUserActivity.this, "Aguarde", "A vontade do Marcus.", true, false);
+                    progressDialog = ProgressDialog.show(CreateUserActivity.this, "Aguarde", "Criando usuário.", true, false);
                     username = username.toLowerCase();
                     listenerBuscaUsername(username);
                 }else{
