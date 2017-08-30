@@ -1,14 +1,11 @@
-package br.com.marcus.fernanda.andre.tourit;
+package br.com.marcus.fernanda.andre.tourit.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,6 +15,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.adapter.UsuariosAtivosAdapter;
 
 public class UsuarioAdmActivity extends AppCompatActivity {
 

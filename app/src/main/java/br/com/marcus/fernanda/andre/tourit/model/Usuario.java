@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit;
+package br.com.marcus.fernanda.andre.tourit.model;
 
 import android.graphics.Bitmap;
 

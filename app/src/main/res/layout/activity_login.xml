@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme.NoActionBar"
-    tools:context="br.com.marcus.fernanda.andre.tourit.LoginActivity">
+    tools:context="br.com.marcus.fernanda.andre.tourit.activities.LoginActivity">
 
     <ImageView
         android:id="@+id/touritImageViewLogin"

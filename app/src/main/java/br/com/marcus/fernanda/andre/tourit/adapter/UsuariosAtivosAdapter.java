@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit;
+package br.com.marcus.fernanda.andre.tourit.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,11 +9,16 @@ import android.widget.Switch;
 
 import java.util.List;
 
+import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.activities.UsuarioAdmActivity;
+import br.com.marcus.fernanda.andre.tourit.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.viewholder.UsuariosAtivosViewHolder;
+
 /**
  * Created by André on 27/08/2017.
  */
 
-class UsuariosAtivosAdapter extends RecyclerView.Adapter {
+public class UsuariosAtivosAdapter extends RecyclerView.Adapter {
     private List<Usuario> usuarios;
     private Context context;
 

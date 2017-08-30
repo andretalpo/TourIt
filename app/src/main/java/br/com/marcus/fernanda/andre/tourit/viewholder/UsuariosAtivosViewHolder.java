@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit;
+package br.com.marcus.fernanda.andre.tourit.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,15 +6,17 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import br.com.marcus.fernanda.andre.tourit.R;
+
 /**
  * Created by André on 27/08/2017.
  */
 
 public class UsuariosAtivosViewHolder extends RecyclerView.ViewHolder {
-    TextView usernameTextView;
-    TextView emailTextView;
-    TextView nomeTextView;
-    Switch ativoSwith;
+    public TextView usernameTextView;
+    public TextView emailTextView;
+    public TextView nomeTextView;
+    public Switch ativoSwith;
 
     public UsuariosAtivosViewHolder(View itemView) {
         super(itemView);

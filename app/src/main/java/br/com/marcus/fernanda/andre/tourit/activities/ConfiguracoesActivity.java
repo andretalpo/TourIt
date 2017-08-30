@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit;
+package br.com.marcus.fernanda.andre.tourit.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import br.com.marcus.fernanda.andre.tourit.R;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 
