@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/backgroundImageViewCriarUsuario"
-        android:src="@drawable/bg_380"/>
+        android:src="@drawable/bg_360"/>
 
     <Button
         android:layout_width="wrap_content"
