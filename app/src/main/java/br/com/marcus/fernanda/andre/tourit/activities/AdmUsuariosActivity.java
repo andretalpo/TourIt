@@ -62,13 +62,11 @@ public class AdmUsuariosActivity extends AppCompatActivity {
     }
 
     private void listenerBuscaUsuarioUsername(final String username){
-        database.child("Usuarios").orderByChild("username").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.child("Usuarios").orderByChild("username").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 listaUsuarios.clear();
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    listaUsuarios.add(childSnapshot.getValue(Usuario.class));
-                }
+                listaUsuarios = buscarUsuariosFiltrado(dataSnapshot, username);
                 adapter.notifyDataSetChanged();
             }
 
@@ -96,5 +94,16 @@ public class AdmUsuariosActivity extends AppCompatActivity {
                 //Vazio
             }
         });
+    }
+
+    private List<Usuario> buscarUsuariosFiltrado(DataSnapshot dataSnapshot, String filtro) {
+        Usuario usuario = null;
+        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+            usuario = childSnapshot.getValue(Usuario.class);
+            if(usuario.getUsername().contains(filtro)){
+                listaUsuarios.add(childSnapshot.getValue(Usuario.class));
+            }
+        }
+        return listaUsuarios;
     }
 }
