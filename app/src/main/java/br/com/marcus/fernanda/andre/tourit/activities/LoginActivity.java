@@ -37,10 +37,11 @@ import br.com.marcus.fernanda.andre.tourit.model.Usuario;
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private static final int RC_SIGN_IN = 1;
     private GoogleApiClient mGoogleApiClient;
     private DatabaseReference database;
     private ProgressDialog progressDialog;
+
+    private static final int RC_SIGN_IN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         //Autenticador do firebase
         mAuth = FirebaseAuth.getInstance();
 
+        //Se tiver sido sinalizado como deslogado, desloga
         if(getIntent().getStringExtra("idUsuarioDeslogado") != null){
             signOut();
         }
 
         //Se já estiver logado, abre outra Activity e encerra a de login
         if(mAuth.getCurrentUser()!= null){
-            irParaTelaPrincipal();//esta entrando errado
+            irParaTelaPrincipal();
         }
 
         //Listener para chamar método login quando apertar botão
@@ -72,15 +74,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Metodo necessário para Firebase
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null) {
-                // User is signed in
-            } else {
-                // User is signed out
-            }
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                } else {
+                    // User is signed out
+                }
             }
         };
 
@@ -104,32 +107,6 @@ public class LoginActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private void inicializarApiGoogleSignIn() {
-        //Configura opções de login
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        //Configuração e criação do client da API de login
-        mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(LoginActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-    }
-
-    private void irParaTelaPrincipal() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("idGoogle", mAuth.getCurrentUser().getUid());
-        startActivity(intent);
-        finish();
     }
 
     @Override
@@ -163,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            listenerBuscaUsuario(mAuth.getCurrentUser().getUid());
+                            listenerBuscaUsuarioExistente(mAuth.getCurrentUser().getUid());
                         }else {
                             Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_SHORT).show();
                             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
@@ -175,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void listenerBuscaUsuario(String idUsuario){
+    private void listenerBuscaUsuarioExistente(String idUsuario){
         database.child("Usuarios").orderByChild("idGoogle").equalTo(idUsuario).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -205,7 +182,15 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    public void signOut(){
+    private void irParaTelaPrincipal() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("idGoogle", mAuth.getCurrentUser().getUid());
+        startActivity(intent);
+        finish();
+    }
+
+
+    private void signOut(){
         final ProgressDialog dialog = ProgressDialog.show(this, "Deslogando usuário", "Aguarde", true, false);
         mAuth.signOut();
         mGoogleApiClient.connect();
@@ -231,6 +216,25 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void inicializarApiGoogleSignIn() {
+        //Configura opções de login
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        //Configuração e criação do client da API de login
+        mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Toast.makeText(LoginActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
     }
 
 }

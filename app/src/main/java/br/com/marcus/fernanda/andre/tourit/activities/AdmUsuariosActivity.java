@@ -20,7 +20,7 @@ import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.model.Usuario;
 import br.com.marcus.fernanda.andre.tourit.adapter.UsuariosAtivosAdapter;
 
-public class UsuarioAdmActivity extends AppCompatActivity {
+public class AdmUsuariosActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private DatabaseReference database;
@@ -79,6 +79,7 @@ public class UsuarioAdmActivity extends AppCompatActivity {
         });
     }
 
+    //estático para ser chamado no adapter
     public static void listenerAtualizarUsuario(final String idGoogle, final boolean ativo) {
         FirebaseDatabase.getInstance().getReference().child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

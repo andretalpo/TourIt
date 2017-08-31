@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
         navHeaderNomeUsuarioTextView = (TextView) view.findViewById(R.id.navHeaderNomeUsuarioTextView);
         navHeaderUsernameTextView = (TextView) view.findViewById(R.id.navHeaderUsernameTextView);
 
-        listenerBuscaIdUsuario(getIntent().getStringExtra("idGoogle"));
+        listenerInicializaçãoTela(getIntent().getStringExtra("idGoogle"));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,19 +76,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-    }
-
-    private void registrarBroadcastReceiver() {
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent intent) {
-                String action = intent.getAction();
-                if (action.equals("finishActivity")) {
-                    finish();
-                }
-            }
-        };
-        registerReceiver(broadcastReceiver, new IntentFilter("finishActivity"));
     }
 
     @Override
@@ -142,14 +129,13 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void irParaTelaLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("idUsuarioDeslogado", getIntent().getStringExtra("idGoogle"));
-        startActivity(intent);
-        finish();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
-    private void listenerBuscaIdUsuario(final String idGoogle){
+    private void listenerInicializaçãoTela(final String idGoogle){
         database.child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -164,25 +150,9 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //Sei la
+                //vazio
             }
         });
-    }
-
-    private void personalizarMenu() {
-        navHeaderUsernameTextView.setText(usuario.getUsername());
-        navHeaderNomeUsuarioTextView.setText(usuario.getNomeUsuario());
-    }
-
-    private void irParaTelaConfiguracoes(String idGoogle){
-        Intent intent = new Intent(this, ConfiguracoesActivity.class);
-        intent.putExtra("idGoogle", idGoogle);
-        startActivity(intent);
-    }
-
-    private void irParaTelaUsuarios(){
-        Intent intent = new Intent(this, UsuarioAdmActivity.class);
-        startActivity(intent);
     }
 
     public void listenerAtivarUsuario(final String idGoogle) {
@@ -203,9 +173,40 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(broadcastReceiver);
+    private void personalizarMenu() {
+        navHeaderUsernameTextView.setText(usuario.getUsername());
+        navHeaderNomeUsuarioTextView.setText(usuario.getNomeUsuario());
     }
+
+    private void irParaTelaLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("idUsuarioDeslogado", getIntent().getStringExtra("idGoogle"));
+        startActivity(intent);
+        finish();
+    }
+
+    private void irParaTelaConfiguracoes(String idGoogle){
+        Intent intent = new Intent(this, ConfiguracoesActivity.class);
+        intent.putExtra("idGoogle", idGoogle);
+        startActivity(intent);
+    }
+
+    private void irParaTelaUsuarios(){
+        Intent intent = new Intent(this, AdmUsuariosActivity.class);
+        startActivity(intent);
+    }
+
+    private void registrarBroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("finishActivity")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("finishActivity"));
+    }
+
 }

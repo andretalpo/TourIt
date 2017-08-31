@@ -36,14 +36,14 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         desativarUsuarioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                confirmarBloqueio();
+                solicitarConfirmacaoInativacao();
             }
         });
 
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void listenerBuscarKeyUsuario(final String idGoogle){
+    private void listenerInativarUsuario(final String idGoogle){
         database.child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -60,9 +60,22 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //Sei la
+                //Vazio
             }
         });
+    }
+
+    private void solicitarConfirmacaoInativacao() {
+        new AlertDialog.Builder(this)
+                .setTitle("Bloqueio de conta")
+                .setMessage("Você realmente deseja bloquear sua conta?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int qualBotao) {
+                        progressDialog = ProgressDialog.show(ConfiguracoesActivity.this, "Desativação", "Desativando usuário", true, false);
+                        listenerInativarUsuario(getIntent().getStringExtra("idGoogle"));
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
     private void irParaTelaLogin() {
@@ -75,18 +88,5 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private void finishMainActivity(){
         Intent intent = new Intent("finishActivity");
         sendBroadcast(intent);
-    }
-
-    private void confirmarBloqueio() {
-        new AlertDialog.Builder(this)
-                .setTitle("Bloqueio de conta")
-                .setMessage("Você realmente deseja bloquear sua conta?")
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int qualBotao) {
-                        progressDialog = ProgressDialog.show(ConfiguracoesActivity.this, "Desativando usuário", "", true, false);
-                        listenerBuscarKeyUsuario(getIntent().getStringExtra("idGoogle"));
-                    }})
-                .setNegativeButton(android.R.string.no, null).show();
     }
 }

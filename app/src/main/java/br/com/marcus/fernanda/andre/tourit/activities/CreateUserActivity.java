@@ -52,9 +52,9 @@ public class CreateUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = usernameEditText.getText().toString();
                 if(username.length() >= 4) {
-                    progressDialog = ProgressDialog.show(CreateUserActivity.this, "Aguarde", "Criando usuário.", true, false);
+                    progressDialog = ProgressDialog.show(CreateUserActivity.this, "Criação", "Criando usuário", true, false);
                     username = username.toLowerCase();
-                    listenerBuscaUsername(username);
+                    listenerCriacaoUsername(username);
                 }else{
                     Toast.makeText(CreateUserActivity.this, "Seu username deve conter no mínimo quatro dígitos", Toast.LENGTH_LONG).show();
                 }
@@ -62,7 +62,7 @@ public class CreateUserActivity extends AppCompatActivity {
         });
     }
 
-    private void listenerBuscaUsername(final String username){
+    private void listenerCriacaoUsername(final String username){
         database.child("Usuarios").orderByChild("username").equalTo(username).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,16 +78,9 @@ public class CreateUserActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //Sei la
+                //Vazio
             }
         });
-    }
-
-    private void irParaTelaPrincipal() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("idGoogle", getIntent().getStringExtra("idGoogle"));
-        startActivity(intent);
-        finish();
     }
 
     private void criarUsuario(String username){
@@ -116,7 +109,6 @@ public class CreateUserActivity extends AppCompatActivity {
         }
         @Override
         protected Bitmap doInBackground(String... params) {
-            imagemUsuarioGoogle = null;
             HttpURLConnection connection = null;
             try{
                 URL url = new URL(params[0]);
@@ -137,4 +129,12 @@ public class CreateUserActivity extends AppCompatActivity {
             return imagemUsuarioGoogle;
         }
     }
+
+    private void irParaTelaPrincipal() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("idGoogle", getIntent().getStringExtra("idGoogle"));
+        startActivity(intent);
+        finish();
+    }
+
 }

@@ -10,7 +10,7 @@ import android.widget.Switch;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.activities.UsuarioAdmActivity;
+import br.com.marcus.fernanda.andre.tourit.activities.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.model.Usuario;
 import br.com.marcus.fernanda.andre.tourit.viewholder.UsuariosAtivosViewHolder;
 
@@ -46,7 +46,7 @@ public class UsuariosAtivosAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 Switch ativoSwich = (Switch) view;
-                UsuarioAdmActivity.listenerAtualizarUsuario(usuario.getIdGoogle(), ativoSwich.isChecked());
+                AdmUsuariosActivity.listenerAtualizarUsuario(usuario.getIdGoogle(), ativoSwich.isChecked());
             }
         });
     }
