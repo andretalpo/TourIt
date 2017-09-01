@@ -4,7 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -18,12 +22,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.model.Usuario;
@@ -38,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     private TextView navHeaderNomeUsuarioTextView;
     private TextView navHeaderUsernameTextView;
     private BroadcastReceiver broadcastReceiver;
+    private StorageReference storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +62,11 @@ public class MainActivity extends AppCompatActivity
 
         database = FirebaseDatabase.getInstance().getReference();
 
+        storage = FirebaseStorage.getInstance().getReference();
+
         registrarBroadcastReceiver();
+
+        baixarImagemUsuario(getIntent().getStringExtra("idGoogle"));
 
         listenerAtivarUsuario(getIntent().getStringExtra("idGoogle"));
 
@@ -76,6 +94,22 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void baixarImagemUsuario(String idGoogle) {
+        StorageReference refImagemUsuario = storage.child("imagemUsuario/" + idGoogle + ".jpeg");
+        final long ONE_MEGABYTE = 200 * 200;
+        refImagemUsuario.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                navHeaderUsuarioImageView.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(MainActivity.this, "Erro na imagem", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
