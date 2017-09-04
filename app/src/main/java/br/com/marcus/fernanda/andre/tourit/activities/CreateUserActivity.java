@@ -18,10 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -36,7 +32,6 @@ import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
 public class CreateUserActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
-    private DatabaseReference database;
     private Bitmap imagemUsuarioGoogle;
     private ProgressDialog progressDialog;
 
@@ -48,8 +43,6 @@ public class CreateUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_user);
 
         usernameCriado = false;
-
-        database = FirebaseDatabase.getInstance().getReference();
 
         new BaixarImagemTask().execute(getIntent().getStringExtra("urlFotoUsuario"));
 
@@ -101,15 +94,6 @@ public class CreateUserActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
         }
     }
-
-//    private void armazenarImagem(String idGoogle) {
-//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//        imagemUsuarioGoogle.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//        byte[] imagemBytes = stream.toByteArray();
-//
-//        StorageReference storage = FirebaseStorage.getInstance().getReference();
-//        storage.child("imagemUsuario/" + idGoogle + ".jpeg").putBytes(imagemBytes);
-//    }
 
     private class BaixarImagemTask extends AsyncTask<String, Void, Bitmap> {
         public BaixarImagemTask (){
@@ -174,7 +158,7 @@ public class CreateUserActivity extends AppCompatActivity {
         }
     }
 
-        private byte[] converterImagem() {
+    private byte[] converterImagem() {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         imagemUsuarioGoogle.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         return stream.toByteArray();
