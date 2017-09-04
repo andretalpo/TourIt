@@ -1,6 +1,8 @@
 package br.com.marcus.fernanda.andre.tourit.model;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -22,7 +24,9 @@ import java.util.List;
 
 public class UsuarioDAO {
 
-    public static void salvarUsuario(Usuario usuario) {
+    public static void salvarUsuario(Usuario usuario, byte[] imagemBytes) {
+        StorageReference storage = FirebaseStorage.getInstance().getReference();
+        storage.child("imagemUsuario/" + usuario.getIdGoogle() + ".jpeg").putBytes(imagemBytes);
         FirebaseDatabase.getInstance().getReference().child("Usuarios").push().setValue(usuario);
     }
 
@@ -103,7 +107,7 @@ public class UsuarioDAO {
             Iterator<String> iter = usuarios.keys();
             while (iter.hasNext()) {
                 String key = iter.next();
-                JSONObject usuario = usuarios.getJSONObject(key);//JSONArray list = usuarios.getJSONObject(key);
+                JSONObject usuario = usuarios.getJSONObject(key);
                 Gson gson = new Gson();
                 Usuario usuariofinal = gson.fromJson(usuario.toString(), Usuario.class);
                 return usuariofinal;

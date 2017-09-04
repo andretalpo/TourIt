@@ -102,14 +102,14 @@ public class CreateUserActivity extends AppCompatActivity {
         }
     }
 
-    private void armazenarImagem(String idGoogle) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        imagemUsuarioGoogle.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] imagemBytes = stream.toByteArray();
-
-        StorageReference storage = FirebaseStorage.getInstance().getReference();
-        storage.child("imagemUsuario/" + idGoogle + ".jpeg").putBytes(imagemBytes);
-    }
+//    private void armazenarImagem(String idGoogle) {
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        imagemUsuarioGoogle.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//        byte[] imagemBytes = stream.toByteArray();
+//
+//        StorageReference storage = FirebaseStorage.getInstance().getReference();
+//        storage.child("imagemUsuario/" + idGoogle + ".jpeg").putBytes(imagemBytes);
+//    }
 
     private class BaixarImagemTask extends AsyncTask<String, Void, Bitmap> {
         public BaixarImagemTask (){
@@ -154,7 +154,7 @@ public class CreateUserActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Usuario... usuario) {
             if(UsuarioDAO.consultarUsuarioUsername(usuario[0].getUsername()) == null){
-                UsuarioDAO.salvarUsuario(usuario[0]);
+                UsuarioDAO.salvarUsuario(usuario[0], converterImagem());
                 return true;
             }else{
                 return false;
@@ -165,7 +165,6 @@ public class CreateUserActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean sucesso) {
             progressDialog.dismiss();
             if(sucesso){
-                armazenarImagem(getIntent().getStringExtra("idGoogle"));
                 usernameCriado = true;
                 irParaTelaPrincipal();
             }else{
@@ -173,6 +172,12 @@ public class CreateUserActivity extends AppCompatActivity {
                 usernameEditText.setText("");
             }
         }
+    }
+
+        private byte[] converterImagem() {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        imagemUsuarioGoogle.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        return stream.toByteArray();
     }
 
 }
