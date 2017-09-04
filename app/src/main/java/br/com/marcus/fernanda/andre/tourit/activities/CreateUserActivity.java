@@ -18,21 +18,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+
 import java.net.URL;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
 
 public class CreateUserActivity extends AppCompatActivity {
 
@@ -81,9 +80,15 @@ public class CreateUserActivity extends AppCompatActivity {
     private void criarUsuario() {
         String username = usernameEditText.getText().toString();
         if(username.length() >= 4) {
-            progressDialog = ProgressDialog.show(CreateUserActivity.this, "Criação", "Criando usuário", true, false);
             username = username.toLowerCase();
-            listenerCriacaoUsername(username);
+            Usuario usuario = new Usuario();
+            usuario.setIdGoogle(getIntent().getStringExtra("idGoogle"));
+            usuario.setEmailUsuario(getIntent().getStringExtra("emailUsuario"));
+            usuario.setNomeUsuario(getIntent().getStringExtra("nomeUsuario"));
+            usuario.setUsername(username);
+            usuario.setAdmnistrador(false);
+            usuario.setAtivo(true);
+            new criarUsuarioTask().execute(usuario);
         }else{
             Toast.makeText(CreateUserActivity.this, "Seu username deve conter no mínimo quatro dígitos", Toast.LENGTH_LONG).show();
         }
@@ -95,40 +100,6 @@ public class CreateUserActivity extends AppCompatActivity {
         if(!usernameCriado){
             FirebaseAuth.getInstance().signOut();
         }
-    }
-
-    private void listenerCriacaoUsername(final String username){
-        database.child("Usuarios").orderByChild("username").equalTo(username).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                progressDialog.dismiss();
-                if(dataSnapshot.getValue(Usuario.class) == null){
-                    salvarUsuarioEmBanco(username);
-                    irParaTelaPrincipal();
-                }else{
-                    Toast.makeText(CreateUserActivity.this, "Username já utilizado.", Toast.LENGTH_SHORT).show();
-                    usernameEditText.setText("");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //Vazio
-            }
-        });
-    }
-
-    private void salvarUsuarioEmBanco(String username){
-        Usuario usuario = new Usuario();
-        usuario.setIdGoogle(getIntent().getStringExtra("idGoogle"));
-        usuario.setEmailUsuario(getIntent().getStringExtra("emailUsuario"));
-        usuario.setNomeUsuario(getIntent().getStringExtra("nomeUsuario"));
-        usuario.setUsername(username);
-        usuario.setAdmnistrador(false);
-        usuario.setAtivo(true);
-        database.child("Usuarios").push().setValue(usuario);
-        armazenarImagem(usuario.getIdGoogle());
-        usernameCriado = true;
     }
 
     private void armazenarImagem(String idGoogle) {
@@ -171,6 +142,37 @@ public class CreateUserActivity extends AppCompatActivity {
         intent.putExtra("idGoogle", getIntent().getStringExtra("idGoogle"));
         startActivity(intent);
         finish();
+    }
+
+    private class criarUsuarioTask extends AsyncTask<Usuario, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(CreateUserActivity.this, "Criação", "Criando usuário", true, false);
+        }
+
+        @Override
+        protected Boolean doInBackground(Usuario... usuario) {
+            if(UsuarioDAO.consultarUsuarioUsername(usuario[0].getUsername()) == null){
+                UsuarioDAO.salvarUsuario(usuario[0]);
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean sucesso) {
+            progressDialog.dismiss();
+            if(sucesso){
+                armazenarImagem(getIntent().getStringExtra("idGoogle"));
+                usernameCriado = true;
+                irParaTelaPrincipal();
+            }else{
+                Toast.makeText(CreateUserActivity.this, "Username já utilizado.", Toast.LENGTH_SHORT).show();
+                usernameEditText.setText("");
+            }
+        }
     }
 
 }
