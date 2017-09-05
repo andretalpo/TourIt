@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.activities;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +41,7 @@ import java.net.URL;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
         baixarImagemUsuario(getIntent().getStringExtra("idGoogle"));
 
-        listenerAtivarUsuario(getIntent().getStringExtra("idGoogle"));
+        new ReativarUsuarioTask().execute(getIntent().getStringExtra("idGoogle"));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         navHeaderNomeUsuarioTextView = (TextView) view.findViewById(R.id.navHeaderNomeUsuarioTextView);
         navHeaderUsernameTextView = (TextView) view.findViewById(R.id.navHeaderUsernameTextView);
 
-        listenerInicializaçãoTela(getIntent().getStringExtra("idGoogle"));
+        new CarregarDadosUsuarioTask().execute(getIntent().getStringExtra("idGoogle"));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +156,8 @@ public class MainActivity extends AppCompatActivity
             irParaTelaConfiguracoes(getIntent().getStringExtra("idGoogle"));
         } else if (id == R.id.configuracoesUsuarioAdm) {
             irParaTelaUsuarios();
-        } else if(id == R.id.logoutMenu){;
+        } else if (id == R.id.logoutMenu) {
+            ;
             irParaTelaLogin();
         }
 
@@ -169,45 +172,7 @@ public class MainActivity extends AppCompatActivity
         unregisterReceiver(broadcastReceiver);
     }
 
-    private void listenerInicializaçãoTela(final String idGoogle){
-        database.child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    usuario = childSnapshot.getValue(Usuario.class);
-                }
-                if(usuario.isAdmnistrador()){
-                    configuracoesUsuarioAdmItem.setVisible(true);
-                }
-                personalizarMenu();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //vazio
-            }
-        });
-    }
-
-    public void listenerAtivarUsuario(final String idGoogle) {
-        database.child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String keyUsuario = null;
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    keyUsuario = childSnapshot.getKey();
-                }
-                database.child("Usuarios").child(keyUsuario).child("ativo").setValue(true);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //Vazio
-            }
-        });
-    }
-
-    private void personalizarMenu() {
+    private void personalizarMenu(Usuario usuario) {
         navHeaderUsernameTextView.setText(usuario.getUsername());
         navHeaderNomeUsuarioTextView.setText(usuario.getNomeUsuario());
     }
@@ -219,13 +184,13 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    private void irParaTelaConfiguracoes(String idGoogle){
+    private void irParaTelaConfiguracoes(String idGoogle) {
         Intent intent = new Intent(this, ConfiguracoesActivity.class);
         intent.putExtra("idGoogle", idGoogle);
         startActivity(intent);
     }
 
-    private void irParaTelaUsuarios(){
+    private void irParaTelaUsuarios() {
         Intent intent = new Intent(this, AdmUsuariosActivity.class);
         startActivity(intent);
     }
@@ -243,4 +208,29 @@ public class MainActivity extends AppCompatActivity
         registerReceiver(broadcastReceiver, new IntentFilter("finishActivity"));
     }
 
+    private class CarregarDadosUsuarioTask extends AsyncTask<String, Void, Usuario> {
+
+        @Override
+        protected Usuario doInBackground(String... idGoogle) {
+            Usuario usuario = UsuarioDAO.consultarUsuario("idGoogle", idGoogle[0]);
+            return usuario;
+        }
+
+        @Override
+        protected void onPostExecute(Usuario usuario) {
+            if(usuario.isAdmnistrador()){
+                configuracoesUsuarioAdmItem.setVisible(true);
+            }
+            personalizarMenu(usuario);
+        }
+    }
+
+    private class ReativarUsuarioTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... idGoogle) {
+            String keyUsuario = UsuarioDAO.buscarKeyUsuario(idGoogle[0]);
+            UsuarioDAO.alterarStatusAtivo(keyUsuario, true);
+            return null;
+        }
+    }
 }

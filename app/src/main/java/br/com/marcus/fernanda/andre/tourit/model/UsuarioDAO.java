@@ -119,6 +119,14 @@ public class UsuarioDAO {
         return null;
     }
 
+    private static String convertJSONToKeyUsuario(JSONObject jsonUusuarios) {
+        Iterator<String> iter = jsonUusuarios.keys();
+        while (iter.hasNext()) {
+            return iter.next();
+        }
+        return null;
+    }
+
     private static List<Usuario> convertJSONToListaUsuarios(JSONObject jsonUsuarios) {
         try {
             List<Usuario> listaUsuarios = new ArrayList<>();
@@ -147,4 +155,43 @@ public class UsuarioDAO {
         return usuariosFiltrado;
     }
 
+    public static String buscarKeyUsuario(String idGoogle) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Usuarios.json?orderBy=%22idGoogle%22&equalTo=%22" + idGoogle +"%22");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    //nada
+                }
+                return convertJSONToKeyUsuario(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            //nada
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    public static void alterarStatusAtivo(String keyUsuario, boolean status) {
+        FirebaseDatabase.getInstance().getReference().child("Usuarios").child(keyUsuario).child("ativo").setValue(status);
+    }
 }
