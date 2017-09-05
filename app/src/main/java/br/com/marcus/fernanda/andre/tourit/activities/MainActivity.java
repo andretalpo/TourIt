@@ -1,11 +1,9 @@
 package br.com.marcus.fernanda.andre.tourit.activities;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,17 +25,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.model.Usuario;
@@ -46,8 +35,6 @@ import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DatabaseReference database;
-    private Usuario usuario;
     private MenuItem configuracoesUsuarioAdmItem;
     private ImageView navHeaderUsuarioImageView;
     private TextView navHeaderNomeUsuarioTextView;
@@ -61,8 +48,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        database = FirebaseDatabase.getInstance().getReference();
 
         storage = FirebaseStorage.getInstance().getReference();
 
@@ -157,7 +142,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.configuracoesUsuarioAdm) {
             irParaTelaUsuarios();
         } else if (id == R.id.logoutMenu) {
-            ;
             irParaTelaLogin();
         }
 
