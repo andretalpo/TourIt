@@ -50,7 +50,7 @@ public class AdmUsuariosActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                new popularListViewTask().execute(query);
+                new PopularListViewTask().execute(query);
                 return false;
             }
 
@@ -61,7 +61,7 @@ public class AdmUsuariosActivity extends AppCompatActivity {
         });
     }
 
-    private class popularListViewTask extends AsyncTask<String, Void, List<Usuario>> {
+    private class PopularListViewTask extends AsyncTask<String, Void, List<Usuario>> {
         ProgressDialog progressDialog;
 
         @Override

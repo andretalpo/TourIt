@@ -30,10 +30,11 @@ public class UsuarioDAO {
         FirebaseDatabase.getInstance().getReference().child("Usuarios").push().setValue(usuario);
     }
 
-    public static Usuario consultarUsuarioUsername(String username){
+    public static Usuario consultarUsuario(String parametro, String valor){
         URL url = null;
         try {
-            url = new URL("https://tourit-176321.firebaseio.com/Usuarios.json?orderBy=%22username%22&equalTo=%22" + username +"%22");
+            url = new URL("https://tourit-176321.firebaseio.com/Usuarios.json?orderBy=%22" +
+                    parametro + "%22&equalTo=%22" + valor +"%22");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -102,15 +103,15 @@ public class UsuarioDAO {
         return null;
     }
 
-    private static Usuario convertJSONToUsuario(JSONObject usuarios) {
+    private static Usuario convertJSONToUsuario(JSONObject jsonUusuarios) {
         try {
-            Iterator<String> iter = usuarios.keys();
+            Iterator<String> iter = jsonUusuarios.keys();
             while (iter.hasNext()) {
                 String key = iter.next();
-                JSONObject usuario = usuarios.getJSONObject(key);
+                JSONObject jsonUusuario = jsonUusuarios.getJSONObject(key);
                 Gson gson = new Gson();
-                Usuario usuariofinal = gson.fromJson(usuario.toString(), Usuario.class);
-                return usuariofinal;
+                Usuario usuario = gson.fromJson(jsonUusuario.toString(), Usuario.class);
+                return usuario;
             }
         } catch (JSONException e) {
             e.printStackTrace();

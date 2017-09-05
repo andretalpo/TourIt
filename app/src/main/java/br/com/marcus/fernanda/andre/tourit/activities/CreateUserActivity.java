@@ -81,7 +81,7 @@ public class CreateUserActivity extends AppCompatActivity {
             usuario.setUsername(username);
             usuario.setAdmnistrador(false);
             usuario.setAtivo(true);
-            new criarUsuarioTask().execute(usuario);
+            new CriarUsuarioTask().execute(usuario);
         }else{
             Toast.makeText(CreateUserActivity.this, "Seu username deve conter no mínimo quatro dígitos", Toast.LENGTH_LONG).show();
         }
@@ -128,7 +128,7 @@ public class CreateUserActivity extends AppCompatActivity {
         finish();
     }
 
-    private class criarUsuarioTask extends AsyncTask<Usuario, Void, Boolean> {
+    private class CriarUsuarioTask extends AsyncTask<Usuario, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -137,7 +137,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Usuario... usuario) {
-            if(UsuarioDAO.consultarUsuarioUsername(usuario[0].getUsername()) == null){
+            if(UsuarioDAO.consultarUsuario("username", usuario[0].getUsername()) == null){
                 UsuarioDAO.salvarUsuario(usuario[0], converterImagem());
                 return true;
             }else{

@@ -2,6 +2,7 @@ package br.com.marcus.fernanda.andre.tourit.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,20 +26,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
-    private DatabaseReference database;
     private ProgressDialog progressDialog;
 
     private static final int RC_SIGN_IN = 1;
@@ -47,8 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        database = FirebaseDatabase.getInstance().getReference();
 
         inicializarApiGoogleSignIn();
 
@@ -140,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            listenerBuscaUsuarioExistente(mAuth.getCurrentUser().getUid());
+                            new ConsultarUsuarioExistenteTask().execute(mAuth.getCurrentUser().getUid());
                         }else {
                             Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_SHORT).show();
                             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
@@ -150,25 +145,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    private void listenerBuscaUsuarioExistente(String idUsuario){
-        database.child("Usuarios").orderByChild("idGoogle").equalTo(idUsuario).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                progressDialog.dismiss();
-                if(dataSnapshot.getValue(Usuario.class) != null){
-                    irParaTelaPrincipal();
-                }else{
-                    irParaCriacaoUsuario();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //vazio
-            }
-        });
     }
 
     private void irParaCriacaoUsuario(){
@@ -188,7 +164,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 
     private void signOut(){
         final ProgressDialog dialog = ProgressDialog.show(this, "Deslogando usuário", "Aguarde", true, false);
@@ -235,6 +210,28 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+    }
+
+    private class ConsultarUsuarioExistenteTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... idGoogle) {
+            if(UsuarioDAO.consultarUsuario("idGoogle", idGoogle[0]) != null){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean usuarioExistente) {
+            progressDialog.dismiss();
+            if(usuarioExistente){
+                irParaTelaPrincipal();
+            }else{
+                irParaCriacaoUsuario();
+            }
+        }
     }
 
 }
