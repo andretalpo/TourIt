@@ -1,6 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.adapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.activities.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
 import br.com.marcus.fernanda.andre.tourit.viewholder.UsuariosAtivosViewHolder;
 
 /**
@@ -46,7 +48,7 @@ public class UsuariosAtivosAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 Switch ativoSwich = (Switch) view;
-                AdmUsuariosActivity.listenerAtualizarUsuario(usuario.getIdGoogle(), ativoSwich.isChecked());
+                new AtualizarUsuarioTask(ativoSwich.isChecked()).execute(usuario.getIdGoogle());
             }
         });
     }
@@ -54,5 +56,21 @@ public class UsuariosAtivosAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return usuarios.size();
+    }
+
+    public class AtualizarUsuarioTask extends AsyncTask<String, Void, Void> {
+
+        private boolean ativo;
+
+        public AtualizarUsuarioTask(boolean ativo){
+            this.ativo = ativo;
+        }
+
+        @Override
+        protected Void doInBackground(String... idGoogle) {
+            String keyUsuario = UsuarioDAO.buscarKeyUsuario(idGoogle[0]);
+            UsuarioDAO.alterarStatusAtivo(keyUsuario, ativo);
+            return null;
+        }
     }
 }

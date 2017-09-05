@@ -10,11 +10,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,25 +86,6 @@ public class AdmUsuariosActivity extends AppCompatActivity {
                 Toast.makeText(AdmUsuariosActivity.this, "A busca não retornou resultados.", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    //estático para ser chamado no adapter
-    public static void listenerAtualizarUsuario(final String idGoogle, final boolean ativo) {
-        FirebaseDatabase.getInstance().getReference().child("Usuarios").orderByChild("idGoogle").equalTo(idGoogle).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String keyUsuario = null;
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    keyUsuario = childSnapshot.getKey();
-                }
-                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(keyUsuario).child("ativo").setValue(ativo);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //Vazio
-            }
-        });
     }
 
 }
