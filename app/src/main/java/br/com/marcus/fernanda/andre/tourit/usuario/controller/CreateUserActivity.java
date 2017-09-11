@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.activities;
+package br.com.marcus.fernanda.andre.tourit.usuario.controller;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -26,8 +26,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.model.Usuario;
-import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 public class CreateUserActivity extends AppCompatActivity {
 

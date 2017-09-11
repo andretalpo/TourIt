@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.activities;
+package br.com.marcus.fernanda.andre.tourit.login.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,11 +26,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.usuario.controller.CreateUserActivity;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;

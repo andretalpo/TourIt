@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="br.com.marcus.fernanda.andre.tourit.activities.AdmUsuariosActivity">
+    tools:context="br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity">
 
     <Toolbar
         android:layout_width="match_parent"

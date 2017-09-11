@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.viewholder;
+package br.com.marcus.fernanda.andre.tourit.usuario.model;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.activities;
+package br.com.marcus.fernanda.andre.tourit.main;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -14,7 +14,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
+import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 

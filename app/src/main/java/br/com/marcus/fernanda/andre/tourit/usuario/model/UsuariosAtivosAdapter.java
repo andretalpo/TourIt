@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.adapter;
+package br.com.marcus.fernanda.andre.tourit.usuario.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -11,10 +11,7 @@ import android.widget.Switch;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.activities.AdmUsuariosActivity;
-import br.com.marcus.fernanda.andre.tourit.model.Usuario;
-import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
-import br.com.marcus.fernanda.andre.tourit.viewholder.UsuariosAtivosViewHolder;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 /**
  * Created by André on 27/08/2017.

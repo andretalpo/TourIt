@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.activities;
+package br.com.marcus.fernanda.andre.tourit.usuario.controller;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.model.Usuario;
-import br.com.marcus.fernanda.andre.tourit.adapter.UsuariosAtivosAdapter;
-import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuariosAtivosAdapter;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 public class AdmUsuariosActivity extends AppCompatActivity {
 

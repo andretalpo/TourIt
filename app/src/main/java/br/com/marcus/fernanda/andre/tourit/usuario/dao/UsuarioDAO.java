@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.model;
+package br.com.marcus.fernanda.andre.tourit.usuario.dao;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -17,6 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 
 /**
  * Created by André on 03/09/2017.

@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activities.LoginActivity"
+        <activity android:name=".login.controller.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,16 +26,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CreateUserActivity"
+            android:name=".usuario.controller.CreateUserActivity"
             android:label="@string/title_activity_create_user"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.ConfiguracoesActivity"
+            android:name=".main.ConfiguracoesActivity"
             android:label="@string/title_activity_configuracoes"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.AdmUsuariosActivity"
+            android:name=".usuario.controller.AdmUsuariosActivity"
             android:label="@string/title_activity_usuario_adm"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"></activity>

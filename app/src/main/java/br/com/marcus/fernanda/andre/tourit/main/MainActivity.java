@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.activities;
+package br.com.marcus.fernanda.andre.tourit.main;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,8 +29,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.model.Usuario;
-import br.com.marcus.fernanda.andre.tourit.model.UsuarioDAO;
+import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
+import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
