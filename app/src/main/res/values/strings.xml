@@ -89,4 +89,5 @@
     <string name="email">Email:</string>
     <string name="nome_usuario_logado">Usuário</string>
     <string name="username_logado">Username</string>
+    <string name="google_maps_key">AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4</string>
 </resources>

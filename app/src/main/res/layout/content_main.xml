@@ -8,6 +8,24 @@
     tools:context="br.com.marcus.fernanda.andre.tourit.main.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <SearchView
+        android:id="@+id/mainSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <fragment
+        android:id="@+id/mapFragmentMainActivity"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/mainSearchView"/>
+
+    <fragment
+        android:id="@+id/localListFragmentMainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/mapFragmentMainActivity"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

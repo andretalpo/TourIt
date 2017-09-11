@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:src="@drawable/background_imagem_new"
+        android:id="@+id/imagemLocalViewHolderImageView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local"
+        android:id="@+id/nomeLocalViewHolderTextView"
+        android:layout_toRightOf="@id/imagemLocalViewHolderImageView"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avaliacaoLocalViewHolderRatingBar"
+        android:layout_toRightOf="@id/imagemLocalViewHolderImageView"
+        android:layout_below="@id/nomeLocalViewHolderTextView"/>
+
+
+
+
+</RelativeLayout>
