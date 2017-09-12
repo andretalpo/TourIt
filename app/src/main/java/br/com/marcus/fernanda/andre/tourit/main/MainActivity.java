@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.main;
 
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +31,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
@@ -83,6 +86,18 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        //--------------------------------------------------------------
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        LocalListFragment localFragment = new LocalListFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("pesquisa", "parque");
+        localFragment.setArguments(bundle);
+
+        transaction.replace(R.id.localFragmentContentMainActivity, localFragment);
+        transaction.commit();
+        //----------------------------------------------------------------
     }
 
     private void baixarImagemUsuario(String idGoogle) {

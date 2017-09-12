@@ -2,7 +2,6 @@ package br.com.marcus.fernanda.andre.tourit.usuario.model;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 

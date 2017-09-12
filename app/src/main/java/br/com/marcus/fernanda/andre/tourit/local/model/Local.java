@@ -14,10 +14,14 @@ public class Local {
     private String tipo;
     private String endereco;
     private Bitmap foto;
-    private double nota;
+    private float nota;
     private List<AvaliacaoLocal> avaliacoes;
 
-    public Local(String nome, String descricao, String tipo, String endereco, Bitmap foto, double nota, List<AvaliacaoLocal> avaliacoes) {
+    public Local(){
+        //vazio
+    }
+
+    public Local(String nome, String descricao, String tipo, String endereco, Bitmap foto, float nota, List<AvaliacaoLocal> avaliacoes) {
         this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
@@ -25,10 +29,6 @@ public class Local {
         this.foto = foto;
         this.nota = nota;
         this.avaliacoes = avaliacoes;
-    }
-
-    public Local(){
-        //vazio
     }
 
     public String getNome() {
@@ -71,11 +71,11 @@ public class Local {
         this.foto = foto;
     }
 
-    public double getNota() {
+    public float getNota() {
         return nota;
     }
 
-    public void setNota(double nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 

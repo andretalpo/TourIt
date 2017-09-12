@@ -18,6 +18,11 @@ public class LocalAdapter extends RecyclerView.Adapter {
     private List<Local> locais;
     private Context context;
 
+    public LocalAdapter(List<Local> locais, Context context) {
+        this.locais = locais;
+        this.context = context;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.viewholder_local, parent, false);
@@ -27,11 +32,15 @@ public class LocalAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        LocalViewHolder localHolder = (LocalViewHolder) holder;
+        Local local = locais.get(position);
+        localHolder.localImageView.setImageBitmap(local.getFoto());
+        localHolder.nomeLocalTextView.setText(local.getNome());
+        localHolder.localRatingBar.setRating(local.getNota());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return locais.size();
     }
 }
