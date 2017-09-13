@@ -2,6 +2,8 @@ package br.com.marcus.fernanda.andre.tourit.local.model;
 
 import android.graphics.Bitmap;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 /**
@@ -9,26 +11,36 @@ import java.util.List;
  */
 
 public class Local {
+    private String idPlaces;
     private String nome;
-    private String descricao;
     private String tipo;
     private String endereco;
     private Bitmap foto;
     private float nota;
     private List<AvaliacaoLocal> avaliacoes;
+    private LatLng latLng;
 
     public Local(){
         //vazio
     }
 
-    public Local(String nome, String descricao, String tipo, String endereco, Bitmap foto, float nota, List<AvaliacaoLocal> avaliacoes) {
+    public Local(String idPlaces, String nome, String tipo, String endereco, Bitmap foto, float nota, List<AvaliacaoLocal> avaliacoes, LatLng latLng) {
+        this.idPlaces = idPlaces;
         this.nome = nome;
-        this.descricao = descricao;
         this.tipo = tipo;
         this.endereco = endereco;
         this.foto = foto;
         this.nota = nota;
         this.avaliacoes = avaliacoes;
+        this.latLng = latLng;
+    }
+
+    public String getIdPlaces() {
+        return idPlaces;
+    }
+
+    public void setIdPlaces(String idPlaces) {
+        this.idPlaces = idPlaces;
     }
 
     public String getNome() {
@@ -37,14 +49,6 @@ public class Local {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getTipo() {
@@ -85,5 +89,13 @@ public class Local {
 
     public void setAvaliacoes(List<AvaliacaoLocal> avaliacoes) {
         this.avaliacoes = avaliacoes;
+    }
+
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 }

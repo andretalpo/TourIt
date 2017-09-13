@@ -67,12 +67,7 @@ public class AdmUsuariosActivity extends AppCompatActivity {
         @Override
         protected List<Usuario> doInBackground(String... username) {
             List<Usuario> usuarios = UsuarioDAO.listarUsuariosUsername(username[0]);
-            if(usuarios != null){
-                return usuarios;
-            }
-            else{
-                return null;
-            }
+            return usuarios;
         }
 
         @Override

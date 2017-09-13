@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalAdapter;
 
@@ -28,23 +31,6 @@ public class LocalListFragment extends Fragment {
     private LocalAdapter adapter;
     public List<Local> listaLocais;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-        String pesquisa = null;
-        if(bundle != null){
-            pesquisa = bundle.getString("pesquisa");
-        }
-
-        Local local = new Local();
-        local.setNome(pesquisa);
-        local.setNota(5f);
-        listaLocais = new ArrayList<>();
-        listaLocais.add(local);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -56,8 +42,16 @@ public class LocalListFragment extends Fragment {
         RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         locaisRecyclerView.setLayoutManager(layout);
 
+        listaLocais = new ArrayList<>();
         adapter = new LocalAdapter(listaLocais, getActivity());
         locaisRecyclerView.setAdapter(adapter);
+
+        Bundle bundle = getArguments();
+        String pesquisa;
+        if(bundle != null){
+            pesquisa = bundle.getString("pesquisa");
+            new CarregarLocaisTask().execute(pesquisa);
+        }
 
         return view;
     }
@@ -66,5 +60,24 @@ public class LocalListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+    }
+
+    private class CarregarLocaisTask extends AsyncTask<String, Void, List<Local>> {
+
+        @Override
+        protected List<Local> doInBackground(String... pesquisa) {
+            List<Local> locais = GooglePlacesServices.buscarLocais(pesquisa[0]);
+            return locais;
+        }
+
+        @Override
+        protected void onPostExecute(List<Local> locais) {
+            if(locais != null){
+                listaLocais.addAll(locais);
+                adapter.notifyDataSetChanged();
+            }else{
+                Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

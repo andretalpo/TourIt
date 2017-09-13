@@ -1,6 +1,5 @@
 package br.com.marcus.fernanda.andre.tourit.main;
 
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -87,17 +87,27 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        //--------------------------------------------------------------
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        LocalListFragment localFragment = new LocalListFragment();
+        final SearchView searchView = (SearchView) findViewById(R.id.mainSearchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                LocalListFragment localFragment = new LocalListFragment();
 
-        Bundle bundle = new Bundle();
-        bundle.putString("pesquisa", "parque");
-        localFragment.setArguments(bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", query);
+                localFragment.setArguments(bundle);
 
-        transaction.replace(R.id.localFragmentContentMainActivity, localFragment);
-        transaction.commit();
-        //----------------------------------------------------------------
+                transaction.replace(R.id.localFragmentContentMainActivity, localFragment);
+                transaction.commit();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void baixarImagemUsuario(String idGoogle) {
