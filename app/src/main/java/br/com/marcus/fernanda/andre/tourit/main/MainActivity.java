@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private TextView navHeaderUsernameTextView;
     private BroadcastReceiver broadcastReceiver;
     private StorageReference storage;
+    private FrameLayout frameListaLocais;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        frameListaLocais = (FrameLayout) findViewById(R.id.localFragmentContentMainActivity);
 
         storage = FirebaseStorage.getInstance().getReference();
 

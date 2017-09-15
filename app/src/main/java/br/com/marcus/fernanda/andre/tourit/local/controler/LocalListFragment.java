@@ -27,15 +27,19 @@ public class LocalListFragment extends Fragment {
 
     private static final String TAG = "localListFragment";
 
+    private View view;
+
     private RecyclerView locaisRecyclerView;
     private LocalAdapter adapter;
     public List<Local> listaLocais;
+    private View container;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_local_list, container, false);
+        view = inflater.inflate(R.layout.fragment_local_list, container, false);
         view.setTag(TAG);
+        this.container = container;
 
         locaisRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentLocalRecyclerView);
 
@@ -75,6 +79,7 @@ public class LocalListFragment extends Fragment {
             if(locais != null){
                 listaLocais.addAll(locais);
                 adapter.notifyDataSetChanged();
+                container.setVisibility(View.VISIBLE);
             }else{
                 Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
             }
