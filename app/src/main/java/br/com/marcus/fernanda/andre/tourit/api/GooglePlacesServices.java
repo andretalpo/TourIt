@@ -1,11 +1,15 @@
 package br.com.marcus.fernanda.andre.tourit.api;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -68,11 +72,49 @@ public class GooglePlacesServices {
                 local.setIdPlaces(jsonLocal.getString("place_id"));
                 local.setNome(jsonLocal.getString("name"));
                 local.setNota((float)jsonLocal.getDouble("rating"));
+                JSONArray jsonFotos = jsonLocal.getJSONArray("photos");
+                JSONObject jsonFoto = jsonFotos.getJSONObject(0);
+                local.setFoto(buscarFotoLocal(jsonFoto.getString("photo_reference")));
                 listaLocais.add(local);
             }
             return listaLocais;
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static Bitmap buscarFotoLocal(String referencia) {
+
+        URL url = null;
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&photoreference="
+                    + referencia);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                Bitmap imagem = null;
+                try {
+                    InputStream in = url.openStream();
+                    imagem = BitmapFactory.decodeStream(in);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return imagem;
+            }
+        }
+        catch (Exception e){
+            //nada
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
         }
         return null;
     }

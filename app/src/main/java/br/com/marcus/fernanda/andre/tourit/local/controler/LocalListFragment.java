@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -81,7 +82,6 @@ public class LocalListFragment extends Fragment {
                 listaLocais.addAll(locais);
                 adapter.notifyDataSetChanged();
                 container.setVisibility(View.VISIBLE);
-                container.bringToFront();
             }else{
                 container.setVisibility(View.GONE);
                 Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
