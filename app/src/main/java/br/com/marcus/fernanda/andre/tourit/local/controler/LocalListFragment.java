@@ -1,6 +1,5 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

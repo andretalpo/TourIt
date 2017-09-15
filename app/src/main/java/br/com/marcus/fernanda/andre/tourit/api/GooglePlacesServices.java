@@ -85,7 +85,6 @@ public class GooglePlacesServices {
     }
 
     private static Bitmap buscarFotoLocal(String referencia) {
-
         URL url = null;
         try {
             url = new URL("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&photoreference="
