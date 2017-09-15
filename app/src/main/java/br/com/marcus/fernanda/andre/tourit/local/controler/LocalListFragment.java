@@ -46,6 +46,7 @@ public class LocalListFragment extends Fragment {
         RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         locaisRecyclerView.setLayoutManager(layout);
 
+        container.setVisibility(View.GONE);
         listaLocais = new ArrayList<>();
         adapter = new LocalAdapter(listaLocais, getActivity());
         locaisRecyclerView.setAdapter(adapter);
@@ -80,7 +81,9 @@ public class LocalListFragment extends Fragment {
                 listaLocais.addAll(locais);
                 adapter.notifyDataSetChanged();
                 container.setVisibility(View.VISIBLE);
+                container.bringToFront();
             }else{
+                container.setVisibility(View.GONE);
                 Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
             }
         }
