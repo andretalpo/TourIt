@@ -16,13 +16,17 @@
             android:id="@+id/enderecoLocalDetailsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="text" />
+            android:textSize="@dimen/textSizeLocalDetails"
+            android:layout_margin="@dimen/marginLocalDetails"
+            android:text="Endereço" />
 
         <TextView
             android:id="@+id/tipoLocalDetailsTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="Tipo"
+            android:layout_margin="@dimen/marginLocalDetails"
+            android:textSize="@dimen/textSizeLocalDetails"
             android:layout_below="@id/enderecoLocalDetailsTextView"/>
 
         <RatingBar
@@ -30,13 +34,17 @@
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tipoLocalDetailsTextView"/>
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/enderecoLocalDetailsTextView"
+            android:layout_margin="@dimen/marginLocalDetails"
+            android:rating="5" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/avaliacoesLocalDetailsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/localDetailsRatingBar"/>
+            android:layout_margin="@dimen/marginLocalDetails"
+            android:layout_below="@id/tipoLocalDetailsTextView"/>
 
 
     </RelativeLayout>

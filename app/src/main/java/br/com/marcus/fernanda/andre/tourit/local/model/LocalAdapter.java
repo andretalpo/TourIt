@@ -2,6 +2,7 @@ package br.com.marcus.fernanda.andre.tourit.local.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
@@ -49,6 +51,10 @@ public class LocalAdapter extends RecyclerView.Adapter {
                 intent.putExtra("nomePlace", local.getNome());
                 intent.putExtra("enderecoPlace", local.getEndereco());
                 intent.putExtra("ratingPlace", local.getNota());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                local.getFoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] arrayFoto = stream.toByteArray();
+                intent.putExtra("arrayFoto", arrayFoto);
                 //passar imagem
                 view.getContext().startActivity(intent);
             }
