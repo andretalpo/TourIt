@@ -14,7 +14,7 @@
     <dimen name="marginBottomBotaoCriarUsuario">5dp</dimen>
     <dimen name="elevation_geral">5dp</dimen>
     <dimen name="padding_geral">6dp</dimen>
-    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="app_bar_height">240dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="textSizeLocalDetails">16dp</dimen>
     <dimen name="marginLocalDetails">6dp</dimen>

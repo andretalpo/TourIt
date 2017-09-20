@@ -4,35 +4,25 @@ import android.graphics.Bitmap;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by André on 11/09/2017.
  */
 
-public class Local {
+public class Local implements Serializable{
     private String idPlaces;
     private String nome;
-    private String tipo;
+    private List<String> tipo;
     private String endereco;
-    private Bitmap foto;
+    private transient Bitmap foto;
     private float nota;
     private List<AvaliacaoLocal> avaliacoes;
-    private LatLng latLng;
+    private transient LatLng latLng;
 
     public Local(){
         //vazio
-    }
-
-    public Local(String idPlaces, String nome, String tipo, String endereco, Bitmap foto, float nota, List<AvaliacaoLocal> avaliacoes, LatLng latLng) {
-        this.idPlaces = idPlaces;
-        this.nome = nome;
-        this.tipo = tipo;
-        this.endereco = endereco;
-        this.foto = foto;
-        this.nota = nota;
-        this.avaliacoes = avaliacoes;
-        this.latLng = latLng;
     }
 
     public String getIdPlaces() {
@@ -51,11 +41,11 @@ public class Local {
         this.nome = nome;
     }
 
-    public String getTipo() {
+    public List<String> getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(List<String> tipo) {
         this.tipo = tipo;
     }
 

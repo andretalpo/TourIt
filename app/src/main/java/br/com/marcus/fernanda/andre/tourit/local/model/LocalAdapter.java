@@ -47,15 +47,11 @@ public class LocalAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), LocalDetailsActivity.class);
-                intent.putExtra("idPlace", local.getIdPlaces());
-                intent.putExtra("nomePlace", local.getNome());
-                intent.putExtra("enderecoPlace", local.getEndereco());
-                intent.putExtra("ratingPlace", local.getNota());
+                intent.putExtra("local", local);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 local.getFoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] arrayFoto = stream.toByteArray();
                 intent.putExtra("arrayFoto", arrayFoto);
-                //passar imagem
                 view.getContext().startActivity(intent);
             }
         });

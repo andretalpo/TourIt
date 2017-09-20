@@ -3,6 +3,8 @@ package br.com.marcus.fernanda.andre.tourit.api;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,9 +74,24 @@ public class GooglePlacesServices {
                 local.setIdPlaces(jsonLocal.getString("place_id"));
                 local.setNome(jsonLocal.getString("name"));
                 local.setNota((float)jsonLocal.getDouble("rating"));
+                local.setEndereco(jsonLocal.getString("formatted_address"));
+
                 JSONArray jsonFotos = jsonLocal.getJSONArray("photos");
                 JSONObject jsonFoto = jsonFotos.getJSONObject(0);
                 local.setFoto(buscarFotoLocal(jsonFoto.getString("photo_reference")));
+
+                List<String> tipos = new ArrayList<>();
+                JSONArray jsonTipos = jsonLocal.getJSONArray("types");
+                for (int j = 0; j < jsonTipos.length(); j++) {
+                    tipos.add(jsonTipos.getString(j));
+                }
+                local.setTipo(tipos);
+
+                JSONObject jsonGeometry = jsonLocal.getJSONObject("geometry");
+                JSONObject jsonLatLng = jsonGeometry.getJSONObject("location");
+                LatLng latLng = new LatLng(jsonLatLng.getDouble("lat"), jsonLatLng.getDouble("lng"));
+                local.setLatLng(latLng);
+
                 listaLocais.add(local);
             }
             return listaLocais;

@@ -1,22 +1,20 @@
 package br.com.marcus.fernanda.andre.tourit.local.model;
 
+import java.io.Serializable;
+
 /**
  * Created by André on 11/09/2017.
  */
 
-public class AvaliacaoLocal {
+public class AvaliacaoLocal implements Serializable {
     private String nomeAvaliador;
     private String comentario;
-    private double nota;
+    private float nota;
 
-    public AvaliacaoLocal(String nomeAvaliador, String comentario, double nota) {
+    public AvaliacaoLocal(String nomeAvaliador, String comentario, float nota) {
         this.nomeAvaliador = nomeAvaliador;
         this.comentario = comentario;
         this.nota = nota;
-    }
-
-    public AvaliacaoLocal(){
-        //vazio
     }
 
     public String getNomeAvaliador() {
@@ -35,11 +33,11 @@ public class AvaliacaoLocal {
         this.comentario = comentario;
     }
 
-    public double getNota() {
+    public float getNota() {
         return nota;
     }
 
-    public void setNota(double nota) {
+    public void setNota(float nota) {
         this.nota = nota;
     }
 }

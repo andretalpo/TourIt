@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 
 public class LocalDetailsActivity extends AppCompatActivity {
 
@@ -24,21 +25,25 @@ public class LocalDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_details);
         setSupportActionBar(toolbar);
 
-        setTitle(getIntent().getStringExtra("nomePlace"));
+        Local local = (Local) getIntent().getSerializableExtra("local");
+        setTitle(local.getNome());
 
         //Conversão de byte array para bitmap, depois para bitmap drawble(Para que seja possível aplicar no layout)
         byte[] arrayFoto = getIntent().getByteArrayExtra("arrayFoto");
-        Bitmap bmp = BitmapFactory.decodeByteArray(arrayFoto, 100, arrayFoto.length);
+        Bitmap bmp = BitmapFactory.decodeByteArray(arrayFoto, 0, arrayFoto.length);
         BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bmp);
         CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout_local_details);
         toolbarLayout.setBackground(bitmapDrawable);
 
         TextView enderecoTextView = (TextView) findViewById(R.id.enderecoLocalDetailsTextView);
-        enderecoTextView.setText(getIntent().getStringExtra("enderecoPlace"));
         TextView tipoTextView = (TextView) findViewById(R.id.tipoLocalDetailsTextView);
-        tipoTextView.setText(getIntent().getStringExtra("tipoPlace"));
         RatingBar ratingBar = (RatingBar) findViewById(R.id.localDetailsRatingBar);
-        ratingBar.setRating(getIntent().getFloatExtra("ratingPlace", 0.0f));
+
+        enderecoTextView.setText(local.getEndereco());
+        ratingBar.setRating(local.getNota());
+        for (String tipo : local.getTipo()) {
+            tipoTextView.append(tipo + " ");
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
         fab.setOnClickListener(new View.OnClickListener() {
