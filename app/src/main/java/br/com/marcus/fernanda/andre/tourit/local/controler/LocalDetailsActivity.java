@@ -10,10 +10,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 
 public class LocalDetailsActivity extends AppCompatActivity {
@@ -25,7 +28,7 @@ public class LocalDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_details);
         setSupportActionBar(toolbar);
 
-        Local local = (Local) getIntent().getSerializableExtra("local");
+        final Local local = (Local) getIntent().getSerializableExtra("local");
         setTitle(local.getNome());
 
         //Conversão de byte array para bitmap, depois para bitmap drawble(Para que seja possível aplicar no layout)
@@ -49,8 +52,16 @@ public class LocalDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                new LocalDAO(LocalDetailsActivity.this).inserirLocalSQLite(local);
+            }
+        });
+
+        Button button = (Button) findViewById(R.id.botaoTeste);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Local local2 = new LocalDAO(LocalDetailsActivity.this).buscarLocal(local.getIdPlaces());
+                Toast.makeText(LocalDetailsActivity.this, local2.getNome(), Toast.LENGTH_LONG).show();
             }
         });
     }
