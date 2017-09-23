@@ -16,8 +16,8 @@ public class LocalDAO {
     private SQLiteDatabase sqLiteDatabase;
     private DBHelper dbHelper;
 
-    public LocalDAO(Context context){
-        dbHelper = new DBHelper(context);
+    public LocalDAO(Context context, String idUsuarioGoogle){
+        dbHelper = new DBHelper(context, idUsuarioGoogle);
     }
 
     public void inserirLocalSQLite(Local local){

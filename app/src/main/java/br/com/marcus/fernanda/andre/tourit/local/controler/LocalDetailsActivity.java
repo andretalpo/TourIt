@@ -18,6 +18,7 @@ import android.widget.Toast;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 
 public class LocalDetailsActivity extends AppCompatActivity {
 
@@ -52,7 +53,7 @@ public class LocalDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new LocalDAO(LocalDetailsActivity.this).inserirLocalSQLite(local);
+                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).inserirLocalSQLite(local);
             }
         });
 
@@ -60,7 +61,7 @@ public class LocalDetailsActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Local local2 = new LocalDAO(LocalDetailsActivity.this).buscarLocal(local.getIdPlaces());
+                Local local2 = new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces());
                 Toast.makeText(LocalDetailsActivity.this, local2.getNome(), Toast.LENGTH_LONG).show();
             }
         });

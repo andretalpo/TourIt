@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     private TextView navHeaderUsernameTextView;
     private BroadcastReceiver broadcastReceiver;
     private StorageReference storage;
-    private FrameLayout frameListaLocais;
+    public static String idUsuarioGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +56,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        frameListaLocais = (FrameLayout) findViewById(R.id.localFragmentContentMainActivity);
-
         storage = FirebaseStorage.getInstance().getReference();
 
         registrarBroadcastReceiver();
 
-        baixarImagemUsuario(getIntent().getStringExtra("idGoogle"));
+        idUsuarioGoogle = getIntent().getStringExtra("idGoogle");
 
-        new ReativarUsuarioTask().execute(getIntent().getStringExtra("idGoogle"));
+        baixarImagemUsuario(idUsuarioGoogle);
+
+        new ReativarUsuarioTask().execute(idUsuarioGoogle);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
         navHeaderNomeUsuarioTextView = (TextView) view.findViewById(R.id.navHeaderNomeUsuarioTextView);
         navHeaderUsernameTextView = (TextView) view.findViewById(R.id.navHeaderUsernameTextView);
 
-        new CarregarDadosUsuarioTask().execute(getIntent().getStringExtra("idGoogle"));
+        new CarregarDadosUsuarioTask().execute(idUsuarioGoogle);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.configuracoesUsuarioComum) {
-            irParaTelaConfiguracoes(getIntent().getStringExtra("idGoogle"));
+            irParaTelaConfiguracoes(idUsuarioGoogle);
         } else if (id == R.id.configuracoesUsuarioAdm) {
             irParaTelaUsuarios();
         } else if (id == R.id.logoutMenu) {
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity
 
     private void irParaTelaLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("idUsuarioDeslogado", getIntent().getStringExtra("idGoogle"));
+        intent.putExtra("idUsuarioDeslogado", idUsuarioGoogle);
         startActivity(intent);
         finish();
     }
