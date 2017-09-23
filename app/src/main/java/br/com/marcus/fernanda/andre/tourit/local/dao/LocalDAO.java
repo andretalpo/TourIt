@@ -73,7 +73,7 @@ public class LocalDAO {
         sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_LOCAL + " WHERE " + DBHelper.COLUMN_IDPLACES_LOCAL + " = ?", new String[] {idPlaces});
         //Pega o id do local, pelo id do places para inserir no tipo
-        if(cursor != null){
+        if(cursor != null && cursor.getCount() > 0){
             Local local = new Local();
             cursor.moveToFirst();
             local.setNome(cursor.getString(1));
@@ -92,7 +92,7 @@ public class LocalDAO {
         sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_LOCAL, null);
         List<Local> locais = new ArrayList<>();
-        if(cursor != null){
+        if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
             do{
                 Local local = new Local();
@@ -116,7 +116,7 @@ public class LocalDAO {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + DBHelper.COLUMN_NOME_TIPO + " FROM " + DBHelper.TABLE_TIPO + " WHERE " + DBHelper.COLUMN_ID_LOCAL + " = ?", new String[]{String.valueOf(idLocal)});
 
         List<String> tipos = new ArrayList<>();
-        if(cursor != null){
+        if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
             while (cursor.moveToNext()){
                 tipos.add(cursor.getString(0));
@@ -124,5 +124,10 @@ public class LocalDAO {
             return tipos;
         }
         return null;
+    }
+
+    public void deleteLocal(String idGooglePlaces){
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        sqLiteDatabase.delete(DBHelper.TABLE_LOCAL, DBHelper.COLUMN_IDPLACES_LOCAL + "=?", new String[] {idGooglePlaces});
     }
 }

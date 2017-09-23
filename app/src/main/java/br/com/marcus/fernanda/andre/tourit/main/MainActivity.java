@@ -21,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
-import br.com.marcus.fernanda.andre.tourit.local.controler.LocalUser;
+import br.com.marcus.fernanda.andre.tourit.local.controler.LocalUserActivity;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
@@ -214,7 +213,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void irParaTelaLocaisUsuario() {
-        Intent intent = new Intent(this, LocalUser.class);
+        Intent intent = new Intent(this, LocalUserActivity.class);
         startActivity(intent);
     }
 

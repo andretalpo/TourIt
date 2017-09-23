@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
                 "%s VARCHAR(30), " +
                 "%s INTEGER, " +
-                "FOREIGN KEY(%s) REFERENCES local(%s));", TABLE_TIPO, COLUMN_ID_TIPO, COLUMN_NOME_TIPO, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL);
+                "FOREIGN KEY(%s) REFERENCES local(%s) ON DELETE CASCADE);", TABLE_TIPO, COLUMN_ID_TIPO, COLUMN_NOME_TIPO, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL);
         tourItDB.execSQL(sql);
 
     }

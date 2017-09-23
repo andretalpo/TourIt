@@ -1,8 +1,10 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +25,7 @@ import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class LocalDetailsActivity extends AppCompatActivity {
 
+    private Local local;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +33,14 @@ public class LocalDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_details);
         setSupportActionBar(toolbar);
 
-        final Local local = (Local) getIntent().getSerializableExtra("local");
+        inicializarBotaoAdicionar();
+
+        local = (Local) getIntent().getSerializableExtra("local");
         setTitle(local.getNome());
+
+        if(new LocalDAO(this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces()) != null){
+            inicializarBotaoExcluir();
+        }
 
         //Conversão de byte array para bitmap, depois para bitmap drawble(Para que seja possível aplicar no layout)
         Bitmap bmp = ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("arrayFoto"));
@@ -51,13 +60,6 @@ public class LocalDetailsActivity extends AppCompatActivity {
             tipoTextView.append(tipo + " ");
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).inserirLocalSQLite(local);
-            }
-        });
 
         final Button button = (Button) findViewById(R.id.botaoTeste);
         button.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +69,34 @@ public class LocalDetailsActivity extends AppCompatActivity {
                 BitmapDrawable bmpDrawable = new BitmapDrawable(getResources(), local2.getFoto());
                 button.setBackground(bmpDrawable);
                 Toast.makeText(LocalDetailsActivity.this, local2.getNome(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void inicializarBotaoExcluir() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
+        floatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete, null));
+        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.cor_vermelho)));
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).deleteLocal(local.getIdPlaces());
+                inicializarBotaoAdicionar();
+                Toast.makeText(LocalDetailsActivity.this, "Local excluído com sucesso.", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void inicializarBotaoAdicionar() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
+        floatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add, null));
+        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).inserirLocalSQLite(local);
+                inicializarBotaoExcluir();
+                Toast.makeText(LocalDetailsActivity.this, "Local adicionado com sucesso.", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -67,6 +67,7 @@ public class LocalListFragment extends Fragment {
 
     private void carregarLocaisBanco() {
         List<Local> locais = new LocalDAO(getContext(), MainActivity.idUsuarioGoogle).buscarLocaisUsuario();
+        listaLocais.clear();
 
         if(locais != null){
             listaLocais.addAll(locais);
@@ -74,7 +75,7 @@ public class LocalListFragment extends Fragment {
             container.setVisibility(View.VISIBLE);
         }else{
             container.setVisibility(View.GONE);
-            Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LocalListFragment.this.getContext(), "Nenhum local cadastrado.", Toast.LENGTH_SHORT).show();
         }
     }
 
