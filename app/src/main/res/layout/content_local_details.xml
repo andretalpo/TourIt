@@ -12,47 +12,80 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/enderecoLocalDetailsTextView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/textSizeLocalDetails"
-            android:layout_margin="@dimen/marginLocalDetails"
-            android:text="Endereço" />
+            android:paddingTop="@dimen/padding_frame_layout"
+            android:background="@color/colorPrimary"
+            android:id="@+id/layoutBarLocalDetailsActivity">
 
-        <TextView
-            android:id="@+id/tipoLocalDetailsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tipo"
-            android:layout_margin="@dimen/marginLocalDetails"
-            android:textSize="@dimen/textSizeLocalDetails"
-            android:layout_below="@id/enderecoLocalDetailsTextView"/>
+            <TextView
+                android:id="@+id/tipoLocalDetailsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tipo"
+                android:paddingStart="@dimen/paddingLeftTextViewLocalDetailsActivity"
+                android:paddingEnd="@dimen/paddingLeftTextViewLocalDetailsActivity"
+                android:textStyle="bold"
+                android:textColor="@color/cor_branco"
+                android:layout_margin="@dimen/marginLocalDetails"
+                android:textSize="@dimen/textSizeLocalDetails" />
 
-        <RatingBar
-            android:id="@+id/localDetailsRatingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
+            <RatingBar
+                android:id="@+id/localDetailsRatingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:progressTint="@color/cor_branco"
+                android:layout_margin="@dimen/marginLocalDetails"
+                android:rating="5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/notaLocalDetailsTextView"
+                android:layout_toStartOf="@id/localDetailsRatingBar"
+                android:textStyle="bold"
+                android:textColor="@color/cor_branco"
+                android:textSize="@dimen/textSizeLocalDetails"
+                android:layout_margin="@dimen/marginLocalDetails"
+                android:text="5.0"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/enderecoLocalDetailsTextView"
-            android:layout_margin="@dimen/marginLocalDetails"
-            android:rating="5" />
+            android:padding="@dimen/padding_frame_layout"
+            android:id="@+id/frameLayoutEnderecoLocalDetailsActivity"
+            android:layout_below="@id/layoutBarLocalDetailsActivity">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iconeEnderecoImageViewLocalDetailsActivity"
+                android:tint="@color/colorPrimary"
+                android:contentDescription="@string/enderecoImageView"
+                android:src="@drawable/ic_places"/>
+
+            <TextView
+                android:id="@+id/enderecoLocalDetailsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginLeftEnderecoTextViewLocalDetailsActivity"
+                android:layout_marginTop="@dimen/marginTopEnderecoTextViewLocalDetailsActivity"
+                android:text="Amora é bom"
+                android:textSize="@dimen/textSizeLocalDetails" />
+
+        </FrameLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/avaliacoesLocalDetailsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/marginLocalDetails"
-            android:layout_below="@id/tipoLocalDetailsTextView"/>
-
-        <Button
-            android:id="@+id/botaoTeste"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/enderecoLocalDetailsTextView"
-            android:text="Button" />
-
+            android:layout_below="@id/frameLayoutEnderecoLocalDetailsActivity"/>
 
     </RelativeLayout>
 

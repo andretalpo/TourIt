@@ -5,27 +5,66 @@
     android:layout_height="wrap_content"
     android:id="@+id/localViewHolderLayout">
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:id="@+id/imagemLocalViewHolderImageView"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imagemLocalViewHolderImageView"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/background_imagem_new"
+        android:paddingBottom="@dimen/padding_geral"
+        android:layout_marginEnd="10dp"
+        app:civ_border_width="3dp"
+        app:civ_border_color="@color/colorAccent"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Local"
+        android:textSize="@dimen/textSizeListaLocais"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
         android:id="@+id/nomeLocalViewHolderTextView"
-        android:layout_toRightOf="@id/imagemLocalViewHolderImageView"/>
+        android:layout_toEndOf="@id/imagemLocalViewHolderImageView"/>
 
-    <RatingBar
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/avaliacaoLocalViewHolderTextView"
+        android:layout_toEndOf="@id/imagemLocalViewHolderImageView"
+        android:layout_marginEnd="5dp"
+        android:textColor="@color/cor_dourado"
+        android:text="5.0"
+        android:layout_below="@id/nomeLocalViewHolderTextView"/>
+
+    <RatingBar
         android:id="@+id/avaliacaoLocalViewHolderRatingBar"
-        android:layout_toRightOf="@id/imagemLocalViewHolderImageView"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/cor_dourado"
         android:layout_below="@id/nomeLocalViewHolderTextView"
-        style = "?android:attr/ratingBarStyleSmall" />
+        android:layout_toEndOf="@id/avaliacaoLocalViewHolderTextView"
+        android:rating="5" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enderecoLocalViewHolderTextView"
+        android:layout_toEndOf="@id/imagemLocalViewHolderImageView"
+        android:layout_below="@id/avaliacaoLocalViewHolderRatingBar"
+        android:text="Amora é bom!"/>
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adicionarLocalViewHolderButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:text="Adicionar"
+        android:textColor="@color/colorPrimary"
+        android:drawableTop="@drawable/ic_add_2"
+        android:drawableTint="@color/colorPrimary"
+        android:background="@android:color/transparent"/>
 
 </RelativeLayout>

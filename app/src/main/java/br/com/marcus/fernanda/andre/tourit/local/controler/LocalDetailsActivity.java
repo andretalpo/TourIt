@@ -59,18 +59,6 @@ public class LocalDetailsActivity extends AppCompatActivity {
         for (String tipo : local.getTipo()) {
             tipoTextView.append(tipo + " ");
         }
-
-
-        final Button button = (Button) findViewById(R.id.botaoTeste);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Local local2 = new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces());
-                BitmapDrawable bmpDrawable = new BitmapDrawable(getResources(), local2.getFoto());
-                button.setBackground(bmpDrawable);
-                Toast.makeText(LocalDetailsActivity.this, local2.getNome(), Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void inicializarBotaoExcluir() {
