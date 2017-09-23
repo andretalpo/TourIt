@@ -19,6 +19,7 @@ import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class LocalDetailsActivity extends AppCompatActivity {
 
@@ -33,11 +34,12 @@ public class LocalDetailsActivity extends AppCompatActivity {
         setTitle(local.getNome());
 
         //Conversão de byte array para bitmap, depois para bitmap drawble(Para que seja possível aplicar no layout)
-        byte[] arrayFoto = getIntent().getByteArrayExtra("arrayFoto");
-        Bitmap bmp = BitmapFactory.decodeByteArray(arrayFoto, 0, arrayFoto.length);
+        Bitmap bmp = ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("arrayFoto"));
         BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bmp);
         CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout_local_details);
         toolbarLayout.setBackground(bitmapDrawable);
+
+        local.setFoto(bmp);
 
         TextView enderecoTextView = (TextView) findViewById(R.id.enderecoLocalDetailsTextView);
         TextView tipoTextView = (TextView) findViewById(R.id.tipoLocalDetailsTextView);
@@ -57,11 +59,13 @@ public class LocalDetailsActivity extends AppCompatActivity {
             }
         });
 
-        Button button = (Button) findViewById(R.id.botaoTeste);
+        final Button button = (Button) findViewById(R.id.botaoTeste);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Local local2 = new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces());
+                BitmapDrawable bmpDrawable = new BitmapDrawable(getResources(), local2.getFoto());
+                button.setBackground(bmpDrawable);
                 Toast.makeText(LocalDetailsActivity.this, local2.getNome(), Toast.LENGTH_LONG).show();
             }
         });

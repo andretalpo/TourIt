@@ -15,6 +15,7 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 /**
  * Created by André on 11/09/2017.
@@ -48,9 +49,8 @@ public class LocalAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), LocalDetailsActivity.class);
                 intent.putExtra("local", local);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                local.getFoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] arrayFoto = stream.toByteArray();
+
+                byte[] arrayFoto = ImageConverter.convertBitmapToByte(local.getFoto());
                 intent.putExtra("arrayFoto", arrayFoto);
                 view.getContext().startActivity(intent);
             }

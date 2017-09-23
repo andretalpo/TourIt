@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ENDERECO_LOCAL = "endereco";
     public static final String COLUMN_IDPLACES_LOCAL = "idplaces";
     public static final String COLUMN_NOTA_LOCAL = "nota";
+    public static final String COLUMN_FOTO_LOCAL = "foto";
 
     public static final String TABLE_TIPO = "tipo";
     public static final String COLUMN_ID_TIPO = "_id_tipo";
@@ -35,7 +36,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s VARCHAR(300), " +
                 "%s VARCHAR(50), " +
                 "%s REAL, " +
-                "UNIQUE(%s));", TABLE_LOCAL, COLUMN_ID_LOCAL, COLUMN_NOME_LOCAL, COLUMN_ENDERECO_LOCAL, COLUMN_IDPLACES_LOCAL, COLUMN_NOTA_LOCAL, COLUMN_IDPLACES_LOCAL);
+                "%s BLOB, " +
+                "UNIQUE(%s));", TABLE_LOCAL, COLUMN_ID_LOCAL, COLUMN_NOME_LOCAL, COLUMN_ENDERECO_LOCAL, COLUMN_IDPLACES_LOCAL, COLUMN_NOTA_LOCAL, COLUMN_FOTO_LOCAL, COLUMN_IDPLACES_LOCAL);
         tourItDB.execSQL(sql);
 
         sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
