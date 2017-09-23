@@ -16,8 +16,10 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
+import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalAdapter;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 
 /**
  * Created by André on 11/09/2017.
@@ -55,10 +57,25 @@ public class LocalListFragment extends Fragment {
         String pesquisa;
         if(bundle != null){
             pesquisa = bundle.getString("pesquisa");
-            new CarregarLocaisTask().execute(pesquisa);
+            new CarregarLocaisApiTask().execute(pesquisa);
+        }else {
+            carregarLocaisBanco();
         }
 
         return view;
+    }
+
+    private void carregarLocaisBanco() {
+        List<Local> locais = new LocalDAO(getContext(), MainActivity.idUsuarioGoogle).buscarLocaisUsuario();
+
+        if(locais != null){
+            listaLocais.addAll(locais);
+            adapter.notifyDataSetChanged();
+            container.setVisibility(View.VISIBLE);
+        }else{
+            container.setVisibility(View.GONE);
+            Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -67,7 +84,7 @@ public class LocalListFragment extends Fragment {
 
     }
 
-    private class CarregarLocaisTask extends AsyncTask<String, Void, List<Local>> {
+    private class CarregarLocaisApiTask extends AsyncTask<String, Void, List<Local>> {
 
         @Override
         protected List<Local> doInBackground(String... pesquisa) {

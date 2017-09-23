@@ -3,18 +3,22 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/configuracoesUsuarioComum"
+            android:id="@+id/drawerItemConfiguracoesUsuarioComum"
             android:icon="@drawable/ic_settings"
             android:title="Configurações" />
         <item
-            android:id="@+id/configuracoesUsuarioAdm"
+            android:id="@+id/drawerItemConfiguracoesUsuarioAdm"
             android:icon="@drawable/ic_person"
             android:visible="false"
             android:title="Usuários" />
         <item
-            android:id="@+id/logoutMenu"
+            android:id="@+id/drawerItemLogout"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="@string/logout" />
+        <item
+            android:id="@+id/drawerItemLocaisUsuario"
+            android:icon="@drawable/ic_places"
+            android:title="Locais Usuario" />
     </group>
 
 </menu>

@@ -33,6 +33,7 @@ import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
+import br.com.marcus.fernanda.andre.tourit.local.controler.LocalUser;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        configuracoesUsuarioAdmItem = navigationView.getMenu().findItem(R.id.configuracoesUsuarioAdm);
+        configuracoesUsuarioAdmItem = navigationView.getMenu().findItem(R.id.drawerItemConfiguracoesUsuarioAdm);
         View view = navigationView.getHeaderView(0);
         navHeaderUsuarioImageView = (ImageView) view.findViewById(R.id.navHeaderUsuarioImageView);
         navHeaderNomeUsuarioTextView = (TextView) view.findViewById(R.id.navHeaderNomeUsuarioTextView);
@@ -168,12 +169,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view configuracoesUsuarioAdmItem clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.configuracoesUsuarioComum) {
+        if (id == R.id.drawerItemConfiguracoesUsuarioComum) {
             irParaTelaConfiguracoes(idUsuarioGoogle);
-        } else if (id == R.id.configuracoesUsuarioAdm) {
+        } else if (id == R.id.drawerItemConfiguracoesUsuarioAdm) {
             irParaTelaUsuarios();
-        } else if (id == R.id.logoutMenu) {
+        } else if (id == R.id.drawerItemLogout) {
             irParaTelaLogin();
+        } else if(id == R.id.drawerItemLocaisUsuario){
+            irParaTelaLocaisUsuario();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -207,6 +210,11 @@ public class MainActivity extends AppCompatActivity
 
     private void irParaTelaUsuarios() {
         Intent intent = new Intent(this, AdmUsuariosActivity.class);
+        startActivity(intent);
+    }
+
+    private void irParaTelaLocaisUsuario() {
+        Intent intent = new Intent(this, LocalUser.class);
         startActivity(intent);
     }
 

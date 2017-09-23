@@ -56,7 +56,8 @@
         <activity
             android:name=".local.controler.LocalDetailsActivity"
             android:label="@string/title_activity_local_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".local.controler.LocalUser"></activity>
     </application>
 
 </manifest>

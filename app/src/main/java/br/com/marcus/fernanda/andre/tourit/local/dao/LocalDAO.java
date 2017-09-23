@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
@@ -79,9 +81,48 @@ public class LocalDAO {
             local.setIdPlaces(cursor.getString(3));
             local.setNota(cursor.getFloat(4));
             local.setFoto(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
+            local.setTipo(buscarTiposLocal(cursor.getInt(0)));
             return local;
         }
         sqLiteDatabase.close();
+        return null;
+    }
+
+    public List<Local> buscarLocaisUsuario() {
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_LOCAL, null);
+        List<Local> locais = new ArrayList<>();
+        if(cursor != null){
+            cursor.moveToFirst();
+            do{
+                Local local = new Local();
+                local.setNome(cursor.getString(1));
+                local.setEndereco(cursor.getString(2));
+                local.setIdPlaces(cursor.getString(3));
+                local.setNota(cursor.getFloat(4));
+                local.setFoto(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
+                local.setTipo(buscarTiposLocal(cursor.getInt(0)));
+                locais.add(local);
+            }while (cursor.moveToNext());
+
+            sqLiteDatabase.close();
+            return locais;
+        }
+        sqLiteDatabase.close();
+        return null;
+    }
+
+    private List<String> buscarTiposLocal(int idLocal) {
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + DBHelper.COLUMN_NOME_TIPO + " FROM " + DBHelper.TABLE_TIPO + " WHERE " + DBHelper.COLUMN_ID_LOCAL + " = ?", new String[]{String.valueOf(idLocal)});
+
+        List<String> tipos = new ArrayList<>();
+        if(cursor != null){
+            cursor.moveToFirst();
+            while (cursor.moveToNext()){
+                tipos.add(cursor.getString(0));
+            }
+            return tipos;
+        }
         return null;
     }
 }
