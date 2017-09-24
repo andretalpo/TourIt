@@ -44,6 +44,8 @@ public class LocalAdapter extends RecyclerView.Adapter {
         localHolder.localImageView.setImageBitmap(local.getFoto());
         localHolder.nomeLocalTextView.setText(local.getNome());
         localHolder.localRatingBar.setRating(local.getNota());
+        localHolder.notaLocalTextView.setText(String.valueOf(local.getNota()));
+        localHolder.enderecoLocalTextView.setText(local.getEndereco());
         localHolder.localLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

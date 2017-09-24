@@ -16,6 +16,8 @@ import br.com.marcus.fernanda.andre.tourit.R;
 public class LocalViewHolder extends RecyclerView.ViewHolder{
     public ImageView localImageView;
     public TextView nomeLocalTextView;
+    public TextView enderecoLocalTextView;
+    public TextView notaLocalTextView;
     public RatingBar localRatingBar;
     public RelativeLayout localLayout;
 
@@ -23,6 +25,8 @@ public class LocalViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         this.localImageView = (ImageView) itemView.findViewById(R.id.imagemLocalViewHolderImageView);
         this.nomeLocalTextView = (TextView) itemView.findViewById(R.id.nomeLocalViewHolderTextView);
+        this.enderecoLocalTextView = (TextView) itemView.findViewById(R.id.enderecoLocalViewHolderTextView);
+        this.notaLocalTextView = (TextView) itemView.findViewById(R.id.avaliacaoLocalViewHolderTextView);
         this.localRatingBar = (RatingBar) itemView.findViewById(R.id.avaliacaoLocalViewHolderRatingBar);
         this.localLayout = (RelativeLayout) itemView.findViewById(R.id.localViewHolderLayout);
     }

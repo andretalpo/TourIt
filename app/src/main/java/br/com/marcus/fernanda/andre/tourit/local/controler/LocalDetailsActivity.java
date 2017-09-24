@@ -52,9 +52,11 @@ public class LocalDetailsActivity extends AppCompatActivity {
 
         TextView enderecoTextView = (TextView) findViewById(R.id.enderecoLocalDetailsTextView);
         TextView tipoTextView = (TextView) findViewById(R.id.tipoLocalDetailsTextView);
+        TextView notaTextView = (TextView) findViewById(R.id.notaLocalDetailsTextView);
         RatingBar ratingBar = (RatingBar) findViewById(R.id.localDetailsRatingBar);
 
         enderecoTextView.setText(local.getEndereco());
+        notaTextView.setText(String.valueOf(local.getNota()));
         ratingBar.setRating(local.getNota());
         for (String tipo : local.getTipo()) {
             tipoTextView.append(tipo + " ");
