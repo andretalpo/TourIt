@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,11 +31,11 @@ public class LocalListFragment extends Fragment {
     private static final String TAG = "localListFragment";
 
     private View view;
-
     private RecyclerView locaisRecyclerView;
     private LocalAdapter adapter;
     public List<Local> listaLocais;
     private View container;
+    private Bundle bundle;
 
     @Nullable
     @Override
@@ -53,7 +54,7 @@ public class LocalListFragment extends Fragment {
         adapter = new LocalAdapter(listaLocais, getActivity());
         locaisRecyclerView.setAdapter(adapter);
 
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         String pesquisa;
         if(bundle != null){
             pesquisa = bundle.getString("pesquisa");
@@ -103,6 +104,14 @@ public class LocalListFragment extends Fragment {
                 container.setVisibility(View.GONE);
                 Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(bundle == null) {
+            carregarLocaisBanco();
         }
     }
 }

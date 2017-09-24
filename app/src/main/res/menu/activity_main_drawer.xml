@@ -12,13 +12,13 @@
             android:visible="false"
             android:title="Usuários" />
         <item
-            android:id="@+id/drawerItemLogout"
-            android:icon="@drawable/ic_exit_to_app_black_24dp"
-            android:title="@string/logout" />
-        <item
             android:id="@+id/drawerItemLocaisUsuario"
             android:icon="@drawable/ic_places"
             android:title="Locais Usuario" />
+        <item
+            android:id="@+id/drawerItemLogout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="@string/logout" />
     </group>
 
 </menu>
