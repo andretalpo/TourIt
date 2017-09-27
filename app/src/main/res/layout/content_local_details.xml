@@ -38,7 +38,7 @@
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:progressTint="@color/cor_dourado"
+                android:progressTint="@color/cor_branco"
                 android:layout_margin="@dimen/marginLocalDetails"
                 android:layout_below="@id/tipoLocalDetailsTextView"
                 android:layout_marginTop="15dp"
