@@ -181,4 +181,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="enderecoImageView">Endereço</string>
+    <string name="title_activity_local_user">Locais Usuário</string>
 </resources>

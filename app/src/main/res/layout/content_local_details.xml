@@ -23,14 +23,14 @@
                 android:id="@+id/tipoLocalDetailsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tipo"
+                android:text=""
                 android:paddingStart="@dimen/paddingLeftTextViewLocalDetailsActivity"
                 android:paddingEnd="@dimen/paddingLeftTextViewLocalDetailsActivity"
                 android:textStyle="bold"
+                android:layout_marginEnd="50dp"
                 android:textColor="@color/cor_branco"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/localDetailsRatingBar"
-                android:layout_margin="@dimen/marginLocalDetails"
+                android:paddingBottom="4dp"
                 android:textSize="@dimen/textSizeLocalDetails" />
 
             <RatingBar
@@ -38,9 +38,10 @@
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:progressTint="@color/cor_branco"
+                android:progressTint="@color/cor_dourado"
                 android:layout_margin="@dimen/marginLocalDetails"
+                android:layout_below="@id/tipoLocalDetailsTextView"
+                android:layout_marginTop="15dp"
                 android:rating="5" />
 
             <TextView

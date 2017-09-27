@@ -23,7 +23,9 @@
         android:text="Local"
         android:textSize="@dimen/textSizeListaLocais"
         android:textStyle="bold"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
+        android:paddingEnd="@dimen/padding_geral"
+        android:layout_marginEnd="@dimen/padding_geral"
         android:id="@+id/nomeLocalViewHolderTextView"
         android:layout_toEndOf="@id/imagemLocalViewHolderImageView"/>
 
@@ -33,7 +35,6 @@
         android:id="@+id/avaliacaoLocalViewHolderTextView"
         android:layout_toEndOf="@id/imagemLocalViewHolderImageView"
         android:layout_marginEnd="5dp"
-        android:textColor="@color/cor_dourado"
         android:text="5.0"
         android:layout_below="@id/nomeLocalViewHolderTextView"/>
 
@@ -53,6 +54,8 @@
         android:id="@+id/enderecoLocalViewHolderTextView"
         android:layout_toEndOf="@id/imagemLocalViewHolderImageView"
         android:layout_below="@id/avaliacaoLocalViewHolderRatingBar"
+        android:paddingEnd="@dimen/padding_geral"
+        android:layout_marginEnd="@dimen/padding_geral"
         android:text="Amora é bom!"/>
 
     <Button
