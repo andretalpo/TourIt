@@ -7,14 +7,21 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
+import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocal;
+import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
@@ -22,6 +29,9 @@ import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 public class LocalDetailsActivity extends AppCompatActivity {
 
     private Local local;
+    private List<AvaliacaoLocal> listaAvaliacoes;
+    private AvaliacaoLocalAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +47,16 @@ public class LocalDetailsActivity extends AppCompatActivity {
         if(new LocalDAO(this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces()) != null){
             inicializarBotaoExcluir();
         }
+
+        RecyclerView avaliacoesRecyclerView = (RecyclerView) findViewById(R.id.avaliacoesLocalDetailsRecyclerView);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        avaliacoesRecyclerView.setLayoutManager(layout);
+
+        listaAvaliacoes = new ArrayList<>();
+        listaAvaliacoes.add(new AvaliacaoLocal("andre", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 4f));
+        listaAvaliacoes.add(new AvaliacaoLocal("oi", "avdfdfdfdfdfdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 3f));
+        adapter = new AvaliacaoLocalAdapter(listaAvaliacoes, this);
+        avaliacoesRecyclerView.setAdapter(adapter);
 
         //Conversão de byte array para bitmap, depois para bitmap drawble(Para que seja possível aplicar no layout)
         Bitmap bmp = ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("arrayFoto"));

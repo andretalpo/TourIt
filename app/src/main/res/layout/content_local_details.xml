@@ -88,8 +88,9 @@
             android:id="@+id/avaliacoesLocalDetailsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/frameLayoutEnderecoLocalDetailsActivity"
             android:layout_margin="@dimen/marginLocalDetails"
-            android:layout_below="@id/frameLayoutEnderecoLocalDetailsActivity"/>
+            tools:listitem="@layout/viewholder_avaliacao_local" />
 
     </RelativeLayout>
 
