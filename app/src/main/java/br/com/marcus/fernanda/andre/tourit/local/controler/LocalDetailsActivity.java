@@ -26,6 +26,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocal;
 import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class LocalDetailsActivity extends AppCompatActivity {
@@ -46,9 +47,16 @@ public class LocalDetailsActivity extends AppCompatActivity {
         local = (Local) getIntent().getSerializableExtra("local");
         setTitle(local.getNome());
 
-        if(new LocalDAO(this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces()) != null){
-            inicializarBotaoExcluir();
+        List<Local> listaLocaisRoteiroAtual = CreateRoteiroActivity.getListaLocaisRoteiroAtual();
+        for(Local localAtual : listaLocaisRoteiroAtual){
+            if(localAtual.getIdPlaces().equals(local.getIdPlaces())){
+                inicializarBotaoExcluir();
+            }
         }
+
+//        if(new LocalDAO(this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces()) != null){
+//            inicializarBotaoExcluir();
+//        }
 
         RecyclerView avaliacoesRecyclerView = (RecyclerView) findViewById(R.id.avaliacoesLocalDetailsRecyclerView);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -88,7 +96,14 @@ public class LocalDetailsActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).deleteLocal(local.getIdPlaces());
+//                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).deleteLocal(local.getIdPlaces());
+                List<Local> listaLocaisRoteiroAtual = CreateRoteiroActivity.getListaLocaisRoteiroAtual();
+                for(int i = 0; i<listaLocaisRoteiroAtual.size(); i++){
+                    if(listaLocaisRoteiroAtual.get(i).getIdPlaces().equals(local.getIdPlaces())){
+                        listaLocaisRoteiroAtual.remove(i);
+                    }
+                }
+                CreateRoteiroActivity.setListaLocaisRoteiroAtual(listaLocaisRoteiroAtual);
                 inicializarBotaoAdicionar();
                 Toast.makeText(LocalDetailsActivity.this, "Local excluído com sucesso.", Toast.LENGTH_LONG).show();
             }
@@ -102,7 +117,8 @@ public class LocalDetailsActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).inserirLocalSQLite(local);
+//                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).inserirLocalSQLite(local);
+                CreateRoteiroActivity.getListaLocaisRoteiroAtual().add(local);
                 inicializarBotaoExcluir();
                 Toast.makeText(LocalDetailsActivity.this, "Local adicionado com sucesso.", Toast.LENGTH_LONG).show();
             }

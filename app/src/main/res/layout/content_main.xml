@@ -9,34 +9,9 @@
     tools:showIn="@layout/app_bar_main">
 
     <FrameLayout
-        android:id="@+id/mapFragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <fragment
-            android:id="@+id/mapFragmentMainActivity"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></fragment>
-
-    </FrameLayout>
-
-    <android.support.v7.widget.SearchView
-        android:id="@+id/mainSearchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.5"
-        android:background="@color/cor_branco" />
-
-    <FrameLayout
-        android:id="@+id/localFragmentContentMainActivity"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/cor_branco"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:visibility="gone"
-        android:alpha="0.7" />
+        android:layout_height="match_parent"
+        android:id="@+id/locaisMainActivityFrameLayout"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

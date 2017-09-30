@@ -9,9 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
+import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalUserActivity;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.CreateRoteiroActivity;
@@ -92,27 +91,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        final SearchView searchView = (SearchView) findViewById(R.id.mainSearchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                LocalListFragment localFragment = new LocalListFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        LocalSearchFragment localFragment = new LocalSearchFragment();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("pesquisa", query);
-                localFragment.setArguments(bundle);
-
-                transaction.replace(R.id.localFragmentContentMainActivity, localFragment);
-                transaction.commit();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        transaction.replace(R.id.locaisMainActivityFrameLayout, localFragment);
+        transaction.commit();
     }
 
     private void baixarImagemUsuario(String idGoogle) {

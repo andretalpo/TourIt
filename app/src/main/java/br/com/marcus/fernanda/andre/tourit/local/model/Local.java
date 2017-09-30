@@ -88,4 +88,5 @@ public class Local implements Serializable{
     public void setLatLng(LatLng latLng) {
         this.latLng = latLng;
     }
+
 }

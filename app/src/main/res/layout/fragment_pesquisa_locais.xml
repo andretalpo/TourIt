@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/mapFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/mapFragmentBuscaLocais"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></fragment>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/buscaLocaisSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:background="@color/cor_branco" />
+
+    <FrameLayout
+        android:id="@+id/localFragmentBuscaLocais"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:alpha="0.7"
+        android:background="@color/cor_branco"
+        android:visibility="gone" />
+
+</RelativeLayout>
