@@ -17,6 +17,10 @@ public class AvaliacaoLocal implements Serializable {
         this.nota = nota;
     }
 
+    public AvaliacaoLocal(){
+        //vazio
+    }
+
     public String getNomeAvaliador() {
         return nomeAvaliador;
     }

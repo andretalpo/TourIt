@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocal;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 
 /**
@@ -134,4 +135,60 @@ public class GooglePlacesServices {
         }
         return null;
     }
+
+    public static List<AvaliacaoLocal> buscarAvaliacoesLocal(String idPlaces) {
+        URL url = null;
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&placeid=" + idPlaces);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListaAvaliacoes(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private static List<AvaliacaoLocal> convertJSONToListaAvaliacoes(JSONObject jsonObject) {
+        List<AvaliacaoLocal> listaAvaliacoes = new ArrayList<>();
+        try{
+            JSONObject jsonLocal = jsonObject.getJSONObject("result");
+            JSONArray jsonAvalicoes = jsonLocal.getJSONArray("reviews");
+            for (int i=0; i < jsonAvalicoes.length(); i++) {
+                JSONObject jsonAvaliacao = jsonAvalicoes.getJSONObject(i);
+                AvaliacaoLocal avaliacao = new AvaliacaoLocal();
+                avaliacao.setNomeAvaliador(jsonAvaliacao.getString("author_name"));
+                avaliacao.setNota((float) jsonAvaliacao.getDouble("rating"));
+                avaliacao.setComentario(jsonAvaliacao.getString("text"));
+                listaAvaliacoes.add(avaliacao);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return listaAvaliacoes;
+    }
+
 }

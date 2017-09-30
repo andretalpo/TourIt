@@ -61,7 +61,7 @@ public class LocalDAO {
         sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + DBHelper.COLUMN_ID_LOCAL + " FROM " + DBHelper.TABLE_LOCAL + " WHERE " + DBHelper.COLUMN_IDPLACES_LOCAL + " = ?", new String[] {local.getIdPlaces()});
         //Pega o id do local, pelo id do places para inserir no tipo
-        if(cursor != null){
+        if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
             return cursor.getInt(0);
         }

@@ -3,6 +3,7 @@ package br.com.marcus.fernanda.andre.tourit.local.controler;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocal;
 import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
@@ -53,10 +55,10 @@ public class LocalDetailsActivity extends AppCompatActivity {
         avaliacoesRecyclerView.setLayoutManager(layout);
 
         listaAvaliacoes = new ArrayList<>();
-        listaAvaliacoes.add(new AvaliacaoLocal("andre", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 4f));
-        listaAvaliacoes.add(new AvaliacaoLocal("oi", "avdfdfdfdfdfdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 3f));
         adapter = new AvaliacaoLocalAdapter(listaAvaliacoes, this);
         avaliacoesRecyclerView.setAdapter(adapter);
+
+        new CarregarAvaliacoesAsyncTask().execute(local.getIdPlaces());
 
         //Conversão de byte array para bitmap, depois para bitmap drawble(Para que seja possível aplicar no layout)
         Bitmap bmp = ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("arrayFoto"));
@@ -105,5 +107,20 @@ public class LocalDetailsActivity extends AppCompatActivity {
                 Toast.makeText(LocalDetailsActivity.this, "Local adicionado com sucesso.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private class CarregarAvaliacoesAsyncTask extends AsyncTask<String, Void, List<AvaliacaoLocal>>{
+
+        @Override
+        protected List<AvaliacaoLocal> doInBackground(String... idPlaces) {
+            return GooglePlacesServices.buscarAvaliacoesLocal(idPlaces[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<AvaliacaoLocal> avaliacoes) {
+            listaAvaliacoes.clear();
+            listaAvaliacoes.addAll(avaliacoes);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
