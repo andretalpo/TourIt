@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOME_LOCAL = "nome";
     public static final String COLUMN_ENDERECO_LOCAL = "endereco";
     public static final String COLUMN_IDPLACES_LOCAL = "idplaces";
+    //colocar horário de funcionamento no futuro
     public static final String COLUMN_NOTA_LOCAL = "nota";
     public static final String COLUMN_FOTO_LOCAL = "foto";
 

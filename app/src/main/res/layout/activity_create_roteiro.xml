@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.marcus.fernanda.andre.tourit.roteiro.CreateRoteiroActivity">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome do roteiro"
+        android:id="@+id/nomeRoteiroRoteiroActivityTextInputLayout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/nomeRoteiroRoteiroActivityEditText"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo: "
+        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
+        android:id="@+id/labelTipoRoteiroActivityTextView"/>
+
+    <Spinner
+        android:id="@+id/tipoRoteiroActivitySpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/labelTipoRoteiroActivityTextView"
+        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bordas_botao"
+        android:layout_margin="4dp"
+        android:text="Adicionar Local"
+        android:textColor="@color/cor_branco"
+        android:textStyle="bold"
+        android:id="@+id/adicionarLocalRoteiroActivityButton"
+        android:layout_below="@id/tipoRoteiroActivitySpinner"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:id="@+id/listaLocaisRoteiroActivityFrameLayout"
+        android:layout_below="@id/adicionarLocalRoteiroActivityButton"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add_2"
+        android:id="@+id/salvarRoteiroActivityFab"/>
+
+
+</RelativeLayout>

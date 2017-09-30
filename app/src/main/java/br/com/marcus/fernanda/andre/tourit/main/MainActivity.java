@@ -34,6 +34,7 @@ import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalUserActivity;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver broadcastReceiver;
     private StorageReference storage;
     public static String idUsuarioGoogle;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                irParaTelaCriarRoteiro(usuario.getNomeUsuario());
             }
         });
 
@@ -217,6 +218,12 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    private void irParaTelaCriarRoteiro(String user) {
+        Intent intent = new Intent(this, CreateRoteiroActivity.class);
+        intent.putExtra("nomeUsuario", user);
+        startActivity(intent);
+    }
+
     private void registrarBroadcastReceiver() {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -234,7 +241,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected Usuario doInBackground(String... idGoogle) {
-            Usuario usuario = UsuarioDAO.consultarUsuario("idGoogle", idGoogle[0]);
+            usuario = UsuarioDAO.consultarUsuario("idGoogle", idGoogle[0]);
             return usuario;
         }
 
