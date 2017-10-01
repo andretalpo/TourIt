@@ -29,11 +29,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalUserActivity;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
-import br.com.marcus.fernanda.andre.tourit.roteiro.CreateRoteiroActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;

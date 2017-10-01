@@ -1,6 +1,7 @@
-package br.com.marcus.fernanda.andre.tourit.roteiro;
+package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchActivity;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 
@@ -22,6 +24,12 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_roteiro);
         listaLocaisRoteiroAtual = new ArrayList<>();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        LocalListFragment localFragment = new LocalListFragment();
+
+        transaction.replace(R.id.listaLocaisRoteiroActivityFrameLayout, localFragment);
+        transaction.commit();
 
         Button adicionarLocalButton = (Button) findViewById(R.id.adicionarLocalRoteiroActivityButton);
         adicionarLocalButton.setOnClickListener(new View.OnClickListener() {
@@ -43,5 +51,11 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
     public static void setListaLocaisRoteiroAtual(List<Local> listaLocaisRoteiroAtual) {
         CreateRoteiroActivity.listaLocaisRoteiroAtual = listaLocaisRoteiroAtual;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        listaLocaisRoteiroAtual = null;
     }
 }

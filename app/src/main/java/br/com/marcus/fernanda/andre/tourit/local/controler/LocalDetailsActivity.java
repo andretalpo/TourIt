@@ -24,7 +24,7 @@ import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocal;
 import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
-import br.com.marcus.fernanda.andre.tourit.roteiro.CreateRoteiroActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class LocalDetailsActivity extends AppCompatActivity {

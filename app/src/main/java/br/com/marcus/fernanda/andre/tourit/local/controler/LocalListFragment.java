@@ -20,6 +20,7 @@ import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 
 /**
  * Created by André on 11/09/2017.
@@ -59,7 +60,11 @@ public class LocalListFragment extends Fragment {
             pesquisa = bundle.getString("pesquisa");
             new CarregarLocaisApiTask().execute(pesquisa);
         }else {
-            carregarLocaisBanco();
+            //carregarLocaisBanco();
+            container.setVisibility(View.VISIBLE);
+            listaLocais.clear();
+            listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
+            adapter.notifyDataSetChanged();
         }
 
         return view;
@@ -109,7 +114,10 @@ public class LocalListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if(bundle == null) {
-            carregarLocaisBanco();
+            //carregarLocaisBanco();
+            listaLocais.clear();
+            listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
+            adapter.notifyDataSetChanged();
         }
     }
 }

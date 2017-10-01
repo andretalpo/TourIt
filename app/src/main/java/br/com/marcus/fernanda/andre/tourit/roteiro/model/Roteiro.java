@@ -1,4 +1,4 @@
-package br.com.marcus.fernanda.andre.tourit.roteiro;
+package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 
 import java.util.List;
 
