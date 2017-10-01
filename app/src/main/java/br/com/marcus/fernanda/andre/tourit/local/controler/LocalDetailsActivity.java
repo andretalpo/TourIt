@@ -21,11 +21,9 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
-import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocal;
 import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
-import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
@@ -48,9 +46,11 @@ public class LocalDetailsActivity extends AppCompatActivity {
         setTitle(local.getNome());
 
         List<Local> listaLocaisRoteiroAtual = CreateRoteiroActivity.getListaLocaisRoteiroAtual();
-        for(Local localAtual : listaLocaisRoteiroAtual){
-            if(localAtual.getIdPlaces().equals(local.getIdPlaces())){
-                inicializarBotaoExcluir();
+        if(listaLocaisRoteiroAtual != null) {
+            for (Local localAtual : listaLocaisRoteiroAtual) {
+                if (localAtual.getIdPlaces().equals(local.getIdPlaces())) {
+                    inicializarBotaoExcluir();
+                }
             }
         }
 
@@ -139,4 +139,5 @@ public class LocalDetailsActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
+
 }
