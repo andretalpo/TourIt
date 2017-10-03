@@ -14,7 +14,7 @@ public class Roteiro {
     private String criadorRoteiro;
     private String tipoRoteiro;
     private float notaRoteiro;
-    private List<Local> locaisRoteiro;
+    private List<String> locaisRoteiro;
     private boolean publicado;
 
     public Roteiro() {
@@ -52,11 +52,11 @@ public class Roteiro {
         this.notaRoteiro = notaRoteiro;
     }
 
-    public List<Local> getLocaisRoteiro() {
+    public List<String> getLocaisRoteiro() {
         return locaisRoteiro;
     }
 
-    public void setLocaisRoteiro(List<Local> locaisRoteiro) {
+    public void setLocaisRoteiro(List<String> locaisRoteiro) {
         this.locaisRoteiro = locaisRoteiro;
     }
 

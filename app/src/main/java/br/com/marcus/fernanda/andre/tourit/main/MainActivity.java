@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                irParaTelaCriarRoteiro(usuario.getNomeUsuario());
+                irParaTelaCriarRoteiro(usuario);
             }
         });
 
@@ -200,9 +200,10 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void irParaTelaCriarRoteiro(String user) {
+    private void irParaTelaCriarRoteiro(Usuario user) {
         Intent intent = new Intent(this, CreateRoteiroActivity.class);
-        intent.putExtra("nomeUsuario", user);
+        intent.putExtra("nomeUsuario", user.getNomeUsuario());
+        intent.putExtra("idUsuarioGoogle", user.getIdGoogle());
         startActivity(intent);
     }
 

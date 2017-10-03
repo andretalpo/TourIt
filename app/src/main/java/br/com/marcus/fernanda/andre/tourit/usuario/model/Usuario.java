@@ -2,6 +2,8 @@ package br.com.marcus.fernanda.andre.tourit.usuario.model;
 
 import android.graphics.Bitmap;
 
+import java.util.List;
+
 /**
  * Created by André on 22/08/2017.
  */
@@ -12,18 +14,9 @@ public class Usuario {
     private String nomeUsuario;
     private String emailUsuario;
     private Bitmap fotoUsuario;
+    private List<String> roteiros;
     private boolean admnistrador;
     private boolean ativo;
-
-    public Usuario(String idGoogle, String username, String nomeUsuario, String emailUsuario, Bitmap fotoUsuario, boolean admnistrador, boolean ativo) {
-        this.idGoogle = idGoogle;
-        this.username = username;
-        this.nomeUsuario = nomeUsuario;
-        this.emailUsuario = emailUsuario;
-        this.fotoUsuario = fotoUsuario;
-        this.admnistrador = admnistrador;
-        this.ativo = ativo;
-    }
 
     public Usuario(){
         //vazio
@@ -67,6 +60,14 @@ public class Usuario {
 
     public void setFotoUsuario(Bitmap fotoUsuario) {
         this.fotoUsuario = fotoUsuario;
+    }
+
+    public List<String> getRoteiros() {
+        return roteiros;
+    }
+
+    public void setRoteiros(List<String> roteiros) {
+        this.roteiros = roteiros;
     }
 
     public boolean isAdmnistrador() {

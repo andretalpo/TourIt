@@ -60,8 +60,12 @@
         <activity
             android:name=".local.controler.LocalUserActivity"
             android:label="@string/title_activity_local_user" />
-        <activity android:name=".roteiro.controller.CreateRoteiroActivity" />
-        <activity android:name=".local.controler.LocalSearchActivity"></activity>
+        <activity
+            android:name=".roteiro.controller.CreateRoteiroActivity"
+            android:label="@string/title_activity_crete_roteiro"/>
+        <activity
+            android:name=".local.controler.LocalSearchActivity"
+            android:label="@string/title_activity_local_search"/>
     </application>
 
 </manifest>

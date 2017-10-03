@@ -196,4 +196,14 @@ public class UsuarioDAO {
     public static void alterarStatusAtivo(String keyUsuario, boolean status) {
         FirebaseDatabase.getInstance().getReference().child("Usuarios").child(keyUsuario).child("ativo").setValue(status);
     }
+
+    public static void adicionarRoteiroUsuario(String idUsuario, String keyRoteiro) {
+        Usuario usuario = consultarUsuario("idGoogle", idUsuario);
+        List<String> listaRoteiros = usuario.getRoteiros();
+        if(listaRoteiros == null){
+            listaRoteiros = new ArrayList<>();
+        }
+        listaRoteiros.add(keyRoteiro);
+        FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("roteiros").setValue(listaRoteiros);
+    }
 }
