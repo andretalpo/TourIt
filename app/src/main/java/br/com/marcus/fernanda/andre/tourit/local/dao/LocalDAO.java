@@ -26,21 +26,25 @@ public class LocalDAO {
         dbHelper = new DBHelper(context, idUsuarioGoogle);
     }
 
-    public void inserirLocalSQLite(Local local){
+    public void salvarLocaisSQLite(List<Local> locais, int idRoteiro){
 
-        byte[] fotoByte = ImageConverter.convertBitmapToByte(local.getFoto());
+        for (Local local : locais) {
+            byte[] fotoByte = ImageConverter.convertBitmapToByte(local.getFoto());
 
-        sqLiteDatabase = dbHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DBHelper.COLUMN_NOME_LOCAL, local.getNome());
-        contentValues.put(DBHelper.COLUMN_ENDERECO_LOCAL, local.getEndereco());
-        contentValues.put(DBHelper.COLUMN_IDPLACES_LOCAL, local.getIdPlaces());
-        contentValues.put(DBHelper.COLUMN_NOTA_LOCAL, local.getNota());
-        contentValues.put(DBHelper.COLUMN_FOTO_LOCAL, fotoByte);
+            sqLiteDatabase = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DBHelper.COLUMN_NOME_LOCAL, local.getNome());
+            contentValues.put(DBHelper.COLUMN_ENDERECO_LOCAL, local.getEndereco());
+            contentValues.put(DBHelper.COLUMN_IDPLACES_LOCAL, local.getIdPlaces());
+            contentValues.put(DBHelper.COLUMN_NOTA_LOCAL, local.getNota());
+            contentValues.put(DBHelper.COLUMN_FOTO_LOCAL, fotoByte);
+            contentValues.put(DBHelper.COLUMN_ID_ROTEIRO, idRoteiro);
 
-        sqLiteDatabase.insert(DBHelper.TABLE_LOCAL, null, contentValues);
-        sqLiteDatabase.close();
-        inserirTipos(local);
+            sqLiteDatabase.insert(DBHelper.TABLE_LOCAL, null, contentValues);
+            sqLiteDatabase.close();
+            inserirTipos(local);
+        }
+
     }
 
     private void inserirTipos(Local local){

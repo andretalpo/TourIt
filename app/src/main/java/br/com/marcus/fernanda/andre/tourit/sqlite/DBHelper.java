@@ -25,6 +25,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID_TIPO = "_id_tipo";
     public static final String COLUMN_NOME_TIPO = "nome";
 
+    public static final String TABLE_ROTEIRO = "roteiro";
+    public static final String COLUMN_ID_ROTEIRO = "_id_roteiro";
+    public static final String COLUMN_NOME_ROTEIRO = "nome";
+    public static final String COLUMN_CRIADOR_ROTEIRO = "criador";
+    public static final String COLUMN_TIPO_ROTEIRO = "tipo";
+    public static final String COLUMN_NOTA_ROTEIRO = "nota";
+
     public DBHelper(Context context, String databaseName){
         super(context, databaseName, null, DATABASE_VERSION);
     }
@@ -34,11 +41,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
                 "%s VARCHAR(100), " +
+                "%s VARCHAR(100), " +
+                "%s VARCHAR(20), " +
+                "%s REAL);", TABLE_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_NOME_ROTEIRO, COLUMN_CRIADOR_ROTEIRO, COLUMN_TIPO_ROTEIRO, COLUMN_NOTA_ROTEIRO);
+        tourItDB.execSQL(sql);
+
+        sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
+                "%s VARCHAR(100), " +
                 "%s VARCHAR(300), " +
                 "%s VARCHAR(50), " +
                 "%s REAL, " +
                 "%s BLOB, " +
-                "UNIQUE(%s));", TABLE_LOCAL, COLUMN_ID_LOCAL, COLUMN_NOME_LOCAL, COLUMN_ENDERECO_LOCAL, COLUMN_IDPLACES_LOCAL, COLUMN_NOTA_LOCAL, COLUMN_FOTO_LOCAL, COLUMN_IDPLACES_LOCAL);
+                "%s INTEGER, " +
+                "FOREIGN KEY(%s) REFERENCES roteiro(%s) ON DELETE CASCADE);", TABLE_LOCAL, COLUMN_ID_LOCAL, COLUMN_NOME_LOCAL, COLUMN_ENDERECO_LOCAL, COLUMN_IDPLACES_LOCAL, COLUMN_NOTA_LOCAL, COLUMN_FOTO_LOCAL, COLUMN_ID_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_ID_ROTEIRO);
         tourItDB.execSQL(sql);
 
         sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
@@ -46,7 +61,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s INTEGER, " +
                 "FOREIGN KEY(%s) REFERENCES local(%s) ON DELETE CASCADE);", TABLE_TIPO, COLUMN_ID_TIPO, COLUMN_NOME_TIPO, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL);
         tourItDB.execSQL(sql);
-
     }
 
     @Override
@@ -54,6 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         tourItDB.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCAL);
         tourItDB.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPO);
+        tourItDB.execSQL("DROP TABLE IF EXISTS " + TABLE_ROTEIRO);
         onCreate(tourItDB);
 
     }

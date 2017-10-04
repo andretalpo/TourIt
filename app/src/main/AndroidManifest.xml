@@ -58,14 +58,14 @@
             android:label="@string/title_activity_local_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".local.controler.LocalUserActivity"
-            android:label="@string/title_activity_local_user" />
-        <activity
             android:name=".roteiro.controller.CreateRoteiroActivity"
-            android:label="@string/title_activity_crete_roteiro"/>
+            android:label="@string/title_activity_crete_roteiro" />
         <activity
             android:name=".local.controler.LocalSearchActivity"
-            android:label="@string/title_activity_local_search"/>
+            android:label="@string/title_activity_local_search" />
+        <activity
+            android:name=".roteiro.controller.RoteiroDetailsActivity"
+            android:label="@string/title_activity_roteiro_details"/>
     </application>
 
 </manifest>

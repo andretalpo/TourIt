@@ -30,7 +30,6 @@ import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchFragment;
-import br.com.marcus.fernanda.andre.tourit.local.controler.LocalUserActivity;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
@@ -157,8 +156,6 @@ public class MainActivity extends AppCompatActivity
             irParaTelaUsuarios();
         } else if (id == R.id.drawerItemLogout) {
             irParaTelaLogin();
-        } else if(id == R.id.drawerItemLocaisUsuario){
-            irParaTelaLocaisUsuario();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -192,11 +189,6 @@ public class MainActivity extends AppCompatActivity
 
     private void irParaTelaUsuarios() {
         Intent intent = new Intent(this, AdmUsuariosActivity.class);
-        startActivity(intent);
-    }
-
-    private void irParaTelaLocaisUsuario() {
-        Intent intent = new Intent(this, LocalUserActivity.class);
         startActivity(intent);
     }
 

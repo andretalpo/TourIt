@@ -2,6 +2,11 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 
 import android.content.Context;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
 
 /**
@@ -10,7 +15,22 @@ import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
 
 public class RoteiroService {
 
-    public static void salvarRoteiro(Context context, String idUsuarioGoogle, Roteiro roteiro){
-        new RoteiroDAO(context, idUsuarioGoogle).salvarRoteiro(roteiro);
+    private Context context;
+    private String idUsuarioGoogle;
+
+    public RoteiroService(Context context, String idUsuarioGoogle) {
+        this.context = context;
+        this.idUsuarioGoogle = idUsuarioGoogle;
+    }
+
+    public void salvarRoteiro(Roteiro roteiro, List<Local> locais) throws SQLException {
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+        roteiroDAO.salvarRoteiroFireBase(roteiro);
+        int id = roteiroDAO.salvarRoteiroSqlite(roteiro);
+        if(id >= 0) {
+            new LocalService(context, idUsuarioGoogle).salvarLocais(locais, id);
+        }else{
+            throw new SQLException("Erro no armazenamento do roteiro");
+        }
     }
 }

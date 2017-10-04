@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -11,7 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchActivity;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 
@@ -28,6 +32,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     public static List<String> listaTiposRoteiro = new ArrayList<>();
     private EditText nomeRoteiroEditText;
     private Spinner spinner;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,12 +117,38 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         listaLocaisRoteiroAtual = null;
     }
 
-    private class SalvarRoteiroTask extends AsyncTask<Roteiro, Void, Void>{
+    private class SalvarRoteiroTask extends AsyncTask<Roteiro, Void, Boolean>{
 
         @Override
-        protected Void doInBackground(Roteiro... roteiro) {
-            RoteiroService.salvarRoteiro(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle"), roteiro[0]);
-            return null;
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(CreateRoteiroActivity.this, "Criando roteiro.", "Aguarde", true, false);
         }
+
+        @Override
+        protected Boolean doInBackground(Roteiro... roteiro) {
+            try {
+                new RoteiroService(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle")).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
+                return true;
+            } catch (SQLException e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean sucesso) {
+            if (sucesso){
+                Toast.makeText(CreateRoteiroActivity.this, "Roteiro criado com sucesso!", Toast.LENGTH_SHORT).show();
+                irParaTelaRoteiroDetails();
+            } else{
+                Toast.makeText(CreateRoteiroActivity.this, "Falha na criação de roteiro", Toast.LENGTH_SHORT).show();
+            }
+            progressDialog.dismiss();
+        }
+    }
+
+    private void irParaTelaRoteiroDetails() {
+        Intent intent = new Intent(CreateRoteiroActivity.this, RoteiroDetailsActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
