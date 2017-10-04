@@ -23,7 +23,7 @@ public class RoteiroService {
         this.idUsuarioGoogle = idUsuarioGoogle;
     }
 
-    public void salvarRoteiro(Roteiro roteiro, List<Local> locais) throws SQLException {
+    public int salvarRoteiro(Roteiro roteiro, List<Local> locais) throws SQLException {
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         roteiroDAO.salvarRoteiroFireBase(roteiro);
         int id = roteiroDAO.salvarRoteiroSqlite(roteiro);
@@ -32,5 +32,10 @@ public class RoteiroService {
         }else{
             throw new SQLException("Erro no armazenamento do roteiro");
         }
+        return id;
+    }
+
+    public Roteiro consultarRoteiro(int idRoteiro) {
+        return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteiroSqlite(idRoteiro);
     }
 }

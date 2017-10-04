@@ -33,6 +33,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     private EditText nomeRoteiroEditText;
     private Spinner spinner;
     private ProgressDialog progressDialog;
+    private int idRoteiro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +128,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
             try {
-                new RoteiroService(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle")).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
+                idRoteiro = new RoteiroService(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle")).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
                 return true;
             } catch (SQLException e) {
                 return false;
@@ -148,6 +149,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
     private void irParaTelaRoteiroDetails() {
         Intent intent = new Intent(CreateRoteiroActivity.this, RoteiroDetailsActivity.class);
+        intent.putExtra("idRoteiro", idRoteiro);
         startActivity(intent);
         finish();
     }

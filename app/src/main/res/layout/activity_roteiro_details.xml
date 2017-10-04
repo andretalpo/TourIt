@@ -5,5 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity">
-    
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nomeRoteiroRoteiroDetailsTextView"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp"
+        android:text="Alo Goianinha"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Criador: "
+        android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
+        android:id="@+id/labelNomeCriadorRoteiroDetailsTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
+        android:layout_toEndOf="@id/labelNomeCriadorRoteiroDetailsTextView"
+        android:text="André Talpo"
+        android:id="@+id/nomeCriadorRoteiroDetailsTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/labelNomeCriadorRoteiroDetailsTextView"
+        android:text="Tipo: "
+        android:id="@+id/labelTipoRoteiroRoteiroDetailsTextView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nomeCriadorRoteiroDetailsTextView"
+        android:text="Romântico"
+        android:layout_toEndOf="@id/labelTipoRoteiroRoteiroDetailsTextView"
+        android:id="@+id/tipoRoteiroRoteiroDetailsTextView"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tipoRoteiroRoteiroDetailsTextView"
+        android:rating="5"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:id="@+id/avaliacaoRoteiroRoteiroDetailsRatingBar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
+        android:id="@+id/listaLocaisRoteiroDetailsFrameLayout"/>
+
 </RelativeLayout>

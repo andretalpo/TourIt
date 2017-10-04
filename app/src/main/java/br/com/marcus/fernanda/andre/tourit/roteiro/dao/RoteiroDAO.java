@@ -2,6 +2,7 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,6 +37,23 @@ public class RoteiroDAO {
         sqLiteDatabase.close();
 
         return id;
+    }
+
+    public Roteiro consultarRoteiroSqlite(int id){
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_ROTEIRO + " WHERE " + DBHelper.COLUMN_ID_ROTEIRO + " = ?", new String[] {String.valueOf(id)});
+        if(cursor != null && cursor.getCount() > 0){
+            Roteiro roteiro = new Roteiro();
+            cursor.moveToFirst();
+            roteiro.setNomeRoteiro(cursor.getString(1));
+            roteiro.setCriadorRoteiro(cursor.getString(2));
+            roteiro.setTipoRoteiro(cursor.getString(3));
+            roteiro.setNotaRoteiro(cursor.getFloat(4));
+            sqLiteDatabase.close();
+            return roteiro;
+        }
+        sqLiteDatabase.close();
+        return null;
     }
 
     public void salvarRoteiroFireBase(Roteiro roteiro) {
