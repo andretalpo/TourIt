@@ -1,6 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -68,7 +69,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                     locais.add(local.getIdPlaces());
                 }
                 roteiro.setLocaisRoteiro(locais);
-                RoteiroService.salvarRoteiro(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle"), roteiro);
+                new SalvarRoteiroTask().execute(roteiro);
             }
         });
     }
@@ -109,5 +110,14 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         listaLocaisRoteiroAtual = null;
+    }
+
+    private class SalvarRoteiroTask extends AsyncTask<Roteiro, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Roteiro... roteiro) {
+            RoteiroService.salvarRoteiro(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle"), roteiro[0]);
+            return null;
+        }
     }
 }

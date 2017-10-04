@@ -53,13 +53,13 @@ public class UsuarioDAO {
                     }
                 }
                 catch (IOException e){
-                    //nada
+                    e.printStackTrace();
                 }
                 return convertJSONToUsuario(new JSONObject(builder.toString()));
             }
         }
         catch (Exception e){
-            //nada
+            e.printStackTrace();
         }
         finally{
             if (connection != null){
