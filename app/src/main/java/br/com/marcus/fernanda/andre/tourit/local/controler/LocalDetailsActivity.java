@@ -32,6 +32,8 @@ public class LocalDetailsActivity extends AppCompatActivity {
     private Local local;
     private List<AvaliacaoLocal> listaAvaliacoes;
     private AvaliacaoLocalAdapter adapter;
+    private static boolean consultando;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class LocalDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_details);
         setSupportActionBar(toolbar);
 
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
         inicializarBotaoAdicionar();
 
         local = (Local) getIntent().getSerializableExtra("local");
@@ -53,10 +56,6 @@ public class LocalDetailsActivity extends AppCompatActivity {
                 }
             }
         }
-
-//        if(new LocalDAO(this, MainActivity.idUsuarioGoogle).buscarLocal(local.getIdPlaces()) != null){
-//            inicializarBotaoExcluir();
-//        }
 
         RecyclerView avaliacoesRecyclerView = (RecyclerView) findViewById(R.id.avaliacoesLocalDetailsRecyclerView);
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -87,10 +86,13 @@ public class LocalDetailsActivity extends AppCompatActivity {
         for (String tipo : local.getTipo()) {
             tipoTextView.append(tipo + " ");
         }
+
+        if(isConsultando()){
+            floatingActionButton.hide();
+        }
     }
 
     private void inicializarBotaoExcluir() {
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
         floatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete, null));
         floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.cor_vermelho)));
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +113,6 @@ public class LocalDetailsActivity extends AppCompatActivity {
     }
 
     private void inicializarBotaoAdicionar() {
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
         floatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add, null));
         floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -140,4 +141,11 @@ public class LocalDetailsActivity extends AppCompatActivity {
         }
     }
 
+    public static boolean isConsultando() {
+        return consultando;
+    }
+
+    public static void setConsultando(boolean consultando) {
+        LocalDetailsActivity.consultando = consultando;
+    }
 }

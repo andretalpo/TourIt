@@ -37,6 +37,7 @@ public class LocalSearchFragment extends Fragment {
                 LocalListFragment localFragment = new LocalListFragment();
 
                 Bundle bundle = new Bundle();
+                bundle.putString("acao", "pesquisaLocal");
                 bundle.putString("pesquisa", query);
                 localFragment.setArguments(bundle);
 

@@ -16,11 +16,12 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
-import br.com.marcus.fernanda.andre.tourit.local.dao.LocalDAO;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalAdapter;
+import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity;
 
 /**
  * Created by André on 11/09/2017.
@@ -56,31 +57,30 @@ public class LocalListFragment extends Fragment {
 
         bundle = getArguments();
         String pesquisa;
-        if(bundle != null){
+        if(bundle.getString("acao").equals("pesquisaLocal")){
             pesquisa = bundle.getString("pesquisa");
             new CarregarLocaisApiTask().execute(pesquisa);
-        }else {
-            //carregarLocaisBanco();
+        }else if(bundle.getString("acao").equals("consultaLocaisRoteiroAtual")){
             container.setVisibility(View.VISIBLE);
             listaLocais.clear();
             listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
             adapter.notifyDataSetChanged();
+        }else if(bundle.getString("acao").equals("consultaLocaisBanco")){
+            carregarLocaisRoteiroBanco(bundle.getInt("idRoteiro"));
         }
 
         return view;
     }
 
-    private void carregarLocaisBanco() {
-        List<Local> locais = new LocalDAO(getContext(), MainActivity.idUsuarioGoogle).buscarLocaisUsuario();
+    private void carregarLocaisRoteiroBanco(int idRoteiro) {
+        List<Local> locais = new LocalService(LocalListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocaisRoteiro(idRoteiro);
         listaLocais.clear();
 
-        if(locais != null){
+        if(locais != null) {
             listaLocais.addAll(locais);
             adapter.notifyDataSetChanged();
             container.setVisibility(View.VISIBLE);
-        }else{
-            container.setVisibility(View.GONE);
-            Toast.makeText(LocalListFragment.this.getContext(), "Nenhum local cadastrado.", Toast.LENGTH_SHORT).show();
+            LocalDetailsActivity.setConsultando(true);
         }
     }
 
@@ -113,8 +113,7 @@ public class LocalListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(bundle == null) {
-            //carregarLocaisBanco();
+        if(bundle.getString("acao").equals("consultaLocaisRoteiroAtual")) {
             listaLocais.clear();
             listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
             adapter.notifyDataSetChanged();

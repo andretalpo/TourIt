@@ -44,6 +44,10 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         LocalListFragment localFragment = new LocalListFragment();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("acao", "consultaLocaisRoteiroAtual");
+        localFragment.setArguments(bundle);
+
         transaction.replace(R.id.listaLocaisRoteiroActivityFrameLayout, localFragment);
         transaction.commit();
 

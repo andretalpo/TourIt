@@ -40,16 +40,14 @@ public class LocalDAO {
             contentValues.put(DBHelper.COLUMN_FOTO_LOCAL, fotoByte);
             contentValues.put(DBHelper.COLUMN_ID_ROTEIRO, idRoteiro);
 
-            sqLiteDatabase.insert(DBHelper.TABLE_LOCAL, null, contentValues);
+            int idLocal = (int) sqLiteDatabase.insert(DBHelper.TABLE_LOCAL, null, contentValues);
             sqLiteDatabase.close();
-            inserirTipos(local);
+            inserirTipos(local, idLocal);
         }
 
     }
 
-    private void inserirTipos(Local local){
-
-        Integer idLocal = buscarIdLocal(local);
+    private void inserirTipos(Local local, int idLocal){
 
         sqLiteDatabase = dbHelper.getWritableDatabase();
         for(int i = 0; i < local.getTipo().size(); i++){
@@ -92,9 +90,28 @@ public class LocalDAO {
         return null;
     }
 
-    public List<Local> buscarLocaisUsuario() {
+    private List<String> buscarTiposLocal(int idLocal) {
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + DBHelper.COLUMN_NOME_TIPO + " FROM " + DBHelper.TABLE_TIPO + " WHERE " + DBHelper.COLUMN_ID_LOCAL + " = ?", new String[]{String.valueOf(idLocal)});
+
+        List<String> tipos = new ArrayList<>();
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            while (cursor.moveToNext()){
+                tipos.add(cursor.getString(0));
+            }
+            return tipos;
+        }
+        return null;
+    }
+
+    public void deleteLocal(String idGooglePlaces){
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        sqLiteDatabase.delete(DBHelper.TABLE_LOCAL, DBHelper.COLUMN_IDPLACES_LOCAL + "=?", new String[] {idGooglePlaces});
+    }
+
+    public List<Local> buscarLocaisDoRoteiro(int idRoteiro) {
         sqLiteDatabase = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_LOCAL, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_LOCAL + " WHERE " + DBHelper.COLUMN_ID_ROTEIRO + " = ?",  new String[] {String.valueOf(idRoteiro)});
         List<Local> locais = new ArrayList<>();
         if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
@@ -114,24 +131,5 @@ public class LocalDAO {
         }
         sqLiteDatabase.close();
         return null;
-    }
-
-    private List<String> buscarTiposLocal(int idLocal) {
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + DBHelper.COLUMN_NOME_TIPO + " FROM " + DBHelper.TABLE_TIPO + " WHERE " + DBHelper.COLUMN_ID_LOCAL + " = ?", new String[]{String.valueOf(idLocal)});
-
-        List<String> tipos = new ArrayList<>();
-        if(cursor != null && cursor.getCount() > 0){
-            cursor.moveToFirst();
-            while (cursor.moveToNext()){
-                tipos.add(cursor.getString(0));
-            }
-            return tipos;
-        }
-        return null;
-    }
-
-    public void deleteLocal(String idGooglePlaces){
-        sqLiteDatabase = dbHelper.getWritableDatabase();
-        sqLiteDatabase.delete(DBHelper.TABLE_LOCAL, DBHelper.COLUMN_IDPLACES_LOCAL + "=?", new String[] {idGooglePlaces});
     }
 }

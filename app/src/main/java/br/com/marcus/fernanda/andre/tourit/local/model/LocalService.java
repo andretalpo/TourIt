@@ -23,4 +23,8 @@ public class LocalService {
     public void salvarLocais(List<Local> locais, int idRoteiro){
         new LocalDAO(context, idUsuarioGoogle).salvarLocaisSQLite(locais, idRoteiro);
     }
+
+    public List<Local> buscarLocaisRoteiro(int idRoteiro) {
+        return new LocalDAO(context, idUsuarioGoogle).buscarLocaisDoRoteiro(idRoteiro);
+    }
 }
