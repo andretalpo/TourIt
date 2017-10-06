@@ -65,7 +65,10 @@
             android:label="@string/title_activity_local_search" />
         <activity
             android:name=".roteiro.controller.RoteiroDetailsActivity"
-            android:label="@string/title_activity_roteiro_details"/>
+            android:label="@string/title_activity_roteiro_details" />
+        <activity
+            android:name=".roteiro.controller.MeusRoteirosActivity"
+            android:label="@string/title_activity_meus_roteiros"/>
     </application>
 
 </manifest>

@@ -32,6 +32,7 @@ import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchFragment;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.MeusRoteirosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
@@ -156,6 +157,8 @@ public class MainActivity extends AppCompatActivity
             irParaTelaUsuarios();
         } else if (id == R.id.drawerItemLogout) {
             irParaTelaLogin();
+        } else if (id == R.id.drawerItemMeusRoteiros) {
+            irParaTelaMeusRoteiros();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -184,6 +187,11 @@ public class MainActivity extends AppCompatActivity
     private void irParaTelaConfiguracoes(String idGoogle) {
         Intent intent = new Intent(this, ConfiguracoesActivity.class);
         intent.putExtra("idGoogle", idGoogle);
+        startActivity(intent);
+    }
+
+    private void irParaTelaMeusRoteiros() {
+        Intent intent = new Intent(this, MeusRoteirosActivity.class);
         startActivity(intent);
     }
 

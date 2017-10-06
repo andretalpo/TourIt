@@ -12,6 +12,10 @@
             android:visible="false"
             android:title="Usuários" />
         <item
+            android:id="@+id/drawerItemMeusRoteiros"
+            android:icon="@drawable/ic_menu_roteiro"
+            android:title="@string/meus_roteiros" />
+        <item
             android:id="@+id/drawerItemLogout"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="@string/logout" />

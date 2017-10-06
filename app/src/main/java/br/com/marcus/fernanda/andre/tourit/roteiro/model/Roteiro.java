@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
@@ -8,7 +9,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.Local;
  * Created by André on 30/09/2017.
  */
 
-public class Roteiro {
+public class Roteiro implements Serializable {
 
     private String nomeRoteiro;
     private String criadorRoteiro;

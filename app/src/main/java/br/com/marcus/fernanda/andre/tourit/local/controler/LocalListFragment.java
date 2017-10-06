@@ -21,7 +21,6 @@ import br.com.marcus.fernanda.andre.tourit.local.model.LocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
-import br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity;
 
 /**
  * Created by André on 11/09/2017.

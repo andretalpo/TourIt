@@ -23,4 +23,5 @@
     <dimen name="marginTopEnderecoTextViewLocalDetailsActivity">5dp</dimen>
     <dimen name="paddingLeftTextViewLocalDetailsActivity">10dp</dimen>
     <dimen name="textSizeListaLocais">20sp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>
