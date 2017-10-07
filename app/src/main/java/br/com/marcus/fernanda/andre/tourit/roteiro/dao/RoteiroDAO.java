@@ -7,7 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
@@ -62,7 +71,7 @@ public class RoteiroDAO {
 
     public void salvarRoteiroFireBase(Roteiro roteiro) {
         String key = FirebaseDatabase.getInstance().getReference().child("Roteiros").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("roteiros").child(key).setValue(roteiro);
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(key).setValue(roteiro);
         new UsuarioService().adicionarRoteiroUsuario(idUsuarioGoogle, key);
     }
 
@@ -88,4 +97,59 @@ public class RoteiroDAO {
         }
         return null;
     }
+
+    public void excluirRoteiroSqlite(int idRoteiro){
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        sqLiteDatabase.delete(DBHelper.TABLE_ROTEIRO, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[] {String.valueOf(idRoteiro)});
+    }
+
+    public void excluirRoteiroFirebase(String keyRoteiro){
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(keyRoteiro).removeValue();
+    }
+
+    public static String buscarKeyUsuario(int idRoteiro) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22idRoteiro%22&equalTo=" + idRoteiro);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToKeyRoteiro(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            //nada
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private static String convertJSONToKeyRoteiro(JSONObject jsonRoteiro) {
+        Iterator<String> iter = jsonRoteiro.keys();
+        while (iter.hasNext()) {
+            return iter.next();
+        }
+        return null;
+    }
+
+
 }

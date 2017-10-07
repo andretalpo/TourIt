@@ -57,8 +57,18 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="320dp"
         android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
-        android:id="@+id/listaLocaisRoteiroDetailsFrameLayout"/>
+        android:id="@+id/listaLocaisRoteiroDetailsFrameLayout">
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/botaoExcluir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listaLocaisRoteiroDetailsFrameLayout"
+        android:background="@drawable/bordas_botao"
+        android:text="Excluir Roteiro" />
 
 </RelativeLayout>

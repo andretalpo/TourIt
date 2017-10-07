@@ -7,7 +7,9 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 /**
  * Created by André on 03/10/2017.
@@ -43,5 +45,13 @@ public class RoteiroService {
 
     public List<Roteiro> consultarMeusRoteiros() {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarMeusRoteirosSqlite();
+    }
+
+    public void excluirRoteiro(int idRoteiro){
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, MainActivity.idUsuarioGoogle);
+        roteiroDAO.excluirRoteiroSqlite(idRoteiro);
+        String keyRoteiro = roteiroDAO.buscarKeyUsuario(idRoteiro);
+        roteiroDAO.excluirRoteiroFirebase(keyRoteiro);
+        UsuarioDAO.excluirRoteiroUsuario(keyRoteiro);
     }
 }

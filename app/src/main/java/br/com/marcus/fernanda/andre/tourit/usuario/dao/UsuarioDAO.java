@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 
 /**
@@ -205,5 +206,16 @@ public class UsuarioDAO {
         }
         listaRoteiros.add(keyRoteiro);
         FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("roteiros").setValue(listaRoteiros);
+    }
+
+    public static void excluirRoteiroUsuario(String keyRoteiro){
+        Usuario usuario = consultarUsuario("idGoogle", MainActivity.idUsuarioGoogle);
+        List<String> listaRoteiros = usuario.getRoteiros();
+        for(int i = 0; i < listaRoteiros.size(); i++){
+            if(listaRoteiros.get(i).equals(keyRoteiro)){
+                listaRoteiros.remove(i);
+            }
+            FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteiros").setValue(listaRoteiros);
+        }
     }
 }
