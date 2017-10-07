@@ -29,15 +29,17 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         LocalListFragment localFragment = new LocalListFragment();
 
+        Roteiro roteiro = (Roteiro) getIntent().getSerializableExtra("roteiro");
+
         Bundle bundle = new Bundle();
         bundle.putString("acao", "consultaLocaisBanco");
-        bundle.putInt("idRoteiro", getIntent().getIntExtra("idRoteiro", -1));
+        bundle.putInt("idRoteiro", roteiro.getIdRoteiro());
         localFragment.setArguments(bundle);
 
         transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);
         transaction.commit();
 
-        Roteiro roteiro = new RoteiroService(this, MainActivity.idUsuarioGoogle).consultarRoteiro(getIntent().getIntExtra("idRoteiro", -1));
+        //Roteiro roteiro = new RoteiroService(this, MainActivity.idUsuarioGoogle).consultarRoteiro(getIntent().getIntExtra("idRoteiro", -1));
         nomeRoteiroTextView.setText(roteiro.getNomeRoteiro());
         nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());

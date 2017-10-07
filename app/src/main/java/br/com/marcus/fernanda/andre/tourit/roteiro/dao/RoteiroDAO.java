@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
@@ -45,6 +48,7 @@ public class RoteiroDAO {
         if(cursor != null && cursor.getCount() > 0){
             Roteiro roteiro = new Roteiro();
             cursor.moveToFirst();
+            roteiro.setIdRoteiro(cursor.getInt(0));
             roteiro.setNomeRoteiro(cursor.getString(1));
             roteiro.setCriadorRoteiro(cursor.getString(2));
             roteiro.setTipoRoteiro(cursor.getString(3));
@@ -60,5 +64,28 @@ public class RoteiroDAO {
         String key = FirebaseDatabase.getInstance().getReference().child("Roteiros").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("roteiros").child(key).setValue(roteiro);
         new UsuarioService().adicionarRoteiroUsuario(idUsuarioGoogle, key);
+    }
+
+    public List<Roteiro> consultarMeusRoteirosSqlite() {
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_ROTEIRO, null);
+        if(cursor != null && cursor.getCount() > 0){
+            List<Roteiro> listaRoteiros = new ArrayList<>();
+            cursor.moveToFirst();
+            do{
+                Roteiro roteiro = new Roteiro();
+                cursor.moveToFirst();
+                roteiro.setIdRoteiro(cursor.getInt(0));
+                roteiro.setNomeRoteiro(cursor.getString(1));
+                roteiro.setCriadorRoteiro(cursor.getString(2));
+                roteiro.setTipoRoteiro(cursor.getString(3));
+                roteiro.setNotaRoteiro(cursor.getFloat(4));
+                listaRoteiros.add(roteiro);
+            }while(cursor.moveToNext());
+
+            sqLiteDatabase.close();
+            return listaRoteiros;
+        }
+        return null;
     }
 }

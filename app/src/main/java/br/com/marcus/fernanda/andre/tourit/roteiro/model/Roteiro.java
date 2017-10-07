@@ -11,6 +11,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 
 public class Roteiro implements Serializable {
 
+    private int idRoteiro;
     private String nomeRoteiro;
     private String criadorRoteiro;
     private String tipoRoteiro;
@@ -19,6 +20,14 @@ public class Roteiro implements Serializable {
     private boolean publicado;
 
     public Roteiro() {
+    }
+
+    public int getIdRoteiro() {
+        return idRoteiro;
+    }
+
+    public void setIdRoteiro(int idRoteiro) {
+        this.idRoteiro = idRoteiro;
     }
 
     public String getNomeRoteiro() {

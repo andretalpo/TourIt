@@ -33,7 +33,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     private EditText nomeRoteiroEditText;
     private Spinner spinner;
     private ProgressDialog progressDialog;
-    private int idRoteiro;
+    private Roteiro roteiroAtual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +68,18 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Roteiro roteiro = new Roteiro();
-                roteiro.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
-                roteiro.setNotaRoteiro(0);//mudar
-                roteiro.setPublicado(false);
-                roteiro.setTipoRoteiro(spinner.getSelectedItem().toString());
-                roteiro.setCriadorRoteiro(getIntent().getStringExtra("nomeUsuario"));
+                roteiroAtual = new Roteiro();
+                roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
+                roteiroAtual.setNotaRoteiro(0);//mudar
+                roteiroAtual.setPublicado(false);
+                roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
+                roteiroAtual.setCriadorRoteiro(getIntent().getStringExtra("nomeUsuario"));
                 List<String> locais = new ArrayList<>();
                 for (Local local : listaLocaisRoteiroAtual) {
                     locais.add(local.getIdPlaces());
                 }
-                roteiro.setLocaisRoteiro(locais);
-                new SalvarRoteiroTask().execute(roteiro);
+                roteiroAtual.setLocaisRoteiro(locais);
+                new SalvarRoteiroTask().execute(roteiroAtual);
             }
         });
     }
@@ -132,7 +132,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
             try {
-                idRoteiro = new RoteiroService(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle")).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
+                roteiroAtual = new RoteiroService(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle")).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
                 return true;
             } catch (SQLException e) {
                 return false;
@@ -153,7 +153,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
     private void irParaTelaRoteiroDetails() {
         Intent intent = new Intent(CreateRoteiroActivity.this, RoteiroDetailsActivity.class);
-        intent.putExtra("idRoteiro", idRoteiro);
+        intent.putExtra("roteiro", roteiroAtual);
         startActivity(intent);
         finish();
     }

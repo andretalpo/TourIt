@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroAdapter;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 
 /**
  * Created by André on 06/10/2017.
@@ -39,19 +41,25 @@ public class RoteiroListFragment extends Fragment {
 
         listaRoteiros = new ArrayList<>();
 
-        Bundle bundle = getArguments();
-        if(bundle.getString("tipoRoteiro").equals("meusRoteiros")) {
-            Roteiro roteiro = new Roteiro();
-            roteiro.setNomeRoteiro("Roteiro da pica");
-            roteiro.setTipoRoteiro("Romântico");
-            roteiro.setNotaRoteiro(4);
-            listaRoteiros.add(roteiro);
-        }
-
         adapter = new RoteiroAdapter(listaRoteiros, getActivity());
         roteirosRecyclerView.setAdapter(adapter);
 
+        Bundle bundle = getArguments();
+        if(bundle.getString("tipoRoteiro").equals("meusRoteiros")) {
+            carregarMeusRoteirosBanco();
+        }
+
         return view;
+    }
+
+    private void carregarMeusRoteirosBanco() {
+        List<Roteiro> listaMeusRoteiros = new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarMeusRoteiros();
+
+        if(listaMeusRoteiros != null){
+            listaRoteiros.clear();
+            listaRoteiros.addAll(listaMeusRoteiros);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public static Fragment newInstance(String tipoRoteiro){

@@ -96,9 +96,9 @@ public class LocalDAO {
         List<String> tipos = new ArrayList<>();
         if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
-            while (cursor.moveToNext()){
+            do{
                 tipos.add(cursor.getString(0));
-            }
+            }while (cursor.moveToNext());
             return tipos;
         }
         return null;

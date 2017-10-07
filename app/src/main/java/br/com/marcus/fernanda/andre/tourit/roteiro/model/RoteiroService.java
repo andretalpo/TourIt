@@ -23,19 +23,25 @@ public class RoteiroService {
         this.idUsuarioGoogle = idUsuarioGoogle;
     }
 
-    public int salvarRoteiro(Roteiro roteiro, List<Local> locais) throws SQLException {
+    public Roteiro salvarRoteiro(Roteiro roteiro, List<Local> locais) throws SQLException {
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
-        roteiroDAO.salvarRoteiroFireBase(roteiro);
+
         int id = roteiroDAO.salvarRoteiroSqlite(roteiro);
         if(id >= 0) {
             new LocalService(context, idUsuarioGoogle).salvarLocais(locais, id);
         }else{
             throw new SQLException("Erro no armazenamento do roteiro");
         }
-        return id;
+        roteiro.setIdRoteiro(id);
+        roteiroDAO.salvarRoteiroFireBase(roteiro);
+        return roteiro;
     }
 
     public Roteiro consultarRoteiro(int idRoteiro) {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteiroSqlite(idRoteiro);
+    }
+
+    public List<Roteiro> consultarMeusRoteiros() {
+        return new RoteiroDAO(context, idUsuarioGoogle).consultarMeusRoteirosSqlite();
     }
 }
