@@ -7,12 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.sql.SQLException;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
@@ -42,7 +39,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putString("acao", "consultaLocaisBanco");
-        bundle.putInt("idRoteiro", roteiro.getIdRoteiro());
+        bundle.putInt("idRoteiro", roteiro.getIdRoteiroSqlite());
         localFragment.setArguments(bundle);
 
         transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);
@@ -79,7 +76,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
-            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).excluirRoteiro(roteiro [0].getIdRoteiro());
+            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).excluirRoteiro(roteiro [0].getIdRoteiroSqlite());
             return true;
         }
 

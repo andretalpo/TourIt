@@ -3,15 +3,14 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.marcus.fernanda.andre.tourit.local.model.Local;
-
 /**
  * Created by André on 30/09/2017.
  */
 
 public class Roteiro implements Serializable {
 
-    private int idRoteiro;
+    private int idRoteiroSqlite;
+    private String idRoteiroFirebase;
     private String nomeRoteiro;
     private String criadorRoteiro;
     private String tipoRoteiro;
@@ -22,12 +21,20 @@ public class Roteiro implements Serializable {
     public Roteiro() {
     }
 
-    public int getIdRoteiro() {
-        return idRoteiro;
+    public String getIdRoteiroFirebase() {
+        return idRoteiroFirebase;
     }
 
-    public void setIdRoteiro(int idRoteiro) {
-        this.idRoteiro = idRoteiro;
+    public void setIdRoteiroFirebase(String idRoteiroFirebase) {
+        this.idRoteiroFirebase = idRoteiroFirebase;
+    }
+
+    public int getIdRoteiroSqlite() {
+        return idRoteiroSqlite;
+    }
+
+    public void setIdRoteiroSqlite(int idRoteiroSqlite) {
+        this.idRoteiroSqlite = idRoteiroSqlite;
     }
 
     public String getNomeRoteiro() {

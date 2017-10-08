@@ -57,7 +57,7 @@ public class RoteiroDAO {
         if(cursor != null && cursor.getCount() > 0){
             Roteiro roteiro = new Roteiro();
             cursor.moveToFirst();
-            roteiro.setIdRoteiro(cursor.getInt(0));
+            roteiro.setIdRoteiroSqlite(cursor.getInt(0));
             roteiro.setNomeRoteiro(cursor.getString(1));
             roteiro.setCriadorRoteiro(cursor.getString(2));
             roteiro.setTipoRoteiro(cursor.getString(3));
@@ -84,7 +84,7 @@ public class RoteiroDAO {
             do{
                 Roteiro roteiro = new Roteiro();
                 cursor.moveToFirst();
-                roteiro.setIdRoteiro(cursor.getInt(0));
+                roteiro.setIdRoteiroSqlite(cursor.getInt(0));
                 roteiro.setNomeRoteiro(cursor.getString(1));
                 roteiro.setCriadorRoteiro(cursor.getString(2));
                 roteiro.setTipoRoteiro(cursor.getString(3));

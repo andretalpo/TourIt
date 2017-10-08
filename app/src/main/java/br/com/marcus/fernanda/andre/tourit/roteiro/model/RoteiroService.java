@@ -34,7 +34,8 @@ public class RoteiroService {
         }else{
             throw new SQLException("Erro no armazenamento do roteiro");
         }
-        roteiro.setIdRoteiro(id);
+        roteiro.setIdRoteiroSqlite(id);
+        roteiro.setIdRoteiroFirebase(MainActivity.idUsuarioGoogle + id);
         roteiroDAO.salvarRoteiroFireBase(roteiro);
         return roteiro;
     }
