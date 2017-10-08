@@ -104,9 +104,9 @@ public class LocalDAO {
         return null;
     }
 
-    public void deleteLocal(String idGooglePlaces){
+    public void excluirLocais(int idRoteiro){
         sqLiteDatabase = dbHelper.getWritableDatabase();
-        sqLiteDatabase.delete(DBHelper.TABLE_LOCAL, DBHelper.COLUMN_IDPLACES_LOCAL + "=?", new String[] {idGooglePlaces});
+        sqLiteDatabase.delete(DBHelper.TABLE_LOCAL, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[] {String.valueOf(idRoteiro)});
     }
 
     public List<Local> buscarLocaisDoRoteiro(int idRoteiro) {

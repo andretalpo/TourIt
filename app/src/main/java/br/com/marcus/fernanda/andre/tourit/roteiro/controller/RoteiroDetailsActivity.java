@@ -1,6 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -51,14 +52,29 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
         roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
 
-        Button button = (Button) findViewById(R.id.botaoExcluir);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button excluirButton = (Button) findViewById(R.id.excluirRoteiroDetailsActivityButton);
+        excluirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new ExcluirRoteiroTask().execute(roteiro);
             }
         });
 
+        Button alterarButtton = (Button) findViewById(R.id.alterarRoteiroDetailsActivityButton);
+        alterarButtton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alterarRoteiro(roteiro);
+            }
+        });
+
+    }
+
+    private void alterarRoteiro(Roteiro roteiro){
+        Intent intent = new Intent(this, CreateRoteiroActivity.class);
+        intent.putExtra("roteiro", roteiro);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -94,5 +110,11 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
         if(progressDialog != null) {
             progressDialog.dismiss();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalDetailsActivity.setConsultando(true);
     }
 }

@@ -60,10 +60,13 @@ public class LocalListFragment extends Fragment {
             pesquisa = bundle.getString("pesquisa");
             new CarregarLocaisApiTask().execute(pesquisa);
         }else if(bundle.getString("acao").equals("consultaLocaisRoteiroAtual")){
+            LocalDetailsActivity.setConsultando(false);
             container.setVisibility(View.VISIBLE);
             listaLocais.clear();
-            listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
-            adapter.notifyDataSetChanged();
+            if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null) {
+                listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
+                adapter.notifyDataSetChanged();
+            }
         }else if(bundle.getString("acao").equals("consultaLocaisBanco")){
             carregarLocaisRoteiroBanco(bundle.getInt("idRoteiro"));
         }
@@ -114,8 +117,10 @@ public class LocalListFragment extends Fragment {
         super.onResume();
         if(bundle.getString("acao").equals("consultaLocaisRoteiroAtual")) {
             listaLocais.clear();
-            listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
-            adapter.notifyDataSetChanged();
+            if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null) {
+                listaLocais.addAll(CreateRoteiroActivity.getListaLocaisRoteiroAtual());
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 }

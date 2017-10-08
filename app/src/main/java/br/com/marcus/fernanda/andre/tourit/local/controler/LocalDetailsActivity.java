@@ -119,6 +119,9 @@ public class LocalDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).inserirLocalSQLite(local);
+                if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() == null){
+                    CreateRoteiroActivity.setListaLocaisRoteiroAtual(new ArrayList<Local>());
+                }
                 CreateRoteiroActivity.getListaLocaisRoteiroAtual().add(local);
                 inicializarBotaoExcluir();
                 Toast.makeText(LocalDetailsActivity.this, "Local adicionado com sucesso.", Toast.LENGTH_LONG).show();

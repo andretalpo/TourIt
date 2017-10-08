@@ -64,11 +64,19 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/botaoExcluir"
+        android:id="@+id/excluirRoteiroDetailsActivityButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/listaLocaisRoteiroDetailsFrameLayout"
         android:background="@drawable/bordas_botao"
         android:text="Excluir Roteiro" />
+
+    <Button
+        android:id="@+id/alterarRoteiroDetailsActivityButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/excluirRoteiroDetailsActivityButton"
+        android:background="@drawable/bordas_botao"
+        android:text="Alterar Roteiro" />
 
 </RelativeLayout>

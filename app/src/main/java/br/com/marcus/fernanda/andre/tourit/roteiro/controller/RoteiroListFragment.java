@@ -55,12 +55,12 @@ public class RoteiroListFragment extends Fragment {
 
     private void carregarMeusRoteirosBanco() {
         List<Roteiro> listaMeusRoteiros = new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarMeusRoteiros();
+        listaRoteiros.clear();
 
         if(listaMeusRoteiros != null){
-            listaRoteiros.clear();
             listaRoteiros.addAll(listaMeusRoteiros);
-            adapter.notifyDataSetChanged();
         }
+        adapter.notifyDataSetChanged();
     }
 
     public static Fragment newInstance(String tipoRoteiro){
@@ -71,4 +71,9 @@ public class RoteiroListFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        carregarMeusRoteirosBanco();
+    }
 }

@@ -185,7 +185,7 @@
     <string name="title_activity_crete_roteiro">Criação de Roteiro</string>
     <string name="title_activity_local_search">Pesquisa de Locais</string>
     <string name="title_activity_roteiro_details">Detalhes do Roteiro</string>
-    <string name="title_activity_meus_roteiros">MeusRoteirosActivity</string>
+    <string name="title_activity_meus_roteiros">Meus Roteiros</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="meus_roteiros">Meus Roteiros</string>
 </resources>

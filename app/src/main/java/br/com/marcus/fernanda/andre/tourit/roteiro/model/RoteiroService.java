@@ -50,8 +50,15 @@ public class RoteiroService {
     public void excluirRoteiro(int idRoteiro){
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         roteiroDAO.excluirRoteiroSqlite(idRoteiro);
-        String keyRoteiro = roteiroDAO.buscarKeyUsuario(idUsuarioGoogle + idRoteiro);
+        String keyRoteiro = roteiroDAO.buscarKeyRoteiro(idUsuarioGoogle + idRoteiro);
         roteiroDAO.excluirRoteiroFirebase(keyRoteiro);
         UsuarioDAO.excluirRoteiroUsuario(keyRoteiro);
+    }
+
+    public void alterarRoteiro(Roteiro roteiro, List<Local> listaLocais) {
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+        new LocalService(context, idUsuarioGoogle).alterarLocaisRoteiro(roteiro.getIdRoteiroSqlite(), listaLocais);
+        roteiroDAO.alterarRoteiroSQLite(roteiro);
+        roteiroDAO.alterarRoteiroFirebase(roteiro);
     }
 }

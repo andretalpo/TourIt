@@ -106,7 +106,7 @@ public class RoteiroDAO {
         FirebaseDatabase.getInstance().getReference().child("Roteiros").child(keyRoteiro).removeValue();
     }
 
-    public String buscarKeyUsuario(String idRoteiroFirebase) {
+    public String buscarKeyRoteiro(String idRoteiroFirebase) {
         URL url = null;
         try {
             url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22idRoteiroFirebase%22&equalTo=%22" + idRoteiroFirebase + "%22");
@@ -150,5 +150,17 @@ public class RoteiroDAO {
         return null;
     }
 
+    public void alterarRoteiroFirebase(Roteiro roteiro) {
+        roteiro.setIdRoteiroFirebase(idUsuarioGoogle + roteiro.getIdRoteiroSqlite());
+        String key = buscarKeyRoteiro(idUsuarioGoogle + roteiro.getIdRoteiroSqlite());
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(key).setValue(roteiro);
+    }
 
+    public void alterarRoteiroSQLite(Roteiro roteiro) {
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_NOME_ROTEIRO, roteiro.getNomeRoteiro());
+        contentValues.put(DBHelper.COLUMN_TIPO_ROTEIRO, roteiro.getTipoRoteiro());
+        sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
+    }
 }

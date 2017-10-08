@@ -19,9 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchActivity;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 
@@ -38,20 +41,13 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_roteiro);
-        listaLocaisRoteiroAtual = new ArrayList<>();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        LocalListFragment localFragment = new LocalListFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("acao", "consultaLocaisRoteiroAtual");
-        localFragment.setArguments(bundle);
-
-        transaction.replace(R.id.listaLocaisRoteiroActivityFrameLayout, localFragment);
-        transaction.commit();
 
         nomeRoteiroEditText = (EditText) findViewById(R.id.nomeRoteiroRoteiroActivityEditText);
         spinner = (Spinner) findViewById(R.id.tipoRoteiroActivitySpinner);
+
+        inicializarSpinnerTipo();
+
+        listaLocaisRoteiroAtual = new ArrayList<>();
 
         Button adicionarLocalButton = (Button) findViewById(R.id.adicionarLocalRoteiroActivityButton);
         adicionarLocalButton.setOnClickListener(new View.OnClickListener() {
@@ -61,26 +57,58 @@ public class CreateRoteiroActivity extends AppCompatActivity {
             }
         });
 
-        inicializarSpinnerTipo();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.salvarRoteiroActivityFab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                roteiroAtual = new Roteiro();
-                roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
-                roteiroAtual.setNotaRoteiro(0);//mudar
-                roteiroAtual.setPublicado(false);
-                roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
-                roteiroAtual.setCriadorRoteiro(getIntent().getStringExtra("nomeUsuario"));
-                List<String> locais = new ArrayList<>();
-                for (Local local : listaLocaisRoteiroAtual) {
-                    locais.add(local.getIdPlaces());
+        //alteraçao de roteiro
+        roteiroAtual = (Roteiro) getIntent().getSerializableExtra("roteiro");
+        if(roteiroAtual != null){
+            setTitle("Alteração de Roteiro");
+            nomeRoteiroEditText.setText(roteiroAtual.getNomeRoteiro());
+            for (int i=0; i<listaTiposRoteiro.size(); i++){
+                if(listaTiposRoteiro.get(i).equals(roteiroAtual.getTipoRoteiro())){
+                    spinner.setSelection(i);
                 }
-                roteiroAtual.setLocaisRoteiro(locais);
-                new SalvarRoteiroTask().execute(roteiroAtual);
             }
-        });
+            listaLocaisRoteiroAtual = new LocalService(this, MainActivity.idUsuarioGoogle).buscarLocaisRoteiro(roteiroAtual.getIdRoteiroSqlite());
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
+                    roteiroAtual.setTipoRoteiro((String) spinner.getSelectedItem());
+                    List<String> locais = new ArrayList<>();
+                    for (Local local : listaLocaisRoteiroAtual) {
+                        locais.add(local.getIdPlaces());
+                    }
+                    roteiroAtual.setLocaisRoteiro(locais);
+                    new AlterarRoteiroTask().execute(roteiroAtual);
+                }
+            });
+        } else{ //criação de roteiro
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    roteiroAtual = new Roteiro();
+                    roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
+                    roteiroAtual.setNotaRoteiro(0);//mudar
+                    roteiroAtual.setPublicado(false);
+                    roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
+                    roteiroAtual.setCriadorRoteiro(getIntent().getStringExtra("nomeUsuario"));
+                    List<String> locais = new ArrayList<>();
+                    for (Local local : listaLocaisRoteiroAtual) {
+                        locais.add(local.getIdPlaces());
+                    }
+                    roteiroAtual.setLocaisRoteiro(locais);
+                    new SalvarRoteiroTask().execute(roteiroAtual);
+                }
+            });
+        }
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        LocalListFragment localFragment = new LocalListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("acao", "consultaLocaisRoteiroAtual");
+        localFragment.setArguments(bundle);
+        transaction.replace(R.id.listaLocaisRoteiroActivityFrameLayout, localFragment);
+        transaction.commit();
     }
 
     private void inicializarSpinnerTipo() {
@@ -140,13 +168,38 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean sucesso) {
+            progressDialog.dismiss();
             if (sucesso){
                 Toast.makeText(CreateRoteiroActivity.this, "Roteiro criado com sucesso!", Toast.LENGTH_SHORT).show();
                 irParaTelaRoteiroDetails();
             } else{
                 Toast.makeText(CreateRoteiroActivity.this, "Falha na criação de roteiro", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private class AlterarRoteiroTask extends AsyncTask<Roteiro, Void, Boolean>{
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(CreateRoteiroActivity.this, "Salvando alterações.", "Aguarde", true, false);
+        }
+
+        @Override
+        protected Boolean doInBackground(Roteiro... roteiro) {
+            new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).alterarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean sucesso) {
             progressDialog.dismiss();
+            if (sucesso){
+                Toast.makeText(CreateRoteiroActivity.this, "Roteiro salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else{
+                Toast.makeText(CreateRoteiroActivity.this, "Falha na alteração do roteiro", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -155,5 +208,13 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         intent.putExtra("roteiro", roteiroAtual);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
     }
 }
