@@ -7,7 +7,6 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
-import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
@@ -35,7 +34,7 @@ public class RoteiroService {
             throw new SQLException("Erro no armazenamento do roteiro");
         }
         roteiro.setIdRoteiroSqlite(id);
-        roteiro.setIdRoteiroFirebase(MainActivity.idUsuarioGoogle + id);
+        roteiro.setIdRoteiroFirebase(idUsuarioGoogle + id);
         roteiroDAO.salvarRoteiroFireBase(roteiro);
         return roteiro;
     }
@@ -49,9 +48,9 @@ public class RoteiroService {
     }
 
     public void excluirRoteiro(int idRoteiro){
-        RoteiroDAO roteiroDAO = new RoteiroDAO(context, MainActivity.idUsuarioGoogle);
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         roteiroDAO.excluirRoteiroSqlite(idRoteiro);
-        String keyRoteiro = roteiroDAO.buscarKeyUsuario(idRoteiro);
+        String keyRoteiro = roteiroDAO.buscarKeyUsuario(idUsuarioGoogle + idRoteiro);
         roteiroDAO.excluirRoteiroFirebase(keyRoteiro);
         UsuarioDAO.excluirRoteiroUsuario(keyRoteiro);
     }

@@ -83,7 +83,6 @@ public class RoteiroDAO {
             cursor.moveToFirst();
             do{
                 Roteiro roteiro = new Roteiro();
-                cursor.moveToFirst();
                 roteiro.setIdRoteiroSqlite(cursor.getInt(0));
                 roteiro.setNomeRoteiro(cursor.getString(1));
                 roteiro.setCriadorRoteiro(cursor.getString(2));
@@ -107,10 +106,10 @@ public class RoteiroDAO {
         FirebaseDatabase.getInstance().getReference().child("Roteiros").child(keyRoteiro).removeValue();
     }
 
-    public static String buscarKeyUsuario(int idRoteiro) {
+    public String buscarKeyUsuario(String idRoteiroFirebase) {
         URL url = null;
         try {
-            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22idRoteiro%22&equalTo=" + idRoteiro);
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22idRoteiroFirebase%22&equalTo=%22" + idRoteiroFirebase + "%22");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -133,7 +132,7 @@ public class RoteiroDAO {
             }
         }
         catch (Exception e){
-            //nada
+            e.printStackTrace();
         }
         finally{
             if (connection != null){

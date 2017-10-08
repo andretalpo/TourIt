@@ -28,6 +28,7 @@ public class RoteiroListFragment extends Fragment {
     private List<Roteiro> listaRoteiros;
     private RecyclerView roteirosRecyclerView;
     private RoteiroAdapter adapter;
+    private Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class RoteiroListFragment extends Fragment {
         adapter = new RoteiroAdapter(listaRoteiros, getActivity());
         roteirosRecyclerView.setAdapter(adapter);
 
-        Bundle bundle = getArguments();
+        bundle = getArguments();
         if(bundle.getString("tipoRoteiro").equals("meusRoteiros")) {
             carregarMeusRoteirosBanco();
         }
@@ -69,4 +70,5 @@ public class RoteiroListFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+
 }

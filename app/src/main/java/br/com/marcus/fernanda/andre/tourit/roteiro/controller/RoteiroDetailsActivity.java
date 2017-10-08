@@ -87,4 +87,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
             RoteiroDetailsActivity.this.finish();
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
 }
