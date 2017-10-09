@@ -9,46 +9,51 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="20dp"
         android:hint="Nome do roteiro"
         android:id="@+id/nomeRoteiroRoteiroActivityTextInputLayout">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:id="@+id/nomeRoteiroRoteiroActivityEditText"/>
 
     </android.support.design.widget.TextInputLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/listaLocaisRoteiroActivityFrameLayout"
+        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"/>
+
+    <Button
+        android:id="@+id/adicionarLocalRoteiroActivityButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listaLocaisRoteiroActivityFrameLayout"
+        android:layout_margin="4dp"
+        android:background="@color/cor_branco"
+        android:drawablePadding="@dimen/marginLocalDetails"
+        android:drawableStart="@drawable/ic_add_3"
+        android:gravity="start|center_vertical"
+        android:paddingStart="10dp"
+        android:text="Adicionar Local"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tipo: "
-        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
+        android:layout_below="@id/adicionarLocalRoteiroActivityButton"
         android:id="@+id/labelTipoRoteiroActivityTextView"/>
 
     <Spinner
         android:id="@+id/tipoRoteiroActivitySpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/labelTipoRoteiroActivityTextView"
-        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bordas_botao"
-        android:layout_margin="4dp"
-        android:text="Adicionar Local"
-        android:textColor="@color/cor_branco"
-        android:textStyle="bold"
-        android:id="@+id/adicionarLocalRoteiroActivityButton"
-        android:layout_below="@id/tipoRoteiroActivitySpinner"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:id="@+id/listaLocaisRoteiroActivityFrameLayout"
-        android:layout_below="@id/adicionarLocalRoteiroActivityButton"/>
+        android:layout_below="@id/adicionarLocalRoteiroActivityButton" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
