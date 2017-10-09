@@ -61,4 +61,12 @@ public class RoteiroService {
         roteiroDAO.alterarRoteiroSQLite(roteiro);
         roteiroDAO.alterarRoteiroFirebase(roteiro);
     }
+
+    public float calcularNotaRoteiro(List<Local> listaLocais) {
+        float nota = 0;
+        for (Local local : listaLocais) {
+            nota += local.getNota();
+        }
+        return nota/listaLocais.size();
+    }
 }

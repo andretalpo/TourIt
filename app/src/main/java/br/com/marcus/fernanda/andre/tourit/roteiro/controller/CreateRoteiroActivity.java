@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchActivity;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
@@ -72,32 +71,49 @@ public class CreateRoteiroActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
-                    roteiroAtual.setTipoRoteiro((String) spinner.getSelectedItem());
-                    List<String> locais = new ArrayList<>();
-                    for (Local local : listaLocaisRoteiroAtual) {
-                        locais.add(local.getIdPlaces());
+                    if(nomeRoteiroEditText.length() >= 4) {
+                        if(!listaLocaisRoteiroAtual.isEmpty()) {
+                            roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
+                            roteiroAtual.setTipoRoteiro((String) spinner.getSelectedItem());
+                            List<String> locais = new ArrayList<>();
+                            for (Local local : listaLocaisRoteiroAtual) {
+                                locais.add(local.getIdPlaces());
+                            }
+                            roteiroAtual.setLocaisRoteiro(locais);
+                            roteiroAtual.setNotaRoteiro(new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).calcularNotaRoteiro(listaLocaisRoteiroAtual));
+                            new AlterarRoteiroTask().execute(roteiroAtual);
+                        }else{
+                            Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(CreateRoteiroActivity.this, "O nome deve ter ao menos quarto caracteres", Toast.LENGTH_SHORT).show();
                     }
-                    roteiroAtual.setLocaisRoteiro(locais);
-                    new AlterarRoteiroTask().execute(roteiroAtual);
                 }
             });
         } else{ //criação de roteiro
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    roteiroAtual = new Roteiro();
-                    roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
-                    roteiroAtual.setNotaRoteiro(0);//mudar
-                    roteiroAtual.setPublicado(false);
-                    roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
-                    roteiroAtual.setCriadorRoteiro(getIntent().getStringExtra("nomeUsuario"));
-                    List<String> locais = new ArrayList<>();
-                    for (Local local : listaLocaisRoteiroAtual) {
-                        locais.add(local.getIdPlaces());
+                    if(nomeRoteiroEditText.length() >= 4) {
+                        if (!listaLocaisRoteiroAtual.isEmpty()) {
+                            roteiroAtual = new Roteiro();
+                            roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
+                            roteiroAtual.setPublicado(false);
+                            roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
+                            roteiroAtual.setCriadorRoteiro(getIntent().getStringExtra("nomeUsuario"));
+                            List<String> locais = new ArrayList<>();
+                            for (Local local : listaLocaisRoteiroAtual) {
+                                locais.add(local.getIdPlaces());
+                            }
+                            roteiroAtual.setLocaisRoteiro(locais);
+                            roteiroAtual.setNotaRoteiro(new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).calcularNotaRoteiro(listaLocaisRoteiroAtual));
+                            new SalvarRoteiroTask().execute(roteiroAtual);
+                        }else{
+                            Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();    
+                        }
+                    }else{
+                        Toast.makeText(CreateRoteiroActivity.this, "O nome deve ter ao menos quarto caracteres", Toast.LENGTH_SHORT).show();
                     }
-                    roteiroAtual.setLocaisRoteiro(locais);
-                    new SalvarRoteiroTask().execute(roteiroAtual);
                 }
             });
         }
