@@ -22,19 +22,12 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tipo: "
-        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
-        android:id="@+id/labelTipoRoteiroActivityTextView"/>
-
     <Spinner
         android:id="@+id/tipoRoteiroActivitySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/labelTipoRoteiroActivityTextView"
-        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout" />
+        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
+        android:backgroundTint="@color/colorAccent" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -60,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/adicionarLocalRoteiroActivityButton"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_check"
         android:id="@+id/salvarRoteiroActivityFab"/>

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,8 @@ import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
+
+import static br.com.marcus.fernanda.andre.tourit.R.id.alterarRoteiroDetailsActivityImageView;
 
 public class RoteiroDetailsActivity extends AppCompatActivity {
 
@@ -52,7 +55,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
         roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
 
-        Button excluirButton = (Button) findViewById(R.id.excluirRoteiroDetailsActivityButton);
+        ImageView excluirButton = (ImageView) findViewById(R.id.excluirRoteiroDetailsActivityImageView);
         excluirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +63,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
             }
         });
 
-        Button alterarButtton = (Button) findViewById(R.id.alterarRoteiroDetailsActivityButton);
+        ImageView alterarButtton = (ImageView) findViewById(alterarRoteiroDetailsActivityImageView);
         alterarButtton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

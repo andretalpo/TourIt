@@ -69,7 +69,8 @@
         <activity
             android:name=".roteiro.controller.RoteiroDetailsActivity"
             android:label="@string/title_activity_roteiro_details"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".roteiro.controller.MeusRoteirosActivity"
             android:label="@string/title_activity_meus_roteiros"

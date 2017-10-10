@@ -6,6 +6,55 @@
     android:layout_height="match_parent"
     tools:context="br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/roteiroDetailsAppBarLayout">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarRoteiroDetails"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_activity_roteiro_details"
+                    style="@style/Base.TextAppearance.AppCompat.Title"
+                    android:layout_margin="@dimen/padding_geral"
+                    android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:id="@+id/excluirRoteiroDetailsActivityImageView"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_delete_2"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:id="@+id/alterarRoteiroDetailsActivityImageView"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_edit"
+                    android:layout_margin="10dp"
+                    android:layout_toLeftOf="@id/excluirRoteiroDetailsActivityImageView"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,60 +64,59 @@
         android:gravity="center_horizontal"
         android:paddingBottom="20dp"
         android:paddingTop="10dp"
-        android:text="Alo Goianinha"/>
+        android:text="Alo Goianinha"
+        android:layout_below="@id/roteiroDetailsAppBarLayout"/>
 
-    <ImageView
-        android:id="@+id/excluirRoteiroDetailsActivityImageView"
-        android:layout_width="24dp"
-        android:layout_alignParentEnd="true"
-        android:layout_height="24dp"
-        android:layout_margin="@dimen/padding_geral"
-        android:src="@drawable/ic_delete_2"/>
-
-    <ImageView
-        android:id="@+id/alterarRoteiroDetailsActivityImageView"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_edit"
-        android:layout_margin="@dimen/padding_geral"
-        android:layout_toStartOf="@id/excluirRoteiroDetailsActivityImageView"/>
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
-        android:text="André Talpo"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:id="@+id/nomeCriadorRoteiroDetailsTextView"/>
+        android:id="@+id/criadorRoteiroDetailsLinearLayout"
+        android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Criador: "
+            android:id="@+id/labelNomeCriadorRoteiroDetailsTextView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="André Talpo"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/nomeCriadorRoteiroDetailsTextView"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Criador: "
-        android:layout_toStartOf="@id/nomeCriadorRoteiroDetailsTextView"
-        android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
-        android:id="@+id/labelNomeCriadorRoteiroDetailsTextView"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/nomeCriadorRoteiroDetailsTextView"
-        android:text="Romântico"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:id="@+id/tipoRoteiroRoteiroDetailsTextView"/>
+        android:id="@+id/tipoRoteiroDetailsLinearLayout"
+        android:layout_below="@id/criadorRoteiroDetailsLinearLayout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labelNomeCriadorRoteiroDetailsTextView"
-        android:layout_toStartOf="@id/tipoRoteiroRoteiroDetailsTextView"
-        android:text="Tipo: "
-        android:id="@+id/labelTipoRoteiroRoteiroDetailsTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo: "
+            android:id="@+id/labelTipoRoteiroRoteiroDetailsTextView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Romântico"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tipoRoteiroRoteiroDetailsTextView"/>
+
+    </LinearLayout>
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tipoRoteiroRoteiroDetailsTextView"
+        android:layout_below="@id/tipoRoteiroDetailsLinearLayout"
         android:rating="5"
         android:layout_centerHorizontal="true"
         style="@style/Base.Widget.AppCompat.RatingBar.Small"
@@ -79,21 +127,5 @@
         android:layout_height="320dp"
         android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
         android:id="@+id/listaLocaisRoteiroDetailsFrameLayout"/>
-
-    <Button
-        android:id="@+id/excluirRoteiroDetailsActivityButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/listaLocaisRoteiroDetailsFrameLayout"
-        android:background="@drawable/bordas_botao"
-        android:text="Excluir Roteiro" />
-
-    <Button
-        android:id="@+id/alterarRoteiroDetailsActivityButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/excluirRoteiroDetailsActivityButton"
-        android:background="@drawable/bordas_botao"
-        android:text="Alterar Roteiro" />
 
 </RelativeLayout>
