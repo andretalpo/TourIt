@@ -17,41 +17,60 @@
         android:paddingTop="10dp"
         android:text="Alo Goianinha"/>
 
+    <ImageView
+        android:id="@+id/excluirRoteiroDetailsActivityImageView"
+        android:layout_width="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_height="24dp"
+        android:layout_margin="@dimen/padding_geral"
+        android:src="@drawable/ic_delete_2"/>
+
+    <ImageView
+        android:id="@+id/alterarRoteiroDetailsActivityImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_edit"
+        android:layout_margin="@dimen/padding_geral"
+        android:layout_toStartOf="@id/excluirRoteiroDetailsActivityImageView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
+        android:text="André Talpo"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/nomeCriadorRoteiroDetailsTextView"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Criador: "
+        android:layout_toStartOf="@id/nomeCriadorRoteiroDetailsTextView"
         android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
         android:id="@+id/labelNomeCriadorRoteiroDetailsTextView"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
-        android:layout_toEndOf="@id/labelNomeCriadorRoteiroDetailsTextView"
-        android:text="André Talpo"
-        android:id="@+id/nomeCriadorRoteiroDetailsTextView"/>
+        android:layout_below="@id/nomeCriadorRoteiroDetailsTextView"
+        android:text="Romântico"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tipoRoteiroRoteiroDetailsTextView"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/labelNomeCriadorRoteiroDetailsTextView"
+        android:layout_toStartOf="@id/tipoRoteiroRoteiroDetailsTextView"
         android:text="Tipo: "
         android:id="@+id/labelTipoRoteiroRoteiroDetailsTextView"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/nomeCriadorRoteiroDetailsTextView"
-        android:text="Romântico"
-        android:layout_toEndOf="@id/labelTipoRoteiroRoteiroDetailsTextView"
-        android:id="@+id/tipoRoteiroRoteiroDetailsTextView"/>
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tipoRoteiroRoteiroDetailsTextView"
         android:rating="5"
+        android:layout_centerHorizontal="true"
         style="@style/Base.Widget.AppCompat.RatingBar.Small"
         android:id="@+id/avaliacaoRoteiroRoteiroDetailsRatingBar"/>
 
@@ -59,9 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
-        android:id="@+id/listaLocaisRoteiroDetailsFrameLayout">
-
-    </FrameLayout>
+        android:id="@+id/listaLocaisRoteiroDetailsFrameLayout"/>
 
     <Button
         android:id="@+id/excluirRoteiroDetailsActivityButton"
