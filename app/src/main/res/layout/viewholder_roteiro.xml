@@ -3,13 +3,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:elevation="@dimen/elevation_geral"
     android:id="@+id/roteiroViewHolderLayout">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imagemRoteiroViewHolderImageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerVertical="true"
         android:src="@drawable/background_imagem_new"
         android:padding="@dimen/padding_geral"
@@ -17,30 +19,40 @@
         app:civ_border_width="3dp"
         app:civ_border_color="@color/colorAccent" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nomeRoteiroViewHolderTextView"
-        android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
-        android:text="qwert"
-        android:textStyle="bold"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tipoRoteiroViewHolderTextView"
-        android:text="tipo"
-        android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
-        android:layout_below="@id/nomeRoteiroViewHolderTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nomeRoteiroViewHolderTextView"
+            android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
+            android:textSize="@dimen/textSizeListas"
+            android:text="qwert"
+            android:textStyle="bold"/>
 
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Base.Widget.AppCompat.RatingBar.Small"
-        android:id="@+id/roteiroViewHolderRatingBar"
-        android:rating="5"
-        android:progressTint="@color/cor_dourado"
-        android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
-        android:layout_below="@id/tipoRoteiroViewHolderTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tipoRoteiroViewHolderTextView"
+            android:text="tipo"
+            android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
+            android:layout_below="@id/nomeRoteiroViewHolderTextView"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:id="@+id/roteiroViewHolderRatingBar"
+            android:rating="5"
+            android:progressTint="@color/cor_dourado"
+            android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
+            android:layout_below="@id/tipoRoteiroViewHolderTextView"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Local"
-        android:textSize="@dimen/textSizeListaLocais"
+        android:textSize="@dimen/textSizeListas"
         android:textStyle="bold"
         android:layout_marginTop="6dp"
         android:paddingEnd="@dimen/padding_geral"
