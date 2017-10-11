@@ -14,8 +14,8 @@
         android:src="@drawable/background_imagem_new"
         android:padding="@dimen/padding_geral"
         android:layout_marginEnd="10dp"
-        app:civ_border_width="3dp"
-        app:civ_border_color="@color/colorAccent"/>
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/cor_prata" />
 
     <TextView
         android:layout_width="wrap_content"
