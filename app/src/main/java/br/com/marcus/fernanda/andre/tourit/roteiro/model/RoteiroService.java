@@ -28,6 +28,8 @@ public class RoteiroService {
     public Roteiro salvarRoteiro(Roteiro roteiro, List<Local> locais) throws SQLException {
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
 
+        roteiro = roteiroDAO.salvarRoteiroFireBase(roteiro);
+
         int id = roteiroDAO.salvarRoteiroSqlite(roteiro);
         if(id >= 0) {
             new LocalService(context, idUsuarioGoogle).salvarLocais(locais, id);
@@ -35,8 +37,7 @@ public class RoteiroService {
             throw new SQLException("Erro no armazenamento do roteiro");
         }
         roteiro.setIdRoteiroSqlite(id);
-        roteiro.setIdRoteiroFirebase(idUsuarioGoogle + id);
-        roteiroDAO.salvarRoteiroFireBase(roteiro);
+
         return roteiro;
     }
 
@@ -48,12 +49,11 @@ public class RoteiroService {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarMeusRoteirosSqlite();
     }
 
-    public void excluirRoteiro(int idRoteiro){
+    public void excluirRoteiro(Roteiro roteiro){
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
-        roteiroDAO.excluirRoteiroSqlite(idRoteiro);
-        String keyRoteiro = roteiroDAO.buscarKeyRoteiro(idUsuarioGoogle + idRoteiro);
-        roteiroDAO.excluirRoteiroFirebase(keyRoteiro);
-        UsuarioDAO.excluirRoteiroUsuario(keyRoteiro);
+        roteiroDAO.excluirRoteiroSqlite(roteiro.getIdRoteiroSqlite());
+        roteiroDAO.excluirRoteiroFirebase(roteiro.getIdRoteiroFirebase());
+        UsuarioDAO.excluirRoteiroUsuario(roteiro.getIdRoteiroFirebase());
     }
 
     public void alterarRoteiro(Roteiro roteiro, List<Local> listaLocais) {
@@ -74,9 +74,11 @@ public class RoteiroService {
     public void sincronizarRoteirosUsuario() {
         List<String> roteirosId = new UsuarioService().buscarRoteirosUsuarioFirebase(idUsuarioGoogle);
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
-        List<Roteiro> roteiros = roteiroDAO.buscarRoteirosUsuarioFirebase(roteirosId);
-        for (Roteiro roteiro : roteiros) {
-            roteiroDAO.salvarRoteiroSqlite(roteiro);
+        if (roteirosId != null) {
+            List<Roteiro> roteiros = roteiroDAO.buscarRoteirosUsuarioFirebase(roteirosId);
+            for (Roteiro roteiro : roteiros) {
+                roteiroDAO.salvarRoteiroSqlite(roteiro);
+            }
         }
     }
 }

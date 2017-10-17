@@ -100,7 +100,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
-            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).excluirRoteiro(roteiro [0].getIdRoteiroSqlite());
+            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).excluirRoteiro(roteiro [0]);
             return true;
         }
 

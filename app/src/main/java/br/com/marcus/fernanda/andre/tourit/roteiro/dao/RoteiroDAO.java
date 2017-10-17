@@ -49,6 +49,7 @@ public class RoteiroDAO {
         contentValues.put(DBHelper.COLUMN_TIPO_ROTEIRO, roteiro.getTipoRoteiro());
         contentValues.put(DBHelper.COLUMN_NOTA_ROTEIRO, roteiro.getNotaRoteiro());
         contentValues.put(DBHelper.COLUMN_IMAGEM_ROTEIRO, ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
+        contentValues.put(DBHelper.COLUMN_ID_ROTEIRO_FIREBASE, roteiro.getIdRoteiroFirebase());
 
         int id = (int) sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
         sqLiteDatabase.close();
@@ -68,6 +69,7 @@ public class RoteiroDAO {
             roteiro.setTipoRoteiro(cursor.getString(3));
             roteiro.setNotaRoteiro(cursor.getFloat(4));
             roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
+            roteiro.setIdRoteiroFirebase(cursor.getString(6));
             sqLiteDatabase.close();
             return roteiro;
         }
@@ -75,13 +77,16 @@ public class RoteiroDAO {
         return null;
     }
 
-    public void salvarRoteiroFireBase(Roteiro roteiro) {
+    public Roteiro salvarRoteiroFireBase(Roteiro roteiro) {
         String key = FirebaseDatabase.getInstance().getReference().child("Roteiros").push().getKey();
+        roteiro.setIdRoteiroFirebase(key);
         FirebaseDatabase.getInstance().getReference().child("Roteiros").child(key).setValue(roteiro);
         new UsuarioService().adicionarRoteiroUsuario(idUsuarioGoogle, key);
 
         StorageReference storage = FirebaseStorage.getInstance().getReference();
         storage.child("imagemRoteiro/" + roteiro.getIdRoteiroFirebase() + ".jpeg").putBytes(ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
+
+        return roteiro;
     }
 
     public List<Roteiro> consultarMeusRoteirosSqlite() {
@@ -98,6 +103,7 @@ public class RoteiroDAO {
                 roteiro.setTipoRoteiro(cursor.getString(3));
                 roteiro.setNotaRoteiro(cursor.getFloat(4));
                 roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
+                roteiro.setIdRoteiroFirebase(cursor.getString(6));
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
 
@@ -161,9 +167,10 @@ public class RoteiroDAO {
     }
 
     public void alterarRoteiroFirebase(Roteiro roteiro) {
-        roteiro.setIdRoteiroFirebase(idUsuarioGoogle + roteiro.getIdRoteiroSqlite());
-        String key = buscarKeyRoteiro(idUsuarioGoogle + roteiro.getIdRoteiroSqlite());
-        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(key).setValue(roteiro);
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(roteiro.getIdRoteiroFirebase()).setValue(roteiro);
+
+        StorageReference storage = FirebaseStorage.getInstance().getReference();
+        storage.child("imagemRoteiro/" + roteiro.getIdRoteiroFirebase() + ".jpeg").putBytes(ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
     }
 
     public void alterarRoteiroSQLite(Roteiro roteiro) {

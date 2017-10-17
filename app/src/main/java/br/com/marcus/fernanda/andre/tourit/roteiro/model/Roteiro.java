@@ -43,6 +43,7 @@ public class Roteiro implements Serializable {
         this.idRoteiroFirebase = idRoteiroFirebase;
     }
 
+    @Exclude
     public int getIdRoteiroSqlite() {
         return idRoteiroSqlite;
     }
