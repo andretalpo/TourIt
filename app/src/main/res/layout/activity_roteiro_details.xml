@@ -54,14 +54,17 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imagemRoteiroDetailsActivity"
-        android:layout_below="@id/roteiroDetailsAppBarLayout"
+        android:layout_width="140dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/padding_geral"
-        android:background="@color/colorAccent"/>
+        android:layout_below="@id/roteiroDetailsAppBarLayout"
+        android:padding="@dimen/padding_geral"
+        android:layout_marginEnd="10dp"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/cor_prata" />
 
     <TextView
         android:layout_width="match_parent"
