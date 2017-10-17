@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONObject;
 
@@ -22,6 +24,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 /**
  * Created by André on 03/10/2017.
@@ -44,6 +47,7 @@ public class RoteiroDAO {
         contentValues.put(DBHelper.COLUMN_CRIADOR_ROTEIRO, roteiro.getCriadorRoteiro());
         contentValues.put(DBHelper.COLUMN_TIPO_ROTEIRO, roteiro.getTipoRoteiro());
         contentValues.put(DBHelper.COLUMN_NOTA_ROTEIRO, roteiro.getNotaRoteiro());
+        contentValues.put(DBHelper.COLUMN_IMAGEM_ROTEIRO, ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
 
         int id = (int) sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
         sqLiteDatabase.close();
@@ -62,6 +66,7 @@ public class RoteiroDAO {
             roteiro.setCriadorRoteiro(cursor.getString(2));
             roteiro.setTipoRoteiro(cursor.getString(3));
             roteiro.setNotaRoteiro(cursor.getFloat(4));
+            roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
             sqLiteDatabase.close();
             return roteiro;
         }
@@ -73,6 +78,9 @@ public class RoteiroDAO {
         String key = FirebaseDatabase.getInstance().getReference().child("Roteiros").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("Roteiros").child(key).setValue(roteiro);
         new UsuarioService().adicionarRoteiroUsuario(idUsuarioGoogle, key);
+
+        StorageReference storage = FirebaseStorage.getInstance().getReference();
+        storage.child("imagemRoteiro/" + roteiro.getIdRoteiroSqlite() + ".jpeg").putBytes(ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
     }
 
     public List<Roteiro> consultarMeusRoteirosSqlite() {
@@ -88,6 +96,7 @@ public class RoteiroDAO {
                 roteiro.setCriadorRoteiro(cursor.getString(2));
                 roteiro.setTipoRoteiro(cursor.getString(3));
                 roteiro.setNotaRoteiro(cursor.getFloat(4));
+                roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
 
@@ -162,6 +171,7 @@ public class RoteiroDAO {
         contentValues.put(DBHelper.COLUMN_NOME_ROTEIRO, roteiro.getNomeRoteiro());
         contentValues.put(DBHelper.COLUMN_TIPO_ROTEIRO, roteiro.getTipoRoteiro());
         contentValues.put(DBHelper.COLUMN_NOTA_ROTEIRO, roteiro.getNotaRoteiro());
+        contentValues.put(DBHelper.COLUMN_IMAGEM_ROTEIRO, ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
     }
 }

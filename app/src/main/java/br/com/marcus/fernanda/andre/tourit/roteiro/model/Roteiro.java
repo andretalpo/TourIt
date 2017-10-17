@@ -1,5 +1,9 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 
+import android.graphics.Bitmap;
+
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,8 +21,18 @@ public class Roteiro implements Serializable {
     private float notaRoteiro;
     private List<String> locaisRoteiro;
     private boolean publicado;
+    private transient Bitmap imagemRoteiro;
 
     public Roteiro() {
+    }
+
+    @Exclude
+    public Bitmap getImagemRoteiro() {
+        return imagemRoteiro;
+    }
+
+    public void setImagemRoteiro(Bitmap imagemRoteiro) {
+        this.imagemRoteiro = imagemRoteiro;
     }
 
     public String getIdRoteiroFirebase() {

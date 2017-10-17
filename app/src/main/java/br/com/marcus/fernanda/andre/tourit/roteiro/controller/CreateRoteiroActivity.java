@@ -3,6 +3,9 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +32,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class CreateRoteiroActivity extends AppCompatActivity {
 
@@ -84,6 +88,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             }
                             roteiroAtual.setLocaisRoteiro(locais);
                             roteiroAtual.setNotaRoteiro(new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).calcularNotaRoteiro(listaLocaisRoteiroAtual));
+                            roteiroAtual.setImagemRoteiro(montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new AlterarRoteiroTask().execute(roteiroAtual);
                         }else{
                             Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();
@@ -110,6 +115,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             }
                             roteiroAtual.setLocaisRoteiro(locais);
                             roteiroAtual.setNotaRoteiro(new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).calcularNotaRoteiro(listaLocaisRoteiroAtual));
+                            roteiroAtual.setImagemRoteiro(montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new SalvarRoteiroTask().execute(roteiroAtual);
                         }else{
                             Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();    
@@ -128,6 +134,23 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         localFragment.setArguments(bundle);
         transaction.replace(R.id.listaLocaisRoteiroActivityFrameLayout, localFragment);
         transaction.commit();
+    }
+
+    private Bitmap montarImagemRoteiro(List<Local> locais) {
+        Bitmap bmp1 = locais.get(0).getFoto();
+        Bitmap bitmap = Bitmap.createBitmap(bmp1.getWidth() * 2, bmp1.getHeight() * 2, Bitmap.Config.ARGB_8888);
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bitmap);
+        if(locais.size() > 0) {
+            canvas.drawBitmap(locais.get(0).getFoto(), 0, 0, paint);
+            if(locais.size() > 1) {
+                canvas.drawBitmap(locais.get(1).getFoto(), locais.get(0).getFoto().getWidth() + 10, 0, paint);
+                if(locais.size() > 2) {
+                    canvas.drawBitmap(locais.get(2).getFoto(), locais.get(0).getFoto().getWidth()/2, locais.get(0).getFoto().getHeight() + 10, paint);
+                }
+            }
+        }
+        return bitmap;
     }
 
     private void inicializarSpinnerTipo() {
@@ -225,6 +248,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     private void irParaTelaRoteiroDetails() {
         Intent intent = new Intent(CreateRoteiroActivity.this, RoteiroDetailsActivity.class);
         intent.putExtra("roteiro", roteiroAtual);
+        intent.putExtra("imagemRoteiro", ImageConverter.convertBitmapToByte(roteiroAtual.getImagemRoteiro()));
         startActivity(intent);
         finish();
     }

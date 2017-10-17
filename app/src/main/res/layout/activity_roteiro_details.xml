@@ -54,6 +54,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:id="@+id/imagemRoteiroDetailsActivity"
+        android:layout_below="@id/roteiroDetailsAppBarLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/padding_geral"
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -65,7 +73,7 @@
         android:paddingBottom="20dp"
         android:paddingTop="10dp"
         android:text="Alo Goianinha"
-        android:layout_below="@id/roteiroDetailsAppBarLayout"/>
+        android:layout_below="@id/imagemRoteiroDetailsActivity"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -124,7 +132,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="match_parent"
         android:padding="@dimen/padding_geral"
         android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
         android:id="@+id/listaLocaisRoteiroDetailsFrameLayout"/>

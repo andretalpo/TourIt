@@ -19,6 +19,7 @@ import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 import static br.com.marcus.fernanda.andre.tourit.R.id.alterarRoteiroDetailsActivityImageView;
 
@@ -35,11 +36,15 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
         TextView nomeCriadorTextView = (TextView) findViewById(R.id.nomeCriadorRoteiroDetailsTextView);
         TextView tipoRoteiroTextView = (TextView) findViewById(R.id.tipoRoteiroRoteiroDetailsTextView);
         RatingBar roteiroRatingBar = (RatingBar) findViewById(R.id.avaliacaoRoteiroRoteiroDetailsRatingBar);
+        ImageView roteiroImageView = (ImageView) findViewById(R.id.imagemRoteiroDetailsActivity);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         LocalListFragment localFragment = new LocalListFragment();
 
         final Roteiro roteiro = (Roteiro) getIntent().getSerializableExtra("roteiro");
+
+        roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("imagemRoteiro")));
+        roteiroImageView.setImageBitmap(roteiro.getImagemRoteiro());
 
         Bundle bundle = new Bundle();
         bundle.putString("acao", "consultaLocaisBanco");

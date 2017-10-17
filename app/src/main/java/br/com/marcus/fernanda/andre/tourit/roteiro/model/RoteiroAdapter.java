@@ -12,6 +12,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalViewHolder;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 /**
  * Created by André on 06/10/2017.
@@ -40,14 +41,15 @@ public class RoteiroAdapter extends RecyclerView.Adapter {
         roteiroHolder.nomeTextView.setText(roteiro.getNomeRoteiro());
         roteiroHolder.tipoTextView.setText(roteiro.getTipoRoteiro());
         roteiroHolder.ratingBar.setRating(roteiro.getNotaRoteiro());
+        roteiroHolder.imageView.setImageBitmap(roteiro.getImagemRoteiro());
         roteiroHolder.roteiroLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), RoteiroDetailsActivity.class);
                 intent.putExtra("roteiro", roteiro);
 
-//                byte[] arrayFoto = ImageConverter.convertBitmapToByte(local.getFoto());
-//                intent.putExtra("arrayFoto", arrayFoto);
+                byte[] arrayImagem = ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro());
+                intent.putExtra("imagemRoteiro", arrayImagem);
                 view.getContext().startActivity(intent);
             }
         });
