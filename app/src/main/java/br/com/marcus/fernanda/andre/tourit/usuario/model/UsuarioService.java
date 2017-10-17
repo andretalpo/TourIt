@@ -1,5 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.usuario.model;
 
+import java.util.List;
+
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
 /**
@@ -9,5 +11,9 @@ import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 public class UsuarioService {
     public void adicionarRoteiroUsuario(String idUsuario, String keyRoteiro) {
         UsuarioDAO.adicionarRoteiroUsuario(idUsuario, keyRoteiro);
+    }
+
+    public List<String> buscarRoteirosUsuarioFirebase(String idUsuarioGoogle) {
+        return UsuarioDAO.buscarRoteirosUsuarioFirebase(idUsuarioGoogle);
     }
 }

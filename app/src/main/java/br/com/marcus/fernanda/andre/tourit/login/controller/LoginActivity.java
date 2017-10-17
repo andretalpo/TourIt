@@ -29,8 +29,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.CreateUserActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -217,6 +219,10 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(String... idGoogle) {
             if(UsuarioDAO.consultarUsuario("idGoogle", idGoogle[0]) != null){
+                RoteiroService roteiroService = new RoteiroService(LoginActivity.this, idGoogle[0]);
+                if(roteiroService.consultarMeusRoteiros() == null) {
+                    roteiroService.sincronizarRoteirosUsuario();
+                }
                 return true;
             }else{
                 return false;
@@ -234,4 +240,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
 }

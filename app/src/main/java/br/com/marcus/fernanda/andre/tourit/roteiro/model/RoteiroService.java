@@ -9,6 +9,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
 
 /**
  * Created by André on 03/10/2017.
@@ -68,5 +69,14 @@ public class RoteiroService {
             nota += local.getNota();
         }
         return nota/listaLocais.size();
+    }
+
+    public void sincronizarRoteirosUsuario() {
+        List<String> roteirosId = new UsuarioService().buscarRoteirosUsuarioFirebase(idUsuarioGoogle);
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+        List<Roteiro> roteiros = roteiroDAO.buscarRoteirosUsuarioFirebase(roteirosId);
+        for (Roteiro roteiro : roteiros) {
+            roteiroDAO.salvarRoteiroSqlite(roteiro);
+        }
     }
 }

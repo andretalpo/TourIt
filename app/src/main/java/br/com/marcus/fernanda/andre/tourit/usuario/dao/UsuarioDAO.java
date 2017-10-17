@@ -5,6 +5,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -217,5 +218,60 @@ public class UsuarioDAO {
             }
             FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteiros").setValue(listaRoteiros);
         }
+    }
+
+    public static List<String> buscarRoteirosUsuarioFirebase(String idUsuarioGoogle) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Usuarios.json?orderBy=%22idGoogle%22&equalTo=%22" + idUsuarioGoogle +"%22");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListRoteiro(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private static List<String> convertJSONToListRoteiro(JSONObject jsonUsuarios) {
+        try {
+            List<String> listaRoteiros = new ArrayList<>();
+            Iterator<String> iter = jsonUsuarios.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                JSONObject jsonUsuario = jsonUsuarios.getJSONObject(key);
+                JSONArray jsonRoteiros = jsonUsuario.getJSONArray("roteiros");
+                for (int i = 0; i < jsonRoteiros.length(); i++){
+                    listaRoteiros.add(jsonRoteiros.getString(i));
+                }
+            }
+            return listaRoteiros;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

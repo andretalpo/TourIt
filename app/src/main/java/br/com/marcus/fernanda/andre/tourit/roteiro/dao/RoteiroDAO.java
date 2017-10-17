@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -80,7 +81,7 @@ public class RoteiroDAO {
         new UsuarioService().adicionarRoteiroUsuario(idUsuarioGoogle, key);
 
         StorageReference storage = FirebaseStorage.getInstance().getReference();
-        storage.child("imagemRoteiro/" + roteiro.getIdRoteiroSqlite() + ".jpeg").putBytes(ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
+        storage.child("imagemRoteiro/" + roteiro.getIdRoteiroFirebase() + ".jpeg").putBytes(ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
     }
 
     public List<Roteiro> consultarMeusRoteirosSqlite() {
@@ -173,5 +174,54 @@ public class RoteiroDAO {
         contentValues.put(DBHelper.COLUMN_NOTA_ROTEIRO, roteiro.getNotaRoteiro());
         contentValues.put(DBHelper.COLUMN_IMAGEM_ROTEIRO, ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
+    }
+
+    public List<Roteiro> buscarRoteirosUsuarioFirebase(List<String> roteirosId) {
+        List<Roteiro> roteiros = new ArrayList<>();
+        for (String idRoteiro : roteirosId) {
+            roteiros.add(buscarRoteiroFirebasePorKey(idRoteiro));
+        }
+        return roteiros;
+    }
+
+    private Roteiro buscarRoteiroFirebasePorKey(String idRoteiro) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros/" + idRoteiro + ".json");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToRoteiro(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private Roteiro convertJSONToRoteiro(JSONObject jsonRoteiro) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonRoteiro.toString(), Roteiro.class);
     }
 }
