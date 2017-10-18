@@ -41,7 +41,7 @@ public class RoteiroDAO {
         dbHelper = new DBHelper(context, idUsuarioGoogle);
     }
 
-    public int salvarRoteiroSqlite(Roteiro roteiro) {
+    public Long salvarRoteiroSqlite(Roteiro roteiro) {
         sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_NOME_ROTEIRO, roteiro.getNomeRoteiro());
@@ -51,7 +51,7 @@ public class RoteiroDAO {
         contentValues.put(DBHelper.COLUMN_IMAGEM_ROTEIRO, ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
         contentValues.put(DBHelper.COLUMN_ID_ROTEIRO_FIREBASE, roteiro.getIdRoteiroFirebase());
 
-        int id = (int) sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
+        Long id = (Long) sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
         sqLiteDatabase.close();
 
         return id;
@@ -63,7 +63,7 @@ public class RoteiroDAO {
         if(cursor != null && cursor.getCount() > 0){
             Roteiro roteiro = new Roteiro();
             cursor.moveToFirst();
-            roteiro.setIdRoteiroSqlite(cursor.getInt(0));
+            roteiro.setIdRoteiroSqlite(cursor.getLong(0));
             roteiro.setNomeRoteiro(cursor.getString(1));
             roteiro.setCriadorRoteiro(cursor.getString(2));
             roteiro.setTipoRoteiro(cursor.getString(3));
@@ -97,7 +97,7 @@ public class RoteiroDAO {
             cursor.moveToFirst();
             do{
                 Roteiro roteiro = new Roteiro();
-                roteiro.setIdRoteiroSqlite(cursor.getInt(0));
+                roteiro.setIdRoteiroSqlite(cursor.getLong(0));
                 roteiro.setNomeRoteiro(cursor.getString(1));
                 roteiro.setCriadorRoteiro(cursor.getString(2));
                 roteiro.setTipoRoteiro(cursor.getString(3));
@@ -113,7 +113,7 @@ public class RoteiroDAO {
         return null;
     }
 
-    public void excluirRoteiroSqlite(int idRoteiro){
+    public void excluirRoteiroSqlite(Long idRoteiro){
         sqLiteDatabase = dbHelper.getWritableDatabase();
         sqLiteDatabase.delete(DBHelper.TABLE_ROTEIRO, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[] {String.valueOf(idRoteiro)});
     }

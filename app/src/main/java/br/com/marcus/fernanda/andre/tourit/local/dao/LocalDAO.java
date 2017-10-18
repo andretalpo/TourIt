@@ -26,7 +26,7 @@ public class LocalDAO {
         dbHelper = new DBHelper(context, idUsuarioGoogle);
     }
 
-    public void salvarLocaisSQLite(List<Local> locais, int idRoteiro){
+    public void salvarLocaisSQLite(List<Local> locais, Long idRoteiro){
 
         for (Local local : locais) {
             byte[] fotoByte = ImageConverter.convertBitmapToByte(local.getFoto());
@@ -104,12 +104,12 @@ public class LocalDAO {
         return null;
     }
 
-    public void excluirLocais(int idRoteiro){
+    public void excluirLocais(Long idRoteiro){
         sqLiteDatabase = dbHelper.getWritableDatabase();
         sqLiteDatabase.delete(DBHelper.TABLE_LOCAL, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[] {String.valueOf(idRoteiro)});
     }
 
-    public List<Local> buscarLocaisDoRoteiro(int idRoteiro) {
+    public List<Local> buscarLocaisDoRoteiro(Long idRoteiro) {
         sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_LOCAL + " WHERE " + DBHelper.COLUMN_ID_ROTEIRO + " = ?",  new String[] {String.valueOf(idRoteiro)});
         List<Local> locais = new ArrayList<>();

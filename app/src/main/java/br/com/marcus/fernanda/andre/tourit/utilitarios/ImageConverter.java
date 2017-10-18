@@ -13,13 +13,18 @@ import java.io.ByteArrayOutputStream;
 public class ImageConverter {
 
     public static byte[] convertBitmapToByte(Bitmap fotoBitmap){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
+        if(fotoBitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            return stream.toByteArray();
+        }
+        return null;
     }
 
     public static Bitmap convertByteToBitmap(byte[] fotoByte){
-        byte[] arrayFoto = fotoByte;
-        return BitmapFactory.decodeByteArray(arrayFoto, 0, arrayFoto.length);
+        if(fotoByte.length > 0) {
+            return BitmapFactory.decodeByteArray(fotoByte, 0, fotoByte.length);
+        }
+        return null;
     }
 }

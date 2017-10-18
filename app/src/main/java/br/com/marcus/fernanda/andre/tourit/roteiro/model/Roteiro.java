@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Roteiro implements Serializable {
 
-    private int idRoteiroSqlite;
+    private Long idRoteiroSqlite;
     private String idRoteiroFirebase;
     private String nomeRoteiro;
     private String criadorRoteiro;
@@ -44,11 +44,11 @@ public class Roteiro implements Serializable {
     }
 
     @Exclude
-    public int getIdRoteiroSqlite() {
+    public Long getIdRoteiroSqlite() {
         return idRoteiroSqlite;
     }
 
-    public void setIdRoteiroSqlite(int idRoteiroSqlite) {
+    public void setIdRoteiroSqlite(Long idRoteiroSqlite) {
         this.idRoteiroSqlite = idRoteiroSqlite;
     }
 

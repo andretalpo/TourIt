@@ -20,15 +20,15 @@ public class LocalService {
         this.idUsuarioGoogle = idUsuarioGoogle;
     }
 
-    public void salvarLocais(List<Local> locais, int idRoteiro){
+    public void salvarLocais(List<Local> locais, Long idRoteiro){
         new LocalDAO(context, idUsuarioGoogle).salvarLocaisSQLite(locais, idRoteiro);
     }
 
-    public List<Local> buscarLocaisRoteiro(int idRoteiro) {
+    public List<Local> buscarLocaisRoteiro(Long idRoteiro) {
         return new LocalDAO(context, idUsuarioGoogle).buscarLocaisDoRoteiro(idRoteiro);
     }
 
-    public void alterarLocaisRoteiro(int idRoteiroSqlite, List<Local> listaLocais) {
+    public void alterarLocaisRoteiro(Long idRoteiroSqlite, List<Local> listaLocais) {
         LocalDAO localDAO = new LocalDAO(context, idUsuarioGoogle);
         localDAO.excluirLocais(idRoteiroSqlite);
         localDAO.salvarLocaisSQLite(listaLocais, idRoteiroSqlite);

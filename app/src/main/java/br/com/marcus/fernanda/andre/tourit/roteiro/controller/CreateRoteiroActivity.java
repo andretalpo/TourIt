@@ -87,8 +87,9 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                                 locais.add(local.getIdPlaces());
                             }
                             roteiroAtual.setLocaisRoteiro(locais);
-                            roteiroAtual.setNotaRoteiro(new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).calcularNotaRoteiro(listaLocaisRoteiroAtual));
-                            roteiroAtual.setImagemRoteiro(montarImagemRoteiro(listaLocaisRoteiroAtual));
+                            RoteiroService roteiroService = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle);
+                            roteiroAtual.setNotaRoteiro(roteiroService.calcularNotaRoteiro(listaLocaisRoteiroAtual));
+                            roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new AlterarRoteiroTask().execute(roteiroAtual);
                         }else{
                             Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();
@@ -114,8 +115,9 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                                 locais.add(local.getIdPlaces());
                             }
                             roteiroAtual.setLocaisRoteiro(locais);
-                            roteiroAtual.setNotaRoteiro(new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).calcularNotaRoteiro(listaLocaisRoteiroAtual));
-                            roteiroAtual.setImagemRoteiro(montarImagemRoteiro(listaLocaisRoteiroAtual));
+                            RoteiroService roteiroService = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle);
+                            roteiroAtual.setNotaRoteiro(roteiroService.calcularNotaRoteiro(listaLocaisRoteiroAtual));
+                            roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new SalvarRoteiroTask().execute(roteiroAtual);
                         }else{
                             Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();    

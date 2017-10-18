@@ -191,4 +191,71 @@ public class GooglePlacesServices {
         return listaAvaliacoes;
     }
 
+    public static Local buscarLocalIdPlaces(String idPlaces) {
+        URL url = null;
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&placeid=" + idPlaces);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToLocal(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private static Local convertJSONToLocal(JSONObject jsonObject) {
+        Local local = new Local();
+        try {
+            JSONObject jsonLocal = jsonObject.getJSONObject("result");
+            local.setIdPlaces(jsonLocal.getString("place_id"));
+            local.setEndereco(jsonLocal.getString("formatted_address"));
+            local.setNota((float)jsonLocal.getDouble("rating"));
+            local.setNome(jsonLocal.getString("name"));
+
+            JSONArray jsonFotos = jsonLocal.getJSONArray("photos");
+            JSONObject jsonFoto = jsonFotos.getJSONObject(0);
+            local.setFoto(buscarFotoLocal(jsonFoto.getString("photo_reference")));
+
+            List<String> tipos = new ArrayList<>();
+            JSONArray jsonTipos = jsonLocal.getJSONArray("types");
+            for (int j = 0; j < jsonTipos.length(); j++) {
+                tipos.add(jsonTipos.getString(j));
+            }
+            local.setTipo(tipos);
+
+            JSONObject jsonGeometry = jsonLocal.getJSONObject("geometry");
+            JSONObject jsonLatLng = jsonGeometry.getJSONObject("location");
+            LatLng latLng = new LatLng(jsonLatLng.getDouble("lat"), jsonLatLng.getDouble("lng"));
+            local.setLatLng(latLng);
+
+            return local;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

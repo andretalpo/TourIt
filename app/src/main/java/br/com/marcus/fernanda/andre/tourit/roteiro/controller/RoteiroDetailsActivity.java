@@ -48,7 +48,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putString("acao", "consultaLocaisBanco");
-        bundle.putInt("idRoteiro", roteiro.getIdRoteiroSqlite());
+        bundle.putLong("idRoteiro", roteiro.getIdRoteiroSqlite());
         localFragment.setArguments(bundle);
 
         transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);

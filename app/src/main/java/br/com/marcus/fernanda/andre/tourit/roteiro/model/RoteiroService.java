@@ -1,10 +1,16 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
@@ -30,7 +36,7 @@ public class RoteiroService {
 
         roteiro = roteiroDAO.salvarRoteiroFireBase(roteiro);
 
-        int id = roteiroDAO.salvarRoteiroSqlite(roteiro);
+        Long id = roteiroDAO.salvarRoteiroSqlite(roteiro);
         if(id >= 0) {
             new LocalService(context, idUsuarioGoogle).salvarLocais(locais, id);
         }else{
@@ -76,9 +82,35 @@ public class RoteiroService {
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         if (roteirosId != null) {
             List<Roteiro> roteiros = roteiroDAO.buscarRoteirosUsuarioFirebase(roteirosId);
+            LocalService localService = new LocalService(context, idUsuarioGoogle);
             for (Roteiro roteiro : roteiros) {
-                roteiroDAO.salvarRoteiroSqlite(roteiro);
+                Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
+                List<Local> locais = new ArrayList<>();
+                for (String local : roteiro.getLocaisRoteiro()) {
+                    locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
+                }
+                localService.salvarLocais(locais, idRoteiro);
+                roteiro.setIdRoteiroSqlite(idRoteiro);
+                roteiro.setImagemRoteiro(montarImagemRoteiro(locais));
+                roteiroDAO.alterarRoteiroSQLite(roteiro);
             }
         }
+    }
+
+    public Bitmap montarImagemRoteiro(List<Local> locais) {
+        Bitmap bmp1 = locais.get(0).getFoto();
+        Bitmap bitmap = Bitmap.createBitmap(bmp1.getWidth() * 2, bmp1.getHeight() * 2, Bitmap.Config.ARGB_8888);
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bitmap);
+        if(locais.size() > 0) {
+            canvas.drawBitmap(locais.get(0).getFoto(), 0, 0, paint);
+            if(locais.size() > 1) {
+                canvas.drawBitmap(locais.get(1).getFoto(), locais.get(0).getFoto().getWidth() + 10, 0, paint);
+                if(locais.size() > 2) {
+                    canvas.drawBitmap(locais.get(2).getFoto(), locais.get(0).getFoto().getWidth()/2, locais.get(0).getFoto().getHeight() + 10, paint);
+                }
+            }
+        }
+        return bitmap;
     }
 }

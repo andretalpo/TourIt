@@ -68,13 +68,13 @@ public class LocalListFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         }else if(bundle.getString("acao").equals("consultaLocaisBanco")){
-            carregarLocaisRoteiroBanco(bundle.getInt("idRoteiro"));
+            carregarLocaisRoteiroBanco(bundle.getLong("idRoteiro"));
         }
 
         return view;
     }
 
-    private void carregarLocaisRoteiroBanco(int idRoteiro) {
+    private void carregarLocaisRoteiroBanco(Long idRoteiro) {
         List<Local> locais = new LocalService(LocalListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocaisRoteiro(idRoteiro);
         listaLocais.clear();
 
