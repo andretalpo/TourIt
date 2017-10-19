@@ -1,5 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -43,7 +44,12 @@ public class LocalDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
-        inicializarBotaoAdicionar();
+
+        if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
+            inicializarBotaoAdicionar();
+        } else{
+            inicializarBotaoCriarRoteiro();
+        }
 
         local = (Local) getIntent().getSerializableExtra("local");
         setTitle(local.getNome());
@@ -118,7 +124,6 @@ public class LocalDetailsActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).inserirLocalSQLite(local);
                 if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() == null){
                     CreateRoteiroActivity.setListaLocaisRoteiroAtual(new ArrayList<Local>());
                 }
@@ -127,6 +132,27 @@ public class LocalDetailsActivity extends AppCompatActivity {
                 Toast.makeText(LocalDetailsActivity.this, "Local adicionado com sucesso.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void inicializarBotaoCriarRoteiro() {
+        floatingActionButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add, null));
+        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() == null){
+                    CreateRoteiroActivity.setListaLocaisRoteiroAtual(new ArrayList<Local>());
+                }
+                CreateRoteiroActivity.getListaLocaisRoteiroAtual().add(local);
+                irParaCriacaoRoteiro();
+            }
+        });
+    }
+
+    private void irParaCriacaoRoteiro() {
+        Intent intent = new Intent(this, CreateRoteiroActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private class CarregarAvaliacoesAsyncTask extends AsyncTask<String, Void, List<AvaliacaoLocal>>{

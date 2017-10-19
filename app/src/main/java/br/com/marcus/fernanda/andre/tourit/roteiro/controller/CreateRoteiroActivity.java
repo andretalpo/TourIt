@@ -53,7 +53,9 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         inicializarSpinnerTipo();
 
-        listaLocaisRoteiroAtual = new ArrayList<>();
+        if (listaLocaisRoteiroAtual == null) {
+            listaLocaisRoteiroAtual = new ArrayList<>();
+        }
 
         Button adicionarLocalButton = (Button) findViewById(R.id.adicionarLocalRoteiroActivityButton);
         adicionarLocalButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +111,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
                             roteiroAtual.setPublicado(false);
                             roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
-                            roteiroAtual.setCriadorRoteiro(getIntent().getStringExtra("nomeUsuario"));
+                            roteiroAtual.setCriadorRoteiro(MainActivity.nomeUsuario);
                             List<String> locais = new ArrayList<>();
                             for (Local local : listaLocaisRoteiroAtual) {
                                 locais.add(local.getIdPlaces());
@@ -203,7 +205,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
             try {
-                roteiroAtual = new RoteiroService(CreateRoteiroActivity.this, getIntent().getStringExtra("idUsuarioGoogle")).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
+                roteiroAtual = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
                 return true;
             } catch (SQLException e) {
                 return false;

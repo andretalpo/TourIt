@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private BroadcastReceiver broadcastReceiver;
     private StorageReference storage;
     public static String idUsuarioGoogle;
+    public static String nomeUsuario;
     private Usuario usuario;
 
     @Override
@@ -202,8 +203,6 @@ public class MainActivity extends AppCompatActivity
 
     private void irParaTelaCriarRoteiro(Usuario user) {
         Intent intent = new Intent(this, CreateRoteiroActivity.class);
-        intent.putExtra("nomeUsuario", user.getNomeUsuario());
-        intent.putExtra("idUsuarioGoogle", user.getIdGoogle());
         startActivity(intent);
     }
 
@@ -225,6 +224,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected Usuario doInBackground(String... idGoogle) {
             usuario = UsuarioDAO.consultarUsuario("idGoogle", idGoogle[0]);
+            nomeUsuario = usuario.getNomeUsuario();
             return usuario;
         }
 
