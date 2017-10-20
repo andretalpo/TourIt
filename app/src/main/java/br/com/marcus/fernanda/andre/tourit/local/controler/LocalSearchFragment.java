@@ -5,14 +5,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 
@@ -20,11 +26,12 @@ import br.com.marcus.fernanda.andre.tourit.R;
  * Created by André on 30/09/2017.
  */
 
-public class LocalSearchFragment extends Fragment {
+public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
 
     private View view;
     private static final String TAG = "fragmentPesquisaLocais";
     private SearchView searchView;
+    private GoogleMap map;
 
     @Nullable
     @Override
@@ -62,9 +69,28 @@ public class LocalSearchFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapBuscaLocais);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         searchView.clearFocus();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.addMarker(new MarkerOptions()
+                .anchor(0.0f, 1.0f)
+                .position(new LatLng(0,0))
+                .title("local"));
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(0,0), 1);
+        map.moveCamera(cameraUpdate);
     }
 }
 
