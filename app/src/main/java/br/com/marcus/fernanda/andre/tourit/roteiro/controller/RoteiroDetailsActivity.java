@@ -2,12 +2,12 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,11 +20,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.api.GoogleDirectionsServices;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
@@ -41,6 +45,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     ProgressDialog progressDialog;
     private GoogleMap map;
     private static List<Local> listaLocais;
+    private List<Polyline> polylinePaths;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,18 +163,26 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        polylinePaths = new ArrayList<>();
+
         int meioLista = Math.round(listaLocais.size()/2);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(listaLocais.get(meioLista).getLat(), listaLocais.get(meioLista).getLng()), 15);
         map.moveCamera(cameraUpdate);
+        List<LatLng> listaLatLng = new ArrayList<>();
         for(Local local : listaLocais){
             map.addMarker(new MarkerOptions()
-                    .anchor(0.0f, 1.0f)
                     .position(new LatLng(local.getLat(), local.getLng()))
                     .title(local.getNome()));
+            listaLatLng.add(new LatLng(local.getLat(), local.getLng()));
         }
+
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
+
+        new CriarRotaTask().execute(listaLatLng);
     }
+
+
 
     public static List<Local> getListaLocais() {
         return listaLocais;
@@ -178,4 +191,27 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     public static void setListaLocais(List<Local> listaLocais) {
         RoteiroDetailsActivity.listaLocais = listaLocais;
     }
+
+    private class CriarRotaTask extends AsyncTask<List<LatLng>, Void, List<LatLng>>{
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Carregando roteiro", "Aguarde", true, false);
+        }
+
+        @Override
+        protected List<LatLng> doInBackground(List<LatLng>... listaLatLng) {
+            return GoogleDirectionsServices.criarRota(listaLatLng[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<LatLng> listaPontos) {
+            progressDialog.dismiss();
+            PolylineOptions polylineOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.colorAccent));
+
+            polylineOptions.addAll(listaPontos);
+            polylinePaths.add(map.addPolyline(polylineOptions));
+        }
+    }
+
 }
