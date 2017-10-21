@@ -17,6 +17,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +36,15 @@ import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
-public class LocalDetailsActivity extends AppCompatActivity {
+public class LocalDetailsActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private Local local;
     private List<AvaliacaoLocal> listaAvaliacoes;
     private AvaliacaoLocalAdapter adapter;
     private static boolean consultando;
     private FloatingActionButton floatingActionButton;
+    private GoogleMap map;
+    private CameraUpdate cameraUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,12 @@ public class LocalDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_details);
         setSupportActionBar(toolbar);
 
+        local = (Local) getIntent().getSerializableExtra("local");
+        setTitle(local.getNome());
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapLocalDetails);
+        mapFragment.getMapAsync(this);
+
         floatingActionButton = (FloatingActionButton) findViewById(R.id.adicionarLocalDetailsFab);
 
         if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
@@ -50,9 +66,6 @@ public class LocalDetailsActivity extends AppCompatActivity {
         } else{
             inicializarBotaoCriarRoteiro();
         }
-
-        local = (Local) getIntent().getSerializableExtra("local");
-        setTitle(local.getNome());
 
         List<Local> listaLocaisRoteiroAtual = CreateRoteiroActivity.getListaLocaisRoteiroAtual();
         if(listaLocaisRoteiroAtual != null) {
@@ -155,6 +168,20 @@ public class LocalDetailsActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.addMarker(new MarkerOptions()
+                .anchor(0.0f, 1.0f)
+                .position(new LatLng(local.getLat(), local.getLng()))
+                .title(local.getNome()));
+        cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(local.getLat(), local.getLng()), 15);
+        map.moveCamera(cameraUpdate);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.getUiSettings().setMapToolbarEnabled(false);
+        map.getUiSettings().setAllGesturesEnabled(false);
+    }
+
     private class CarregarAvaliacoesAsyncTask extends AsyncTask<String, Void, List<AvaliacaoLocal>>{
 
         @Override
@@ -177,4 +204,6 @@ public class LocalDetailsActivity extends AppCompatActivity {
     public static void setConsultando(boolean consultando) {
         LocalDetailsActivity.consultando = consultando;
     }
+
+
 }

@@ -21,6 +21,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.LocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity;
 
 /**
  * Created by André on 11/09/2017.
@@ -57,8 +58,10 @@ public class LocalListFragment extends Fragment {
         bundle = getArguments();
         String pesquisa;
         if(bundle.getString("acao").equals("pesquisaLocal")){
-            pesquisa = bundle.getString("pesquisa");
-            new CarregarLocaisApiTask().execute(pesquisa);
+            adapter = new LocalAdapter(LocalSearchFragment.getLocalList(), getActivity());
+            locaisRecyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            container.setVisibility(View.VISIBLE);
         }else if(bundle.getString("acao").equals("consultaLocaisRoteiroAtual")){
             LocalDetailsActivity.setConsultando(false);
             container.setVisibility(View.VISIBLE);
@@ -68,48 +71,20 @@ public class LocalListFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         }else if(bundle.getString("acao").equals("consultaLocaisBanco")){
-            carregarLocaisRoteiroBanco(bundle.getLong("idRoteiro"));
+            adapter = new LocalAdapter(RoteiroDetailsActivity.getListaLocais(), getActivity());
+            locaisRecyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            container.setVisibility(View.VISIBLE);
+//            carregarLocaisRoteiroBanco(bundle.getLong("idRoteiro"));
         }
 
         return view;
-    }
-
-    private void carregarLocaisRoteiroBanco(Long idRoteiro) {
-        List<Local> locais = new LocalService(LocalListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocaisRoteiro(idRoteiro);
-        listaLocais.clear();
-
-        if(locais != null) {
-            listaLocais.addAll(locais);
-            adapter.notifyDataSetChanged();
-            container.setVisibility(View.VISIBLE);
-            LocalDetailsActivity.setConsultando(true);
-        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-    }
-
-    private class CarregarLocaisApiTask extends AsyncTask<String, Void, List<Local>> {
-
-        @Override
-        protected List<Local> doInBackground(String... pesquisa) {
-            return GooglePlacesServices.buscarLocais(pesquisa[0]);
-        }
-
-        @Override
-        protected void onPostExecute(List<Local> locais) {
-            if(locais != null){
-                listaLocais.addAll(locais);
-                adapter.notifyDataSetChanged();
-                container.setVisibility(View.VISIBLE);
-            }else{
-                container.setVisibility(View.GONE);
-                Toast.makeText(LocalListFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override

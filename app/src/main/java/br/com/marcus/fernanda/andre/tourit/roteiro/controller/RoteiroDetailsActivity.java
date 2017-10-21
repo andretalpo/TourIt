@@ -13,9 +13,22 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
+import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
@@ -23,14 +36,17 @@ import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 import static br.com.marcus.fernanda.andre.tourit.R.id.alterarRoteiroDetailsActivityImageView;
 
-public class RoteiroDetailsActivity extends AppCompatActivity {
+public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     ProgressDialog progressDialog;
+    private GoogleMap map;
+    private static List<Local> listaLocais;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roteiro_details);
+        listaLocais = new ArrayList<>();
 
         TextView nomeRoteiroTextView = (TextView) findViewById(R.id.nomeRoteiroRoteiroDetailsTextView);
         TextView nomeCriadorTextView = (TextView) findViewById(R.id.nomeCriadorRoteiroDetailsTextView);
@@ -46,10 +62,13 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
         roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("imagemRoteiro")));
         roteiroImageView.setImageBitmap(roteiro.getImagemRoteiro());
 
+        carregarLocaisRoteiroBanco(roteiro.getIdRoteiroSqlite());
         Bundle bundle = new Bundle();
         bundle.putString("acao", "consultaLocaisBanco");
-        bundle.putLong("idRoteiro", roteiro.getIdRoteiroSqlite());
         localFragment.setArguments(bundle);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapRoteiroDetails);
+        mapFragment.getMapAsync(this);
 
         transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);
         transaction.commit();
@@ -124,5 +143,39 @@ public class RoteiroDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         LocalDetailsActivity.setConsultando(true);
+    }
+
+    private void carregarLocaisRoteiroBanco(Long idRoteiro) {
+        List<Local> locais = new LocalService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).buscarLocaisRoteiro(idRoteiro);
+        listaLocais.clear();
+
+        if(locais != null) {
+            listaLocais.addAll(locais);
+            LocalDetailsActivity.setConsultando(true);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        int meioLista = Math.round(listaLocais.size()/2);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(listaLocais.get(meioLista).getLat(), listaLocais.get(meioLista).getLng()), 15);
+        map.moveCamera(cameraUpdate);
+        for(Local local : listaLocais){
+            map.addMarker(new MarkerOptions()
+                    .anchor(0.0f, 1.0f)
+                    .position(new LatLng(local.getLat(), local.getLng()))
+                    .title(local.getNome()));
+        }
+        map.getUiSettings().setMapToolbarEnabled(false);
+        map.getUiSettings().setZoomControlsEnabled(true);
+    }
+
+    public static List<Local> getListaLocais() {
+        return listaLocais;
+    }
+
+    public static void setListaLocais(List<Local> listaLocais) {
+        RoteiroDetailsActivity.listaLocais = listaLocais;
     }
 }

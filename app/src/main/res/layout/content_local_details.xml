@@ -42,7 +42,7 @@
                 android:layout_margin="@dimen/marginLocalDetails"
                 android:layout_below="@id/tipoLocalDetailsTextView"
                 android:layout_marginTop="15dp"
-                android:rating="5" />
+                android:rating="4" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,12 +58,19 @@
 
         </RelativeLayout>
 
+        <fragment
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:id="@+id/mapLocalDetails"
+            android:layout_below="@id/layoutBarLocalDetailsActivity"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_frame_layout"
             android:id="@+id/frameLayoutEnderecoLocalDetailsActivity"
-            android:layout_below="@id/layoutBarLocalDetailsActivity">
+            android:layout_below="@id/mapLocalDetails">
 
             <ImageView
                 android:layout_width="wrap_content"

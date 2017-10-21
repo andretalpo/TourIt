@@ -19,7 +19,8 @@ public class Local implements Serializable{
     private transient Bitmap foto;
     private float nota;
     private List<AvaliacaoLocal> avaliacoes;
-    private transient LatLng latLng;
+    private double lat;
+    private double lng;
 
     public Local(){
         //vazio
@@ -81,12 +82,19 @@ public class Local implements Serializable{
         this.avaliacoes = avaliacoes;
     }
 
-    public LatLng getLatLng() {
-        return latLng;
+    public double getLat() {
+        return lat;
     }
 
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
 }

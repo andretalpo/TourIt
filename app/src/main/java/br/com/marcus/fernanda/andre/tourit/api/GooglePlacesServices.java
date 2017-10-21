@@ -90,8 +90,8 @@ public class GooglePlacesServices {
 
                 JSONObject jsonGeometry = jsonLocal.getJSONObject("geometry");
                 JSONObject jsonLatLng = jsonGeometry.getJSONObject("location");
-                LatLng latLng = new LatLng(jsonLatLng.getDouble("lat"), jsonLatLng.getDouble("lng"));
-                local.setLatLng(latLng);
+                local.setLat(jsonLatLng.getDouble("lat"));
+                local.setLng(jsonLatLng.getDouble("lng"));
 
                 listaLocais.add(local);
             }
@@ -249,8 +249,8 @@ public class GooglePlacesServices {
 
             JSONObject jsonGeometry = jsonLocal.getJSONObject("geometry");
             JSONObject jsonLatLng = jsonGeometry.getJSONObject("location");
-            LatLng latLng = new LatLng(jsonLatLng.getDouble("lat"), jsonLatLng.getDouble("lng"));
-            local.setLatLng(latLng);
+            local.setLat(jsonLatLng.getDouble("lat"));
+            local.setLng(jsonLatLng.getDouble("lng"));
 
             return local;
         } catch (JSONException e) {

@@ -39,6 +39,8 @@ public class LocalDAO {
             contentValues.put(DBHelper.COLUMN_NOTA_LOCAL, local.getNota());
             contentValues.put(DBHelper.COLUMN_FOTO_LOCAL, fotoByte);
             contentValues.put(DBHelper.COLUMN_ID_ROTEIRO, idRoteiro);
+            contentValues.put(DBHelper.COLUMN_LAT_LOCAL, local.getLat());
+            contentValues.put(DBHelper.COLUMN_LNG_LOCAL, local.getLng());
 
             int idLocal = (int) sqLiteDatabase.insert(DBHelper.TABLE_LOCAL, null, contentValues);
             sqLiteDatabase.close();
@@ -83,6 +85,8 @@ public class LocalDAO {
             local.setIdPlaces(cursor.getString(3));
             local.setNota(cursor.getFloat(4));
             local.setFoto(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
+            local.setLat(cursor.getDouble(6));
+            local.setLng(cursor.getDouble(7));
             local.setTipo(buscarTiposLocal(cursor.getInt(0)));
             return local;
         }
@@ -122,6 +126,8 @@ public class LocalDAO {
                 local.setIdPlaces(cursor.getString(3));
                 local.setNota(cursor.getFloat(4));
                 local.setFoto(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
+                local.setLat(cursor.getDouble(6));
+                local.setLng(cursor.getDouble(7));
                 local.setTipo(buscarTiposLocal(cursor.getInt(0)));
                 locais.add(local);
             }while (cursor.moveToNext());

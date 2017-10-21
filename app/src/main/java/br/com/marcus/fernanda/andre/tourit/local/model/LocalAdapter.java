@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
