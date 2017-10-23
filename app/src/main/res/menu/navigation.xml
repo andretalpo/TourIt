@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_roteiros_criados"
+        android:title="Roteiros Criados"
+        android:icon="@drawable/ic_person"/>
+
+    <item
+        android:id="@+id/navigation_roteiros_seguidos"
+        android:title="Roteiros Seguidos"
+        android:icon="@drawable/ic_download"/>
+
+</menu>

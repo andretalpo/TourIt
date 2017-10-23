@@ -63,17 +63,11 @@ public class RoteiroListFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    public static Fragment newInstance(String tipoRoteiro){
-        Fragment fragment = new RoteiroListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("tipoRoteiro", tipoRoteiro);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-        carregarMeusRoteirosBanco();
+        if(bundle.getString("tipoRoteiro").equals("meusRoteiros")) {
+            carregarMeusRoteirosBanco();
+        }
     }
 }

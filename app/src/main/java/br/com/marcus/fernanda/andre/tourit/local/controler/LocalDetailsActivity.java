@@ -205,5 +205,4 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
         LocalDetailsActivity.consultando = consultando;
     }
 
-
 }
