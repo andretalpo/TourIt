@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view configuracoesUsuarioAdmItem clicks here.
+        // Handle navigation_roteiro view configuracoesUsuarioAdmItem clicks here.
         int id = item.getItemId();
 
         if (id == R.id.drawerItemConfiguracoesUsuarioComum) {

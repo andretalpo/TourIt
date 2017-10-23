@@ -201,17 +201,27 @@ public class UsuarioDAO {
 
     public static void adicionarRoteiroUsuario(String idUsuario, String keyRoteiro) {
         Usuario usuario = consultarUsuario("idGoogle", idUsuario);
-        List<String> listaRoteiros = usuario.getRoteiros();
+        List<String> listaRoteiros = usuario.getMeusRoteiros();
         if(listaRoteiros == null){
             listaRoteiros = new ArrayList<>();
         }
         listaRoteiros.add(keyRoteiro);
-        FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("roteiros").setValue(listaRoteiros);
+        FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("meusRoteiros").setValue(listaRoteiros);
+    }
+
+    public static void adicionarRoteiroSeguidoUsuario(String idUsuario, String keyRoteiro) {
+        Usuario usuario = consultarUsuario("idGoogle", idUsuario);
+        List<String> listaRoteiros = usuario.getRoteirosSeguidos();
+        if(listaRoteiros == null){
+            listaRoteiros = new ArrayList<>();
+        }
+        listaRoteiros.add(keyRoteiro);
+        FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("roteirosSeguidos").setValue(listaRoteiros);
     }
 
     public static void excluirRoteiroUsuario(String keyRoteiro){
         Usuario usuario = consultarUsuario("idGoogle", MainActivity.idUsuarioGoogle);
-        List<String> listaRoteiros = usuario.getRoteiros();
+        List<String> listaRoteiros = usuario.getMeusRoteiros();
         for(int i = 0; i < listaRoteiros.size(); i++){
             if(listaRoteiros.get(i).equals(keyRoteiro)){
                 listaRoteiros.remove(i);

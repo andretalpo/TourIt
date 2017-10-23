@@ -58,7 +58,9 @@ public class RoteiroService {
     public void excluirRoteiro(Roteiro roteiro){
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         roteiroDAO.excluirRoteiroSqlite(roteiro.getIdRoteiroSqlite());
-        roteiroDAO.excluirRoteiroFirebase(roteiro.getIdRoteiroFirebase());
+        if(!roteiro.isPublicado()){
+            roteiroDAO.excluirRoteiroFirebase(roteiro.getIdRoteiroFirebase());
+        }
         UsuarioDAO.excluirRoteiroUsuario(roteiro.getIdRoteiroFirebase());
     }
 

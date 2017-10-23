@@ -14,7 +14,8 @@ public class Usuario {
     private String nomeUsuario;
     private String emailUsuario;
     private Bitmap fotoUsuario;
-    private List<String> roteiros;
+    private List<String> meusRoteiros;
+    private List<String> roteirosSeguidos;
     private boolean admnistrador;
     private boolean ativo;
 
@@ -62,12 +63,12 @@ public class Usuario {
         this.fotoUsuario = fotoUsuario;
     }
 
-    public List<String> getRoteiros() {
-        return roteiros;
+    public List<String> getMeusRoteiros() {
+        return meusRoteiros;
     }
 
-    public void setRoteiros(List<String> roteiros) {
-        this.roteiros = roteiros;
+    public void setMeusRoteiros(List<String> meusRoteiros) {
+        this.meusRoteiros = meusRoteiros;
     }
 
     public boolean isAdmnistrador() {
@@ -84,5 +85,13 @@ public class Usuario {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public List<String> getRoteirosSeguidos() {
+        return roteirosSeguidos;
+    }
+
+    public void setRoteirosSeguidos(List<String> roteirosSeguidos) {
+        this.roteirosSeguidos = roteirosSeguidos;
     }
 }

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.sql.SQLException;
@@ -40,6 +41,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     public static List<String> listaTiposRoteiro = new ArrayList<>();
     private EditText nomeRoteiroEditText;
     private Spinner spinner;
+    private Switch switchPublicado;
     private ProgressDialog progressDialog;
     private Roteiro roteiroAtual;
 
@@ -50,6 +52,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         nomeRoteiroEditText = (EditText) findViewById(R.id.nomeRoteiroRoteiroActivityEditText);
         spinner = (Spinner) findViewById(R.id.tipoRoteiroActivitySpinner);
+        switchPublicado = (Switch) findViewById(R.id.publicarCreateRoteiroSwitch);
 
         inicializarSpinnerTipo();
 
@@ -84,6 +87,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                         if(!listaLocaisRoteiroAtual.isEmpty()) {
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
                             roteiroAtual.setTipoRoteiro((String) spinner.getSelectedItem());
+                            roteiroAtual.setPublicado(switchPublicado.isChecked());
                             List<String> locais = new ArrayList<>();
                             for (Local local : listaLocaisRoteiroAtual) {
                                 locais.add(local.getIdPlaces());
@@ -109,7 +113,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                         if (!listaLocaisRoteiroAtual.isEmpty()) {
                             roteiroAtual = new Roteiro();
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
-                            roteiroAtual.setPublicado(false);
+                            roteiroAtual.setPublicado(switchPublicado.isChecked());
                             roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
                             roteiroAtual.setCriadorRoteiro(MainActivity.nomeUsuario);
                             List<String> locais = new ArrayList<>();
@@ -140,23 +144,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private Bitmap montarImagemRoteiro(List<Local> locais) {
-        Bitmap bmp1 = locais.get(0).getFoto();
-        Bitmap bitmap = Bitmap.createBitmap(bmp1.getWidth() * 2, bmp1.getHeight() * 2, Bitmap.Config.ARGB_8888);
-        Paint paint = new Paint();
-        Canvas canvas = new Canvas(bitmap);
-        if(locais.size() > 0) {
-            canvas.drawBitmap(locais.get(0).getFoto(), 0, 0, paint);
-            if(locais.size() > 1) {
-                canvas.drawBitmap(locais.get(1).getFoto(), locais.get(0).getFoto().getWidth() + 10, 0, paint);
-                if(locais.size() > 2) {
-                    canvas.drawBitmap(locais.get(2).getFoto(), locais.get(0).getFoto().getWidth()/2, locais.get(0).getFoto().getHeight() + 10, paint);
-                }
-            }
-        }
-        return bitmap;
-    }
-
     private void inicializarSpinnerTipo() {
         listaTiposRoteiro.clear();
         listaTiposRoteiro.add("Natureza");
@@ -179,14 +166,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
     public static void setListaLocaisRoteiroAtual(List<Local> listaLocaisRoteiroAtual) {
         CreateRoteiroActivity.listaLocaisRoteiroAtual = listaLocaisRoteiroAtual;
-    }
-
-    public static List<String> getListaTiposRoteiro() {
-        return listaTiposRoteiro;
-    }
-
-    public static void setListaTiposRoteiro(List<String> listaTiposRoteiro) {
-        CreateRoteiroActivity.listaTiposRoteiro = listaTiposRoteiro;
     }
 
     @Override
