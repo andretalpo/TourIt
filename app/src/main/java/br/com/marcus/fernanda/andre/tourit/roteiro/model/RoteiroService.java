@@ -98,16 +98,18 @@ public class RoteiroService {
     }
 
     public Bitmap montarImagemRoteiro(List<Local> locais) {
-        Bitmap bmp1 = locais.get(0).getFoto();
-        Bitmap bitmap = Bitmap.createBitmap(bmp1.getWidth() * 2, bmp1.getHeight() * 2, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(400, 300, Bitmap.Config.ARGB_8888);
         Paint paint = new Paint();
         Canvas canvas = new Canvas(bitmap);
         if(locais.size() > 0) {
-            canvas.drawBitmap(locais.get(0).getFoto(), 0, 0, paint);
+            Bitmap resized = Bitmap.createScaledBitmap(locais.get(0).getFoto(), 200, 150, true);
+            canvas.drawBitmap(resized, 0, 0, paint);
             if(locais.size() > 1) {
-                canvas.drawBitmap(locais.get(1).getFoto(), locais.get(0).getFoto().getWidth() + 10, 0, paint);
+                resized = Bitmap.createScaledBitmap(locais.get(1).getFoto(), 200, 150, true);
+                canvas.drawBitmap(resized, resized.getWidth() + 10, 0, paint);
                 if(locais.size() > 2) {
-                    canvas.drawBitmap(locais.get(2).getFoto(), locais.get(0).getFoto().getWidth()/2, locais.get(0).getFoto().getHeight() + 10, paint);
+                    resized = Bitmap.createScaledBitmap(locais.get(2).getFoto(), 400, 150, true);
+                    canvas.drawBitmap(resized, 0, resized.getHeight() + 10, paint);
                 }
             }
         }
