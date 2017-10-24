@@ -92,14 +92,28 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             }
         });
 
-        ImageView alterarButtton = (ImageView) findViewById(alterarRoteiroDetailsActivityImageView);
-        alterarButtton.setOnClickListener(new View.OnClickListener() {
+        ImageView alterarButton = (ImageView) findViewById(alterarRoteiroDetailsActivityImageView);
+        alterarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alterarRoteiro(roteiro);
             }
         });
 
+        ImageView publicarRoteiroButton = (ImageView) findViewById(R.id.publicarRoteiroDetailsActivityImageView);
+        publicarRoteiroButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                roteiro.setPublicado(true);
+                publicarRoteiro(roteiro, listaLocais);
+            }
+        });
+
+    }
+
+    private void publicarRoteiro(Roteiro roteiro, List<Local> locais) {
+        new AlterarRoteiroTask().execute(roteiro);
+        new RoteiroService(this, MainActivity.idUsuarioGoogle).alterarRoteiro(roteiro, locais);
     }
 
     private void alterarRoteiro(Roteiro roteiro){
@@ -141,6 +155,31 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         super.onPause();
         if(progressDialog != null) {
             progressDialog.dismiss();
+        }
+    }
+
+    private class AlterarRoteiroTask extends AsyncTask<Roteiro, Void, Boolean>{
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Publicando roteiro.", "Aguarde", true, false);
+        }
+
+        @Override
+        protected Boolean doInBackground(Roteiro... roteiro) {
+            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).alterarRoteiro(roteiro[0], RoteiroDetailsActivity.listaLocais);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean sucesso) {
+            progressDialog.dismiss();
+            if (sucesso){
+                Toast.makeText(RoteiroDetailsActivity.this, "Roteiro publicado com sucesso!", Toast.LENGTH_SHORT).show();
+                finish();
+            } else{
+                Toast.makeText(RoteiroDetailsActivity.this, "Falha na publicação do roteiro", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

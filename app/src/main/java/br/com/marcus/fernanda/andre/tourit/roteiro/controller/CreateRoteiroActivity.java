@@ -41,7 +41,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     public static List<String> listaTiposRoteiro = new ArrayList<>();
     private EditText nomeRoteiroEditText;
     private Spinner spinner;
-    private Switch switchPublicado;
     private ProgressDialog progressDialog;
     private Roteiro roteiroAtual;
 
@@ -52,7 +51,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         nomeRoteiroEditText = (EditText) findViewById(R.id.nomeRoteiroRoteiroActivityEditText);
         spinner = (Spinner) findViewById(R.id.tipoRoteiroActivitySpinner);
-        switchPublicado = (Switch) findViewById(R.id.publicarCreateRoteiroSwitch);
 
         inicializarSpinnerTipo();
 
@@ -87,7 +85,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                         if(!listaLocaisRoteiroAtual.isEmpty()) {
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
                             roteiroAtual.setTipoRoteiro((String) spinner.getSelectedItem());
-                            roteiroAtual.setPublicado(switchPublicado.isChecked());
                             List<String> locais = new ArrayList<>();
                             for (Local local : listaLocaisRoteiroAtual) {
                                 locais.add(local.getIdPlaces());
@@ -113,7 +110,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                         if (!listaLocaisRoteiroAtual.isEmpty()) {
                             roteiroAtual = new Roteiro();
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
-                            roteiroAtual.setPublicado(switchPublicado.isChecked());
                             roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
                             roteiroAtual.setCriadorRoteiro(MainActivity.nomeUsuario);
                             List<String> locais = new ArrayList<>();

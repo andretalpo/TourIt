@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
@@ -51,8 +50,15 @@ public class RoteiroDAO {
         contentValues.put(DBHelper.COLUMN_NOTA_ROTEIRO, roteiro.getNotaRoteiro());
         contentValues.put(DBHelper.COLUMN_IMAGEM_ROTEIRO, ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
         contentValues.put(DBHelper.COLUMN_ID_ROTEIRO_FIREBASE, roteiro.getIdRoteiroFirebase());
+        int publicado;
+        if(roteiro.isPublicado()){
+            publicado = 1;
+        }else{
+            publicado = 0;
+        }
+        contentValues.put(DBHelper.COLUMN_PUBLICADO, publicado);
 
-        Long id = (Long) sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
+        Long id = sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
         sqLiteDatabase.close();
 
         return id;
@@ -71,6 +77,12 @@ public class RoteiroDAO {
             roteiro.setNotaRoteiro(cursor.getFloat(4));
             roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
             roteiro.setIdRoteiroFirebase(cursor.getString(6));
+
+            if(cursor.getInt(7) > 0){
+                roteiro.setPublicado(true);
+            }else{
+                roteiro.setPublicado(false);
+            }
             sqLiteDatabase.close();
             return roteiro;
         }
@@ -105,6 +117,13 @@ public class RoteiroDAO {
                 roteiro.setNotaRoteiro(cursor.getFloat(4));
                 roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
                 roteiro.setIdRoteiroFirebase(cursor.getString(6));
+
+                if (cursor.getInt(7) > 0){
+                    roteiro.setPublicado(true);
+                }else{
+                    roteiro.setPublicado(false);
+                }
+
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
 
@@ -181,6 +200,13 @@ public class RoteiroDAO {
         contentValues.put(DBHelper.COLUMN_TIPO_ROTEIRO, roteiro.getTipoRoteiro());
         contentValues.put(DBHelper.COLUMN_NOTA_ROTEIRO, roteiro.getNotaRoteiro());
         contentValues.put(DBHelper.COLUMN_IMAGEM_ROTEIRO, ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
+        int publicado;
+        if(roteiro.isPublicado()){
+            publicado = 1;
+        }else {
+            publicado = 0;
+        }
+        contentValues.put(DBHelper.COLUMN_PUBLICADO, publicado);
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
     }
 

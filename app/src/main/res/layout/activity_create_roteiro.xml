@@ -30,27 +30,11 @@
         android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
         android:backgroundTint="@color/colorAccent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tornar público"
-        android:id="@+id/publicarCreateRoteiroTextView"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="10dp"
-        android:layout_below="@id/tipoRoteiroActivitySpinner"/>
-
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tipoRoteiroActivitySpinner"
-        android:layout_toEndOf="@id/publicarCreateRoteiroTextView"
-        android:id="@+id/publicarCreateRoteiroSwitch" />
-
     <Button
         android:id="@+id/adicionarLocalRoteiroActivityButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/publicarCreateRoteiroSwitch"
+        android:layout_below="@id/tipoRoteiroActivitySpinner"
         android:layout_margin="4dp"
         android:background="@color/cor_branco"
         android:drawablePadding="@dimen/marginLocalDetails"

@@ -48,6 +48,15 @@
                     android:layout_margin="10dp"
                     android:layout_toLeftOf="@id/excluirRoteiroDetailsActivityImageView"
                     android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:id="@+id/publicarRoteiroDetailsActivityImageView"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_publicar"
+                    android:layout_margin="10dp"
+                    android:layout_toLeftOf="@id/alterarRoteiroDetailsActivityImageView"
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
