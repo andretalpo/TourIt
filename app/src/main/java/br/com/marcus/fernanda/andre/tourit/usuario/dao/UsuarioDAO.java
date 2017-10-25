@@ -226,7 +226,7 @@ public class UsuarioDAO {
             if(listaRoteiros.get(i).equals(keyRoteiro)){
                 listaRoteiros.remove(i);
             }
-            FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteiros").setValue(listaRoteiros);
+            FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("meusRoteiros").setValue(listaRoteiros);
         }
     }
 
@@ -273,7 +273,7 @@ public class UsuarioDAO {
             while (iter.hasNext()) {
                 String key = iter.next();
                 JSONObject jsonUsuario = jsonUsuarios.getJSONObject(key);
-                JSONArray jsonRoteiros = jsonUsuario.getJSONArray("roteiros");
+                JSONArray jsonRoteiros = jsonUsuario.getJSONArray("meusRoteiros");
                 for (int i = 0; i < jsonRoteiros.length(); i++){
                     listaRoteiros.add(jsonRoteiros.getString(i));
                 }

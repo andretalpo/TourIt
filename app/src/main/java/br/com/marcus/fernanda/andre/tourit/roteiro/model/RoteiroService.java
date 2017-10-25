@@ -117,4 +117,8 @@ public class RoteiroService {
         }
         return bitmap;
     }
+
+    public void publicarRoteiro(String idRoteiroFirebase) {
+        new RoteiroDAO(context, idUsuarioGoogle).publicarRoteiro(idRoteiroFirebase);
+    }
 }

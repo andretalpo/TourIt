@@ -2,7 +2,6 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +22,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +76,6 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);
         transaction.commit();
 
-        //Roteiro roteiro = new RoteiroService(this, MainActivity.idUsuarioGoogle).consultarRoteiro(getIntent().getIntExtra("idRoteiro", -1));
         nomeRoteiroTextView.setText(roteiro.getNomeRoteiro());
         nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
@@ -101,19 +98,18 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         });
 
         ImageView publicarRoteiroButton = (ImageView) findViewById(R.id.publicarRoteiroDetailsActivityImageView);
-        publicarRoteiroButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                roteiro.setPublicado(true);
-                publicarRoteiro(roteiro, listaLocais);
-            }
-        });
+        if(roteiro.isPublicado()){
+            publicarRoteiroButton.setVisibility(View.GONE);
+        } else{
+            publicarRoteiroButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    roteiro.setPublicado(true);
+                    new PublicarRoteiroTask().execute(roteiro);
+                }
+            });
+        }
 
-    }
-
-    private void publicarRoteiro(Roteiro roteiro, List<Local> locais) {
-        new AlterarRoteiroTask().execute(roteiro);
-        new RoteiroService(this, MainActivity.idUsuarioGoogle).alterarRoteiro(roteiro, locais);
     }
 
     private void alterarRoteiro(Roteiro roteiro){
@@ -158,7 +154,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         }
     }
 
-    private class AlterarRoteiroTask extends AsyncTask<Roteiro, Void, Boolean>{
+    private class PublicarRoteiroTask extends AsyncTask<Roteiro, Void, Boolean>{
 
         @Override
         protected void onPreExecute() {
@@ -167,7 +163,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
-            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).alterarRoteiro(roteiro[0], RoteiroDetailsActivity.listaLocais);
+            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).publicarRoteiro(roteiro[0].getIdRoteiroFirebase());
             return true;
         }
 

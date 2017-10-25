@@ -258,4 +258,12 @@ public class RoteiroDAO {
         Gson gson = new Gson();
         return gson.fromJson(jsonRoteiro.toString(), Roteiro.class);
     }
+
+    public void publicarRoteiro(String idRoteiroFirebase) {
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(idRoteiroFirebase).child("publicado").setValue("true");
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_PUBLICADO, 1);
+        sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO_FIREBASE + "=?", new String[]{idRoteiroFirebase});
+    }
 }

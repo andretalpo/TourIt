@@ -50,7 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s VARCHAR(20), " +
                 "%s REAL, " +
                 "%s BLOB, " +
-                "%s VARCHAR(50), +" +
+                "%s VARCHAR(50), " +
                 "%s INTEGER);", TABLE_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_NOME_ROTEIRO, COLUMN_CRIADOR_ROTEIRO, COLUMN_TIPO_ROTEIRO, COLUMN_NOTA_ROTEIRO, COLUMN_IMAGEM_ROTEIRO, COLUMN_ID_ROTEIRO_FIREBASE, COLUMN_PUBLICADO);
         tourItDB.execSQL(sql);
 
