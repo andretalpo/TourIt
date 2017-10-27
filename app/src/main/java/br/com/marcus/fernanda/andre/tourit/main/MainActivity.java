@@ -33,6 +33,7 @@ import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchFragment;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.MeusRoteirosActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.PesquisaRoteirosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.AdmUsuariosActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                irParaTelaCriarRoteiro(usuario);
+                irParaTelaCriarRoteiro();
             }
         });
 
@@ -160,6 +161,8 @@ public class MainActivity extends AppCompatActivity
             irParaTelaLogin();
         } else if (id == R.id.drawerItemMeusRoteiros) {
             irParaTelaMeusRoteiros();
+        } else if (id == R.id.drawerItemPesquisaRoteiros) {
+            irParaTelaPesquisaRoteiros();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -201,8 +204,13 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void irParaTelaCriarRoteiro(Usuario user) {
+    private void irParaTelaCriarRoteiro() {
         Intent intent = new Intent(this, CreateRoteiroActivity.class);
+        startActivity(intent);
+    }
+
+    private void irParaTelaPesquisaRoteiros() {
+        Intent intent = new Intent(this, PesquisaRoteirosActivity.class);
         startActivity(intent);
     }
 

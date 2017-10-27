@@ -10,6 +10,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -265,5 +267,69 @@ public class RoteiroDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_PUBLICADO, 1);
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO_FIREBASE + "=?", new String[]{idRoteiroFirebase});
+    }
+
+    public List<Roteiro> consultarRoteirosPublicados(String pesquisa) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22publicado%22&equalTo=%22true%22");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return filtrarResultados(convertJSONToListRoteiro(new JSONObject(builder.toString())), pesquisa);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private List<Roteiro> convertJSONToListRoteiro(JSONObject jsonRoteiros) {
+        try {
+            List<Roteiro> listaRoteiros = new ArrayList<>();
+            Iterator<String> iter = jsonRoteiros.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                JSONObject jsonUsuario = jsonRoteiros.getJSONObject(key);
+                Gson gson = new Gson();
+                Roteiro roteiro = gson.fromJson(jsonUsuario.toString(), Roteiro.class);
+                listaRoteiros.add(roteiro);
+            }
+            return listaRoteiros;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<Roteiro> filtrarResultados(List<Roteiro> roteiros, String filtro){
+        List<Roteiro> roteirosFiltrado = new ArrayList<>();
+        for (Roteiro roteiro : roteiros) {
+            if(roteiro.getTipoRoteiro().toLowerCase().equals(filtro.toLowerCase())){
+                roteirosFiltrado.add(roteiro);
+            }
+        }
+        return roteirosFiltrado;
     }
 }

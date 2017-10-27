@@ -140,6 +140,11 @@ public class CreateUserActivity extends AppCompatActivity {
         protected Boolean doInBackground(Usuario... usuario) {
             if(UsuarioDAO.consultarUsuario("username", usuario[0].getUsername()) == null){
                 UsuarioDAO.salvarUsuario(usuario[0], converterImagem());
+                Usuario usuarioSalvo = null;
+                do {
+                    usuarioSalvo = UsuarioDAO.consultarUsuario("idGoogle", usuario[0].getIdGoogle());
+                }
+                while(usuarioSalvo == null);
                 return true;
             }else{
                 return false;

@@ -121,4 +121,8 @@ public class RoteiroService {
     public void publicarRoteiro(String idRoteiroFirebase) {
         new RoteiroDAO(context, idUsuarioGoogle).publicarRoteiro(idRoteiroFirebase);
     }
+
+    public List<Roteiro> consultarRoteirosPublicados(String pesquisa) {
+        return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteirosPublicados(pesquisa);
+    }
 }

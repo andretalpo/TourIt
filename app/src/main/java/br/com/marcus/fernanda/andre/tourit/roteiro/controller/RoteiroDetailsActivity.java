@@ -27,6 +27,7 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GoogleDirectionsServices;
+import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
@@ -57,29 +58,10 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         RatingBar roteiroRatingBar = (RatingBar) findViewById(R.id.avaliacaoRoteiroRoteiroDetailsRatingBar);
         ImageView roteiroImageView = (ImageView) findViewById(R.id.imagemRoteiroDetailsActivity);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        LocalListFragment localFragment = new LocalListFragment();
-
         final Roteiro roteiro = (Roteiro) getIntent().getSerializableExtra("roteiro");
 
         roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("imagemRoteiro")));
         roteiroImageView.setImageBitmap(roteiro.getImagemRoteiro());
-
-        carregarLocaisRoteiroBanco(roteiro.getIdRoteiroSqlite());
-        Bundle bundle = new Bundle();
-        bundle.putString("acao", "consultaLocaisBanco");
-        localFragment.setArguments(bundle);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapRoteiroDetails);
-        mapFragment.getMapAsync(this);
-
-        transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);
-        transaction.commit();
-
-        nomeRoteiroTextView.setText(roteiro.getNomeRoteiro());
-        nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
-        tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
-        roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
 
         ImageView excluirButton = (ImageView) findViewById(R.id.excluirRoteiroDetailsActivityImageView);
         excluirButton.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +91,32 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
                 }
             });
         }
+
+        if(roteiro.getIdRoteiroSqlite() == null){//carrega locais da api - roteiros publicados
+            alterarButton.setVisibility(View.GONE);
+            excluirButton.setVisibility(View.GONE);
+            new CarregarLocaisTask().execute(roteiro);
+        }else{//carrega locais do sqlite - meus roteiros
+            carregarLocaisRoteiroBanco(roteiro.getIdRoteiroSqlite());
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            LocalListFragment localFragment = new LocalListFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("acao", "consultaLocaisBanco");
+            localFragment.setArguments(bundle);
+
+            transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);
+            transaction.commit();
+
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapRoteiroDetails);
+            mapFragment.getMapAsync(this);
+        }
+
+        nomeRoteiroTextView.setText(roteiro.getNomeRoteiro());
+        nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
+        tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
+        roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
 
     }
 
@@ -217,8 +225,6 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         new CriarRotaTask().execute(listaLatLng);
     }
 
-
-
     public static List<Local> getListaLocais() {
         return listaLocais;
     }
@@ -249,4 +255,37 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         }
     }
 
+    private class CarregarLocaisTask extends AsyncTask<Roteiro, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Carregando locais.", "Aguarde", true, false);
+        }
+
+        @Override
+        protected Void doInBackground(Roteiro... roteiro) {
+            for (String local : roteiro[0].getLocaisRoteiro()) {
+                listaLocais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
+            }
+            LocalDetailsActivity.setConsultando(true);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void nada) {
+            progressDialog.dismiss();
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            LocalListFragment localFragment = new LocalListFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("acao", "consultaLocaisBanco");
+            localFragment.setArguments(bundle);
+
+            transaction.replace(R.id.listaLocaisRoteiroDetailsFrameLayout, localFragment);
+            transaction.commit();
+
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapRoteiroDetails);
+            mapFragment.getMapAsync(RoteiroDetailsActivity.this);
+        }
+    }
 }
