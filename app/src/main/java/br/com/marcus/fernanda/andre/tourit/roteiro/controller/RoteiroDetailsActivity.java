@@ -35,6 +35,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 import static br.com.marcus.fernanda.andre.tourit.R.id.alterarRoteiroDetailsActivityImageView;
@@ -45,6 +46,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     private GoogleMap map;
     private static List<Local> listaLocais;
     private List<Polyline> polylinePaths;
+    private ImageView seguirRoteiroButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +94,18 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             });
         }
 
+        seguirRoteiroButton = (ImageView) findViewById(R.id.seguirRoteiroDetailsActivityImageView);
+        seguirRoteiroButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SeguirRoteiroTask().execute(roteiro);
+            }
+        });
+
         if(roteiro.getIdRoteiroSqlite() == null){//carrega locais da api - roteiros publicados
             alterarButton.setVisibility(View.GONE);
             excluirButton.setVisibility(View.GONE);
+            new InicializarBotaoSeguirTask().execute(roteiro);
             new CarregarLocaisTask().execute(roteiro);
         }else{//carrega locais do sqlite - meus roteiros
             carregarLocaisRoteiroBanco(roteiro.getIdRoteiroSqlite());
@@ -286,6 +297,35 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapRoteiroDetails);
             mapFragment.getMapAsync(RoteiroDetailsActivity.this);
+        }
+    }
+
+    private class InicializarBotaoSeguirTask extends AsyncTask<Roteiro, Void, Roteiro> {
+        @Override
+        protected Roteiro doInBackground(Roteiro... roteiro) {
+            return new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).consultarRoteiro(roteiro[0].getIdRoteiroFirebase());
+        }
+
+        @Override
+        protected void onPostExecute(Roteiro roteiro) {
+            if(roteiro == null){
+                seguirRoteiroButton.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private class SeguirRoteiroTask extends AsyncTask<Roteiro, Void, Void> {
+        @Override
+        protected Void doInBackground(Roteiro... roteiro) {
+            new UsuarioService().adicionarRoteiroSeguidoUsuario(MainActivity.idUsuarioGoogle, roteiro[0].getIdRoteiroFirebase());
+            //download do roteiro para o sqlite
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void nada) {
+            Toast.makeText(RoteiroDetailsActivity.this, "Roteiro seguido com sucesso!", Toast.LENGTH_SHORT).show();
+            RoteiroDetailsActivity.this.finish();
         }
     }
 }

@@ -13,6 +13,10 @@ public class UsuarioService {
         UsuarioDAO.adicionarRoteiroUsuario(idUsuario, keyRoteiro);
     }
 
+    public void adicionarRoteiroSeguidoUsuario(String idUsuario, String keyRoteiro){
+        UsuarioDAO.adicionarRoteiroSeguidoUsuario(idUsuario, keyRoteiro);
+    }
+
     public List<String> buscarRoteirosUsuarioFirebase(String idUsuarioGoogle) {
         return UsuarioDAO.buscarRoteirosUsuarioFirebase(idUsuarioGoogle);
     }

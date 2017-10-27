@@ -66,9 +66,9 @@ public class RoteiroDAO {
         return id;
     }
 
-    public Roteiro consultarRoteiroSqlite(int id){
+    public Roteiro consultarRoteiroSqlite(String id){
         sqLiteDatabase = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_ROTEIRO + " WHERE " + DBHelper.COLUMN_ID_ROTEIRO + " = ?", new String[] {String.valueOf(id)});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_ROTEIRO + " WHERE " + DBHelper.COLUMN_ID_ROTEIRO_FIREBASE + " = ?", new String[] {id});
         if(cursor != null && cursor.getCount() > 0){
             Roteiro roteiro = new Roteiro();
             cursor.moveToFirst();

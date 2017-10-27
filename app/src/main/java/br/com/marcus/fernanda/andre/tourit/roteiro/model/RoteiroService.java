@@ -47,7 +47,7 @@ public class RoteiroService {
         return roteiro;
     }
 
-    public Roteiro consultarRoteiro(int idRoteiro) {
+    public Roteiro consultarRoteiro(String idRoteiro) {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteiroSqlite(idRoteiro);
     }
 

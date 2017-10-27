@@ -41,6 +41,16 @@
                     android:layout_centerVertical="true"/>
 
                 <ImageView
+                    android:id="@+id/seguirRoteiroDetailsActivityImageView"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_download_branco"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"/>
+
+                <ImageView
                     android:id="@+id/alterarRoteiroDetailsActivityImageView"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
