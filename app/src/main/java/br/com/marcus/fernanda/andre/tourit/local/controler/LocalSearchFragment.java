@@ -1,6 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
     private SearchView searchView;
     private GoogleMap map;
     private static List<Local> localList;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -78,12 +80,18 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
     private class CarregarLocaisApiTask extends AsyncTask<String, Void, List<Local>> {
 
         @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(LocalSearchFragment.this.getContext(), "Pesquisando local.", "Aguarde", true, false);
+        }
+
+        @Override
         protected List<Local> doInBackground(String... pesquisa) {
             return GooglePlacesServices.buscarLocais(pesquisa[0]);
         }
 
         @Override
         protected void onPostExecute(List<Local> locais) {
+            progressDialog.dismiss();
             if(locais != null){
                 if(!locais.isEmpty()) {
                     localList.clear();

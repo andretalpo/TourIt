@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,14 +83,14 @@ public class RoteiroListFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private class PesquisaRoteirosTask extends AsyncTask<String, Void, Void> {
+    private class PesquisaRoteirosTask extends AsyncTask<String, Void, List<Roteiro>> {
         @Override
         protected void onPreExecute() {
             progressDialog = ProgressDialog.show(RoteiroListFragment.this.getContext(), "Buscando roteiros.", "Aguarde", true, true);
         }
 
         @Override
-        protected Void doInBackground(String... pesquisa) {
+        protected List<Roteiro> doInBackground(String... pesquisa) {
             listaRoteiros.addAll(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarRoteirosPublicados(pesquisa[0]));
             List<Local> locais = new ArrayList<>();
             for (Roteiro roteiro : listaRoteiros) {
@@ -99,11 +100,14 @@ public class RoteiroListFragment extends Fragment {
                 }
                 roteiro.setImagemRoteiro(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).montarImagemRoteiro(locais));
             }
-            return null;
+            return listaRoteiros;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(List<Roteiro> roteiros) {
+            if(listaRoteiros.isEmpty()){
+                Toast.makeText(RoteiroListFragment.this.getContext(), "Nenhum roteiro encontrado.", Toast.LENGTH_SHORT).show();
+            }
             progressDialog.dismiss();
             adapter.notifyDataSetChanged();
         }

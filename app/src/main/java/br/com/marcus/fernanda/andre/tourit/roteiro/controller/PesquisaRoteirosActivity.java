@@ -1,11 +1,13 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,10 +25,14 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisa_roteiros);
 
-        SearchView searchView = (SearchView) findViewById(R.id.pesquisaRoteirosSearchView);
+        final SearchView searchView = (SearchView) findViewById(R.id.pesquisaRoteirosSearchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                searchView.clearFocus();
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 RoteiroListFragment roteiroFragment = new RoteiroListFragment();
 
