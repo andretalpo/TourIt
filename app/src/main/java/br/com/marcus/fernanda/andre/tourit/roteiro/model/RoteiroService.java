@@ -146,17 +146,21 @@ public class RoteiroService {
         Bitmap bitmap = Bitmap.createBitmap(400, 300, Bitmap.Config.ARGB_8888);
         Paint paint = new Paint();
         Canvas canvas = new Canvas(bitmap);
-        if(locais.size() > 0) {
+        if(locais.size() == 1) {
+            Bitmap resized = Bitmap.createScaledBitmap(locais.get(0).getFoto(), 400, 300, true);
+            canvas.drawBitmap(resized, 0, 0, paint);
+        }else if(locais.size() == 2) {
+            Bitmap resized = Bitmap.createScaledBitmap(locais.get(0).getFoto(), 400, 150, true);
+            canvas.drawBitmap(resized, 0, 0, paint);
+            resized = Bitmap.createScaledBitmap(locais.get(1).getFoto(), 400, 150, true);
+            canvas.drawBitmap(resized, 0, resized.getHeight() + 10, paint);
+        }else if(locais.size() >= 3) {
             Bitmap resized = Bitmap.createScaledBitmap(locais.get(0).getFoto(), 200, 150, true);
             canvas.drawBitmap(resized, 0, 0, paint);
-            if(locais.size() > 1) {
-                resized = Bitmap.createScaledBitmap(locais.get(1).getFoto(), 200, 150, true);
-                canvas.drawBitmap(resized, resized.getWidth() + 10, 0, paint);
-                if(locais.size() > 2) {
-                    resized = Bitmap.createScaledBitmap(locais.get(2).getFoto(), 400, 150, true);
-                    canvas.drawBitmap(resized, 0, resized.getHeight() + 10, paint);
-                }
-            }
+            resized = Bitmap.createScaledBitmap(locais.get(1).getFoto(), 200, 150, true);
+            canvas.drawBitmap(resized, resized.getWidth() + 10, 0, paint);
+            resized = Bitmap.createScaledBitmap(locais.get(2).getFoto(), 400, 150, true);
+            canvas.drawBitmap(resized, 0, resized.getHeight() + 10, paint);
         }
         return bitmap;
     }
