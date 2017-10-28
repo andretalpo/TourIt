@@ -11,7 +11,10 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -20,6 +23,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -80,28 +85,52 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         @Override
         protected void onPostExecute(List<Local> locais) {
             if(locais != null){
-                localList.clear();
-                localList.addAll(locais);
-                for(Local local : localList){
-                    map.addMarker(new MarkerOptions()
-                            .anchor(0.0f, 1.0f)
-                            .position(new LatLng(local.getLat(), local.getLng()))
-                            .title(local.getNome()));
-                    map.getUiSettings().setMyLocationButtonEnabled(false);
-                    map.getUiSettings().setZoomControlsEnabled(false);
+                if(!locais.isEmpty()) {
+                    localList.clear();
+                    localList.addAll(locais);
+                    List<Marker> markers = new ArrayList<>();
+                    for (Local local : localList) {
+                        markers.add(map.addMarker(new MarkerOptions()
+                                .anchor(0.0f, 1.0f)
+                                .position(new LatLng(local.getLat(), local.getLng()))
+                                .title(local.getNome())));
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
+                        map.getUiSettings().setZoomControlsEnabled(false);
+                    }
+                    if (markers.size() > 1) {
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        for (Marker marker : markers) {
+                            builder.include(marker.getPosition());
+                        }
+                        LatLngBounds bounds = builder.build();
+
+
+                        final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 125);
+
+                        FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.mapFragmentContainer);
+                        frameLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                map.moveCamera(cameraUpdate);
+                            }
+                        });
+                    } else {
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(localList.get(0).getLat(), localList.get(0).getLng()), 10);
+                        map.moveCamera(cameraUpdate);
+                    }
+
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    LocalListFragment localFragment = new LocalListFragment();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("acao", "pesquisaLocal");
+                    localFragment.setArguments(bundle);
+
+                    transaction.replace(R.id.localFragmentBuscaLocais, localFragment);
+                    transaction.commit();
+                }else{
+                    Toast.makeText(LocalSearchFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
                 }
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(localList.get(0).getLat(), localList.get(0).getLng()), 10);
-                map.moveCamera(cameraUpdate);
-
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                LocalListFragment localFragment = new LocalListFragment();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("acao", "pesquisaLocal");
-                localFragment.setArguments(bundle);
-
-                transaction.replace(R.id.localFragmentBuscaLocais, localFragment);
-                transaction.commit();
             }else{
                 Toast.makeText(LocalSearchFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
             }

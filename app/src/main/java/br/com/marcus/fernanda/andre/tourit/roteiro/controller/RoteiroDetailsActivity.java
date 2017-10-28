@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -250,21 +254,37 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         polylinePaths = new ArrayList<>();
-
-        int meioLista = Math.round(listaLocais.size()/2);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(listaLocais.get(meioLista).getLat(), listaLocais.get(meioLista).getLng()), 15);
-        map.moveCamera(cameraUpdate);
+        List<Marker> markers = new ArrayList<>();
         List<LatLng> listaLatLng = new ArrayList<>();
         for(Local local : listaLocais){
-            map.addMarker(new MarkerOptions()
+            markers.add(map.addMarker(new MarkerOptions()
                     .position(new LatLng(local.getLat(), local.getLng()))
-                    .title(local.getNome()));
+                    .title(local.getNome())));
             listaLatLng.add(new LatLng(local.getLat(), local.getLng()));
         }
 
         map.getUiSettings().setMapToolbarEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
+        if(markers.size() > 1) {
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (Marker marker : markers) {
+                builder.include(marker.getPosition());
+            }
+            LatLngBounds bounds = builder.build();
 
+            final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 125);
+
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.roteiroDetailsLinearLayout);
+            linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    map.moveCamera(cameraUpdate);
+                }
+            });
+        }else{
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 15);
+            map.moveCamera(cameraUpdate);
+        }
         new CriarRotaTask().execute(listaLatLng);
     }
 
