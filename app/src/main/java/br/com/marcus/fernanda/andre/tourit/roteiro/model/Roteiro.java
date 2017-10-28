@@ -21,6 +21,7 @@ public class Roteiro implements Serializable {
     private float notaRoteiro;
     private List<String> locaisRoteiro;
     private boolean publicado;
+    private boolean seguido;
     private transient Bitmap imagemRoteiro;
 
     public Roteiro() {
@@ -98,5 +99,14 @@ public class Roteiro implements Serializable {
 
     public void setPublicado(boolean publicado) {
         this.publicado = publicado;
+    }
+
+    @Exclude
+    public boolean isSeguido() {
+        return seguido;
+    }
+
+    public void setSeguido(boolean seguido) {
+        this.seguido = seguido;
     }
 }

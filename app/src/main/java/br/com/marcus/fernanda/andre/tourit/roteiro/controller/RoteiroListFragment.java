@@ -55,9 +55,21 @@ public class RoteiroListFragment extends Fragment {
             carregarMeusRoteirosBanco();
         } else if(bundle.getString("tipoRoteiro").equals("pesquisaRoteiros")){
             new PesquisaRoteirosTask().execute(bundle.getString("pesquisa"));
+        } else if(bundle.getString("tipoRoteiro").equals("roteirosSeguidos")){
+            carregarRoteirosSeguidos();
         }
 
         return view;
+    }
+
+    private void carregarRoteirosSeguidos() {
+        List<Roteiro> listaRoteirosSeguidos = new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarRoteirosSeguidos();
+        listaRoteiros.clear();
+
+        if(listaRoteirosSeguidos != null){
+            listaRoteiros.addAll(listaRoteirosSeguidos);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     private void carregarMeusRoteirosBanco() {
@@ -102,6 +114,8 @@ public class RoteiroListFragment extends Fragment {
         super.onResume();
         if(bundle.getString("tipoRoteiro").equals("meusRoteiros")) {
             carregarMeusRoteirosBanco();
+        }else if(bundle.getString("tipoRoteiro").equals("roteirosSeguidos")){
+            carregarRoteirosSeguidos();
         }
     }
 }

@@ -47,12 +47,31 @@ public class RoteiroService {
         return roteiro;
     }
 
+    public Roteiro salvarRoteiroSeguido(Roteiro roteiro, List<Local> locais) throws SQLException {
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+
+        roteiro.setSeguido(true);
+        Long id = roteiroDAO.salvarRoteiroSqlite(roteiro);
+        if(id >= 0) {
+            new LocalService(context, idUsuarioGoogle).salvarLocais(locais, id);
+        }else{
+            throw new SQLException("Erro no armazenamento do roteiro");
+        }
+        roteiro.setIdRoteiroSqlite(id);
+
+        return roteiro;
+    }
+
     public Roteiro consultarRoteiro(String idRoteiro) {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteiroSqlite(idRoteiro);
     }
 
     public List<Roteiro> consultarMeusRoteiros() {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarMeusRoteirosSqlite();
+    }
+
+    public List<Roteiro> consultarRoteirosSeguidos() {
+        return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteirosSeguidos();
     }
 
     public void excluirRoteiro(Roteiro roteiro){
@@ -62,6 +81,11 @@ public class RoteiroService {
             roteiroDAO.excluirRoteiroFirebase(roteiro.getIdRoteiroFirebase());
         }
         UsuarioDAO.excluirRoteiroUsuario(roteiro.getIdRoteiroFirebase());
+    }
+
+    public void excluirRoteiroSeguido(Roteiro roteiro) {
+        new RoteiroDAO(context, idUsuarioGoogle).excluirRoteiroSqlite(roteiro.getIdRoteiroSqlite());
+        UsuarioDAO.excluirRoteiroSeguidoUsuario(roteiro.getIdRoteiroFirebase());
     }
 
     public void alterarRoteiro(Roteiro roteiro, List<Local> listaLocais) {
@@ -86,6 +110,25 @@ public class RoteiroService {
             List<Roteiro> roteiros = roteiroDAO.buscarRoteirosUsuarioFirebase(roteirosId);
             LocalService localService = new LocalService(context, idUsuarioGoogle);
             for (Roteiro roteiro : roteiros) {
+                roteiro.setSeguido(false);
+                Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
+                List<Local> locais = new ArrayList<>();
+                for (String local : roteiro.getLocaisRoteiro()) {
+                    locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
+                }
+                localService.salvarLocais(locais, idRoteiro);
+                roteiro.setIdRoteiroSqlite(idRoteiro);
+                roteiro.setImagemRoteiro(montarImagemRoteiro(locais));
+                roteiroDAO.alterarRoteiroSQLite(roteiro);
+            }
+        }
+
+        List<String> roteirosSeguidosId = new UsuarioService().buscarRoteirosSeguidosUsuarioFirebase(idUsuarioGoogle);
+        if (roteirosSeguidosId != null) {
+            List<Roteiro> roteiros = roteiroDAO.buscarRoteirosUsuarioFirebase(roteirosSeguidosId);
+            LocalService localService = new LocalService(context, idUsuarioGoogle);
+            for (Roteiro roteiro : roteiros) {
+                roteiro.setSeguido(true);
                 Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
                 List<Local> locais = new ArrayList<>();
                 for (String local : roteiro.getLocaisRoteiro()) {

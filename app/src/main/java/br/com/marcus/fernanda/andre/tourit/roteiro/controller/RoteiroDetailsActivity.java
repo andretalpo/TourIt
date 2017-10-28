@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +103,16 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             }
         });
 
+        if(roteiro.isSeguido()){
+            alterarButton.setVisibility(View.GONE);
+            excluirButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new ExcluirRoteiroSeguidoTask().execute(roteiro);
+                }
+            });
+        }
+
         if(roteiro.getIdRoteiroSqlite() == null){//carrega locais da api - roteiros publicados
             alterarButton.setVisibility(View.GONE);
             excluirButton.setVisibility(View.GONE);
@@ -154,6 +165,27 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
             new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).excluirRoteiro(roteiro [0]);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean sucesso) {
+            Toast.makeText(RoteiroDetailsActivity.this, "Roteiro excluído com sucesso!", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            RoteiroDetailsActivity.this.finish();
+        }
+    }
+
+    private class ExcluirRoteiroSeguidoTask extends AsyncTask<Roteiro, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Excluindo roteiro.", "Aguarde", true, false);
+        }
+
+        @Override
+        protected Boolean doInBackground(Roteiro... roteiro) {
+            new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).excluirRoteiroSeguido(roteiro [0]);
             return true;
         }
 
@@ -316,14 +348,24 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
     private class SeguirRoteiroTask extends AsyncTask<Roteiro, Void, Void> {
         @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Seguindo roteiro.", "Aguarde", true, false);
+        }
+
+        @Override
         protected Void doInBackground(Roteiro... roteiro) {
             new UsuarioService().adicionarRoteiroSeguidoUsuario(MainActivity.idUsuarioGoogle, roteiro[0].getIdRoteiroFirebase());
-            //download do roteiro para o sqlite
+            try {
+                new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).salvarRoteiroSeguido(roteiro[0], listaLocais);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void nada) {
+            progressDialog.dismiss();
             Toast.makeText(RoteiroDetailsActivity.this, "Roteiro seguido com sucesso!", Toast.LENGTH_SHORT).show();
             RoteiroDetailsActivity.this.finish();
         }

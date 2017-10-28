@@ -230,6 +230,17 @@ public class UsuarioDAO {
         }
     }
 
+    public static void excluirRoteiroSeguidoUsuario(String idRoteiroFirebase) {
+        Usuario usuario = consultarUsuario("idGoogle", MainActivity.idUsuarioGoogle);
+        List<String> listaRoteiros = usuario.getRoteirosSeguidos();
+        for(int i = 0; i < listaRoteiros.size(); i++){
+            if(listaRoteiros.get(i).equals(idRoteiroFirebase)){
+                listaRoteiros.remove(i);
+            }
+            FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteirosSeguidos").setValue(listaRoteiros);
+        }
+    }
+
     public static List<String> buscarRoteirosUsuarioFirebase(String idUsuarioGoogle) {
         URL url = null;
         try {
@@ -262,6 +273,61 @@ public class UsuarioDAO {
             if (connection != null){
                 connection.disconnect();
             }
+        }
+        return null;
+    }
+
+    public static List<String> buscarRoteirosSeguidosUsuarioFirebase(String idUsuarioGoogle) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Usuarios.json?orderBy=%22idGoogle%22&equalTo=%22" + idUsuarioGoogle +"%22");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListRoteiroSeguido(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private static List<String> convertJSONToListRoteiroSeguido(JSONObject jsonUsuarios) {
+        try {
+            List<String> listaRoteiros = new ArrayList<>();
+            Iterator<String> iter = jsonUsuarios.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                JSONObject jsonUsuario = jsonUsuarios.getJSONObject(key);
+                JSONArray jsonRoteiros = jsonUsuario.getJSONArray("roteirosSeguidos");
+                for (int i = 0; i < jsonRoteiros.length(); i++){
+                    listaRoteiros.add(jsonRoteiros.getString(i));
+                }
+            }
+            return listaRoteiros;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return null;
     }

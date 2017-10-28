@@ -35,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOTA_ROTEIRO = "nota";
     public static final String COLUMN_IMAGEM_ROTEIRO = "imagem";
     public static final String COLUMN_PUBLICADO = "publicado";
+    public static final String COLUMN_SEGUIDO = "seguido";
     public static final String COLUMN_ID_ROTEIRO_FIREBASE = "id_roteiro_firebase";
 
     public DBHelper(Context context, String databaseName){
@@ -51,7 +52,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s REAL, " +
                 "%s BLOB, " +
                 "%s VARCHAR(50), " +
-                "%s INTEGER);", TABLE_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_NOME_ROTEIRO, COLUMN_CRIADOR_ROTEIRO, COLUMN_TIPO_ROTEIRO, COLUMN_NOTA_ROTEIRO, COLUMN_IMAGEM_ROTEIRO, COLUMN_ID_ROTEIRO_FIREBASE, COLUMN_PUBLICADO);
+                "%s INTEGER, " +
+                "%s INTEGER);", TABLE_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_NOME_ROTEIRO, COLUMN_CRIADOR_ROTEIRO, COLUMN_TIPO_ROTEIRO, COLUMN_NOTA_ROTEIRO, COLUMN_IMAGEM_ROTEIRO, COLUMN_ID_ROTEIRO_FIREBASE, COLUMN_PUBLICADO, COLUMN_SEGUIDO);
         tourItDB.execSQL(sql);
 
         sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +

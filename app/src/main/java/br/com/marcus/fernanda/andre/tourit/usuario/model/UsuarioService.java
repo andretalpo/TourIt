@@ -20,4 +20,8 @@ public class UsuarioService {
     public List<String> buscarRoteirosUsuarioFirebase(String idUsuarioGoogle) {
         return UsuarioDAO.buscarRoteirosUsuarioFirebase(idUsuarioGoogle);
     }
+
+    public List<String> buscarRoteirosSeguidosUsuarioFirebase(String idUsuarioGoogle) {
+        return UsuarioDAO.buscarRoteirosSeguidosUsuarioFirebase(idUsuarioGoogle);
+    }
 }

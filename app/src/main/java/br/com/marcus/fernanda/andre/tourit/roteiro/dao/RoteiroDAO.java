@@ -59,6 +59,13 @@ public class RoteiroDAO {
             publicado = 0;
         }
         contentValues.put(DBHelper.COLUMN_PUBLICADO, publicado);
+        int seguido;
+        if(roteiro.isSeguido()){
+            seguido = 1;
+        }else{
+            seguido = 0;
+        }
+        contentValues.put(DBHelper.COLUMN_SEGUIDO, seguido);
 
         Long id = sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
         sqLiteDatabase.close();
@@ -85,6 +92,12 @@ public class RoteiroDAO {
             }else{
                 roteiro.setPublicado(false);
             }
+
+            if(cursor.getInt(8) > 0){
+                roteiro.setSeguido(true);
+            }else{
+                roteiro.setSeguido(false);
+            }
             sqLiteDatabase.close();
             return roteiro;
         }
@@ -106,7 +119,7 @@ public class RoteiroDAO {
 
     public List<Roteiro> consultarMeusRoteirosSqlite() {
         sqLiteDatabase = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_ROTEIRO, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_ROTEIRO + " WHERE " + DBHelper.COLUMN_SEGUIDO + "=?", new String[]{"0"});
         if(cursor != null && cursor.getCount() > 0){
             List<Roteiro> listaRoteiros = new ArrayList<>();
             cursor.moveToFirst();
@@ -126,6 +139,39 @@ public class RoteiroDAO {
                     roteiro.setPublicado(false);
                 }
 
+                roteiro.setSeguido(false);
+                listaRoteiros.add(roteiro);
+            }while(cursor.moveToNext());
+
+            sqLiteDatabase.close();
+            return listaRoteiros;
+        }
+        return null;
+    }
+
+    public List<Roteiro> consultarRoteirosSeguidos() {
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_ROTEIRO + " WHERE " + DBHelper.COLUMN_SEGUIDO + "=?", new String[]{"1"});
+        if(cursor != null && cursor.getCount() > 0){
+            List<Roteiro> listaRoteiros = new ArrayList<>();
+            cursor.moveToFirst();
+            do{
+                Roteiro roteiro = new Roteiro();
+                roteiro.setIdRoteiroSqlite(cursor.getLong(0));
+                roteiro.setNomeRoteiro(cursor.getString(1));
+                roteiro.setCriadorRoteiro(cursor.getString(2));
+                roteiro.setTipoRoteiro(cursor.getString(3));
+                roteiro.setNotaRoteiro(cursor.getFloat(4));
+                roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(cursor.getBlob(5)));
+                roteiro.setIdRoteiroFirebase(cursor.getString(6));
+
+                if (cursor.getInt(7) > 0){
+                    roteiro.setPublicado(true);
+                }else{
+                    roteiro.setPublicado(false);
+                }
+
+                roteiro.setSeguido(true);
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
 
@@ -209,6 +255,15 @@ public class RoteiroDAO {
             publicado = 0;
         }
         contentValues.put(DBHelper.COLUMN_PUBLICADO, publicado);
+
+        int seguido;
+        if(roteiro.isSeguido()){
+            seguido = 1;
+        }else{
+            seguido = 0;
+        }
+        contentValues.put(DBHelper.COLUMN_SEGUIDO, seguido);
+
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
     }
 
