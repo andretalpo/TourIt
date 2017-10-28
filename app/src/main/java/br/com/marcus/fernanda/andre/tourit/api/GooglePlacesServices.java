@@ -31,7 +31,7 @@ public class GooglePlacesServices {
     public static List<Local> buscarLocais(String pesquisa){
         URL url = null;
         try {
-            url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&query="
+            url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&language=pt-BR&query="
                     + pesquisa.replaceAll(" ", ""));
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -139,7 +139,7 @@ public class GooglePlacesServices {
     public static List<AvaliacaoLocal> buscarAvaliacoesLocal(String idPlaces) {
         URL url = null;
         try {
-            url = new URL("https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&placeid=" + idPlaces);
+            url = new URL("https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&language=pt-BR&placeid=" + idPlaces);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -194,7 +194,7 @@ public class GooglePlacesServices {
     public static Local buscarLocalIdPlaces(String idPlaces) {
         URL url = null;
         try {
-            url = new URL("https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&placeid=" + idPlaces);
+            url = new URL("https://maps.googleapis.com/maps/api/place/details/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&language=pt-BR&placeid=" + idPlaces);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
