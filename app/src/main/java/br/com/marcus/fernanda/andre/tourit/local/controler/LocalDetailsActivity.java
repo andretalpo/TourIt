@@ -102,8 +102,12 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
         enderecoTextView.setText(local.getEndereco());
         notaTextView.setText(String.valueOf(local.getNota()));
         ratingBar.setRating(local.getNota());
-        for (String tipo : local.getTipo()) {
-            tipoTextView.append(tipo + " ");
+        for (int i = 0; i < local.getTipo().size(); i++) {
+            if(i < local.getTipo().size() - 1) {
+                tipoTextView.append(local.getTipo().get(i) + ", ");
+            } else {
+                tipoTextView.append(local.getTipo().get(i) + ".");
+            }
         }
 
         if(isConsultando()){

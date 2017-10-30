@@ -49,13 +49,13 @@ public class GooglePlacesServices {
                     }
                 }
                 catch (IOException e){
-                    //nada
+                    e.printStackTrace();
                 }
                 return convertJSONToListaLocais(new JSONObject(builder.toString()));
             }
         }
         catch (Exception e){
-            //nada
+            e.printStackTrace();
         }
         finally{
             if (connection != null){
@@ -83,8 +83,12 @@ public class GooglePlacesServices {
 
                 List<String> tipos = new ArrayList<>();
                 JSONArray jsonTipos = jsonLocal.getJSONArray("types");
+                ConstantesTipoLocal constantesTipoLocal = new ConstantesTipoLocal();
                 for (int j = 0; j < jsonTipos.length(); j++) {
-                    tipos.add(jsonTipos.getString(j));
+                    String tipo = constantesTipoLocal.getTipos().get(jsonTipos.getString(j));
+                    if(tipo != null){
+                        tipos.add(tipo);
+                    }
                 }
                 local.setTipo(tipos);
 
@@ -242,8 +246,12 @@ public class GooglePlacesServices {
 
             List<String> tipos = new ArrayList<>();
             JSONArray jsonTipos = jsonLocal.getJSONArray("types");
+            ConstantesTipoLocal constantesTipoLocal = new ConstantesTipoLocal();
             for (int j = 0; j < jsonTipos.length(); j++) {
-                tipos.add(jsonTipos.getString(j));
+                String tipo = constantesTipoLocal.getTipos().get(jsonTipos.getString(j));
+                if(tipo != null) {
+                    tipos.add(tipo);
+                }
             }
             local.setTipo(tipos);
 
