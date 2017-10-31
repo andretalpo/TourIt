@@ -74,12 +74,8 @@ public class GoogleDirectionsServices {
             for(int i = 0; i < jsonRoutes.length(); i++){
                 JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
                 JSONObject overview_polyline = jsonRoute.getJSONObject("overview_polyline");
-                JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
-                JSONObject jsonLeg = jsonLegs.getJSONObject(0);
-
                 polyline = overview_polyline.getString("points");
             }
-
             return decodePolyLine(polyline);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,7 +86,7 @@ public class GoogleDirectionsServices {
     private static List<LatLng> decodePolyLine(final String poly) {
         int len = poly.length();
         int index = 0;
-        List<LatLng> decoded = new ArrayList<LatLng>();
+        List<LatLng> decoded = new ArrayList<>();
         int lat = 0;
         int lng = 0;
 

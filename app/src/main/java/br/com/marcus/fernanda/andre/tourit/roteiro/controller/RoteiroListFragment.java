@@ -31,7 +31,6 @@ public class RoteiroListFragment extends Fragment {
     private static final String TAG = "roteiroListFragment";
 
     private List<Roteiro> listaRoteiros;
-    private RecyclerView roteirosRecyclerView;
     private RoteiroAdapter adapter;
     private Bundle bundle;
     private ProgressDialog progressDialog;
@@ -41,7 +40,7 @@ public class RoteiroListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_roteiro_list, container, false);
         view.setTag(TAG);
 
-        roteirosRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentRoteiroRecyclerView);
+        RecyclerView roteirosRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentRoteiroRecyclerView);
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         roteirosRecyclerView.setLayoutManager(layout);

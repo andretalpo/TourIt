@@ -11,12 +11,6 @@ public class AvaliacaoLocal implements Serializable {
     private String comentario;
     private float nota;
 
-    public AvaliacaoLocal(String nomeAvaliador, String comentario, float nota) {
-        this.nomeAvaliador = nomeAvaliador;
-        this.comentario = comentario;
-        this.nota = nota;
-    }
-
     public AvaliacaoLocal(){
         //vazio
     }

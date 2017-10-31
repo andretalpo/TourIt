@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.local.model.LocalViewHolder;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 

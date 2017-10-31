@@ -1,22 +1,13 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
-import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
-import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 
 public class PesquisaRoteirosActivity extends AppCompatActivity {
 

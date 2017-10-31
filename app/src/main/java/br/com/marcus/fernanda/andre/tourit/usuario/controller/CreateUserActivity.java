@@ -27,6 +27,7 @@ import java.net.URL;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 
@@ -140,6 +141,7 @@ public class CreateUserActivity extends AppCompatActivity {
         protected Boolean doInBackground(Usuario... usuario) {
             if(UsuarioDAO.consultarUsuario("username", usuario[0].getUsername()) == null){
                 UsuarioDAO.salvarUsuario(usuario[0], converterImagem());
+                new UsuarioDAO(CreateUserActivity.this, usuario[0].getIdGoogle()).salvarUsuarioSqlite(usuario[0]);
                 Usuario usuarioSalvo = null;
                 do {
                     usuarioSalvo = UsuarioDAO.consultarUsuario("idGoogle", usuario[0].getIdGoogle());

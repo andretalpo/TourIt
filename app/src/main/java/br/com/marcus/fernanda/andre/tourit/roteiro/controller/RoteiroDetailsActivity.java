@@ -292,10 +292,6 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         return listaLocais;
     }
 
-    public static void setListaLocais(List<Local> listaLocais) {
-        RoteiroDetailsActivity.listaLocais = listaLocais;
-    }
-
     private class CriarRotaTask extends AsyncTask<List<LatLng>, Void, List<LatLng>>{
 
         @Override

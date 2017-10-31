@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -34,7 +33,6 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
-import br.com.marcus.fernanda.andre.tourit.local.model.LocalAdapter;
 
 /**
  * Created by André on 30/09/2017.
@@ -167,8 +165,5 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         return localList;
     }
 
-    public static void setLocalList(List<Local> localList) {
-        LocalSearchFragment.localList = localList;
-    }
 }
 

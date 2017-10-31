@@ -43,8 +43,6 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
     private AvaliacaoLocalAdapter adapter;
     private static boolean consultando;
     private FloatingActionButton floatingActionButton;
-    private GoogleMap map;
-    private CameraUpdate cameraUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +119,6 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                new LocalDAO(LocalDetailsActivity.this, MainActivity.idUsuarioGoogle).deleteLocal(local.getIdPlaces());
                 List<Local> listaLocaisRoteiroAtual = CreateRoteiroActivity.getListaLocaisRoteiroAtual();
                 for(int i = 0; i<listaLocaisRoteiroAtual.size(); i++){
                     if(listaLocaisRoteiroAtual.get(i).getIdPlaces().equals(local.getIdPlaces())){
@@ -174,16 +171,15 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        map.addMarker(new MarkerOptions()
+        googleMap.addMarker(new MarkerOptions()
                 .anchor(0.0f, 1.0f)
                 .position(new LatLng(local.getLat(), local.getLng()))
                 .title(local.getNome()));
-        cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(local.getLat(), local.getLng()), 15);
-        map.moveCamera(cameraUpdate);
-        map.getUiSettings().setMyLocationButtonEnabled(false);
-        map.getUiSettings().setMapToolbarEnabled(false);
-        map.getUiSettings().setAllGesturesEnabled(false);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(local.getLat(), local.getLng()), 15);
+        googleMap.moveCamera(cameraUpdate);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
     }
 
     private class CarregarAvaliacoesAsyncTask extends AsyncTask<String, Void, List<AvaliacaoLocal>>{

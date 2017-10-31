@@ -2,8 +2,6 @@ package br.com.marcus.fernanda.andre.tourit.local.model;
 
 import android.graphics.Bitmap;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.Serializable;
 import java.util.List;
 

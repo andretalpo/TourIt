@@ -7,11 +7,11 @@ import java.util.Map;
  * Created by André on 30/10/2017.
  */
 
-public class ConstantesTipoLocal {
+class ConstantesTipoLocal {
 
     private Map<String, String> tipos = new HashMap<>();
 
-    public ConstantesTipoLocal(){
+    ConstantesTipoLocal(){
         tipos.put("establishment", "Estabelecimento");
         tipos.put("grocery_or_supermarket", "Mercado");
         tipos.put("health", "Saúde");

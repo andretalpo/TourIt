@@ -38,6 +38,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SEGUIDO = "seguido";
     public static final String COLUMN_ID_ROTEIRO_FIREBASE = "id_roteiro_firebase";
 
+    public static final String TABLE_USUARIO = "usuario";
+    public static final String COLUMN_ID_USUARIO_SQLITE = "_id_usuario";
+    public static final String COLUMN_ID_USUARIO_GOOGLE = "id_google";
+    public static final String COLUMN_NOME_USUARIO = "nome";
+    public static final String COLUMN_FOTO_USUARIO = "foto";
+    public static final String COLUMN_USERNAME = "username";
+
     public DBHelper(Context context, String databaseName){
         super(context, databaseName, null, DATABASE_VERSION);
     }
@@ -73,6 +80,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s INTEGER, " +
                 "FOREIGN KEY(%s) REFERENCES local(%s) ON DELETE CASCADE);", TABLE_TIPO, COLUMN_ID_TIPO, COLUMN_NOME_TIPO, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL, COLUMN_ID_LOCAL);
         tourItDB.execSQL(sql);
+
+        sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
+                "%s VARCHAR(100), " +
+                "%s VARCHAR(30), " +
+                "%s VARCHAR(30), " +
+                "%s BLOB);", TABLE_USUARIO, COLUMN_ID_USUARIO_SQLITE, COLUMN_ID_USUARIO_GOOGLE, COLUMN_NOME_USUARIO, COLUMN_USERNAME, COLUMN_FOTO_USUARIO);
+        tourItDB.execSQL(sql);
     }
 
     @Override
@@ -81,6 +95,7 @@ public class DBHelper extends SQLiteOpenHelper {
         tourItDB.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCAL);
         tourItDB.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPO);
         tourItDB.execSQL("DROP TABLE IF EXISTS " + TABLE_ROTEIRO);
+        tourItDB.execSQL("DROP TABLE IF EXISTS " + TABLE_USUARIO);
         onCreate(tourItDB);
 
     }

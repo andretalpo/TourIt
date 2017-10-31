@@ -1,5 +1,11 @@
 package br.com.marcus.fernanda.andre.tourit.usuario.dao;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -20,7 +26,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 /**
  * Created by André on 03/09/2017.
@@ -28,10 +36,31 @@ import br.com.marcus.fernanda.andre.tourit.usuario.model.Usuario;
 
 public class UsuarioDAO {
 
+    private Context context;
+    private String idUsuarioGoogle;
+    private DBHelper dbHelper;
+
+    public UsuarioDAO(Context context, String idUsuarioGoogle){
+        this.context = context;
+        this.dbHelper = new DBHelper(context, idUsuarioGoogle);
+    }
+
     public static void salvarUsuario(Usuario usuario, byte[] imagemBytes) {
         StorageReference storage = FirebaseStorage.getInstance().getReference();
         storage.child("imagemUsuario/" + usuario.getIdGoogle() + ".jpeg").putBytes(imagemBytes);
         FirebaseDatabase.getInstance().getReference().child("Usuarios").push().setValue(usuario);
+    }
+
+    public void salvarUsuarioSqlite(Usuario usuario) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_ID_USUARIO_GOOGLE, usuario.getIdGoogle());
+        contentValues.put(DBHelper.COLUMN_NOME_USUARIO, usuario.getNomeUsuario());
+        contentValues.put(DBHelper.COLUMN_USERNAME, usuario.getUsername());
+        contentValues.put(DBHelper.COLUMN_FOTO_USUARIO, ImageConverter.convertBitmapToByte(usuario.getFotoUsuario()));
+
+        sqLiteDatabase.insert(DBHelper.TABLE_USUARIO, null, contentValues);
+        sqLiteDatabase.close();
     }
 
     public static Usuario consultarUsuario(String parametro, String valor){
@@ -110,7 +139,7 @@ public class UsuarioDAO {
     private static Usuario convertJSONToUsuario(JSONObject jsonUusuarios) {
         try {
             Iterator<String> iter = jsonUusuarios.keys();
-            while (iter.hasNext()) {
+            if (iter.hasNext()) {
                 String key = iter.next();
                 JSONObject jsonUusuario = jsonUusuarios.getJSONObject(key);
                 Gson gson = new Gson();
@@ -350,4 +379,35 @@ public class UsuarioDAO {
         }
         return null;
     }
+
+    public void adicionarFotoUsuarioSqlite(String idGoogle, Bitmap bitmap) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_FOTO_USUARIO, ImageConverter.convertBitmapToByte(bitmap));
+        sqLiteDatabase.update(DBHelper.TABLE_USUARIO, contentValues, DBHelper.COLUMN_ID_USUARIO_GOOGLE + "=?", new String[]{String.valueOf(idGoogle)});
+    }
+
+    public Usuario consultarUsuarioSqlite(String idUsuarioGoogle) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_USUARIO + " WHERE " + DBHelper.COLUMN_ID_USUARIO_GOOGLE + " = ?", new String[] {idUsuarioGoogle});
+        if(cursor != null && cursor.getCount() > 0){
+            Usuario usuario = new Usuario();
+            cursor.moveToFirst();
+            usuario.setIdGoogle(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_USUARIO_GOOGLE)));
+            usuario.setNomeUsuario(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOME_USUARIO)));
+            usuario.setUsername(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_USERNAME)));
+
+            byte[] bytes = cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO));
+            if(bytes != null) {
+                usuario.setFotoUsuario(ImageConverter.convertByteToBitmap(bytes));
+            }
+
+            cursor.close();
+            sqLiteDatabase.close();
+            return usuario;
+        }
+        sqLiteDatabase.close();
+        return null;
+    }
+
 }

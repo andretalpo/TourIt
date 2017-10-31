@@ -3,12 +3,9 @@ package br.com.marcus.fernanda.andre.tourit.local.model;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -32,8 +29,7 @@ public class LocalAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.viewholder_local, parent, false);
-        LocalViewHolder viewHolder = new LocalViewHolder(view);
-        return viewHolder;
+        return new LocalViewHolder(view);
     }
 
     @Override

@@ -10,7 +10,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,6 +97,7 @@ public class RoteiroDAO {
             }else{
                 roteiro.setSeguido(false);
             }
+            cursor.close();
             sqLiteDatabase.close();
             return roteiro;
         }
@@ -142,7 +142,7 @@ public class RoteiroDAO {
                 roteiro.setSeguido(false);
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
-
+            cursor.close();
             sqLiteDatabase.close();
             return listaRoteiros;
         }
@@ -174,7 +174,7 @@ public class RoteiroDAO {
                 roteiro.setSeguido(true);
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
-
+            cursor.close();
             sqLiteDatabase.close();
             return listaRoteiros;
         }
@@ -228,7 +228,7 @@ public class RoteiroDAO {
 
     private static String convertJSONToKeyRoteiro(JSONObject jsonRoteiro) {
         Iterator<String> iter = jsonRoteiro.keys();
-        while (iter.hasNext()) {
+        if (iter.hasNext()) {
             return iter.next();
         }
         return null;

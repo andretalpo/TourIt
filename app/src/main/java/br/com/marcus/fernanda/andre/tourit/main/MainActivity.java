@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,15 +42,12 @@ import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MenuItem configuracoesUsuarioAdmItem;
     private ImageView navHeaderUsuarioImageView;
     private TextView navHeaderNomeUsuarioTextView;
     private TextView navHeaderUsernameTextView;
     private BroadcastReceiver broadcastReceiver;
-    private StorageReference storage;
     public static String idUsuarioGoogle;
     public static String nomeUsuario;
-    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +55,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        storage = FirebaseStorage.getInstance().getReference();
 
         registrarBroadcastReceiver();
 
@@ -70,13 +66,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        configuracoesUsuarioAdmItem = navigationView.getMenu().findItem(R.id.drawerItemConfiguracoesUsuarioAdm);
         View view = navigationView.getHeaderView(0);
         navHeaderUsuarioImageView = (ImageView) view.findViewById(R.id.navHeaderUsuarioImageView);
         navHeaderNomeUsuarioTextView = (TextView) view.findViewById(R.id.navHeaderNomeUsuarioTextView);
         navHeaderUsernameTextView = (TextView) view.findViewById(R.id.navHeaderUsernameTextView);
 
-        new CarregarDadosUsuarioTask().execute(idUsuarioGoogle);
+        personalizarMenu();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -97,22 +92,6 @@ public class MainActivity extends AppCompatActivity
 
         transaction.replace(R.id.locaisMainActivityFrameLayout, localFragment);
         transaction.commit();
-    }
-
-    private void baixarImagemUsuario(String idGoogle) {
-        StorageReference refImagemUsuario = storage.child("imagemUsuario/" + idGoogle + ".jpeg");
-        final long ONE_MEGABYTE = 200 * 200;
-        refImagemUsuario.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                navHeaderUsuarioImageView.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(MainActivity.this, "Erro na imagem", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -149,7 +128,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation_roteiro view configuracoesUsuarioAdmItem clicks here.
         int id = item.getItemId();
 
@@ -176,9 +155,30 @@ public class MainActivity extends AppCompatActivity
         unregisterReceiver(broadcastReceiver);
     }
 
-    private void personalizarMenu(Usuario usuario) {
+    private void baixarImagemUsuario(final String idGoogle) {
+        StorageReference refImagemUsuario = FirebaseStorage.getInstance().getReference().child("imagemUsuario/" + idGoogle + ".jpeg");
+        final long ONE_MEGABYTE = 200 * 200;
+        refImagemUsuario.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                new UsuarioDAO(MainActivity.this, idGoogle).adicionarFotoUsuarioSqlite(idGoogle, BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                navHeaderUsuarioImageView.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("Falha na imagem", exception.getMessage());
+            }
+        });
+    }
+
+    private void personalizarMenu() {
+        Usuario usuario = new UsuarioDAO(this, idUsuarioGoogle).consultarUsuarioSqlite(idUsuarioGoogle);
         navHeaderUsernameTextView.setText(usuario.getUsername());
         navHeaderNomeUsuarioTextView.setText(usuario.getNomeUsuario());
+        if(usuario.getFotoUsuario() != null){
+            navHeaderUsuarioImageView.setImageBitmap(usuario.getFotoUsuario());
+        }
     }
 
     private void irParaTelaLogin() {
@@ -227,29 +227,13 @@ public class MainActivity extends AppCompatActivity
         registerReceiver(broadcastReceiver, new IntentFilter("finishActivity"));
     }
 
-    private class CarregarDadosUsuarioTask extends AsyncTask<String, Void, Usuario> {
-
-        @Override
-        protected Usuario doInBackground(String... idGoogle) {
-            usuario = UsuarioDAO.consultarUsuario("idGoogle", idGoogle[0]);
-            nomeUsuario = usuario.getNomeUsuario();
-            return usuario;
-        }
-
-        @Override
-        protected void onPostExecute(Usuario usuario) {
-            if(usuario.isAdmnistrador()){
-                configuracoesUsuarioAdmItem.setVisible(true);
-            }
-            personalizarMenu(usuario);
-        }
-    }
-
     private class ReativarUsuarioTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... idGoogle) {
             String keyUsuario = UsuarioDAO.buscarKeyUsuario(idGoogle[0]);
-            UsuarioDAO.alterarStatusAtivo(keyUsuario, true);
+            if(keyUsuario != null) {
+                UsuarioDAO.alterarStatusAtivo(keyUsuario, true);
+            }
             return null;
         }
     }

@@ -4,9 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +67,7 @@ public class LocalDAO {
             cursor.moveToFirst();
             return cursor.getInt(0);
         }
+        cursor.close();
         sqLiteDatabase.close();
         return null;
     }
@@ -90,6 +89,7 @@ public class LocalDAO {
             local.setTipo(buscarTiposLocal(cursor.getInt(0)));
             return local;
         }
+        cursor.close();
         sqLiteDatabase.close();
         return null;
     }
@@ -105,6 +105,7 @@ public class LocalDAO {
             }while (cursor.moveToNext());
             return tipos;
         }
+        cursor.close();
         return null;
     }
 
@@ -131,7 +132,7 @@ public class LocalDAO {
                 local.setTipo(buscarTiposLocal(cursor.getInt(0)));
                 locais.add(local);
             }while (cursor.moveToNext());
-
+            cursor.close();
             sqLiteDatabase.close();
             return locais;
         }

@@ -1,7 +1,6 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
