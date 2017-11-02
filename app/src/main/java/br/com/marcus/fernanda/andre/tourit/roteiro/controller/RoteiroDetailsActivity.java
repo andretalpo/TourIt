@@ -2,6 +2,8 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -49,6 +52,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
     ProgressDialog progressDialog;
     private GoogleMap map;
+    private Roteiro roteiro;
     private static List<Local> listaLocais;
     private List<Polyline> polylinePaths;
     private ImageView seguirRoteiroButton;
@@ -65,7 +69,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         RatingBar roteiroRatingBar = (RatingBar) findViewById(R.id.avaliacaoRoteiroRoteiroDetailsRatingBar);
         ImageView roteiroImageView = (ImageView) findViewById(R.id.imagemRoteiroDetailsActivity);
 
-        final Roteiro roteiro = (Roteiro) getIntent().getSerializableExtra("roteiro");
+        roteiro = (Roteiro) getIntent().getSerializableExtra("roteiro");
 
         roteiro.setImagemRoteiro(ImageConverter.convertByteToBitmap(getIntent().getByteArrayExtra("imagemRoteiro")));
         roteiroImageView.setImageBitmap(roteiro.getImagemRoteiro());
@@ -143,7 +147,6 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
         roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
-
     }
 
     private void alterarRoteiro(Roteiro roteiro){
@@ -253,14 +256,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        polylinePaths = new ArrayList<>();
         List<Marker> markers = new ArrayList<>();
-        List<LatLng> listaLatLng = new ArrayList<>();
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_32);
         for(Local local : listaLocais){
             markers.add(map.addMarker(new MarkerOptions()
                     .position(new LatLng(local.getLat(), local.getLng()))
-                    .title(local.getNome())));
-            listaLatLng.add(new LatLng(local.getLat(), local.getLng()));
+                    .title(local.getNome()).icon(BitmapDescriptorFactory.fromBitmap(icon))));
         }
 
         map.getUiSettings().setMapToolbarEnabled(false);
@@ -271,6 +272,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
                 builder.include(marker.getPosition());
             }
             LatLngBounds bounds = builder.build();
+            buscarRota(roteiro.getRota());
 
             final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 125);
 
@@ -285,33 +287,19 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 15);
             map.moveCamera(cameraUpdate);
         }
-        new CriarRotaTask().execute(listaLatLng);
     }
 
     public static List<Local> getListaLocais() {
         return listaLocais;
     }
 
-    private class CriarRotaTask extends AsyncTask<List<LatLng>, Void, List<LatLng>>{
+    private void buscarRota(String rota){
+        polylinePaths = new ArrayList<>();
+        List<LatLng> listaPontos = GoogleDirectionsServices.decodePolyLine(rota);
+        PolylineOptions polylineOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.colorPrimary));
 
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Carregando roteiro", "Aguarde", true, false);
-        }
-
-        @Override
-        protected List<LatLng> doInBackground(List<LatLng>... listaLatLng) {
-            return GoogleDirectionsServices.criarRota(listaLatLng[0]);
-        }
-
-        @Override
-        protected void onPostExecute(List<LatLng> listaPontos) {
-            progressDialog.dismiss();
-            PolylineOptions polylineOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.colorAccent));
-
-            polylineOptions.addAll(listaPontos);
-            polylinePaths.add(map.addPolyline(polylineOptions));
-        }
+        polylineOptions.addAll(listaPontos);
+        polylinePaths.add(map.addPolyline(polylineOptions));
     }
 
     private class CarregarLocaisTask extends AsyncTask<Roteiro, Void, Void> {

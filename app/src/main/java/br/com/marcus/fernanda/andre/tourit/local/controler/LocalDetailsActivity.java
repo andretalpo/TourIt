@@ -3,6 +3,7 @@ package br.com.marcus.fernanda.andre.tourit.local.controler;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -171,10 +173,11 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_32);
         googleMap.addMarker(new MarkerOptions()
                 .anchor(0.0f, 1.0f)
                 .position(new LatLng(local.getLat(), local.getLng()))
-                .title(local.getNome()));
+                .title(local.getNome()).icon(BitmapDescriptorFactory.fromBitmap(icon)));
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(local.getLat(), local.getLng()), 15);
         googleMap.moveCamera(cameraUpdate);
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);

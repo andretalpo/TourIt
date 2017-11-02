@@ -23,6 +23,7 @@ public class Roteiro implements Serializable {
     private boolean publicado;
     private boolean seguido;
     private transient Bitmap imagemRoteiro;
+    private String rota;
 
     public Roteiro() {
     }
@@ -108,5 +109,13 @@ public class Roteiro implements Serializable {
 
     public void setSeguido(boolean seguido) {
         this.seguido = seguido;
+    }
+
+    public String getRota() {
+        return rota;
+    }
+
+    public void setRota(String rota) {
+        this.rota = rota;
     }
 }

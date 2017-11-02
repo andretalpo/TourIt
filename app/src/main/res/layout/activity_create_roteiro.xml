@@ -27,6 +27,7 @@
         android:id="@+id/tipoRoteiroActivitySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_geral"
         android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
         android:backgroundTint="@color/colorAccent" />
 

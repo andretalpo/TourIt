@@ -65,6 +65,7 @@ public class RoteiroDAO {
             seguido = 0;
         }
         contentValues.put(DBHelper.COLUMN_SEGUIDO, seguido);
+        contentValues.put(DBHelper.COLUMN_ROTA, roteiro.getRota());
 
         Long id = sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
         sqLiteDatabase.close();
@@ -97,6 +98,8 @@ public class RoteiroDAO {
             }else{
                 roteiro.setSeguido(false);
             }
+
+            roteiro.setRota(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ROTA)));
             cursor.close();
             sqLiteDatabase.close();
             return roteiro;
@@ -140,6 +143,7 @@ public class RoteiroDAO {
                 }
 
                 roteiro.setSeguido(false);
+                roteiro.setRota(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ROTA)));
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
             cursor.close();
@@ -172,6 +176,7 @@ public class RoteiroDAO {
                 }
 
                 roteiro.setSeguido(true);
+                roteiro.setRota(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ROTA)));
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
             cursor.close();
@@ -263,6 +268,7 @@ public class RoteiroDAO {
             seguido = 0;
         }
         contentValues.put(DBHelper.COLUMN_SEGUIDO, seguido);
+        contentValues.put(DBHelper.COLUMN_ROTA, roteiro.getRota());
 
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
     }

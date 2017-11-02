@@ -14,11 +14,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.api.GoogleDirectionsServices;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchActivity;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
@@ -173,6 +176,11 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
             try {
+                List<LatLng> latLngList = new ArrayList<>();
+                for(Local local : listaLocaisRoteiroAtual){
+                    latLngList.add(new LatLng(local.getLat(), local.getLng()));
+                }
+                roteiro[0].setRota(GoogleDirectionsServices.criarRota(latLngList));
                 roteiroAtual = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).salvarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
                 return true;
             } catch (SQLException e) {
@@ -201,6 +209,11 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
+            List<LatLng> latLngList = new ArrayList<>();
+            for(Local local : listaLocaisRoteiroAtual){
+                latLngList.add(new LatLng(local.getLat(), local.getLng()));
+            }
+            roteiro[0].setRota(GoogleDirectionsServices.criarRota(latLngList));
             new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle).alterarRoteiro(roteiro[0], listaLocaisRoteiroAtual);
             return true;
         }

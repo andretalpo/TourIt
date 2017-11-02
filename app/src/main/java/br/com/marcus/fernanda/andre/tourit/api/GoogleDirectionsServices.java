@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GoogleDirectionsServices {
 
-    public static List<LatLng> criarRota(List<LatLng> listaLocais) {
+    public static String criarRota(List<LatLng> listaLocais) {
         URL url = null;
         String waypoints = "";
         if(listaLocais.size() > 2) {
@@ -67,7 +67,7 @@ public class GoogleDirectionsServices {
         return null;
     }
 
-    private static List<LatLng> convertJSONToRota(JSONObject jsonObject) {
+    private static String convertJSONToRota(JSONObject jsonObject) {
         try {
             JSONArray jsonRoutes = jsonObject.getJSONArray("routes");
             String polyline = "";
@@ -76,14 +76,14 @@ public class GoogleDirectionsServices {
                 JSONObject overview_polyline = jsonRoute.getJSONObject("overview_polyline");
                 polyline = overview_polyline.getString("points");
             }
-            return decodePolyLine(polyline);
+            return polyline;
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private static List<LatLng> decodePolyLine(final String poly) {
+    public static List<LatLng> decodePolyLine(final String poly) {
         int len = poly.length();
         int index = 0;
         List<LatLng> decoded = new ArrayList<>();

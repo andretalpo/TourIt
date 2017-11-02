@@ -3,6 +3,8 @@ package br.com.marcus.fernanda.andre.tourit.local.controler;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -79,7 +82,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(LocalSearchFragment.this.getContext(), "Pesquisando local.", "Aguarde", true, false);
+            progressDialog = ProgressDialog.show(LocalSearchFragment.this.getContext(), "Pesquisando local.", "Aguarde", true, true);
         }
 
         @Override
@@ -95,11 +98,12 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
                     localList.clear();
                     localList.addAll(locais);
                     List<Marker> markers = new ArrayList<>();
+                    Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_32);
                     for (Local local : localList) {
-                        markers.add(map.addMarker(new MarkerOptions()
+                        map.addMarker(new MarkerOptions()
                                 .anchor(0.0f, 1.0f)
                                 .position(new LatLng(local.getLat(), local.getLng()))
-                                .title(local.getNome())));
+                                .title(local.getNome()).icon(BitmapDescriptorFactory.fromBitmap(icon)));
                         map.getUiSettings().setMyLocationButtonEnabled(false);
                         map.getUiSettings().setZoomControlsEnabled(false);
                     }
@@ -154,6 +158,9 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
     public void onResume() {
         super.onResume();
         searchView.clearFocus();
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
     }
 
     @Override
