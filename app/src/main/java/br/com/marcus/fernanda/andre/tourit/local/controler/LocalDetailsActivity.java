@@ -195,7 +195,9 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
         @Override
         protected void onPostExecute(List<AvaliacaoLocal> avaliacoes) {
             listaAvaliacoes.clear();
-            listaAvaliacoes.addAll(avaliacoes);
+            if(avaliacoes != null) {
+                listaAvaliacoes.addAll(avaliacoes);
+            }
             adapter.notifyDataSetChanged();
         }
     }

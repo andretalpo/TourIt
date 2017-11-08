@@ -333,7 +333,7 @@ public class RoteiroDAO {
     public List<Roteiro> consultarRoteirosPublicados(String pesquisa) {
         URL url = null;
         try {
-            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22publicado%22&equalTo=true");
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22publicado%22&equalTo=%22true%22");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

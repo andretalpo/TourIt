@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity
 
     private void personalizarMenu() {
         Usuario usuario = new UsuarioDAO(this, idUsuarioGoogle).consultarUsuarioSqlite(idUsuarioGoogle);
+        nomeUsuario = usuario.getNomeUsuario();
         navHeaderUsernameTextView.setText(usuario.getUsername());
         navHeaderNomeUsuarioTextView.setText(usuario.getNomeUsuario());
         if(usuario.getFotoUsuario() != null){
