@@ -390,7 +390,7 @@ public class RoteiroDAO {
 
     private List<Roteiro> filtrarResultados(List<Roteiro> roteiros, String filtro){
         List<Roteiro> roteirosFiltrado = new ArrayList<>();
-        List<Local> locais = GooglePlacesServices.buscarLocais(filtro);
+//        List<Local> locais = GooglePlacesServices.buscarLocais(filtro);
         for (Roteiro roteiro : roteiros) {
             if(roteiro.getTipoRoteiro().toLowerCase().trim().contains(filtro.toLowerCase())){
                 roteirosFiltrado.add(roteiro);
@@ -398,18 +398,18 @@ public class RoteiroDAO {
                 roteirosFiltrado.add(roteiro);
             } else if(roteiro.getCriadorRoteiro().toLowerCase().trim().contains(filtro.toLowerCase())){
                 roteirosFiltrado.add(roteiro);
-            } else{
-                if(locais != null){
-                    if (!locais.isEmpty()) {
-                        for (String idLocal : roteiro.getLocaisRoteiro()) {
-                            Local local = new Local();
-                            local.setIdPlaces(idLocal);
-                            if(locais.contains(local)){
-                                roteirosFiltrado.add(roteiro);
-                            }
-                        }
-                    }
-                }
+//            } else{
+//                if(locais != null){
+//                    if (!locais.isEmpty()) {
+//                        for (String idLocal : roteiro.getLocaisRoteiro()) {
+//                            Local local = new Local();
+//                            local.setIdPlaces(idLocal);
+//                            if(locais.contains(local)){
+//                                roteirosFiltrado.add(roteiro);
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
         Collections.sort(roteirosFiltrado, Collections.<Roteiro>reverseOrder());

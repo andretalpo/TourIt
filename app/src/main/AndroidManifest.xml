@@ -73,10 +73,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".roteiro.controller.MeusRoteirosActivity"
-            android:label="@string/title_activity_meus_roteiros" />
+            android:label="@string/title_activity_meus_roteiros"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".roteiro.controller.PesquisaRoteirosActivity"
-            android:label="@string/title_activity_pesquisa_roteiros"/>
+            android:label="@string/title_activity_pesquisa_roteiros"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

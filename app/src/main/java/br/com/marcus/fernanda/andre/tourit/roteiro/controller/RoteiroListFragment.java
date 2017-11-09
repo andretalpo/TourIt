@@ -121,4 +121,12 @@ public class RoteiroListFragment extends Fragment {
             carregarRoteirosSeguidos();
         }
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
 }
