@@ -412,7 +412,7 @@ public class RoteiroDAO {
                 }
             }
         }
-        Collections.sort(roteirosFiltrado);
+        Collections.sort(roteirosFiltrado, Collections.<Roteiro>reverseOrder());
         return roteirosFiltrado;
     }
 }
