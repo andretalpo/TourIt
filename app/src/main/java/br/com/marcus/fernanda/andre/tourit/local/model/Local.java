@@ -95,4 +95,15 @@ public class Local implements Serializable{
     public void setLng(double lng) {
         this.lng = lng;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Local local = (Local) obj;
+        return this.getIdPlaces().equals(local.getIdPlaces());
+    }
+
+    @Override
+    public int hashCode() {
+        return idPlaces.hashCode();
+    }
 }

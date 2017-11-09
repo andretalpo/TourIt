@@ -1,6 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.model;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by André on 30/09/2017.
  */
 
-public class Roteiro implements Serializable {
+public class Roteiro implements Serializable, Comparable {
 
     private Long idRoteiroSqlite;
     private String idRoteiroFirebase;
@@ -117,5 +118,19 @@ public class Roteiro implements Serializable {
 
     public void setRota(String rota) {
         this.rota = rota;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        Roteiro roteiro = (Roteiro) o;
+        float notaDesse = this.getNotaRoteiro();
+        float notaComparado = roteiro.getNotaRoteiro();
+        if(notaDesse > notaComparado){
+            return 1;
+        }
+        if(notaDesse < notaComparado){
+            return -1;
+        }
+        return 0;
     }
 }
