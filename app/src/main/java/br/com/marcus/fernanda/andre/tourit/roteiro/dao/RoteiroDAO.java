@@ -24,9 +24,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
-import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
@@ -390,7 +388,6 @@ public class RoteiroDAO {
 
     private List<Roteiro> filtrarResultados(List<Roteiro> roteiros, String filtro){
         List<Roteiro> roteirosFiltrado = new ArrayList<>();
-//        List<Local> locais = GooglePlacesServices.buscarLocais(filtro);
         for (Roteiro roteiro : roteiros) {
             if(roteiro.getTipoRoteiro().toLowerCase().trim().contains(filtro.toLowerCase())){
                 roteirosFiltrado.add(roteiro);
@@ -398,18 +395,12 @@ public class RoteiroDAO {
                 roteirosFiltrado.add(roteiro);
             } else if(roteiro.getCriadorRoteiro().toLowerCase().trim().contains(filtro.toLowerCase())){
                 roteirosFiltrado.add(roteiro);
-//            } else{
-//                if(locais != null){
-//                    if (!locais.isEmpty()) {
-//                        for (String idLocal : roteiro.getLocaisRoteiro()) {
-//                            Local local = new Local();
-//                            local.setIdPlaces(idLocal);
-//                            if(locais.contains(local)){
-//                                roteirosFiltrado.add(roteiro);
-//                            }
-//                        }
-//                    }
-//                }
+            } else {
+                for (String local : roteiro.getNomeLocaisRoteiro()) {
+                    if(local.toLowerCase().trim().contains(filtro.toLowerCase().trim())){
+                        roteirosFiltrado.add(roteiro);
+                    }
+                }
             }
         }
         Collections.sort(roteirosFiltrado, Collections.<Roteiro>reverseOrder());

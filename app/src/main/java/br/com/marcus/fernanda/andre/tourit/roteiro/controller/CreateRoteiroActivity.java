@@ -81,11 +81,14 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                         if(!listaLocaisRoteiroAtual.isEmpty()) {
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
                             roteiroAtual.setTipoRoteiro((String) spinner.getSelectedItem());
-                            List<String> locais = new ArrayList<>();
+                            List<String> idLocais = new ArrayList<>();
+                            List<String> nomeLocais = new ArrayList<>();
                             for (Local local : listaLocaisRoteiroAtual) {
-                                locais.add(local.getIdPlaces());
+                                idLocais.add(local.getIdPlaces());
+                                nomeLocais.add(local.getNome());
                             }
-                            roteiroAtual.setLocaisRoteiro(locais);
+                            roteiroAtual.setIdLocaisRoteiro(idLocais);
+                            roteiroAtual.setNomeLocaisRoteiro(nomeLocais);
                             RoteiroService roteiroService = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle);
                             roteiroAtual.setNotaRoteiro(roteiroService.calcularNotaRoteiro(listaLocaisRoteiroAtual));
                             roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
@@ -108,11 +111,14 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
                             roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
                             roteiroAtual.setCriadorRoteiro(MainActivity.nomeUsuario);
-                            List<String> locais = new ArrayList<>();
+                            List<String> idLocais = new ArrayList<>();
+                            List<String> nomeLocais = new ArrayList<>();
                             for (Local local : listaLocaisRoteiroAtual) {
-                                locais.add(local.getIdPlaces());
+                                idLocais.add(local.getIdPlaces());
+                                nomeLocais.add(local.getNome());
                             }
-                            roteiroAtual.setLocaisRoteiro(locais);
+                            roteiroAtual.setIdLocaisRoteiro(idLocais);
+                            roteiroAtual.setNomeLocaisRoteiro(nomeLocais);
                             RoteiroService roteiroService = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle);
                             roteiroAtual.setNotaRoteiro(roteiroService.calcularNotaRoteiro(listaLocaisRoteiroAtual));
                             roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));

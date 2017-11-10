@@ -94,7 +94,7 @@ public class RoteiroListFragment extends Fragment {
             List<Local> locais = new ArrayList<>();
             for (Roteiro roteiro : listaRoteiros) {
                 locais.clear();
-                for (String local : roteiro.getLocaisRoteiro()) {
+                for (String local : roteiro.getIdLocaisRoteiro()) {
                     locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
                 }
                 roteiro.setImagemRoteiro(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).montarImagemRoteiro(locais));

@@ -20,7 +20,8 @@ public class Roteiro implements Serializable, Comparable {
     private String criadorRoteiro;
     private String tipoRoteiro;
     private float notaRoteiro;
-    private List<String> locaisRoteiro;
+    private List<String> idLocaisRoteiro;
+    private List<String> nomeLocaisRoteiro;
     private boolean publicado;
     private boolean seguido;
     private transient Bitmap imagemRoteiro;
@@ -87,12 +88,12 @@ public class Roteiro implements Serializable, Comparable {
         this.notaRoteiro = notaRoteiro;
     }
 
-    public List<String> getLocaisRoteiro() {
-        return locaisRoteiro;
+    public List<String> getIdLocaisRoteiro() {
+        return idLocaisRoteiro;
     }
 
-    public void setLocaisRoteiro(List<String> locaisRoteiro) {
-        this.locaisRoteiro = locaisRoteiro;
+    public void setIdLocaisRoteiro(List<String> idLocaisRoteiro) {
+        this.idLocaisRoteiro = idLocaisRoteiro;
     }
 
     public boolean isPublicado() {
@@ -118,6 +119,14 @@ public class Roteiro implements Serializable, Comparable {
 
     public void setRota(String rota) {
         this.rota = rota;
+    }
+
+    public List<String> getNomeLocaisRoteiro() {
+        return nomeLocaisRoteiro;
+    }
+
+    public void setNomeLocaisRoteiro(List<String> nomeLocaisRoteiro) {
+        this.nomeLocaisRoteiro = nomeLocaisRoteiro;
     }
 
     @Override

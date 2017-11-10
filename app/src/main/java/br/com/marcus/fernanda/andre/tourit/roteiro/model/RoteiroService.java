@@ -112,7 +112,7 @@ public class RoteiroService {
                 roteiro.setSeguido(false);
                 Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
                 List<Local> locais = new ArrayList<>();
-                for (String local : roteiro.getLocaisRoteiro()) {
+                for (String local : roteiro.getIdLocaisRoteiro()) {
                     locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
                 }
                 localService.salvarLocais(locais, idRoteiro);
@@ -130,7 +130,7 @@ public class RoteiroService {
                 roteiro.setSeguido(true);
                 Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
                 List<Local> locais = new ArrayList<>();
-                for (String local : roteiro.getLocaisRoteiro()) {
+                for (String local : roteiro.getIdLocaisRoteiro()) {
                     locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
                 }
                 localService.salvarLocais(locais, idRoteiro);

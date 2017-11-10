@@ -310,7 +310,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         protected Void doInBackground(Roteiro... roteiro) {
-            for (String local : roteiro[0].getLocaisRoteiro()) {
+            for (String local : roteiro[0].getIdLocaisRoteiro()) {
                 listaLocais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
             }
             LocalDetailsActivity.setConsultando(true);
