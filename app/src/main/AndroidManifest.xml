@@ -80,6 +80,7 @@
         <activity
             android:name=".roteiro.controller.PesquisaRoteirosActivity"
             android:label="@string/title_activity_pesquisa_roteiros"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
     </application>
 

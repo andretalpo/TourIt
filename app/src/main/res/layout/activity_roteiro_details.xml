@@ -29,6 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/padding_geral"
+                    android:id="@+id/nomeRoteiroRoteiroDetailsTextView"
                     android:text="@string/title_activity_roteiro_details" />
 
                 <ImageView
@@ -97,30 +98,18 @@
                 app:civ_border_width="1dp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="8dp"
-                android:id="@+id/botaoPraAmarOBotao"
-                android:src="@drawable/ic_person"/>
-
-            <TextView
-                android:id="@+id/nomeRoteiroRoteiroDetailsTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imagemRoteiroDetailsActivity"
-                android:gravity="center_horizontal"
-                android:paddingBottom="20dp"
-                android:paddingTop="10dp"
-                android:text="Alo Goianinha"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:id="@+id/toggleMapRoteiroDetailsImageView"
+                android:src="@drawable/ic_map_gray"/>
 
             <LinearLayout
                 android:id="@+id/criadorRoteiroDetailsLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/nomeRoteiroRoteiroDetailsTextView"
+                android:layout_below="@id/imagemRoteiroDetailsActivity"
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
 

@@ -149,7 +149,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
         roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
 
-        ImageView mapaToggle = (ImageView) findViewById(R.id.botaoPraAmarOBotao);
+        ImageView mapaToggle = (ImageView) findViewById(R.id.toggleMapRoteiroDetailsImageView);
         final FrameLayout mapaLayout = (FrameLayout) findViewById(R.id.mapaRotaRoteiroDetailsFrameLayout);
         mapaToggle.setOnClickListener(new View.OnClickListener() {
             @Override

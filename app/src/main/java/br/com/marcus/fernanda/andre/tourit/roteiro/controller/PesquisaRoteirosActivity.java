@@ -45,6 +45,7 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
 
                 transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
                 transaction.commit();
+                searchView.requestFocus();
                 return false;
             }
 
@@ -53,5 +54,7 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        searchView.requestFocus();
     }
 }
