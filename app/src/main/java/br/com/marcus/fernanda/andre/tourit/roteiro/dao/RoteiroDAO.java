@@ -325,7 +325,7 @@ public class RoteiroDAO {
     }
 
     public void publicarRoteiro(String idRoteiroFirebase) {
-        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(idRoteiroFirebase).child("publicado").setValue("true");
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(idRoteiroFirebase).child("publicado").setValue(true);
         sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_PUBLICADO, 1);
@@ -335,7 +335,7 @@ public class RoteiroDAO {
     public List<Roteiro> consultarRoteirosPublicados(String pesquisa) {
         URL url = null;
         try {
-            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22publicado%22&equalTo=%22true%22");
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22publicado%22&equalTo=true");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -388,8 +388,12 @@ public class RoteiroDAO {
 
     private List<Roteiro> filtrarResultados(List<Roteiro> roteiros, String filtro){
         List<Roteiro> roteirosFiltrado = new ArrayList<>();
+        int cont = 0;
         for (Roteiro roteiro : roteiros) {
-            if(roteiro.getTipoRoteiro().toLowerCase().trim().contains(filtro.toLowerCase())){
+            if(filtro.equals("todos") && cont < 5){
+                roteirosFiltrado.add(roteiro);
+                cont++;
+            } else if(roteiro.getTipoRoteiro().toLowerCase().trim().contains(filtro.toLowerCase())){
                 roteirosFiltrado.add(roteiro);
             } else if(roteiro.getNomeRoteiro().toLowerCase().trim().contains(filtro.toLowerCase())){
                 roteirosFiltrado.add(roteiro);

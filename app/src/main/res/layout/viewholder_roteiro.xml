@@ -3,6 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/card_background"
+    android:layout_margin="4dp"
     android:padding="4dp"
     android:elevation="@dimen/elevation_geral"
     android:id="@+id/roteiroViewHolderLayout">
@@ -32,12 +34,14 @@
             android:id="@+id/nomeRoteiroViewHolderTextView"
             android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
             android:textSize="@dimen/textSizeListas"
+            android:textColor="@color/cor_branco"
             android:text="qwert"
             android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/cor_branco"
             android:id="@+id/tipoRoteiroViewHolderTextView"
             android:text="tipo"
             android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
@@ -49,7 +53,7 @@
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:id="@+id/roteiroViewHolderRatingBar"
             android:rating="5"
-            android:progressTint="@color/cor_dourado"
+            android:progressTint="@color/cor_branco"
             android:layout_toEndOf="@id/imagemRoteiroViewHolderImageView"
             android:layout_below="@id/tipoRoteiroViewHolderTextView"/>
 

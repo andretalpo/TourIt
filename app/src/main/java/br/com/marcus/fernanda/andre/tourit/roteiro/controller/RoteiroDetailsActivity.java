@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -147,6 +148,19 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
         roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
+
+        ImageView mapaToggle = (ImageView) findViewById(R.id.botaoPraAmarOBotao);
+        final FrameLayout mapaLayout = (FrameLayout) findViewById(R.id.mapaRotaRoteiroDetailsFrameLayout);
+        mapaToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mapaLayout.getVisibility()!= View.GONE) {
+                    mapaLayout.setVisibility(View.GONE);
+                }else{
+                    mapaLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void alterarRoteiro(Roteiro roteiro){

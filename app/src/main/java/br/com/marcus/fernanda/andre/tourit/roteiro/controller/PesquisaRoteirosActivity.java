@@ -16,6 +16,17 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisa_roteiros);
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("pesquisa", "todos");
+        bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+        roteiroFragment.setArguments(bundle);
+
+        transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+        transaction.commit();
+
         final SearchView searchView = (SearchView) findViewById(R.id.pesquisaRoteirosSearchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
