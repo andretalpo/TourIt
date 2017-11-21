@@ -21,10 +21,104 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/cardsPesquisaRoteiroActivityLinearLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:text="Melhores Roteiros"
+                android:id="@+id/melhoresPesquisaRoteiroActivityButton"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/cor_branco"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="@dimen/padding_geral"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/padding_geral"
+            android:layout_marginEnd="@dimen/padding_geral"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:text="Cultural"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/cor_branco"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/padding_geral"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:text="Aventura"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/cor_branco"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/padding_geral"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/padding_geral"
+            android:layout_marginEnd="@dimen/padding_geral"
+            android:layout_marginBottom="@dimen/padding_geral"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:text="Gastronômico"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/cor_branco"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/padding_geral"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:text="Natureza"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/cor_branco"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/padding_geral"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
         android:id="@+id/pesquisaRoteirosFrameLayout"/>
 
 </LinearLayout>

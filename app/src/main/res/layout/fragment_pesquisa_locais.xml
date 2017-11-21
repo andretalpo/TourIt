@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,12 +19,30 @@
 
     </FrameLayout>
 
-    <android.support.v7.widget.SearchView
-        android:id="@+id/buscaLocaisSearchView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:alpha="0.5"
-        android:background="@color/cor_branco" />
+        android:alpha="0.65"
+        android:background="@color/cor_branco">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/filtroLocalSearchImageView"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_filtro"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/buscaLocaisSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:defaultQueryHint="Pesquisa de locais"
+            android:layout_toStartOf="@id/filtroLocalSearchImageView" />
+
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/localFragmentBuscaLocais"

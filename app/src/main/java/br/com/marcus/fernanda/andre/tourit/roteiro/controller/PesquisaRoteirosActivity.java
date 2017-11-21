@@ -5,7 +5,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 
@@ -16,16 +19,24 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisa_roteiros);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+        final LinearLayout cardsLayout = (LinearLayout) findViewById(R.id.cardsPesquisaRoteiroActivityLinearLayout);
+        Button melhoresButton = (Button) findViewById(R.id.melhoresPesquisaRoteiroActivityButton);
+        melhoresButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardsLayout.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RoteiroListFragment roteiroFragment = new RoteiroListFragment();
 
-        Bundle bundle = new Bundle();
-        bundle.putString("pesquisa", "todos");
-        bundle.putString("tipoRoteiro", "pesquisaRoteiros");
-        roteiroFragment.setArguments(bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", "todos");
+                bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+                roteiroFragment.setArguments(bundle);
 
-        transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
-        transaction.commit();
+                transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+                transaction.commit();
+            }
+        });
 
         final SearchView searchView = (SearchView) findViewById(R.id.pesquisaRoteirosSearchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

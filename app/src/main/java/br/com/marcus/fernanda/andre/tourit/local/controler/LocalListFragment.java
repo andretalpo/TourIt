@@ -48,10 +48,13 @@ public class LocalListFragment extends Fragment {
 
         bundle = getArguments();
         if(bundle.getString("acao").equals("pesquisaLocal")){
-            adapter = new LocalAdapter(LocalSearchFragment.getLocalList(), getActivity());
+            List<Local> locais = LocalSearchFragment.getLocalList();
+            adapter = new LocalAdapter(locais, getActivity());
             locaisRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            container.setVisibility(View.VISIBLE);
+            if(!locais.isEmpty()){
+                container.setVisibility(View.VISIBLE);
+            }
         }else if(bundle.getString("acao").equals("consultaLocaisRoteiroAtual")){
             LocalDetailsActivity.setConsultando(false);
             container.setVisibility(View.VISIBLE);

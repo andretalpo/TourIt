@@ -1,6 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,7 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -36,6 +42,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
 
 /**
  * Created by André on 30/09/2017.
@@ -49,6 +56,11 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
     private GoogleMap map;
     private static List<Local> localList;
     private ProgressDialog progressDialog;
+    private ImageView filtroImageView;
+    private int distanciaFiltro;
+    private SeekBar distanciaSeekBar;
+    private boolean abertoAgora;
+    private boolean distanciaBoolean;
 
     @Nullable
     @Override
@@ -56,6 +68,75 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         view = inflater.inflate(R.layout.fragment_pesquisa_locais, container, false);
         view.setTag(TAG);
         localList = new ArrayList<>();
+        distanciaBoolean = false;
+        distanciaFiltro = 15000;
+        abertoAgora = false;
+
+
+        filtroImageView = (ImageView) view.findViewById(R.id.filtroLocalSearchImageView);
+        filtroImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View filtroLayout = inflater.inflate(R.layout.dialog_filtro_local, null);
+                final TextView distanciaKm = (TextView) filtroLayout.findViewById(R.id.distanciaLabelTextView);
+
+                distanciaSeekBar = (SeekBar) filtroLayout.findViewById(R.id.distanciaSeekBarDialogFiltro);
+                Switch distanciaSwitch = (Switch) filtroLayout.findViewById(R.id.distanciaSwitchDialogFiltro);
+                distanciaSwitch.setChecked(distanciaBoolean);
+                distanciaSeekBar.setEnabled(false);
+                if(distanciaSwitch.isChecked()){
+                    distanciaSeekBar.setEnabled(true);
+                }
+
+                distanciaKm.setText(distanciaFiltro/1000 + "Km");
+
+                distanciaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if(isChecked) {
+                            distanciaSeekBar.setEnabled(true);
+                            distanciaBoolean = true;
+                        }else {
+                            distanciaSeekBar.setEnabled(false);
+                            distanciaBoolean = false;
+                        }
+                    }
+                });
+                distanciaSeekBar.setProgress(distanciaFiltro);
+                distanciaSeekBar.incrementProgressBy(1000);
+                distanciaSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        distanciaKm.setText(progress/1000 + " Km");
+                        distanciaFiltro = progress;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
+
+                Switch abertoAgoraSwitch = (Switch) filtroLayout.findViewById(R.id.abertoSwitchDialogFiltro);
+                abertoAgoraSwitch.setChecked(abertoAgora);
+                abertoAgoraSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        abertoAgora = isChecked;
+                    }
+                });
+                Dialog dialog = new Dialog(getContext());
+                dialog.setTitle("Filtro");
+                dialog.setContentView(filtroLayout);
+                dialog.show();
+            }
+        });
 
         searchView = (SearchView) view.findViewById(R.id.buscaLocaisSearchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -87,6 +168,27 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
 
         @Override
         protected List<Local> doInBackground(String... pesquisa) {
+
+            if(abertoAgora){
+                if(distanciaBoolean){
+                    if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
+                        if(!CreateRoteiroActivity.getListaLocaisRoteiroAtual().isEmpty()){
+                            Local local = CreateRoteiroActivity.getListaLocaisRoteiroAtual().get(CreateRoteiroActivity.getListaLocaisRoteiroAtual().size()-1);
+                            LatLng latLng = new LatLng(local.getLat(), local.getLng());
+                            return GooglePlacesServices.buscarLocais(pesquisa[0], distanciaFiltro, abertoAgora, latLng);
+                        }
+                    }
+                }
+                return GooglePlacesServices.buscarLocais(pesquisa[0], abertoAgora);
+            }else if(distanciaBoolean){
+                if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
+                    if(!CreateRoteiroActivity.getListaLocaisRoteiroAtual().isEmpty()){
+                        Local local = CreateRoteiroActivity.getListaLocaisRoteiroAtual().get(CreateRoteiroActivity.getListaLocaisRoteiroAtual().size()-1);
+                        LatLng latLng = new LatLng(local.getLat(), local.getLng());
+                        return GooglePlacesServices.buscarLocais(pesquisa[0], distanciaFiltro, latLng);
+                    }
+                }
+            }
             return GooglePlacesServices.buscarLocais(pesquisa[0]);
         }
 
@@ -94,8 +196,8 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         protected void onPostExecute(List<Local> locais) {
             progressDialog.dismiss();
             if(locais != null){
+                localList.clear();
                 if(!locais.isEmpty()) {
-                    localList.clear();
                     localList.addAll(locais);
                     List<Marker> markers = new ArrayList<>();
                     Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_32);
@@ -128,19 +230,18 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(localList.get(0).getLat(), localList.get(0).getLng()), 10);
                         map.moveCamera(cameraUpdate);
                     }
-
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    LocalListFragment localFragment = new LocalListFragment();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("acao", "pesquisaLocal");
-                    localFragment.setArguments(bundle);
-
-                    transaction.replace(R.id.localFragmentBuscaLocais, localFragment);
-                    transaction.commit();
                 }else{
                     Toast.makeText(LocalSearchFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
                 }
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                LocalListFragment localFragment = new LocalListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("acao", "pesquisaLocal");
+                localFragment.setArguments(bundle);
+
+                transaction.replace(R.id.localFragmentBuscaLocais, localFragment);
+                transaction.commit();
             }else{
                 Toast.makeText(LocalSearchFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
             }

@@ -3,6 +3,8 @@ package br.com.marcus.fernanda.andre.tourit.api;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +51,7 @@ public class GooglePlacesServices {
                 catch (IOException e){
                     e.printStackTrace();
                 }
-                return convertJSONToListaLocais(new JSONObject(builder.toString()));
+                return convertJSONToListaLocaisText(new JSONObject(builder.toString()));
             }
         }
         catch (Exception e){
@@ -63,9 +65,120 @@ public class GooglePlacesServices {
         return null;
     }
 
-    private static List<Local> convertJSONToListaLocais(JSONObject json) {
+    public static List<Local> buscarLocais(String pesquisa, int distancia, boolean abertoAgora, LatLng latLng){
+        URL url = null;
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&language=pt-BR&keyword="
+                    + pesquisa.replaceAll(" ", "") + "&location=" + latLng.latitude + "," + latLng.longitude + "&radius=" + distancia + "&opennow");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListaLocaisNearby(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    public static List<Local> buscarLocais(String pesquisa, boolean abertoAgora){
+        URL url = null;
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&language=pt-BR&query="
+                    + pesquisa.replaceAll(" ", "") + "&opennow");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListaLocaisText(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    public static List<Local> buscarLocais(String pesquisa, int distancia, LatLng latLng){
+        URL url = null;
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&language=pt-BR&keyword="
+                    + pesquisa.replaceAll(" ", "")+ "&location=" + latLng.latitude + "," + latLng.longitude + "&radius=" + distancia);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListaLocaisNearby(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private static List<Local> convertJSONToListaLocaisText(JSONObject json) {
+        List<Local> listaLocais = new ArrayList<>();
         try{
-            List<Local> listaLocais = new ArrayList<>();
             JSONArray jsonLocais = json.getJSONArray("results");
             for (int i = 0; i < jsonLocais.length(); i++) {
                 JSONObject jsonLocal = jsonLocais.getJSONObject(i);
@@ -97,11 +210,53 @@ public class GooglePlacesServices {
 
                 listaLocais.add(local);
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            return listaLocais;
+        }
+    }
+
+    private static List<Local> convertJSONToListaLocaisNearby(JSONObject json) {
+        List<Local> listaLocais = new ArrayList<>();
+        try{
+            JSONArray jsonLocais = json.getJSONArray("results");
+            for (int i = 0; i < jsonLocais.length(); i++) {
+                JSONObject jsonLocal = jsonLocais.getJSONObject(i);
+                Local local = new Local();
+                local.setIdPlaces(jsonLocal.getString("place_id"));
+                local.setNome(jsonLocal.getString("name"));
+                local.setNota((float)jsonLocal.getDouble("rating"));
+                local.setEndereco(jsonLocal.getString("vicinity"));
+
+                JSONArray jsonFotos = jsonLocal.getJSONArray("photos");
+                JSONObject jsonFoto = jsonFotos.getJSONObject(0);
+                local.setFoto(buscarFotoLocal(jsonFoto.getString("photo_reference")));
+
+                List<String> tipos = new ArrayList<>();
+                JSONArray jsonTipos = jsonLocal.getJSONArray("types");
+                ConstantesTipoLocal constantesTipoLocal = new ConstantesTipoLocal();
+                for (int j = 0; j < jsonTipos.length(); j++) {
+                    String tipo = constantesTipoLocal.getTipos().get(jsonTipos.getString(j));
+                    if(tipo != null){
+                        tipos.add(tipo);
+                    }
+                }
+                local.setTipo(tipos);
+
+                JSONObject jsonGeometry = jsonLocal.getJSONObject("geometry");
+                JSONObject jsonLatLng = jsonGeometry.getJSONObject("location");
+                local.setLat(jsonLatLng.getDouble("lat"));
+                local.setLng(jsonLatLng.getDouble("lng"));
+
+                listaLocais.add(local);
+            }
             return listaLocais;
         } catch (JSONException e) {
             e.printStackTrace();
+        } finally {
+            return listaLocais;
         }
-        return null;
     }
 
     private static Bitmap buscarFotoLocal(String referencia) {

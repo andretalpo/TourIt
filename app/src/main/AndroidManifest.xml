@@ -66,6 +66,7 @@
         <activity
             android:name=".local.controler.LocalSearchActivity"
             android:label="@string/title_activity_local_search"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".roteiro.controller.RoteiroDetailsActivity"
