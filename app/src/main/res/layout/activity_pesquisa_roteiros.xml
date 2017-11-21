@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorAccent"
-                android:text="Gastronômico"
+                android:text="Gastronomia"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/cor_branco"
