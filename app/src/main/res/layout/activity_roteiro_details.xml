@@ -20,16 +20,17 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <RelativeLayout
+                android:id="@+id/toolbarRoteiroDetailsRelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/nomeRoteiroRoteiroDetailsTextView"
                     style="@style/Base.TextAppearance.AppCompat.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/padding_geral"
-                    android:id="@+id/nomeRoteiroRoteiroDetailsTextView"
                     android:text="@string/title_activity_roteiro_details" />
 
                 <ImageView

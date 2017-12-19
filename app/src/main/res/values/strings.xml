@@ -211,4 +211,10 @@
     <string name="configuracoes">Configurações</string>
     <string name="roteiros_criados">Roteiros Criados</string>
     <string name="roteiros_seguidos">Roteiros Seguidos</string>
+    <string name="aceitar">Aceitar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="mensagem_excluir">Deseja excluir o roteiro?</string>
+    <string name="mensagem_publicar">Deseja publicar o roteiro?</string>
+    <string name="mensagem_seguir">Deseja seguir o roteiro?</string>
+    <string name="mensagem_deixar_de_seguir">Deseja deixar de seguir o roteiro?</string>
 </resources>

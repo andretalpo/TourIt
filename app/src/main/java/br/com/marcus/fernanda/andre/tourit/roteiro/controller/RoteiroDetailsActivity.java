@@ -1,6 +1,8 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -79,7 +81,22 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         excluirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new ExcluirRoteiroTask().execute(roteiro);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_excluir);
+
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new ExcluirRoteiroTask().execute(roteiro);
+                    }
+                });
+                alertDialogBuilder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
             }
         });
 
@@ -98,8 +115,23 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             publicarRoteiroButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    roteiro.setPublicado(true);
-                    new PublicarRoteiroTask().execute(roteiro);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_publicar);
+
+                    alertDialogBuilder.setCancelable(false);
+                    alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            roteiro.setPublicado(true);
+                            new PublicarRoteiroTask().execute(roteiro);
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alert = alertDialogBuilder.create();
+                    alert.show();
                 }
             });
         }
@@ -108,7 +140,22 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         seguirRoteiroButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SeguirRoteiroTask().execute(roteiro);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_seguir);
+
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new SeguirRoteiroTask().execute(roteiro);
+                    }
+                });
+                alertDialogBuilder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
             }
         });
 
@@ -117,7 +164,22 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             excluirButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ExcluirRoteiroSeguidoTask().execute(roteiro);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_deixar_de_seguir);
+
+                    alertDialogBuilder.setCancelable(false);
+                    alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            new ExcluirRoteiroSeguidoTask().execute(roteiro);
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alert = alertDialogBuilder.create();
+                    alert.show();
                 }
             });
         }
