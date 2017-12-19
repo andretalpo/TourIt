@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:onClick="desativarUsuario"
-        android:text="Desativar Usuário"
+        android:text="@string/desativar_usuario"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
         android:background="@drawable/bordas_botao"

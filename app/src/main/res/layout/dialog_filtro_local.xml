@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Distância "
+        android:text="@string/distancia"
         android:layout_alignParentEnd="true"
         android:id="@+id/distanciaSwitchDialogFiltro"/>
 
@@ -41,6 +41,6 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/distanciaSeekBarDialogFiltro"
         android:id="@+id/abertoSwitchDialogFiltro"
-        android:text="Aberto agora " />
+        android:text="@string/aberto_agora" />
 
 </RelativeLayout>

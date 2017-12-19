@@ -117,7 +117,7 @@
                     android:id="@+id/labelNomeCriadorRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Criador: " />
+                    android:text="@string/criador" />
 
                 <TextView
                     android:id="@+id/nomeCriadorRoteiroDetailsTextView"
@@ -140,7 +140,7 @@
                     android:id="@+id/labelTipoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tipo: " />
+                    android:text="@string/tipo" />
 
                 <TextView
                     android:id="@+id/tipoRoteiroRoteiroDetailsTextView"

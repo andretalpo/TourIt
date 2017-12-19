@@ -9,16 +9,16 @@
         <item
             android:id="@+id/drawerItemPesquisaRoteiros"
             android:icon="@drawable/ic_search"
-            android:title="Pesquisa de Roteiros"/>
+            android:title="@string/pesquisa_de_roteiros"/>
         <item
             android:id="@+id/drawerItemConfiguracoesUsuarioAdm"
             android:icon="@drawable/ic_person"
             android:visible="false"
-            android:title="Usuários" />
+            android:title="@string/usuarios" />
         <item
             android:id="@+id/drawerItemConfiguracoesUsuarioComum"
             android:icon="@drawable/ic_settings"
-            android:title="Configurações" />
+            android:title="@string/configuracoes" />
         <item
             android:id="@+id/drawerItemLogout"
             android:icon="@drawable/ic_exit_to_app_black_24dp"

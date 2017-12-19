@@ -192,4 +192,23 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_pesquisa_roteiros">Pesquisa de Roteiros</string>
+    <string name="desativar_usuario">Desativar usuário</string>
+    <string name="adicionar_local">Adicionar Local</string>
+    <string name="login">Login</string>
+    <string name="melhores_roteiros">Melhores Roteiros</string>
+    <string name="cultural">Cultural</string>
+    <string name="aventura">Aventura</string>
+    <string name="gastronomia">Gastronomia</string>
+    <string name="natureza">Natureza</string>
+    <string name="criador">Criador:</string>
+    <string name="tipo">Tipo:</string>
+    <string name="distancia">Distância</string>
+    <string name="aberto_agora">Aberto agora</string>
+    <string name="local">Local</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="pesquisa_de_roteiros">Pesquisa de Roteiros</string>
+    <string name="usuarios">Usuários</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="roteiros_criados">Roteiros Criados</string>
+    <string name="roteiros_seguidos">Roteiros Seguidos</string>
 </resources>

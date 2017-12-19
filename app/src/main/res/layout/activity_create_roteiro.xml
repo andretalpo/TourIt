@@ -42,7 +42,7 @@
         android:drawableStart="@drawable/ic_add_3"
         android:gravity="start|center_vertical"
         android:paddingStart="10dp"
-        android:text="Adicionar Local"
+        android:text="@string/adicionar_local"
         android:textStyle="bold" />
 
     <FrameLayout

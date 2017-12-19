@@ -28,7 +28,7 @@
         android:gravity="center"
         android:paddingStart="@dimen/paddingLeftBotaoLogin"
         android:paddingEnd="@dimen/paddingLateralBotao"
-        android:text="Login"
+        android:text="@string/login"
         android:textAllCaps="true"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="@dimen/tamanhoFonteBotaoCriarUsuario"
