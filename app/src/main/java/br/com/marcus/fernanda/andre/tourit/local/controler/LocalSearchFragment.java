@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -139,6 +140,9 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         });
 
         searchView = (SearchView) view.findViewById(R.id.buscaLocaisSearchView);
+        EditText editTextSV = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        editTextSV.setTextColor(getResources().getColor(R.color.secondary_text_material_light));
+        editTextSV.setHintTextColor(getResources().getColor(R.color.secondary_text_material_light));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

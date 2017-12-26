@@ -24,4 +24,5 @@
     <dimen name="paddingLeftTextViewLocalDetailsActivity">10dp</dimen>
     <dimen name="textSizeListas">18sp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="padding_button_buscar_local">20dp</dimen>
 </resources>

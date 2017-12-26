@@ -118,12 +118,14 @@
                     android:id="@+id/labelNomeCriadorRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
                     android:text="@string/criador" />
 
                 <TextView
                     android:id="@+id/nomeCriadorRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
                     android:layout_centerHorizontal="true"
                     android:text="André Talpo" />
 
@@ -141,12 +143,14 @@
                     android:id="@+id/labelTipoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
                     android:text="@string/tipo" />
 
                 <TextView
                     android:id="@+id/tipoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
                     android:layout_centerHorizontal="true"
                     android:text="Romântico" />
 

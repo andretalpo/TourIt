@@ -81,7 +81,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         excluirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_excluir);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_excluir);
 
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
@@ -115,7 +115,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             publicarRoteiroButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_publicar);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_publicar);
 
                     alertDialogBuilder.setCancelable(false);
                     alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
@@ -140,7 +140,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         seguirRoteiroButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_seguir);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_seguir);
 
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
@@ -164,7 +164,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             excluirButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this).setMessage(R.string.mensagem_deixar_de_seguir);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_deixar_de_seguir);
 
                     alertDialogBuilder.setCancelable(false);
                     alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
@@ -242,7 +242,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Excluindo roteiro.", "Aguarde", true, false);
+            progressDialog = new ProgressDialog(RoteiroDetailsActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.excluindo_roteiro));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(false);
+            progressDialog.show();
         }
 
         @Override

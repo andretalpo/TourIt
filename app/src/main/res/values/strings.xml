@@ -84,9 +84,9 @@
 
     <string name="continuar">Continuar</string>
     <string name="logout">Logout</string>
-    <string name="username">Username:</string>
-    <string name="nome">Nome:</string>
-    <string name="email">Email:</string>
+    <string name="username">Username: </string>
+    <string name="nome">Nome: </string>
+    <string name="email">Email: </string>
     <string name="nome_usuario_logado">Usuário</string>
     <string name="username_logado">Username</string>
     <string name="google_maps_key">AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4</string>
@@ -200,8 +200,8 @@
     <string name="aventura">Aventura</string>
     <string name="gastronomia">Gastronomia</string>
     <string name="natureza">Natureza</string>
-    <string name="criador">Criador:</string>
-    <string name="tipo">Tipo:</string>
+    <string name="criador">Criador: </string>
+    <string name="tipo">Tipo: </string>
     <string name="distancia">Distância</string>
     <string name="aberto_agora">Aberto agora</string>
     <string name="local">Local</string>
@@ -224,4 +224,5 @@
     <string name="desativacao">Desativação</string>
     <string name="desativando_usuario">Desativando usuário</string>
     <string name="usuario_desativado">Usuário desativado</string>
+    <string name="excluindo_roteiro">Excluindo roteiro</string>
 </resources>
