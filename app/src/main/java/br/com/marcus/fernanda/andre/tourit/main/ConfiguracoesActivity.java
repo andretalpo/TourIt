@@ -45,7 +45,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int qualBotao) {
-                        progressDialog = ProgressDialog.show(ConfiguracoesActivity.this, "Desativação", "Desativando usuário", true, false);
+                        progressDialog = ProgressDialog.show(ConfiguracoesActivity.this, getResources().getString(R.string.desativacao), getResources().getString(R.string.desativando_usuario), true, false);
                         new DesativarUsuarioTask().execute(getIntent().getStringExtra("idGoogle"));
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
@@ -74,7 +74,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
-            Toast.makeText(ConfiguracoesActivity.this, "Usuário desativado", Toast.LENGTH_LONG).show();
+            Toast.makeText(ConfiguracoesActivity.this, getResources().getString(R.string.usuario_desativado), Toast.LENGTH_LONG).show();
             irParaTelaLogin();
             finishMainActivity();
         }

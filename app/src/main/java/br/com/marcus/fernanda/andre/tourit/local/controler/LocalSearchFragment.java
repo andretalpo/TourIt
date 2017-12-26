@@ -163,7 +163,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(LocalSearchFragment.this.getContext(), "Pesquisando local.", "Aguarde", true, true);
+            progressDialog = ProgressDialog.show(LocalSearchFragment.this.getContext(), getResources().getString(R.string.pesquisando_local), getResources().getString(R.string.aguarde), true, true);
         }
 
         @Override

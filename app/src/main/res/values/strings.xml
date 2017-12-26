@@ -217,4 +217,11 @@
     <string name="mensagem_publicar">Deseja publicar o roteiro?</string>
     <string name="mensagem_seguir">Deseja seguir o roteiro?</string>
     <string name="mensagem_deixar_de_seguir">Deseja deixar de seguir o roteiro?</string>
+    <string name="pesquisando_local">Pesquisando local</string>
+    <string name="aguarde">Aguarde</string>
+    <string name="deslogaando_usuario">Deslogando usuário</string>
+    <string name="conectando">Conectando</string>
+    <string name="desativacao">Desativação</string>
+    <string name="desativando_usuario">Desativando usuário</string>
+    <string name="usuario_desativado">Usuário desativado</string>
 </resources>
