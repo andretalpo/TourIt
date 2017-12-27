@@ -61,7 +61,12 @@ public class AdmUsuariosActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(AdmUsuariosActivity.this, "Busca", "Listando usuários", true, false);
+            progressDialog = new ProgressDialog(AdmUsuariosActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.busca));
+            progressDialog.setMessage(getResources().getString(R.string.listando_usuarios));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -78,7 +83,7 @@ public class AdmUsuariosActivity extends AppCompatActivity {
                 listaUsuarios.addAll(usuarios);
                 adapter.notifyDataSetChanged();
             }else{
-                Toast.makeText(AdmUsuariosActivity.this, "A busca não retornou resultados.", Toast.LENGTH_LONG).show();
+                Toast.makeText(AdmUsuariosActivity.this, getResources().getString(R.string.busca_sem_resultado), Toast.LENGTH_LONG).show();
             }
         }
     }

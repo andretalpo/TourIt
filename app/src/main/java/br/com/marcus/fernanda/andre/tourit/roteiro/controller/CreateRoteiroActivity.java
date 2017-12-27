@@ -94,10 +94,10 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new AlterarRoteiroTask().execute(roteiroAtual);
                         }else{
-                            Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.necessario_local), Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        Toast.makeText(CreateRoteiroActivity.this, "O nome deve ter ao menos quarto caracteres", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.minimo_nome_roteiro), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -124,10 +124,10 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new SalvarRoteiroTask().execute(roteiroAtual);
                         }else{
-                            Toast.makeText(CreateRoteiroActivity.this, "Necessário inserir um local", Toast.LENGTH_SHORT).show();    
+                            Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.necessario_local), Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        Toast.makeText(CreateRoteiroActivity.this, "O nome deve ter ao menos quarto caracteres", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.minimo_nome_roteiro), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -144,11 +144,11 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
     private void inicializarSpinnerTipo() {
         listaTiposRoteiro.clear();
-        listaTiposRoteiro.add("Natureza");
-        listaTiposRoteiro.add("Gastronomia");
-        listaTiposRoteiro.add("Aventura");
-        listaTiposRoteiro.add("Cultural");
-        listaTiposRoteiro.add("Romântico");
+        listaTiposRoteiro.add(getResources().getString(R.string.natureza));
+        listaTiposRoteiro.add(getResources().getString(R.string.gastronomia));
+        listaTiposRoteiro.add(getResources().getString(R.string.aventura));
+        listaTiposRoteiro.add(getResources().getString(R.string.cultural));
+        listaTiposRoteiro.add(getResources().getString(R.string.romantico));
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaTiposRoteiro);
         spinner.setAdapter(adapter);
     }
@@ -176,7 +176,12 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(CreateRoteiroActivity.this, "Criando roteiro.", "Aguarde", true, false);
+            progressDialog = new ProgressDialog(CreateRoteiroActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.criando_roteiro));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -198,10 +203,10 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean sucesso) {
             progressDialog.dismiss();
             if (sucesso){
-                Toast.makeText(CreateRoteiroActivity.this, "Roteiro criado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.roteiro_criado_sucesso), Toast.LENGTH_SHORT).show();
                 irParaTelaRoteiroDetails();
             } else{
-                Toast.makeText(CreateRoteiroActivity.this, "Falha na criação de roteiro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.falha_criacao_roteiro), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -210,7 +215,12 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(CreateRoteiroActivity.this, "Salvando alterações.", "Aguarde", true, false);
+            progressDialog = new ProgressDialog(CreateRoteiroActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.salvando_alteracoes));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -228,10 +238,10 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean sucesso) {
             progressDialog.dismiss();
             if (sucesso){
-                Toast.makeText(CreateRoteiroActivity.this, "Roteiro salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.roteiro_salvo_sucesso), Toast.LENGTH_SHORT).show();
                 finish();
             } else{
-                Toast.makeText(CreateRoteiroActivity.this, "Falha na alteração do roteiro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.falha_alteacao_roteiro), Toast.LENGTH_SHORT).show();
             }
         }
     }

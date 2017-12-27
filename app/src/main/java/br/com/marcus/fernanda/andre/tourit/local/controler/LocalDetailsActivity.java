@@ -129,7 +129,7 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
                 }
                 CreateRoteiroActivity.setListaLocaisRoteiroAtual(listaLocaisRoteiroAtual);
                 inicializarBotaoAdicionar();
-                Toast.makeText(LocalDetailsActivity.this, "Local excluído com sucesso.", Toast.LENGTH_LONG).show();
+                Toast.makeText(LocalDetailsActivity.this, getResources().getString(R.string.local_excluido_sucesso), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -145,7 +145,7 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
                 }
                 CreateRoteiroActivity.getListaLocaisRoteiroAtual().add(local);
                 inicializarBotaoExcluir();
-                Toast.makeText(LocalDetailsActivity.this, "Local adicionado com sucesso.", Toast.LENGTH_LONG).show();
+                Toast.makeText(LocalDetailsActivity.this, getResources().getString(R.string.local_adicionado_sucesso), Toast.LENGTH_LONG).show();
             }
         });
     }

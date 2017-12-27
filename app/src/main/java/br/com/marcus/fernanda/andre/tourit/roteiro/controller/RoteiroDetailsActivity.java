@@ -258,7 +258,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         protected void onPostExecute(Boolean sucesso) {
-            Toast.makeText(RoteiroDetailsActivity.this, "Roteiro excluído com sucesso!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoteiroDetailsActivity.this, getResources().getString(R.string.roteiro_excluido_sucesso), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
             RoteiroDetailsActivity.this.finish();
         }
@@ -268,7 +268,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Excluindo roteiro.", "Aguarde", true, false);
+            progressDialog = new ProgressDialog(RoteiroDetailsActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.excluindo_roteiro));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -279,7 +284,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         protected void onPostExecute(Boolean sucesso) {
-            Toast.makeText(RoteiroDetailsActivity.this, "Roteiro excluído com sucesso!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoteiroDetailsActivity.this, getResources().getString(R.string.roteiro_excluido_sucesso), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
             RoteiroDetailsActivity.this.finish();
         }
@@ -297,7 +302,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Publicando roteiro.", "Aguarde", true, false);
+            progressDialog = new ProgressDialog(RoteiroDetailsActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.plubicando_roteiro));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -310,10 +320,10 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         protected void onPostExecute(Boolean sucesso) {
             progressDialog.dismiss();
             if (sucesso){
-                Toast.makeText(RoteiroDetailsActivity.this, "Roteiro publicado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RoteiroDetailsActivity.this, getResources().getString(R.string.roteiro_publicado_sucesso), Toast.LENGTH_SHORT).show();
                 finish();
             } else{
-                Toast.makeText(RoteiroDetailsActivity.this, "Falha na publicação do roteiro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RoteiroDetailsActivity.this, getResources().getString(R.string.falha_publicar_roteiro), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -386,7 +396,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     private class CarregarLocaisTask extends AsyncTask<Roteiro, Void, Void> {
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Carregando locais.", "Aguarde", true, false);
+            progressDialog = new ProgressDialog(RoteiroDetailsActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.carregando_locais));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -434,7 +449,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     private class SeguirRoteiroTask extends AsyncTask<Roteiro, Void, Void> {
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(RoteiroDetailsActivity.this, "Seguindo roteiro.", "Aguarde", true, false);
+            progressDialog = new ProgressDialog(RoteiroDetailsActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.seguindo_roteiro));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -451,7 +471,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         @Override
         protected void onPostExecute(Void nada) {
             progressDialog.dismiss();
-            Toast.makeText(RoteiroDetailsActivity.this, "Roteiro seguido com sucesso!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoteiroDetailsActivity.this, getResources().getString(R.string.roteiro_seguido_sucesso), Toast.LENGTH_SHORT).show();
             RoteiroDetailsActivity.this.finish();
         }
     }

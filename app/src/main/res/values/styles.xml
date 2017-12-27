@@ -21,7 +21,7 @@
 
     </style>
 
-    <style name="ProgressTheme" parent="@android:style/Theme.Material.Dialog.Alert">
+    <style name="ProgressTheme" parent="Theme.AppCompat.Dialog">
 
         <item name="android:background">@color/cor_branco</item>
         <item name="android:colorAccent">@color/colorAccent</item>

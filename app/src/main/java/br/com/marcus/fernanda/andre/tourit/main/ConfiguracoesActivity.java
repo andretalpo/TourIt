@@ -40,12 +40,17 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
     private void solicitarConfirmacaoInativacao() {
         new AlertDialog.Builder(this)
-                .setTitle("Bloqueio de conta")
-                .setMessage("Você realmente deseja bloquear sua conta?")
+                .setTitle(getResources().getString(R.string.bloqueio_conta))
+                .setMessage(getResources().getString(R.string.confirmar_bloqueio_conta))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int qualBotao) {
-                        progressDialog = ProgressDialog.show(ConfiguracoesActivity.this, getResources().getString(R.string.desativacao), getResources().getString(R.string.desativando_usuario), true, false);
+                        progressDialog = new ProgressDialog(ConfiguracoesActivity.this, R.style.ProgressTheme);
+                        progressDialog.setTitle(getResources().getString(R.string.desativacao));
+                        progressDialog.setMessage(getResources().getString(R.string.desativando_usuario));
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
                         new DesativarUsuarioTask().execute(getIntent().getStringExtra("idGoogle"));
                     }})
                 .setNegativeButton(android.R.string.no, null).show();

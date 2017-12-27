@@ -85,7 +85,7 @@ public class CreateUserActivity extends AppCompatActivity {
             usuario.setAtivo(true);
             new CriarUsuarioTask().execute(usuario);
         }else{
-            Toast.makeText(CreateUserActivity.this, "Seu username deve conter no mínimo quatro dígitos", Toast.LENGTH_LONG).show();
+            Toast.makeText(CreateUserActivity.this, getResources().getString(R.string.minimo_nome_usuario), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -134,7 +134,12 @@ public class CreateUserActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(CreateUserActivity.this, "Criação", "Criando usuário", true, false);
+            progressDialog = new ProgressDialog(CreateUserActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.criacao));
+            progressDialog.setMessage(getResources().getString(R.string.criando_usuario));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
@@ -160,7 +165,7 @@ public class CreateUserActivity extends AppCompatActivity {
                 usernameCriado = true;
                 irParaTelaPrincipal();
             }else{
-                Toast.makeText(CreateUserActivity.this, "Username já utilizado.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateUserActivity.this, getResources().getString(R.string.username_utilizado), Toast.LENGTH_SHORT).show();
                 usernameEditText.setText("");
             }
         }

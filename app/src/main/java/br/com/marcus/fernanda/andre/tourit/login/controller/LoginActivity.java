@@ -20,16 +20,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
@@ -114,7 +110,12 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        progressDialog = ProgressDialog.show(this, getResources().getString(R.string.aguarde), getResources().getString(R.string.conectando), true, false);
+        progressDialog = new ProgressDialog(LoginActivity.this, R.style.ProgressTheme);
+        progressDialog.setTitle(getResources().getString(R.string.aguarde));
+        progressDialog.setMessage(getResources().getString(R.string.conectando));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         // Resultado da intent de login
         if (requestCode == RC_SIGN_IN) {
@@ -125,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
             } else {
                 //Login do Google falhou
-                Toast.makeText(this, "Falha no login", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getResources().getString(R.string.falha_login), Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         }
@@ -143,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             new ConsultarUsuarioExistenteTask().execute(mAuth.getCurrentUser().getUid());
                         }else {
-                            Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, getResources().getString(R.string.erro_login), Toast.LENGTH_SHORT).show();
                             Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                             mGoogleApiClient.disconnect();
                             mGoogleApiClient.connect();
@@ -172,7 +173,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signOut(){
-        final ProgressDialog dialog = ProgressDialog.show(this, getResources().getString(R.string.deslogaando_usuario), getResources().getString(R.string.aguarde), true, false);
+        progressDialog = new ProgressDialog(LoginActivity.this, R.style.ProgressTheme);
+        progressDialog.setTitle(getResources().getString(R.string.deslogaando_usuario));
+        progressDialog.setMessage(getResources().getString(R.string.aguarde));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         mAuth.signOut();
         mGoogleApiClient.connect();
         mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
@@ -183,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResult(@NonNull Status status) {
                             if(status.isSuccess()) {
-                                dialog.dismiss();
+                                progressDialog.dismiss();
                             }
                         }
                     });
@@ -211,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(LoginActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, getResources().getString(R.string.erro_conexao), Toast.LENGTH_LONG).show();
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)

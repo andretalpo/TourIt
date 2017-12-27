@@ -167,7 +167,12 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(LocalSearchFragment.this.getContext(), getResources().getString(R.string.pesquisando_local), getResources().getString(R.string.aguarde), true, true);
+            progressDialog = new ProgressDialog(LocalSearchFragment.this.getContext(), R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.pesquisando_local));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
         }
 
         @Override
@@ -235,7 +240,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
                         map.moveCamera(cameraUpdate);
                     }
                 }else{
-                    Toast.makeText(LocalSearchFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LocalSearchFragment.this.getContext(), getResources().getString(R.string.nenhum_resultado_pesquisa), Toast.LENGTH_SHORT).show();
                 }
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 LocalListFragment localFragment = new LocalListFragment();
@@ -247,7 +252,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
                 transaction.replace(R.id.localFragmentBuscaLocais, localFragment);
                 transaction.commit();
             }else{
-                Toast.makeText(LocalSearchFragment.this.getContext(), "Nenhum resultado para a pesquisa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LocalSearchFragment.this.getContext(), getResources().getString(R.string.nenhum_resultado_pesquisa), Toast.LENGTH_SHORT).show();
             }
         }
     }

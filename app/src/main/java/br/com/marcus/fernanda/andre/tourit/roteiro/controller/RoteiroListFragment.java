@@ -85,7 +85,12 @@ public class RoteiroListFragment extends Fragment {
     private class PesquisaRoteirosTask extends AsyncTask<String, Void, List<Roteiro>> {
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(RoteiroListFragment.this.getContext(), "Buscando roteiros.", "Aguarde", true, true);
+            progressDialog = new ProgressDialog(RoteiroListFragment.this.getContext(), R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.buscando_roteiros));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
         }
 
         @Override
@@ -105,7 +110,7 @@ public class RoteiroListFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Roteiro> roteiros) {
             if(listaRoteiros.isEmpty()){
-                Toast.makeText(RoteiroListFragment.this.getContext(), "Nenhum roteiro encontrado.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RoteiroListFragment.this.getContext(), getResources().getString(R.string.nenhum_roteiro_encontrado), Toast.LENGTH_SHORT).show();
             }
             progressDialog.dismiss();
             adapter.notifyDataSetChanged();
