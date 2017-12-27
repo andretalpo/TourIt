@@ -21,12 +21,12 @@
 
     </style>
 
-    <style name="ProgressTheme" parent="Theme.AppCompat.Dialog">
+    <style name="ProgressTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
 
         <item name="android:background">@color/cor_branco</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/primary_text_material_light</item>
-        <item name="android:textColorSecondary">@color/secondary_text_material_light</item>
+        <item name="android:textColorSecondary">@color/primary_text_material_light</item>
 
     </style>
 

@@ -387,7 +387,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     private void buscarRota(String rota){
         polylinePaths = new ArrayList<>();
         List<LatLng> listaPontos = GoogleDirectionsServices.decodePolyLine(rota);
-        PolylineOptions polylineOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.colorPrimary));
+        PolylineOptions polylineOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.colorAccent));
 
         polylineOptions.addAll(listaPontos);
         polylinePaths.add(map.addPolyline(polylineOptions));
