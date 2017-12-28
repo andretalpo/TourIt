@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,10 +99,17 @@ public class LocalDetailsActivity extends AppCompatActivity implements OnMapRead
         TextView tipoTextView = (TextView) findViewById(R.id.tipoLocalDetailsTextView);
         TextView notaTextView = (TextView) findViewById(R.id.notaLocalDetailsTextView);
         RatingBar ratingBar = (RatingBar) findViewById(R.id.localDetailsRatingBar);
+        TextView horarioTextView = (TextView) findViewById(R.id.horarioLocalDetailsTextView);
 
         enderecoTextView.setText(local.getEndereco());
         notaTextView.setText(String.valueOf(local.getNota()));
         ratingBar.setRating(local.getNota());
+        if(local.getHorarioFuncionamento() == null){
+            FrameLayout horarioFrame = (FrameLayout) findViewById(R.id.frameLayoutHorarioLocalDetailsActivity);
+            horarioFrame.setVisibility(View.GONE);
+        }else{
+            horarioTextView.setText(local.getHorarioFuncionamento());
+        }
         for (int i = 0; i < local.getTipo().size(); i++) {
             if(i < local.getTipo().size() - 1) {
                 tipoTextView.append(local.getTipo().get(i) + ", ");

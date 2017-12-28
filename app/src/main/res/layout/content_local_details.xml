@@ -76,6 +76,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/iconeEnderecoImageViewLocalDetailsActivity"
                 android:tint="@color/colorPrimary"
                 android:contentDescription="@string/enderecoImageView"
@@ -92,11 +93,38 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_frame_layout"
+            android:id="@+id/frameLayoutHorarioLocalDetailsActivity"
+            android:layout_below="@id/frameLayoutEnderecoLocalDetailsActivity">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iconeHorarioImageViewLocalDetailsActivity"
+                android:tint="@color/colorPrimary"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/horarioImageView"
+                android:src="@drawable/ic_hour"/>
+
+            <TextView
+                android:id="@+id/horarioLocalDetailsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginLeftEnderecoTextViewLocalDetailsActivity"
+                android:layout_marginTop="@dimen/marginTopEnderecoTextViewLocalDetailsActivity"
+                android:text="Amora é bom"
+                android:textSize="@dimen/textSizeLocalDetails" />
+
+        </FrameLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/avaliacoesLocalDetailsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/frameLayoutEnderecoLocalDetailsActivity"
+            android:layout_below="@id/frameLayoutHorarioLocalDetailsActivity"
             android:layout_margin="@dimen/marginLocalDetails"
             tools:listitem="@layout/viewholder_avaliacao_local" />
 

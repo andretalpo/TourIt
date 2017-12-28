@@ -178,11 +178,12 @@ public class GooglePlacesServices {
 
     private static List<Local> convertJSONToListaLocaisText(JSONObject json) {
         List<Local> listaLocais = new ArrayList<>();
+        Local local = null;
         try{
             JSONArray jsonLocais = json.getJSONArray("results");
             for (int i = 0; i < jsonLocais.length(); i++) {
                 JSONObject jsonLocal = jsonLocais.getJSONObject(i);
-                Local local = new Local();
+                local = new Local();
                 local.setIdPlaces(jsonLocal.getString("place_id"));
                 local.setNome(jsonLocal.getString("name"));
                 local.setNota((float)jsonLocal.getDouble("rating"));
@@ -208,22 +209,38 @@ public class GooglePlacesServices {
                 local.setLat(jsonLatLng.getDouble("lat"));
                 local.setLng(jsonLatLng.getDouble("lng"));
 
-                listaLocais.add(local);
+                JSONObject jsonHorario = jsonLocal.getJSONObject("opening_hours");
+                if(jsonHorario != null){
+                    JSONArray jsonDiaFuncionamento = jsonHorario.getJSONArray("weekday_text");
+                    String horario = "";
+                    for(int j = 0; j < jsonDiaFuncionamento.length(); j++){
+                        if(j == 0){
+                            horario = jsonDiaFuncionamento.getString(j);
+                        }else{
+                            horario = horario + "\n" + jsonDiaFuncionamento.getString(j);
+                        }
+                    }
+                    local.setHorarioFuncionamento(horario);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
+            if(local != null){
+                listaLocais.add(local);
+            }
             return listaLocais;
         }
     }
 
     private static List<Local> convertJSONToListaLocaisNearby(JSONObject json) {
         List<Local> listaLocais = new ArrayList<>();
+        Local local = null;
         try{
             JSONArray jsonLocais = json.getJSONArray("results");
             for (int i = 0; i < jsonLocais.length(); i++) {
                 JSONObject jsonLocal = jsonLocais.getJSONObject(i);
-                Local local = new Local();
+                local = new Local();
                 local.setIdPlaces(jsonLocal.getString("place_id"));
                 local.setNome(jsonLocal.getString("name"));
                 local.setNota((float)jsonLocal.getDouble("rating"));
@@ -249,12 +266,27 @@ public class GooglePlacesServices {
                 local.setLat(jsonLatLng.getDouble("lat"));
                 local.setLng(jsonLatLng.getDouble("lng"));
 
-                listaLocais.add(local);
+                JSONObject jsonHorario = jsonLocal.getJSONObject("opening_hours");
+                if(jsonHorario != null){
+                    JSONArray jsonDiaFuncionamento = jsonHorario.getJSONArray("weekday_text");
+                    String horario = "";
+                    for(int j = 0; j < jsonDiaFuncionamento.length(); j++){
+                        if(j == 0){
+                            horario = jsonDiaFuncionamento.getString(j);
+                        }else{
+                            horario = horario + "\n" + jsonDiaFuncionamento.getString(j);
+                        }
+                    }
+                    local.setHorarioFuncionamento(horario);
+                }
             }
             return listaLocais;
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
+            if(local != null){
+                listaLocais.add(local);
+            }
             return listaLocais;
         }
     }
@@ -413,10 +445,23 @@ public class GooglePlacesServices {
             local.setLat(jsonLatLng.getDouble("lat"));
             local.setLng(jsonLatLng.getDouble("lng"));
 
-            return local;
+            JSONObject jsonHorario = jsonLocal.getJSONObject("opening_hours");
+            if(jsonHorario != null){
+                JSONArray jsonDiaFuncionamento = jsonHorario.getJSONArray("weekday_text");
+                String horario = "";
+                for(int j = 0; j < jsonDiaFuncionamento.length(); j++){
+                    if(j == 0){
+                        horario = jsonDiaFuncionamento.getString(j);
+                    }else{
+                        horario = horario + "\n" + jsonDiaFuncionamento.getString(j);
+                    }
+                }
+                local.setHorarioFuncionamento(horario);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
+        }finally {
+            return local;
         }
-        return null;
     }
 }

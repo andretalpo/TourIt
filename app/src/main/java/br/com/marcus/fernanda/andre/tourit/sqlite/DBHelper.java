@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOME_LOCAL = "nome";
     public static final String COLUMN_ENDERECO_LOCAL = "endereco";
     public static final String COLUMN_IDPLACES_LOCAL = "idplaces";
+    public static final String COLUMN_HORARIO_FUNCIONAMENTO = "hrfuncionamento";
     public static final String COLUMN_LAT_LOCAL = "lat";
     public static final String COLUMN_LNG_LOCAL = "lng";
     //colocar horário de funcionamento no futuro
@@ -74,7 +75,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s REAL, " +
                 "%s REAL, " +
                 "%s INTEGER, " +
-                "FOREIGN KEY(%s) REFERENCES roteiro(%s) ON DELETE CASCADE);", TABLE_LOCAL, COLUMN_ID_LOCAL, COLUMN_NOME_LOCAL, COLUMN_ENDERECO_LOCAL, COLUMN_IDPLACES_LOCAL, COLUMN_NOTA_LOCAL, COLUMN_FOTO_LOCAL, COLUMN_LAT_LOCAL, COLUMN_LNG_LOCAL, COLUMN_ID_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_ID_ROTEIRO);
+                "%s VARCHAR, " +
+                "FOREIGN KEY(%s) REFERENCES roteiro(%s) ON DELETE CASCADE);", TABLE_LOCAL, COLUMN_ID_LOCAL, COLUMN_NOME_LOCAL, COLUMN_ENDERECO_LOCAL, COLUMN_IDPLACES_LOCAL, COLUMN_NOTA_LOCAL, COLUMN_FOTO_LOCAL, COLUMN_LAT_LOCAL, COLUMN_LNG_LOCAL, COLUMN_ID_ROTEIRO, COLUMN_HORARIO_FUNCIONAMENTO, COLUMN_ID_ROTEIRO, COLUMN_ID_ROTEIRO);
         tourItDB.execSQL(sql);
 
         sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +

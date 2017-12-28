@@ -21,7 +21,9 @@ public class LocalService {
     }
 
     public void salvarLocais(List<Local> locais, Long idRoteiro){
-        new LocalDAO(context, idUsuarioGoogle).salvarLocaisSQLite(locais, idRoteiro);
+        LocalDAO localDAO = new LocalDAO(context, idUsuarioGoogle);
+        localDAO.salvarLocaisSQLite(locais, idRoteiro);
+        localDAO.salvarLocaisFireBase(locais);
     }
 
     public List<Local> buscarLocaisRoteiro(Long idRoteiro) {

@@ -2,6 +2,8 @@ package br.com.marcus.fernanda.andre.tourit.local.model;
 
 import android.graphics.Bitmap;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class Local implements Serializable{
     private List<AvaliacaoLocal> avaliacoes;
     private double lat;
     private double lng;
+    private String horarioFuncionamento;
 
     public Local(){
         //vazio
@@ -56,6 +59,7 @@ public class Local implements Serializable{
         this.endereco = endereco;
     }
 
+    @Exclude
     public Bitmap getFoto() {
         return foto;
     }
@@ -72,6 +76,7 @@ public class Local implements Serializable{
         this.nota = nota;
     }
 
+    @Exclude
     public List<AvaliacaoLocal> getAvaliacoes() {
         return avaliacoes;
     }
@@ -94,6 +99,14 @@ public class Local implements Serializable{
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public String getHorarioFuncionamento() {
+        return horarioFuncionamento;
+    }
+
+    public void setHorarioFuncionamento(String horarioFuncionamento) {
+        this.horarioFuncionamento = horarioFuncionamento;
     }
 
     @Override

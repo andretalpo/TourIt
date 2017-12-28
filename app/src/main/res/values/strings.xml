@@ -258,4 +258,5 @@
     <string name="falha_publicar_roteiro">Falha na publicação do roteiro</string>
     <string name="busca_sem_resultado">A busca não retornou resultados</string>
     <string name="minimo_nome_usuario">Seu username deve conter no mínimo quatro dígitos</string>
+    <string name="horarioImageView">Horário</string>
 </resources>
