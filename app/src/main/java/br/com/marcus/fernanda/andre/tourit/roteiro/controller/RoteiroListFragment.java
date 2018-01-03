@@ -101,7 +101,8 @@ public class RoteiroListFragment extends Fragment {
             for (Roteiro roteiro : listaRoteiros) {
                 locais.clear();
                 for (String local : roteiro.getIdLocaisRoteiro()) {
-                    locais.add(new LocalService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocalFirebase(local));                }
+                    locais.add(new LocalService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocalFirebase(local));
+                }
                 roteiro.setImagemRoteiro(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).montarImagemRoteiro(locais));
             }
             return listaRoteiros;
