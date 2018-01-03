@@ -18,6 +18,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroAdapter;
@@ -100,8 +101,7 @@ public class RoteiroListFragment extends Fragment {
             for (Roteiro roteiro : listaRoteiros) {
                 locais.clear();
                 for (String local : roteiro.getIdLocaisRoteiro()) {
-                    locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
-                }
+                    locais.add(new LocalService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocalFirebase(local));                }
                 roteiro.setImagemRoteiro(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).montarImagemRoteiro(locais));
             }
             return listaRoteiros;

@@ -22,6 +22,7 @@ public class Local implements Serializable{
     private double lat;
     private double lng;
     private String horarioFuncionamento;
+    private String photoReference;
 
     public Local(){
         //vazio
@@ -107,6 +108,14 @@ public class Local implements Serializable{
 
     public void setHorarioFuncionamento(String horarioFuncionamento) {
         this.horarioFuncionamento = horarioFuncionamento;
+    }
+
+    public String getPhotoReference() {
+        return photoReference;
+    }
+
+    public void setPhotoReference(String photoReference) {
+        this.photoReference = photoReference;
     }
 
     @Override

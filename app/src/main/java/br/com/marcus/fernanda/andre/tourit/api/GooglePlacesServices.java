@@ -191,7 +191,8 @@ public class GooglePlacesServices {
 
                 JSONArray jsonFotos = jsonLocal.getJSONArray("photos");
                 JSONObject jsonFoto = jsonFotos.getJSONObject(0);
-                local.setFoto(buscarFotoLocal(jsonFoto.getString("photo_reference")));
+                local.setPhotoReference(jsonFoto.getString("photo_reference"));
+                local.setFoto(buscarFotoLocal(local.getPhotoReference()));
 
                 List<String> tipos = new ArrayList<>();
                 JSONArray jsonTipos = jsonLocal.getJSONArray("types");
@@ -212,15 +213,17 @@ public class GooglePlacesServices {
                 JSONObject jsonHorario = jsonLocal.getJSONObject("opening_hours");
                 if(jsonHorario != null){
                     JSONArray jsonDiaFuncionamento = jsonHorario.getJSONArray("weekday_text");
-                    String horario = "";
-                    for(int j = 0; j < jsonDiaFuncionamento.length(); j++){
-                        if(j == 0){
-                            horario = jsonDiaFuncionamento.getString(j);
-                        }else{
-                            horario = horario + "\n" + jsonDiaFuncionamento.getString(j);
+                    if(jsonDiaFuncionamento.length() > 0){
+                        String horario = "";
+                        for(int j = 0; j < jsonDiaFuncionamento.length(); j++){
+                            if(j == 0){
+                                horario = jsonDiaFuncionamento.getString(j);
+                            }else{
+                                horario = horario + "\n" + jsonDiaFuncionamento.getString(j);
+                            }
                         }
+                        local.setHorarioFuncionamento(horario);
                     }
-                    local.setHorarioFuncionamento(horario);
                 }
             }
         } catch (JSONException e) {
@@ -248,7 +251,8 @@ public class GooglePlacesServices {
 
                 JSONArray jsonFotos = jsonLocal.getJSONArray("photos");
                 JSONObject jsonFoto = jsonFotos.getJSONObject(0);
-                local.setFoto(buscarFotoLocal(jsonFoto.getString("photo_reference")));
+                local.setPhotoReference(jsonFoto.getString("photo_reference"));
+                local.setFoto(buscarFotoLocal(local.getPhotoReference()));
 
                 List<String> tipos = new ArrayList<>();
                 JSONArray jsonTipos = jsonLocal.getJSONArray("types");
@@ -291,7 +295,7 @@ public class GooglePlacesServices {
         }
     }
 
-    private static Bitmap buscarFotoLocal(String referencia) {
+    public static Bitmap buscarFotoLocal(String referencia) {
         URL url = null;
         try {
             url = new URL("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyAZdDBDb_NfnoqH2Q2SnyL_wE5Ns7YMmr4&photoreference="
@@ -395,7 +399,7 @@ public class GooglePlacesServices {
                 StringBuilder builder = new StringBuilder ();
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
                     String line;
-                    while ((line = reader.readLine()) != null){
+                    while((line = reader.readLine()) != null){
                         builder.append(line);
                     }
                 }
@@ -427,7 +431,8 @@ public class GooglePlacesServices {
 
             JSONArray jsonFotos = jsonLocal.getJSONArray("photos");
             JSONObject jsonFoto = jsonFotos.getJSONObject(0);
-            local.setFoto(buscarFotoLocal(jsonFoto.getString("photo_reference")));
+            local.setPhotoReference(jsonFoto.getString("photo_reference"));
+            local.setFoto(buscarFotoLocal(local.getPhotoReference()));
 
             List<String> tipos = new ArrayList<>();
             JSONArray jsonTipos = jsonLocal.getJSONArray("types");

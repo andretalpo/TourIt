@@ -34,5 +34,10 @@ public class LocalService {
         LocalDAO localDAO = new LocalDAO(context, idUsuarioGoogle);
         localDAO.excluirLocais(idRoteiroSqlite);
         localDAO.salvarLocaisSQLite(listaLocais, idRoteiroSqlite);
+        localDAO.salvarLocaisFireBase(listaLocais);
+    }
+
+    public Local buscarLocalFirebase(String idPlaces) {
+        return new LocalDAO(context, idUsuarioGoogle).consultarLocalFirebase("idPlaces", idPlaces);
     }
 }

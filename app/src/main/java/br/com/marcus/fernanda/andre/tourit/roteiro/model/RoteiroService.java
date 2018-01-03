@@ -12,6 +12,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
@@ -113,7 +114,7 @@ public class RoteiroService {
                 Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
                 List<Local> locais = new ArrayList<>();
                 for (String local : roteiro.getIdLocaisRoteiro()) {
-                    locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
+                    locais.add(new LocalService(context, idUsuarioGoogle).buscarLocalFirebase(local));
                 }
                 localService.salvarLocais(locais, idRoteiro);
                 roteiro.setIdRoteiroSqlite(idRoteiro);
@@ -131,7 +132,7 @@ public class RoteiroService {
                 Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
                 List<Local> locais = new ArrayList<>();
                 for (String local : roteiro.getIdLocaisRoteiro()) {
-                    locais.add(GooglePlacesServices.buscarLocalIdPlaces(local));
+                    locais.add(new LocalService(context, idUsuarioGoogle).buscarLocalFirebase(local));
                 }
                 localService.salvarLocais(locais, idRoteiro);
                 roteiro.setIdRoteiroSqlite(idRoteiro);

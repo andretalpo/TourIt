@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
@@ -156,7 +157,7 @@ public class LocalDAO {
     }
 
     public boolean salvarLocalFireBase(Local local) {
-        if(consultarLocalFirebase("idPlaces", local.getIdPlaces()) != null) {
+        if(consultarLocalFirebase("idPlaces", local.getIdPlaces()) == null) {
             FirebaseDatabase.getInstance().getReference().child("Locais").push().setValue(local);
             return true;
         }
@@ -214,6 +215,7 @@ public class LocalDAO {
                 JSONObject jsonUusuario = jsonLocais.getJSONObject(key);
                 Gson gson = new Gson();
                 Local local = gson.fromJson(jsonUusuario.toString(), Local.class);
+                local.setFoto(GooglePlacesServices.buscarFotoLocal(local.getPhotoReference()));
                 return local;
             }
         } catch (JSONException e) {
