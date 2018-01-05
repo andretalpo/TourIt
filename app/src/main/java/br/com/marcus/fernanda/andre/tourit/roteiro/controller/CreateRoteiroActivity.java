@@ -149,6 +149,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         listaTiposRoteiro.add(getResources().getString(R.string.aventura));
         listaTiposRoteiro.add(getResources().getString(R.string.cultural));
         listaTiposRoteiro.add(getResources().getString(R.string.romantico));
+        listaTiposRoteiro.add(getResources().getString(R.string.diversos));
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaTiposRoteiro);
         spinner.setAdapter(adapter);
     }

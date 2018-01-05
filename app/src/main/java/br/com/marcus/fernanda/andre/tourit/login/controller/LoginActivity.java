@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.BooleanResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
     private ProgressDialog progressDialog;
+    private boolean timeOutDialog = false;
 
     private static final int RC_SIGN_IN = 1;
 
@@ -109,13 +111,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        
         progressDialog = new ProgressDialog(LoginActivity.this, R.style.ProgressTheme);
         progressDialog.setTitle(getResources().getString(R.string.aguarde));
         progressDialog.setMessage(getResources().getString(R.string.conectando));
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.show();
+
 
         // Resultado da intent de login
         if (requestCode == RC_SIGN_IN) {

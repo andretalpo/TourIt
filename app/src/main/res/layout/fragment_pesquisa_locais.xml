@@ -36,12 +36,13 @@
 
         <android.support.v7.widget.SearchView
             android:id="@+id/buscaLocaisSearchView"
+            style="@style/AppTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            style="@style/AppTheme"
+            android:layout_toStartOf="@id/filtroLocalSearchImageView"
             app:defaultQueryHint="Pesquisa de locais"
-            android:layout_toStartOf="@id/filtroLocalSearchImageView" />
+            app:searchIcon="@drawable/ic_search_cinza" />
 
     </RelativeLayout>
 

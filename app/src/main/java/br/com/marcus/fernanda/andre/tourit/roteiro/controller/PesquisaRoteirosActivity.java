@@ -9,17 +9,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 
 public class PesquisaRoteirosActivity extends AppCompatActivity {
 
+    ScrollView cardsLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisa_roteiros);
+        cardsLayout = (ScrollView) findViewById(R.id.cardsPesquisaRoteiroActivityScrollView);
 
-        final LinearLayout cardsLayout = (LinearLayout) findViewById(R.id.cardsPesquisaRoteiroActivityLinearLayout);
         Button melhoresButton = (Button) findViewById(R.id.melhoresPesquisaRoteiroActivityButton);
         melhoresButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +32,114 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("pesquisa", "todos");
+                bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+                roteiroFragment.setArguments(bundle);
+
+                transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+                transaction.commit();
+            }
+        });
+
+        Button culturalButton = (Button) findViewById(R.id.culturalPesquisaRoteiroActivityButton);
+        culturalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardsLayout.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", "cultural");
+                bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+                roteiroFragment.setArguments(bundle);
+
+                transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+                transaction.commit();
+            }
+        });
+
+        Button aventuraButton = (Button) findViewById(R.id.aventuraPesquisaRoteiroActivityButton);
+        aventuraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardsLayout.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", "aventura");
+                bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+                roteiroFragment.setArguments(bundle);
+
+                transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+                transaction.commit();
+            }
+        });
+
+        Button gastronomiaButton = (Button) findViewById(R.id.gastronomiaPesquisaRoteiroActivityButton);
+        gastronomiaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardsLayout.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", "gastronomia");
+                bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+                roteiroFragment.setArguments(bundle);
+
+                transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+                transaction.commit();
+            }
+        });
+
+        Button naturezaButton = (Button) findViewById(R.id.naturezaPesquisaRoteiroActivityButton);
+        naturezaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardsLayout.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", "natureza");
+                bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+                roteiroFragment.setArguments(bundle);
+
+                transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+                transaction.commit();
+            }
+        });
+
+        Button romanticoButton = (Button) findViewById(R.id.romanticoPesquisaRoteiroActivityButton);
+        romanticoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardsLayout.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", "Romântico");
+                bundle.putString("tipoRoteiro", "pesquisaRoteiros");
+                roteiroFragment.setArguments(bundle);
+
+                transaction.replace(R.id.pesquisaRoteirosFrameLayout, roteiroFragment);
+                transaction.commit();
+            }
+        });
+
+        Button diversosButton = (Button) findViewById(R.id.diversosPesquisaRoteiroActivityButton);
+        diversosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardsLayout.setVisibility(View.GONE);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                RoteiroListFragment roteiroFragment = new RoteiroListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("pesquisa", "diversos");
                 bundle.putString("tipoRoteiro", "pesquisaRoteiros");
                 roteiroFragment.setArguments(bundle);
 
@@ -68,5 +178,14 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
         });
 
         searchView.requestFocus();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(cardsLayout != null && cardsLayout.getVisibility() == View.GONE){
+            cardsLayout.setVisibility(View.VISIBLE);
+        }else{
+            super.onBackPressed();
+        }
     }
 }
