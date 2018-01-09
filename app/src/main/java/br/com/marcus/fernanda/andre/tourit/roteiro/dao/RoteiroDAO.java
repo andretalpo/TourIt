@@ -68,6 +68,9 @@ public class RoteiroDAO {
         }
         contentValues.put(DBHelper.COLUMN_SEGUIDO, seguido);
         contentValues.put(DBHelper.COLUMN_ROTA, roteiro.getRota());
+        contentValues.put(DBHelper.COLUMN_DURACAO, roteiro.getDuracao());
+        contentValues.put(DBHelper.COLUMN_PRECO, roteiro.getPreco());
+        contentValues.put(DBHelper.COLUMN_DICAS, roteiro.getDicas());
 
         Long id = sqLiteDatabase.insert(DBHelper.TABLE_ROTEIRO, null, contentValues);
         sqLiteDatabase.close();
@@ -102,6 +105,10 @@ public class RoteiroDAO {
             }
 
             roteiro.setRota(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ROTA)));
+            roteiro.setDuracao(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_DURACAO)));
+            roteiro.setPreco(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_PRECO)));
+            roteiro.setDicas(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DICAS)));
+
             cursor.close();
             sqLiteDatabase.close();
             return roteiro;
@@ -146,6 +153,9 @@ public class RoteiroDAO {
 
                 roteiro.setSeguido(false);
                 roteiro.setRota(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ROTA)));
+                roteiro.setDuracao(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_DURACAO)));
+                roteiro.setPreco(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_PRECO)));
+                roteiro.setDicas(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DICAS)));
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
             cursor.close();
@@ -179,6 +189,9 @@ public class RoteiroDAO {
 
                 roteiro.setSeguido(true);
                 roteiro.setRota(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ROTA)));
+                roteiro.setDuracao(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_DURACAO)));
+                roteiro.setPreco(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_PRECO)));
+                roteiro.setDicas(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DICAS)));
                 listaRoteiros.add(roteiro);
             }while(cursor.moveToNext());
             cursor.close();
@@ -271,6 +284,9 @@ public class RoteiroDAO {
         }
         contentValues.put(DBHelper.COLUMN_SEGUIDO, seguido);
         contentValues.put(DBHelper.COLUMN_ROTA, roteiro.getRota());
+        contentValues.put(DBHelper.COLUMN_DURACAO, roteiro.getDuracao());
+        contentValues.put(DBHelper.COLUMN_PRECO, roteiro.getPreco());
+        contentValues.put(DBHelper.COLUMN_DICAS, roteiro.getDicas());
 
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
     }

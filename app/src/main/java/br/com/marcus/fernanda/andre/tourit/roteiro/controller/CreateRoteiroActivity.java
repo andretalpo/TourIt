@@ -3,15 +3,21 @@ package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -39,6 +45,13 @@ public class CreateRoteiroActivity extends AppCompatActivity {
     private Spinner spinner;
     private ProgressDialog progressDialog;
     private Roteiro roteiroAtual;
+    private EditText dicasRoteiroEditText;
+    private FloatingActionButton fab;
+    private SeekBar duracaoSeekBar;
+    private TextView duracaoTextView;
+    private SeekBar precoSeekBar;
+    private TextView precoTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +59,12 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_roteiro);
 
         nomeRoteiroEditText = (EditText) findViewById(R.id.nomeRoteiroRoteiroActivityEditText);
+        dicasRoteiroEditText = (EditText) findViewById(R.id.dicasRoteiroRoteiroActivityEditText);
         spinner = (Spinner) findViewById(R.id.tipoRoteiroActivitySpinner);
+        duracaoSeekBar = (SeekBar) findViewById(R.id.duracaoCreateRoteiroSeekBar);
+        precoSeekBar = (SeekBar) findViewById(R.id.precoCreateRoteiroSeekBar);
+        duracaoTextView = (TextView) findViewById(R.id.valorDuracaoCreateRoteiroTextView);
+        precoTextView = (TextView) findViewById(R.id.valorPrecoCreateRoteiroTextView);
 
         inicializarSpinnerTipo();
 
@@ -62,7 +80,45 @@ public class CreateRoteiroActivity extends AppCompatActivity {
             }
         });
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.salvarRoteiroActivityFab);
+        duracaoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                duracaoTextView.setText(progress + "h");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        precoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress < 500){
+                    precoTextView.setText("R$ " + progress);
+                }else{
+                    precoTextView.setText("R$ " + progress + " +");
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        fab = (FloatingActionButton) findViewById(R.id.salvarRoteiroActivityFab);
         //alteraçao de roteiro
         roteiroAtual = (Roteiro) getIntent().getSerializableExtra("roteiro");
         if(roteiroAtual != null){
@@ -81,6 +137,9 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                         if(!listaLocaisRoteiroAtual.isEmpty()) {
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
                             roteiroAtual.setTipoRoteiro((String) spinner.getSelectedItem());
+                            roteiroAtual.setDicas(dicasRoteiroEditText.getText().toString());
+                            roteiroAtual.setDuracao(duracaoSeekBar.getProgress());
+                            roteiroAtual.setPreco(precoSeekBar.getProgress());
                             List<String> idLocais = new ArrayList<>();
                             List<String> nomeLocais = new ArrayList<>();
                             for (Local local : listaLocaisRoteiroAtual) {
@@ -110,6 +169,9 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual = new Roteiro();
                             roteiroAtual.setNomeRoteiro(nomeRoteiroEditText.getText().toString());
                             roteiroAtual.setTipoRoteiro(spinner.getSelectedItem().toString());
+                            roteiroAtual.setDicas(dicasRoteiroEditText.getText().toString());
+                            roteiroAtual.setDuracao(duracaoSeekBar.getProgress());
+                            roteiroAtual.setPreco(precoSeekBar.getProgress());
                             roteiroAtual.setCriadorRoteiro(MainActivity.nomeUsuario);
                             List<String> idLocais = new ArrayList<>();
                             List<String> nomeLocais = new ArrayList<>();

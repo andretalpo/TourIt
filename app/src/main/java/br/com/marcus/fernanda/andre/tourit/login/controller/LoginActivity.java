@@ -111,14 +111,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        
+
         progressDialog = new ProgressDialog(LoginActivity.this, R.style.ProgressTheme);
         progressDialog.setTitle(getResources().getString(R.string.aguarde));
         progressDialog.setMessage(getResources().getString(R.string.conectando));
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.show();
-
 
         // Resultado da intent de login
         if (requestCode == RC_SIGN_IN) {

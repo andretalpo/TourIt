@@ -1,67 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity">
 
-    <android.support.design.widget.TextInputLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:hint="Nome do roteiro"
-        android:id="@+id/nomeRoteiroRoteiroActivityTextInputLayout">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/nomeRoteiroRoteiroActivityEditText"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:maxLines="1"/>
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:hint="@string/nome_roteiro"
+                android:textColorHint="@color/cor_branco"
+                android:id="@+id/nomeRoteiroRoteiroActivityTextInputLayout">
 
-    <Spinner
-        android:id="@+id/tipoRoteiroActivitySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_geral"
-        android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
-        android:backgroundTint="@color/colorAccent" />
+                <EditText
+                    android:id="@+id/nomeRoteiroRoteiroActivityEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:maxLength="30"
+                    android:singleLine="true"
+                    android:maxLines="1"/>
 
-    <Button
-        android:id="@+id/adicionarLocalRoteiroActivityButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tipoRoteiroActivitySpinner"
-        android:layout_margin="4dp"
-        android:background="@android:color/transparent"
-        android:drawablePadding="@dimen/marginLocalDetails"
-        android:drawableEnd="@drawable/ic_add_3"
-        android:paddingEnd="5dp"
-        android:gravity="center"
-        android:paddingStart="30dp"
-        android:textSize="15sp"
-        android:text="@string/adicionar_local"
-        android:textStyle="bold" />
+            </android.support.design.widget.TextInputLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:id="@+id/listaLocaisRoteiroActivityFrameLayout"
-        android:layout_below="@id/adicionarLocalRoteiroActivityButton"/>
+            <Spinner
+                android:id="@+id/tipoRoteiroActivitySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_geral"
+                android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
+                android:backgroundTint="@color/colorAccent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tipoRoteiroActivitySpinner"
+                android:padding="@dimen/padding_geral"
+                android:id="@+id/duracaoCreateRoteiroRelativeLayout">
+
+                <TextView
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/duracaoCreateRoteiroTextView"
+                    android:text="@string/duracao_roteiro"
+                    android:textColor="@color/cor_branco"
+                    android:textSize="16sp"
+                    android:paddingStart="@dimen/padding_geral"/>
+
+                <TextView
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/valorDuracaoCreateRoteiroTextView"
+                    android:textColor="@color/cor_branco"
+                    android:text="12 h"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/padding_geral"
+                    android:layout_alignParentEnd="true"/>
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/duracaoCreateRoteiroSeekBar"
+                    android:layout_toEndOf="@id/duracaoCreateRoteiroTextView"
+                    android:max="24"
+                    android:progress="12"
+                    android:layout_toStartOf="@id/valorDuracaoCreateRoteiroTextView" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/duracaoCreateRoteiroRelativeLayout"
+                android:padding="@dimen/padding_geral"
+                android:id="@+id/precoCreateRoteiroRelativeLayout">
+
+                <TextView
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/precoCreateRoteiroTextView"
+                    android:text="@string/preco_roteiro"
+                    android:textColor="@color/cor_branco"
+                    android:textSize="16sp"
+                    android:paddingStart="@dimen/padding_geral"/>
+
+                <TextView
+                    android:layout_width="72dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/valorPrecoCreateRoteiroTextView"
+                    android:textColor="@color/cor_branco"
+                    android:text="R$ 250 +"
+                    android:textSize="16sp"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/padding_geral"/>
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/precoCreateRoteiroSeekBar"
+                    android:layout_toEndOf="@id/precoCreateRoteiroTextView"
+                    android:max="500"
+                    android:progress="250"
+                    android:layout_toStartOf="@id/valorPrecoCreateRoteiroTextView" />
+
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:hint="@string/dicas_roteiro"
+                android:textColorHint="@color/cor_branco"
+                android:layout_below="@id/precoCreateRoteiroRelativeLayout"
+                android:id="@+id/dicasRoteiroRoteiroActivityTextInputLayout">
+
+                <EditText
+                    android:id="@+id/dicasRoteiroRoteiroActivityEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/cor_branco"
+                    android:maxLength="500"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/adicionarLocalRoteiroActivityButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dicasRoteiroRoteiroActivityTextInputLayout"
+                android:layout_margin="4dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="@dimen/marginLocalDetails"
+                android:drawableEnd="@drawable/ic_add_3"
+                android:paddingEnd="5dp"
+                android:gravity="center"
+                android:paddingStart="30dp"
+                android:textSize="15sp"
+                android:text="@string/adicionar_local"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:id="@+id/listaLocaisRoteiroActivityFrameLayout"
+                android:layout_below="@id/adicionarLocalRoteiroActivityButton"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_check"
         android:id="@+id/salvarRoteiroActivityFab"/>
 
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

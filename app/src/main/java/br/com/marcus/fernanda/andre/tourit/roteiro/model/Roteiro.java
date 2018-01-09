@@ -26,6 +26,9 @@ public class Roteiro implements Serializable, Comparable {
     private boolean seguido;
     private transient Bitmap imagemRoteiro;
     private String rota;
+    private int duracao;
+    private int preco;
+    private String dicas;
 
     public Roteiro() {
     }
@@ -127,6 +130,30 @@ public class Roteiro implements Serializable, Comparable {
 
     public void setNomeLocaisRoteiro(List<String> nomeLocaisRoteiro) {
         this.nomeLocaisRoteiro = nomeLocaisRoteiro;
+    }
+
+    public int getDuracao() {
+        return duracao;
+    }
+
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
+    }
+
+    public int getPreco() {
+        return preco;
+    }
+
+    public void setPreco(int preco) {
+        this.preco = preco;
+    }
+
+    public String getDicas() {
+        return dicas;
+    }
+
+    public void setDicas(String dicas) {
+        this.dicas = dicas;
     }
 
     @Override

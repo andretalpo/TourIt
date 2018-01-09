@@ -260,4 +260,9 @@
     <string name="minimo_nome_usuario">Seu username deve conter no mínimo quatro dígitos</string>
     <string name="horarioImageView">Horário</string>
     <string name="diversos">Diversos</string>
+    <string name="duracao_roteiro">Duração:</string>
+    <string name="preco_roteiro">Preço:</string>
+    <string name="dicas_roteiro">Dicas</string>
+    <string name="nome_roteiro">Nome do roteiro</string>
+    <string name="dicas_roteiro_2">Dicas:</string>
 </resources>

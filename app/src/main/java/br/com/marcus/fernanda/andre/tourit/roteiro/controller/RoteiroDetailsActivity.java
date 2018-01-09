@@ -71,6 +71,9 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         TextView tipoRoteiroTextView = (TextView) findViewById(R.id.tipoRoteiroRoteiroDetailsTextView);
         RatingBar roteiroRatingBar = (RatingBar) findViewById(R.id.avaliacaoRoteiroRoteiroDetailsRatingBar);
         ImageView roteiroImageView = (ImageView) findViewById(R.id.imagemRoteiroDetailsActivity);
+        TextView duracaoTextView = (TextView) findViewById(R.id.duracaoRoteiroRoteiroDetailsTextView);
+        TextView precoTextView = (TextView) findViewById(R.id.precoRoteiroRoteiroDetailsTextView);
+        TextView dicasTextView = (TextView) findViewById(R.id.dicasRoteiroRoteiroDetailsTextView);
 
         roteiro = (Roteiro) getIntent().getSerializableExtra("roteiro");
 
@@ -210,6 +213,9 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
         roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
+        duracaoTextView.setText(String.valueOf(roteiro.getDuracao()) + " h");
+        precoTextView.setText("Até R$ " + String.valueOf(roteiro.getPreco()));
+        dicasTextView.setText(roteiro.getDicas());
 
         ImageView mapaToggle = (ImageView) findViewById(R.id.toggleMapRoteiroDetailsImageView);
         final FrameLayout mapaLayout = (FrameLayout) findViewById(R.id.mapaRotaRoteiroDetailsFrameLayout);

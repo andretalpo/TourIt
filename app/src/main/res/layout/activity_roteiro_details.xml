@@ -104,7 +104,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_margin="8dp"
                 android:id="@+id/toggleMapRoteiroDetailsImageView"
-                android:src="@drawable/ic_map_gray"/>
+                android:src="@drawable/ic_menu_roteiro"/>
 
             <LinearLayout
                 android:id="@+id/criadorRoteiroDetailsLinearLayout"
@@ -118,6 +118,8 @@
                     android:id="@+id/labelNomeCriadorRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:paddingEnd="@dimen/padding_fim_texto"
                     android:textColor="@color/cor_branco"
                     android:text="@string/criador" />
 
@@ -144,6 +146,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/cor_branco"
+                    android:textStyle="bold"
+                    android:paddingEnd="@dimen/padding_fim_texto"
                     android:text="@string/tipo" />
 
                 <TextView
@@ -156,20 +160,101 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/duracaoRoteiroDetailsLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tipoRoteiroDetailsLinearLayout"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelDuracaoRoteiroRoteiroDetailsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
+                    android:paddingEnd="@dimen/padding_fim_texto"
+                    android:textStyle="bold"
+                    android:text="@string/duracao_roteiro" />
+
+                <TextView
+                    android:id="@+id/duracaoRoteiroRoteiroDetailsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
+                    android:layout_centerHorizontal="true"
+                    android:text="34" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/precoRoteiroDetailsLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/duracaoRoteiroDetailsLinearLayout"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelPrecoRoteiroRoteiroDetailsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
+                    android:textStyle="bold"
+                    android:paddingEnd="@dimen/padding_fim_texto"
+                    android:text="@string/preco_roteiro" />
+
+                <TextView
+                    android:id="@+id/precoRoteiroRoteiroDetailsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
+                    android:layout_centerHorizontal="true"
+                    android:text="R$666" />
+
+            </LinearLayout>
+
             <RatingBar
                 android:id="@+id/avaliacaoRoteiroRoteiroDetailsRatingBar"
                 style="@style/Base.Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tipoRoteiroDetailsLinearLayout"
+                android:layout_below="@id/precoRoteiroDetailsLinearLayout"
                 android:layout_centerHorizontal="true"
                 android:rating="5" />
+
+            <LinearLayout
+                android:id="@+id/dicasRoteiroDetailsLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelDicasRoteiroRoteiroDetailsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
+                    android:textStyle="bold"
+                    android:paddingEnd="@dimen/padding_fim_texto"
+                    android:text="@string/dicas_roteiro_2" />
+
+                <TextView
+                    android:id="@+id/dicasRoteiroRoteiroDetailsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cor_branco"
+                    android:layout_centerHorizontal="true"
+                    android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+
+            </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/listaLocaisRoteiroDetailsFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
+                android:layout_below="@id/dicasRoteiroDetailsLinearLayout"
                 android:padding="@dimen/padding_geral" />
 
         </RelativeLayout>

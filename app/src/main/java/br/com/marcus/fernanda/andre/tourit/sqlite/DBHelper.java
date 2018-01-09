@@ -39,6 +39,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SEGUIDO = "seguido";
     public static final String COLUMN_ID_ROTEIRO_FIREBASE = "id_roteiro_firebase";
     public static final String COLUMN_ROTA = "rota";
+    public static final String COLUMN_DURACAO = "duracao";
+    public static final String COLUMN_PRECO = "preco";
+    public static final String COLUMN_DICAS = "dicas";
 
     public static final String TABLE_USUARIO = "usuario";
     public static final String COLUMN_ID_USUARIO_SQLITE = "_id_usuario";
@@ -63,7 +66,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s VARCHAR(50), " +
                 "%s INTEGER, " +
                 "%s INTEGER, " +
-                "%s VARCHAR);", TABLE_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_NOME_ROTEIRO, COLUMN_CRIADOR_ROTEIRO, COLUMN_TIPO_ROTEIRO, COLUMN_NOTA_ROTEIRO, COLUMN_IMAGEM_ROTEIRO, COLUMN_ID_ROTEIRO_FIREBASE, COLUMN_PUBLICADO, COLUMN_SEGUIDO, COLUMN_ROTA);
+                "%s VARCHAR, " +
+                "%s INTEGER, " +
+                "%s INTEGER, " +
+                "%s VARCHAR(500));", TABLE_ROTEIRO, COLUMN_ID_ROTEIRO, COLUMN_NOME_ROTEIRO, COLUMN_CRIADOR_ROTEIRO, COLUMN_TIPO_ROTEIRO, COLUMN_NOTA_ROTEIRO, COLUMN_IMAGEM_ROTEIRO, COLUMN_ID_ROTEIRO_FIREBASE, COLUMN_PUBLICADO, COLUMN_SEGUIDO, COLUMN_ROTA, COLUMN_DURACAO, COLUMN_PRECO, COLUMN_DICAS);
         tourItDB.execSQL(sql);
 
         sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
