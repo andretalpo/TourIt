@@ -92,9 +92,10 @@
                 android:id="@+id/imagemRoteiroDetailsActivity"
                 android:layout_width="140dp"
                 android:layout_height="120dp"
-                android:layout_centerHorizontal="true"
                 android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
                 android:padding="@dimen/padding_geral"
+                android:src="@drawable/teste_vetor2"
                 app:civ_border_color="@color/cor_prata"
                 app:civ_border_width="1dp" />
 
@@ -110,7 +111,9 @@
                 android:id="@+id/criadorRoteiroDetailsLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imagemRoteiroDetailsActivity"
+                android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
+                android:layout_marginTop="20dp"
+                android:padding="1dp"
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
 
@@ -138,7 +141,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/criadorRoteiroDetailsLinearLayout"
+                android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                 android:layout_centerHorizontal="true"
+                android:padding="1dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -166,6 +171,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tipoRoteiroDetailsLinearLayout"
                 android:layout_centerHorizontal="true"
+                android:padding="1dp"
+                android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                 android:orientation="horizontal">
 
                 <TextView
@@ -193,6 +200,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/duracaoRoteiroDetailsLinearLayout"
                 android:layout_centerHorizontal="true"
+                android:padding="1dp"
+                android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                 android:orientation="horizontal">
 
                 <TextView
@@ -219,26 +228,30 @@
                 style="@style/Base.Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                 android:layout_below="@id/precoRoteiroDetailsLinearLayout"
-                android:layout_centerHorizontal="true"
                 android:rating="5" />
+
+            <TextView
+                android:id="@+id/labelDicasRoteiroRoteiroDetailsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cor_branco"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/imagemRoteiroDetailsActivity"
+                android:paddingEnd="@dimen/padding_fim_texto"
+                android:text="@string/dicas_roteiro_2" />
 
             <LinearLayout
                 android:id="@+id/dicasRoteiroDetailsLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/avaliacaoRoteiroRoteiroDetailsRatingBar"
-                android:layout_centerHorizontal="true"
+                android:layout_below="@id/labelDicasRoteiroRoteiroDetailsTextView"
+                android:padding="@dimen/padding_geral"
+                android:layout_marginStart="10dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/labelDicasRoteiroRoteiroDetailsTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
-                    android:textStyle="bold"
-                    android:paddingEnd="@dimen/padding_fim_texto"
-                    android:text="@string/dicas_roteiro_2" />
 
                 <TextView
                     android:id="@+id/dicasRoteiroRoteiroDetailsTextView"

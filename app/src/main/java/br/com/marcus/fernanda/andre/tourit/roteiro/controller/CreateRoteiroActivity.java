@@ -68,6 +68,8 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         inicializarSpinnerTipo();
 
+        nomeRoteiroEditText.requestFocus();
+
         if (listaLocaisRoteiroAtual == null) {
             listaLocaisRoteiroAtual = new ArrayList<>();
         }
@@ -100,10 +102,12 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         precoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(progress < 500){
-                    precoTextView.setText("R$ " + progress);
+                if(progress == 20){
+                    precoTextView.setText("R$ " + progress*25 + " +");
+                }else if(progress == 0){
+                    precoTextView.setText("Gratuito");
                 }else{
-                    precoTextView.setText("R$ " + progress + " +");
+                    precoTextView.setText("R$ " + progress*25);
                 }
             }
 
@@ -124,6 +128,11 @@ public class CreateRoteiroActivity extends AppCompatActivity {
         if(roteiroAtual != null){
             setTitle("Alteração de Roteiro");
             nomeRoteiroEditText.setText(roteiroAtual.getNomeRoteiro());
+            dicasRoteiroEditText.setText(roteiroAtual.getDicas());
+            precoSeekBar.setProgress(roteiroAtual.getPreco());
+            precoTextView.setText("R$ " + String.valueOf(roteiroAtual.getPreco()));
+            duracaoSeekBar.setProgress(roteiroAtual.getDuracao());
+            duracaoTextView.setText(String.valueOf(roteiroAtual.getDuracao()) + "h");
             for (int i=0; i<listaTiposRoteiro.size(); i++){
                 if(listaTiposRoteiro.get(i).equals(roteiroAtual.getTipoRoteiro())){
                     spinner.setSelection(i);

@@ -14,11 +14,11 @@
 
     <ImageView
         android:id="@+id/touritImageViewLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
-        android:src="@drawable/ic_tourit" />
+        android:src="@drawable/teste_vetor2" />
 
     <Button
         android:id="@+id/loginButton"
