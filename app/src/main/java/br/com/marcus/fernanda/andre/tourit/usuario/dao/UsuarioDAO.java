@@ -230,43 +230,54 @@ public class UsuarioDAO {
 
     public static void adicionarRoteiroUsuario(String idUsuario, String keyRoteiro) {
         Usuario usuario = consultarUsuario("idGoogle", idUsuario);
-        List<String> listaRoteiros = usuario.getMeusRoteiros();
-        if(listaRoteiros == null){
-            listaRoteiros = new ArrayList<>();
+        if(usuario != null) {
+            List<String> listaRoteiros = usuario.getMeusRoteiros();
+
+            if (listaRoteiros == null) {
+                listaRoteiros = new ArrayList<>();
+            }
+            if(!listaRoteiros.contains(keyRoteiro)) {
+                listaRoteiros.add(keyRoteiro);
+                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("meusRoteiros").setValue(listaRoteiros);
+            }
         }
-        listaRoteiros.add(keyRoteiro);
-        FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("meusRoteiros").setValue(listaRoteiros);
     }
 
     public static void adicionarRoteiroSeguidoUsuario(String idUsuario, String keyRoteiro) {
         Usuario usuario = consultarUsuario("idGoogle", idUsuario);
-        List<String> listaRoteiros = usuario.getRoteirosSeguidos();
-        if(listaRoteiros == null){
-            listaRoteiros = new ArrayList<>();
+        if(usuario != null) {
+            List<String> listaRoteiros = usuario.getRoteirosSeguidos();
+            if (listaRoteiros == null) {
+                listaRoteiros = new ArrayList<>();
+            }
+            listaRoteiros.add(keyRoteiro);
+            FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("roteirosSeguidos").setValue(listaRoteiros);
         }
-        listaRoteiros.add(keyRoteiro);
-        FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("roteirosSeguidos").setValue(listaRoteiros);
     }
 
     public static void excluirRoteiroUsuario(String keyRoteiro){
         Usuario usuario = consultarUsuario("idGoogle", MainActivity.idUsuarioGoogle);
-        List<String> listaRoteiros = usuario.getMeusRoteiros();
-        for(int i = 0; i < listaRoteiros.size(); i++){
-            if(listaRoteiros.get(i).equals(keyRoteiro)){
-                listaRoteiros.remove(i);
+        if(usuario != null) {
+            List<String> listaRoteiros = usuario.getMeusRoteiros();
+            for (int i = 0; i < listaRoteiros.size(); i++) {
+                if (listaRoteiros.get(i).equals(keyRoteiro)) {
+                    listaRoteiros.remove(i);
+                }
+                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("meusRoteiros").setValue(listaRoteiros);
             }
-            FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("meusRoteiros").setValue(listaRoteiros);
         }
     }
 
     public static void excluirRoteiroSeguidoUsuario(String idRoteiroFirebase) {
         Usuario usuario = consultarUsuario("idGoogle", MainActivity.idUsuarioGoogle);
-        List<String> listaRoteiros = usuario.getRoteirosSeguidos();
-        for(int i = 0; i < listaRoteiros.size(); i++){
-            if(listaRoteiros.get(i).equals(idRoteiroFirebase)){
-                listaRoteiros.remove(i);
+        if(usuario != null) {
+            List<String> listaRoteiros = usuario.getRoteirosSeguidos();
+            for (int i = 0; i < listaRoteiros.size(); i++) {
+                if (listaRoteiros.get(i).equals(idRoteiroFirebase)) {
+                    listaRoteiros.remove(i);
+                }
+                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteirosSeguidos").setValue(listaRoteiros);
             }
-            FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteirosSeguidos").setValue(listaRoteiros);
         }
     }
 

@@ -27,26 +27,19 @@
     </android.support.design.widget.TextInputLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="120dp"
         android:layout_above="@id/usernameTextInputLayoutCriarUsuario"
         android:layout_centerHorizontal="true"
         android:id="@+id/touritImageViewCriarUsuario"
         android:layout_marginBottom="@dimen/marginBotaoCriarUsuario"
-        android:src="@drawable/ic_tourit"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/backgroundImageViewCriarUsuario"
-        android:src="@drawable/bg_360"/>
+        android:src="@drawable/teste_vetor2"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/botaoCriarUsuario"
-        android:layout_above="@id/backgroundImageViewCriarUsuario"
+        android:layout_below="@id/usernameTextInputLayoutCriarUsuario"
         android:layout_marginBottom="@dimen/marginBottomBotaoCriarUsuario"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/marginBotaoCriarUsuario"

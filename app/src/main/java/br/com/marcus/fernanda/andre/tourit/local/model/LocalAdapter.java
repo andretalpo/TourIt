@@ -36,22 +36,26 @@ public class LocalAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         LocalViewHolder localHolder = (LocalViewHolder) holder;
         final Local local = locais.get(position);
-        localHolder.localImageView.setImageBitmap(local.getFoto());
-        localHolder.nomeLocalTextView.setText(local.getNome());
-        localHolder.localRatingBar.setRating(local.getNota());
-        localHolder.notaLocalTextView.setText(String.valueOf(local.getNota()));
-        localHolder.enderecoLocalTextView.setText(local.getEndereco());
-        localHolder.localLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), LocalDetailsActivity.class);
-                intent.putExtra("local", local);
+        if(local != null) {
+            localHolder.localImageView.setImageBitmap(local.getFoto());
+            localHolder.nomeLocalTextView.setText(local.getNome());
+            localHolder.localRatingBar.setRating(local.getNota());
+            localHolder.notaLocalTextView.setText(String.valueOf(local.getNota()));
+            localHolder.enderecoLocalTextView.setText(local.getEndereco());
+            localHolder.localLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), LocalDetailsActivity.class);
+                    intent.putExtra("local", local);
 
-                byte[] arrayFoto = ImageConverter.convertBitmapToByte(local.getFoto());
-                intent.putExtra("arrayFoto", arrayFoto);
-                view.getContext().startActivity(intent);
-            }
-        });
+                    byte[] arrayFoto = ImageConverter.convertBitmapToByte(local.getFoto());
+                    intent.putExtra("arrayFoto", arrayFoto);
+                    view.getContext().startActivity(intent);
+                }
+            });
+        }else{
+            holder.itemView.setVisibility(View.GONE);
+        }
     }
 
     @Override

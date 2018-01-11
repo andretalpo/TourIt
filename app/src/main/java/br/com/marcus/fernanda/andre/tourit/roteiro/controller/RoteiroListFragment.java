@@ -96,16 +96,20 @@ public class RoteiroListFragment extends Fragment {
 
         @Override
         protected List<Roteiro> doInBackground(String... pesquisa) {
-            listaRoteiros.addAll(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarRoteirosPublicados(pesquisa[0]));
-            List<Local> locais = new ArrayList<>();
-            for (Roteiro roteiro : listaRoteiros) {
-                locais.clear();
-                for (String local : roteiro.getIdLocaisRoteiro()) {
-                    locais.add(new LocalService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocalFirebase(local));
+            List<Roteiro> roteiros = new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarRoteirosPublicados(pesquisa[0]);
+            if(roteiros != null) {
+                listaRoteiros.addAll(roteiros);
+                List<Local> locais = new ArrayList<>();
+                for (Roteiro roteiro : listaRoteiros) {
+                    locais.clear();
+                    for (String local : roteiro.getIdLocaisRoteiro()) {
+                        locais.add(new LocalService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).buscarLocalFirebase(local));
+                    }
+                    roteiro.setImagemRoteiro(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).montarImagemRoteiro(locais));
                 }
-                roteiro.setImagemRoteiro(new RoteiroService(RoteiroListFragment.this.getContext(), MainActivity.idUsuarioGoogle).montarImagemRoteiro(locais));
+                return listaRoteiros;
             }
-            return listaRoteiros;
+            return null;
         }
 
         @Override

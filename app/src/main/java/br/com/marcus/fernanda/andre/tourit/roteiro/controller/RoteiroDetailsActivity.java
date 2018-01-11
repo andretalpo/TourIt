@@ -190,7 +190,6 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         if(roteiro.getIdRoteiroSqlite() == null){//carrega locais da api - roteiros publicados
             alterarButton.setVisibility(View.GONE);
             excluirButton.setVisibility(View.GONE);
-            new InicializarBotaoSeguirTask().execute(roteiro);
             new CarregarLocaisTask().execute(roteiro);
         }else{//carrega locais do sqlite - meus roteiros
             carregarLocaisRoteiroBanco(roteiro.getIdRoteiroSqlite());
@@ -355,34 +354,40 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         map = googleMap;
         List<Marker> markers = new ArrayList<>();
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_32);
-        for(Local local : listaLocais){
-            markers.add(map.addMarker(new MarkerOptions()
-                    .position(new LatLng(local.getLat(), local.getLng()))
-                    .title(local.getNome()).icon(BitmapDescriptorFactory.fromBitmap(icon))));
-        }
-
-        map.getUiSettings().setMapToolbarEnabled(false);
-        map.getUiSettings().setZoomControlsEnabled(true);
-        if(markers.size() > 1) {
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Marker marker : markers) {
-                builder.include(marker.getPosition());
+        if(listaLocais != null && !listaLocais.isEmpty()) {
+            for (Local local : listaLocais) {
+                if(local != null) {
+                    markers.add(map.addMarker(new MarkerOptions()
+                            .position(new LatLng(local.getLat(), local.getLng()))
+                            .title(local.getNome()).icon(BitmapDescriptorFactory.fromBitmap(icon))));
+                }
             }
-            LatLngBounds bounds = builder.build();
-            buscarRota(roteiro.getRota());
 
-            final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 125);
+            map.getUiSettings().setMapToolbarEnabled(false);
+            map.getUiSettings().setZoomControlsEnabled(true);
+            if (markers.size() > 1) {
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for (Marker marker : markers) {
+                    builder.include(marker.getPosition());
+                }
+                LatLngBounds bounds = builder.build();
+                buscarRota(roteiro.getRota());
 
-            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.roteiroDetailsLinearLayout);
-            linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
+                final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 125);
+
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.roteiroDetailsLinearLayout);
+                linearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        map.moveCamera(cameraUpdate);
+                    }
+                });
+            } else {
+                if(!markers.isEmpty()) {
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 15);
                     map.moveCamera(cameraUpdate);
                 }
-            });
-        }else{
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 15);
-            map.moveCamera(cameraUpdate);
+            }
         }
     }
 
@@ -435,6 +440,12 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapRoteiroDetails);
             mapFragment.getMapAsync(RoteiroDetailsActivity.this);
+
+            if(listaLocais != null || !listaLocais.isEmpty()) {
+                if(listaLocais.get(0) != null) {
+                    new InicializarBotaoSeguirTask().execute(roteiro);
+                }
+            }
         }
     }
 

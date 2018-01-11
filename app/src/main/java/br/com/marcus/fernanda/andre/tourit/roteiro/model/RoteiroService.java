@@ -110,16 +110,18 @@ public class RoteiroService {
             List<Roteiro> roteiros = roteiroDAO.buscarRoteirosUsuarioFirebase(roteirosId);
             LocalService localService = new LocalService(context, idUsuarioGoogle);
             for (Roteiro roteiro : roteiros) {
-                roteiro.setSeguido(false);
-                Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
-                List<Local> locais = new ArrayList<>();
-                for (String local : roteiro.getIdLocaisRoteiro()) {
-                    locais.add(new LocalService(context, idUsuarioGoogle).buscarLocalFirebase(local));
+                if(roteiro != null) {
+                    roteiro.setSeguido(false);
+                    Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
+                    List<Local> locais = new ArrayList<>();
+                    for (String local : roteiro.getIdLocaisRoteiro()) {
+                        locais.add(new LocalService(context, idUsuarioGoogle).buscarLocalFirebase(local));
+                    }
+                    localService.salvarLocais(locais, idRoteiro);
+                    roteiro.setIdRoteiroSqlite(idRoteiro);
+                    roteiro.setImagemRoteiro(montarImagemRoteiro(locais));
+                    roteiroDAO.alterarRoteiroSQLite(roteiro);
                 }
-                localService.salvarLocais(locais, idRoteiro);
-                roteiro.setIdRoteiroSqlite(idRoteiro);
-                roteiro.setImagemRoteiro(montarImagemRoteiro(locais));
-                roteiroDAO.alterarRoteiroSQLite(roteiro);
             }
         }
 
@@ -167,6 +169,7 @@ public class RoteiroService {
 
     public void publicarRoteiro(String idRoteiroFirebase) {
         new RoteiroDAO(context, idUsuarioGoogle).publicarRoteiro(idRoteiroFirebase);
+        new UsuarioService().adicionarRoteiroUsuario(idUsuarioGoogle, idRoteiroFirebase);
     }
 
     public List<Roteiro> consultarRoteirosPublicados(String pesquisa) {
