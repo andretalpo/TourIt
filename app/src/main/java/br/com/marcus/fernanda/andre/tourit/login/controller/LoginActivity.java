@@ -257,7 +257,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(progressDialog != null) {
+        //&& ConsultarUsuarioExistenteTask.Status.FINISHED.equals(true)
+        if(progressDialog != null ) {
             progressDialog.dismiss();
         }
     }

@@ -265,4 +265,5 @@
     <string name="dicas_roteiro">Dicas</string>
     <string name="nome_roteiro">Nome do roteiro</string>
     <string name="dicas_roteiro_2">Dicas</string>
+    <string name="permitirGPS">Uso do GPS permitido</string>
 </resources>

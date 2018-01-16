@@ -41,8 +41,11 @@ public class LocalDAO {
     public void salvarLocaisSQLite(List<Local> locais, Long idRoteiro){
 
         for (Local local : locais) {
-            byte[] fotoByte = ImageConverter.convertBitmapToByte(local.getFoto());
+            while(local.getFoto() == null) {
+                //gamb
+            }
 
+            byte[] fotoByte = ImageConverter.convertBitmapToByte(local.getFoto());
             sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBHelper.COLUMN_NOME_LOCAL, local.getNome());

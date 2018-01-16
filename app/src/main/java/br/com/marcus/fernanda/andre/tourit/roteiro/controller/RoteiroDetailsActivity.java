@@ -1,12 +1,20 @@
 package br.com.marcus.fernanda.andre.tourit.roteiro.controller;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,12 +67,18 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     private static List<Local> listaLocais;
     private List<Polyline> polylinePaths;
     private ImageView seguirRoteiroButton;
+    private android.location.LocationManager locationManager;
+    private Location currentLocation = null;
+    private static final int REQUEST_GPS = 1;
+    private Marker marker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roteiro_details);
         listaLocais = new ArrayList<>();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         TextView nomeRoteiroTextView = (TextView) findViewById(R.id.nomeRoteiroRoteiroDetailsTextView);
         TextView nomeCriadorTextView = (TextView) findViewById(R.id.nomeCriadorRoteiroDetailsTextView);
@@ -352,6 +366,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        solicitarPermissaoGPS();
         List<Marker> markers = new ArrayList<>();
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_32);
         if(listaLocais != null && !listaLocais.isEmpty()) {
@@ -490,6 +505,71 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             progressDialog.dismiss();
             Toast.makeText(RoteiroDetailsActivity.this, getResources().getString(R.string.roteiro_seguido_sucesso), Toast.LENGTH_SHORT).show();
             RoteiroDetailsActivity.this.finish();
+        }
+    }
+
+    private void solicitarPermissaoGPS() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) ) {
+            }
+            ActivityCompat.requestPermissions(this, new String[ ] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GPS);
+        }
+        else{
+            currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(currentLocation != null) {
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                map.moveCamera(cameraUpdate);
+                if (marker != null) {
+                    marker.remove();
+                }
+                marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+    }
+
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            currentLocation = location;
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+//            map.moveCamera(cameraUpdate);
+            if(marker != null){
+                marker.remove();
+            }
+            marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+    };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[ ] permissions, @NonNull int[ ] grantResults) {
+        switch (requestCode) {
+            case REQUEST_GPS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                        map.moveCamera(cameraUpdate);
+                        if(marker != null){
+                            marker.remove();
+                        }
+                        marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                    }
+                }
+                break;
         }
     }
 }

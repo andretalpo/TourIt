@@ -1,14 +1,21 @@
 package br.com.marcus.fernanda.andre.tourit.local.controler;
 
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.SearchView;
@@ -49,7 +56,7 @@ import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActiv
  * Created by André on 30/09/2017.
  */
 
-public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
+public class LocalSearchFragment extends Fragment implements OnMapReadyCallback {
 
     private View view;
     private static final String TAG = "fragmentPesquisaLocais";
@@ -62,6 +69,10 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
     private SeekBar distanciaSeekBar;
     private boolean abertoAgora;
     private boolean distanciaBoolean;
+    private android.location.LocationManager locationManager;
+    private Location currentLocation = null; //PODE DAR NULLPOINTER
+    private static final int REQUEST_GPS = 1;
+    private Marker marker;
 
     @Nullable
     @Override
@@ -70,9 +81,10 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         view.setTag(TAG);
         localList = new ArrayList<>();
         distanciaBoolean = false;
-        distanciaFiltro = 15000;
+        distanciaFiltro = 15;
         abertoAgora = false;
 
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         filtroImageView = (ImageView) view.findViewById(R.id.filtroLocalSearchImageView);
         filtroImageView.setOnClickListener(new View.OnClickListener() {
@@ -86,30 +98,29 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
                 Switch distanciaSwitch = (Switch) filtroLayout.findViewById(R.id.distanciaSwitchDialogFiltro);
                 distanciaSwitch.setChecked(distanciaBoolean);
                 distanciaSeekBar.setEnabled(false);
-                if(distanciaSwitch.isChecked()){
+                if (distanciaSwitch.isChecked()) {
                     distanciaSeekBar.setEnabled(true);
                 }
 
-                distanciaKm.setText(distanciaFiltro/1000 + "Km");
+                distanciaKm.setText(distanciaFiltro + "Km");
 
                 distanciaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if(isChecked) {
+                        if (isChecked) {
                             distanciaSeekBar.setEnabled(true);
                             distanciaBoolean = true;
-                        }else {
+                        } else {
                             distanciaSeekBar.setEnabled(false);
                             distanciaBoolean = false;
                         }
                     }
                 });
                 distanciaSeekBar.setProgress(distanciaFiltro);
-                distanciaSeekBar.incrementProgressBy(1000);
                 distanciaSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        distanciaKm.setText(progress/1000 + " Km");
+                        distanciaKm.setText(progress + " Km");
                         distanciaFiltro = progress;
                     }
 
@@ -149,7 +160,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
                 map.clear();
                 new CarregarLocaisApiTask().execute(query);
 
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                 return false;
             }
@@ -178,25 +189,35 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         @Override
         protected List<Local> doInBackground(String... pesquisa) {
 
-            if(abertoAgora){
-                if(distanciaBoolean){
-                    if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
-                        if(!CreateRoteiroActivity.getListaLocaisRoteiroAtual().isEmpty()){
-                            Local local = CreateRoteiroActivity.getListaLocaisRoteiroAtual().get(CreateRoteiroActivity.getListaLocaisRoteiroAtual().size()-1);
-                            LatLng latLng = new LatLng(local.getLat(), local.getLng());
-                            return GooglePlacesServices.buscarLocais(pesquisa[0], distanciaFiltro, abertoAgora, latLng);
+            if (abertoAgora) {
+                if (distanciaBoolean) {
+                    LatLng latLng;
+                    if (CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
+                        if(!CreateRoteiroActivity.getListaLocaisRoteiroAtual().isEmpty()) {
+                            Local local = CreateRoteiroActivity.getListaLocaisRoteiroAtual().get(CreateRoteiroActivity.getListaLocaisRoteiroAtual().size() - 1);
+                            latLng = new LatLng(local.getLat(), local.getLng());
+                        } else {
+                            latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                         }
+                    } else {
+                        latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                     }
+                    return GooglePlacesServices.buscarLocais(pesquisa[0], distanciaFiltro * 1000, abertoAgora, latLng);
                 }
                 return GooglePlacesServices.buscarLocais(pesquisa[0], abertoAgora);
-            }else if(distanciaBoolean){
-                if(CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
-                    if(!CreateRoteiroActivity.getListaLocaisRoteiroAtual().isEmpty()){
-                        Local local = CreateRoteiroActivity.getListaLocaisRoteiroAtual().get(CreateRoteiroActivity.getListaLocaisRoteiroAtual().size()-1);
-                        LatLng latLng = new LatLng(local.getLat(), local.getLng());
-                        return GooglePlacesServices.buscarLocais(pesquisa[0], distanciaFiltro, latLng);
+            } else if (distanciaBoolean) {
+                LatLng latLng;
+                if (CreateRoteiroActivity.getListaLocaisRoteiroAtual() != null){
+                    if(!CreateRoteiroActivity.getListaLocaisRoteiroAtual().isEmpty()) {
+                        Local local = CreateRoteiroActivity.getListaLocaisRoteiroAtual().get(CreateRoteiroActivity.getListaLocaisRoteiroAtual().size() - 1);
+                        latLng = new LatLng(local.getLat(), local.getLng());
+                    } else {
+                        latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                     }
+                } else {
+                    latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                 }
+                return GooglePlacesServices.buscarLocais(pesquisa[0], distanciaFiltro * 1000, latLng);
             }
             return GooglePlacesServices.buscarLocais(pesquisa[0]);
         }
@@ -204,9 +225,9 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
         @Override
         protected void onPostExecute(List<Local> locais) {
             progressDialog.dismiss();
-            if(locais != null){
+            if (locais != null) {
                 localList.clear();
-                if(!locais.isEmpty()) {
+                if (!locais.isEmpty()) {
                     localList.addAll(locais);
                     List<Marker> markers = new ArrayList<>();
                     Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.launcher_32);
@@ -239,7 +260,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(localList.get(0).getLat(), localList.get(0).getLng()), 10);
                         map.moveCamera(cameraUpdate);
                     }
-                }else{
+                } else {
                     Toast.makeText(LocalSearchFragment.this.getContext(), getResources().getString(R.string.nenhum_resultado_pesquisa), Toast.LENGTH_SHORT).show();
                 }
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -251,7 +272,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
 
                 transaction.replace(R.id.localFragmentBuscaLocais, localFragment);
                 transaction.commit();
-            }else{
+            } else {
                 Toast.makeText(LocalSearchFragment.this.getContext(), getResources().getString(R.string.nenhum_resultado_pesquisa), Toast.LENGTH_SHORT).show();
             }
         }
@@ -268,7 +289,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
     public void onResume() {
         super.onResume();
         searchView.clearFocus();
-        if(progressDialog != null){
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
@@ -276,10 +297,75 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        solicitarPermissaoGPS();
     }
 
     public static List<Local> getLocalList() {
         return localList;
+    }
+
+    private void solicitarPermissaoGPS() {
+        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            }
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GPS);
+        } else {
+            currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(currentLocation != null) {
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                map.moveCamera(cameraUpdate);
+                if (marker != null) {
+                    marker.remove();
+                }
+                marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+    }
+
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            currentLocation = location;
+//            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+//            map.moveCamera(cameraUpdate);
+            if(marker != null){
+                marker.remove();
+            }
+            marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+    };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[ ] permissions, @NonNull int[ ] grantResults) {
+        switch (requestCode) {
+            case REQUEST_GPS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                        map.moveCamera(cameraUpdate);
+                        if(marker != null){
+                            marker.remove();
+                        }
+                        marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                    }
+                }
+                break;
+        }
     }
 
 }
