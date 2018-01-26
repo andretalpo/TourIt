@@ -18,6 +18,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -46,15 +48,17 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GoogleDirectionsServices;
-import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.AvaliacaoRoteiro;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.AvaliacaoRoteiroAdapter;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
+import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 import static br.com.marcus.fernanda.andre.tourit.R.id.alterarRoteiroDetailsActivityImageView;
@@ -71,6 +75,9 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     private Location currentLocation = null;
     private static final int REQUEST_GPS = 1;
     private Marker marker = null;
+    private ImageView avaliarRoteiroButton;
+    private AvaliacaoRoteiroAdapter adapter;
+    private List<AvaliacaoRoteiro> avaliacoes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,8 +183,19 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             }
         });
 
+        avaliarRoteiroButton = (ImageView) findViewById(R.id.avaliarRoteiroDetailsActivityImageView);
+        avaliarRoteiroButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoteiroDetailsActivity.this, AvaliacaoRoteiroActivity.class);
+                intent.putExtra("idRoteiro", roteiro.getIdRoteiroFirebase());
+                startActivity(intent);
+            }
+        });
+
         if(roteiro.isSeguido()){
             alterarButton.setVisibility(View.GONE);
+            avaliarRoteiroButton.setVisibility(View.VISIBLE);
             excluirButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -226,8 +244,14 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         nomeCriadorTextView.setText(roteiro.getCriadorRoteiro());
         tipoRoteiroTextView.setText(roteiro.getTipoRoteiro());
         roteiroRatingBar.setRating(roteiro.getNotaRoteiro());
+        if(roteiro.getPreco() == 0){
+            precoTextView.setText("Gratuito");
+        }else if(roteiro.getPreco() == 20){
+            precoTextView.setText(String.valueOf(roteiro.getPreco()*25) + " +");
+        }else{
+            precoTextView.setText("Até R$ " + String.valueOf(roteiro.getPreco()*25));
+        }
         duracaoTextView.setText(String.valueOf(roteiro.getDuracao()) + " h");
-        precoTextView.setText("Até R$ " + String.valueOf(roteiro.getPreco()));
         dicasTextView.setText(roteiro.getDicas());
 
         ImageView mapaToggle = (ImageView) findViewById(R.id.toggleMapRoteiroDetailsImageView);
@@ -242,6 +266,34 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
                 }
             }
         });
+
+        RecyclerView avaliacoesRecyclerView = (RecyclerView) findViewById(R.id.avaliacoesRoteiroDetailsRecyclerView);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        avaliacoesRecyclerView.setLayoutManager(layout);
+
+        avaliacoes = new ArrayList<>();
+        adapter = new AvaliacaoRoteiroAdapter(avaliacoes, this);
+        avaliacoesRecyclerView.setAdapter(adapter);
+
+        new CarregarAvaliacoesRoteiroTask().execute(roteiro.getIdRoteiroFirebase());
+
+    }
+
+    private class CarregarAvaliacoesRoteiroTask extends AsyncTask<String, Void, List<AvaliacaoRoteiro>>{
+
+        @Override
+        protected List<AvaliacaoRoteiro> doInBackground(String... idRoteiro) {
+            return new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).buscarAvalicoesRoteiro(idRoteiro[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<AvaliacaoRoteiro> listaAvaliacoes) {
+            avaliacoes.clear();
+            if(listaAvaliacoes != null) {
+                avaliacoes.addAll(listaAvaliacoes);
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void alterarRoteiro(Roteiro roteiro){

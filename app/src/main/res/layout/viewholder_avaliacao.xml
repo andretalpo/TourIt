@@ -7,19 +7,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/nomeAvaliadorAvaliacaoLocalViewHolderTextView"
+        android:id="@+id/nomeAvaliadorAvaliacaoViewHolderTextView"
         android:textStyle="bold"/>
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="?android:attr/ratingBarStyleSmall"
-        android:id="@+id/notaAvaliacaoLocalViewHolderRatingBar"
+        android:id="@+id/notaAvaliacaoViewHolderRatingBar"
         android:progressTint="@color/cor_dourado"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/comentarioAvaliacaoLocalViewHolderTextView"/>
+        android:id="@+id/comentarioAvaliacaoViewHolderTextView"/>
 
 </LinearLayout>

@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.AvaliacaoRoteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
@@ -425,5 +426,63 @@ public class RoteiroDAO {
         }
         Collections.sort(roteirosFiltrado, Collections.<Roteiro>reverseOrder());
         return roteirosFiltrado;
+    }
+
+    public void salvarAvaliacaoRoteiroFirebase(AvaliacaoRoteiro avaliacaoRoteiro) {
+        FirebaseDatabase.getInstance().getReference().child("AvaliacoesRoteiro").push().setValue(avaliacaoRoteiro);
+    }
+
+    public List<AvaliacaoRoteiro> buscarAvaliacoesRoteiro(String idRoteiro) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/AvaliacoesRoteiro.json?orderBy=%22idRoteiro%22&equalTo=%22" + idRoteiro + "%22");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListAvaliacoes(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private List<AvaliacaoRoteiro> convertJSONToListAvaliacoes(JSONObject jsonAvaliacoes) {
+        try {
+            List<AvaliacaoRoteiro> listaAvaliacaoRoteiro = new ArrayList<>();
+            Iterator<String> iter = jsonAvaliacoes.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                JSONObject jsonAvaliacao = jsonAvaliacoes.getJSONObject(key);
+                Gson gson = new Gson();
+                AvaliacaoRoteiro avaliacaoRoteiro = gson.fromJson(jsonAvaliacao.toString(), AvaliacaoRoteiro.class);
+                listaAvaliacaoRoteiro.add(avaliacaoRoteiro);
+            }
+            return listaAvaliacaoRoteiro;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

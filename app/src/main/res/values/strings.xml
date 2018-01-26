@@ -266,4 +266,7 @@
     <string name="nome_roteiro">Nome do roteiro</string>
     <string name="dicas_roteiro_2">Dicas</string>
     <string name="permitirGPS">Uso do GPS permitido</string>
+    <string name="comentario_roteiro">Comentário</string>
+    <string name="title_activity_avaliacao_roteiro">Avaliação Roteiro</string>
+    <string name="registrando_avaliacao">Registrando avaliação</string>
 </resources>

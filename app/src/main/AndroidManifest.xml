@@ -3,7 +3,7 @@
     package="br.com.marcus.fernanda.andre.tourit">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -63,12 +63,12 @@
             android:name=".roteiro.controller.CreateRoteiroActivity"
             android:label="@string/title_activity_crete_roteiro"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".local.controler.LocalSearchActivity"
             android:label="@string/title_activity_local_search"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".roteiro.controller.RoteiroDetailsActivity"
             android:label="@string/title_activity_roteiro_details"
@@ -77,13 +77,19 @@
         <activity
             android:name=".roteiro.controller.MeusRoteirosActivity"
             android:label="@string/title_activity_meus_roteiros"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".roteiro.controller.PesquisaRoteirosActivity"
             android:label="@string/title_activity_pesquisa_roteiros"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".roteiro.controller.AvaliacaoRoteiroActivity"
+            android:label="@string/title_activity_avaliacao_roteiro"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

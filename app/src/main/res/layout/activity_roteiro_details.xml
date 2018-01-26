@@ -43,6 +43,16 @@
                     android:src="@drawable/ic_delete_2" />
 
                 <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/avaliarRoteiroDetailsActivityImageView"
+                    android:layout_toStartOf="@id/excluirRoteiroDetailsActivityImageView"
+                    android:layout_margin="10dp"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_star"/>
+
+                <ImageView
                     android:id="@+id/seguirRoteiroDetailsActivityImageView"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -269,6 +279,14 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/dicasRoteiroDetailsLinearLayout"
                 android:padding="@dimen/padding_geral" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/avaliacoesRoteiroDetailsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/listaLocaisRoteiroDetailsFrameLayout"
+                android:padding="@dimen/marginLocalDetails"
+                tools:listitem="@layout/viewholder_avaliacao" />
 
         </RelativeLayout>
     </ScrollView>

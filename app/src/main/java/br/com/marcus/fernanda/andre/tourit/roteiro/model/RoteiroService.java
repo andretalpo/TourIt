@@ -175,4 +175,12 @@ public class RoteiroService {
     public List<Roteiro> consultarRoteirosPublicados(String pesquisa) {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteirosPublicados(pesquisa);
     }
+
+    public void salvarAvaliacaoRoteiro(AvaliacaoRoteiro avaliacaoRoteiro) {
+        new RoteiroDAO(context, idUsuarioGoogle).salvarAvaliacaoRoteiroFirebase(avaliacaoRoteiro);
+    }
+
+    public List<AvaliacaoRoteiro> buscarAvalicoesRoteiro(String idRoteiro) {
+        return new RoteiroDAO(context, idUsuarioGoogle).buscarAvaliacoesRoteiro(idRoteiro);
+    }
 }
