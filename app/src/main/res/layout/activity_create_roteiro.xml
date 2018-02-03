@@ -19,7 +19,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:hint="@string/nome_roteiro"
-                android:textColorHint="@color/cor_branco"
                 android:id="@+id/nomeRoteiroRoteiroActivityTextInputLayout">
 
                 <EditText
@@ -53,7 +52,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/duracaoCreateRoteiroTextView"
                     android:text="@string/duracao_roteiro"
-                    android:textColor="@color/cor_branco"
                     android:textSize="16sp"
                     android:paddingStart="@dimen/padding_geral"/>
 
@@ -61,7 +59,6 @@
                     android:layout_width="72dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/valorDuracaoCreateRoteiroTextView"
-                    android:textColor="@color/cor_branco"
                     android:text="12 h"
                     android:textSize="16sp"
                     android:gravity="center"
@@ -91,7 +88,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/precoCreateRoteiroTextView"
                     android:text="@string/preco_roteiro"
-                    android:textColor="@color/cor_branco"
                     android:textSize="16sp"
                     android:paddingStart="@dimen/padding_geral"/>
 
@@ -99,7 +95,6 @@
                     android:layout_width="72dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/valorPrecoCreateRoteiroTextView"
-                    android:textColor="@color/cor_branco"
                     android:text="Gratuito"
                     android:textSize="16sp"
                     android:layout_alignParentEnd="true"
@@ -122,7 +117,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:hint="@string/dicas_roteiro"
-                android:textColorHint="@color/cor_branco"
                 android:layout_below="@id/precoCreateRoteiroRelativeLayout"
                 android:id="@+id/dicasRoteiroRoteiroActivityTextInputLayout">
 
@@ -131,7 +125,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="@color/cor_branco"
                     android:maxLength="500"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -150,6 +143,7 @@
                 android:gravity="center"
                 android:paddingStart="30dp"
                 android:textSize="15sp"
+                android:textColor="@color/cor_branco"
                 android:text="@string/adicionar_local"
                 android:textStyle="bold" />
 

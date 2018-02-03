@@ -8,6 +8,7 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -149,6 +150,9 @@ public class PesquisaRoteirosActivity extends AppCompatActivity {
         });
 
         final SearchView searchView = (SearchView) findViewById(R.id.pesquisaRoteirosSearchView);
+        EditText editTextSV = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        editTextSV.setTextColor(getResources().getColor(R.color.secondary_text_material_light));
+        editTextSV.setHintTextColor(getResources().getColor(R.color.secondary_text_material_light));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

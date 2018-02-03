@@ -114,6 +114,7 @@
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="8dp"
+                android:tint="@color/colorPrimary"
                 android:id="@+id/toggleMapRoteiroDetailsImageView"
                 android:src="@drawable/ic_menu_roteiro"/>
 
@@ -133,14 +134,12 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:paddingEnd="@dimen/padding_fim_texto"
-                    android:textColor="@color/cor_branco"
                     android:text="@string/criador" />
 
                 <TextView
                     android:id="@+id/nomeCriadorRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:layout_centerHorizontal="true"
                     android:text="André Talpo" />
 
@@ -160,7 +159,6 @@
                     android:id="@+id/labelTipoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:textStyle="bold"
                     android:paddingEnd="@dimen/padding_fim_texto"
                     android:text="@string/tipo" />
@@ -169,7 +167,6 @@
                     android:id="@+id/tipoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:layout_centerHorizontal="true"
                     android:text="Romântico" />
 
@@ -189,7 +186,6 @@
                     android:id="@+id/labelDuracaoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:paddingEnd="@dimen/padding_fim_texto"
                     android:textStyle="bold"
                     android:text="@string/duracao_roteiro" />
@@ -198,7 +194,6 @@
                     android:id="@+id/duracaoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:layout_centerHorizontal="true"
                     android:text="34" />
 
@@ -218,7 +213,6 @@
                     android:id="@+id/labelPrecoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:textStyle="bold"
                     android:paddingEnd="@dimen/padding_fim_texto"
                     android:text="@string/preco_roteiro" />
@@ -227,7 +221,6 @@
                     android:id="@+id/precoRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:layout_centerHorizontal="true"
                     android:text="R$666" />
 
@@ -247,7 +240,6 @@
                 android:id="@+id/labelDicasRoteiroRoteiroDetailsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/cor_branco"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/imagemRoteiroDetailsActivity"
@@ -267,7 +259,6 @@
                     android:id="@+id/dicasRoteiroRoteiroDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/cor_branco"
                     android:layout_centerHorizontal="true"
                     android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 

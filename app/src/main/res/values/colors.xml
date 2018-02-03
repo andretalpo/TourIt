@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#01579B</color>
-    <color name="colorAccent">#936dfc</color>
+    <color name="colorPrimary">#7867F8</color>
+    <color name="colorPrimaryDark">#7867F8</color>
+    <color name="colorAccent">#7867F8</color>
     <color name="corBotao">#2196f3</color>
     <color name="primary_text_material_light">#212121</color>
     <color name="secondary_text_material_light">#757575</color>
@@ -10,5 +10,6 @@
     <color name="cor_vermelho">#D32F2F</color>
     <color name="cor_dourado">#FFEA00</color>
     <color name="cor_prata">#BDBDBD</color>
-    <color name="backgroud_color_tourit">#220545</color>
+    <color name="backgroud_color_tourit">#ECEFF1</color>
+    <color name="cor_fundo_menu">#4becfc</color>
 </resources>

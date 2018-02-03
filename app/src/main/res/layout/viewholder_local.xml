@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:paddingBottom="@dimen/padding_geral"
     android:background="@drawable/card_background"
     android:elevation="5dp"
     android:id="@+id/localViewHolderLayout">
@@ -28,7 +29,6 @@
         android:textStyle="bold"
         android:layout_marginTop="6dp"
         android:paddingEnd="@dimen/padding_geral"
-        android:textColor="@color/cor_branco"
         android:layout_marginEnd="@dimen/padding_geral"
         android:id="@+id/nomeLocalViewHolderTextView"
         android:layout_toEndOf="@id/imagemLocalViewHolderImageView"/>
@@ -39,7 +39,6 @@
         android:id="@+id/avaliacaoLocalViewHolderTextView"
         android:layout_toEndOf="@id/imagemLocalViewHolderImageView"
         android:layout_marginEnd="5dp"
-        android:textColor="@color/cor_branco"
         android:text="5.0"
         android:layout_below="@id/nomeLocalViewHolderTextView"/>
 
@@ -48,7 +47,7 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:progressTint="@color/cor_branco"
+        android:progressTint="@color/colorPrimary"
         android:layout_below="@id/nomeLocalViewHolderTextView"
         android:layout_toEndOf="@id/avaliacaoLocalViewHolderTextView"
         android:rating="5" />
@@ -57,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/enderecoLocalViewHolderTextView"
-        android:textColor="@color/cor_branco"
         android:layout_toEndOf="@id/imagemLocalViewHolderImageView"
         android:layout_below="@id/avaliacaoLocalViewHolderRatingBar"
         android:paddingEnd="@dimen/padding_geral"

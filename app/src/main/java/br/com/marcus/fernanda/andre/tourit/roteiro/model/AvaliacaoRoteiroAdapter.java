@@ -35,8 +35,8 @@ public class AvaliacaoRoteiroAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AvaliacaoViewHolder avaliacaoHolder = (AvaliacaoViewHolder) holder;
-        avaliacaoHolder.nomeAvaliadorTextView.setTextColor(context.getResources().getColor(R.color.cor_branco));
-        avaliacaoHolder.comentarioTextView.setTextColor(context.getResources().getColor(R.color.cor_branco));
+//        avaliacaoHolder.nomeAvaliadorTextView.setTextColor(context.getResources().getColor(R.color.cor_branco));
+//        avaliacaoHolder.comentarioTextView.setTextColor(context.getResources().getColor(R.color.cor_branco));
         AvaliacaoRoteiro avaliacao = avaliacoes.get(position);
         avaliacaoHolder.nomeAvaliadorTextView.setText(avaliacao.getNomeAvaliador());
         avaliacaoHolder.notaRatingBar.setRating(avaliacao.getNota());

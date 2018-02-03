@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            app:searchIcon="@drawable/ic_search_cinza"
             android:queryHint="Pesquise por nome/tipo/lugar"
             app:defaultQueryHint="Pesquise por nome/tipo/lugar" />
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/side_nav_bar"
     tools:context="br.com.marcus.fernanda.andre.tourit.usuario.controller.CreateUserActivity"
     tools:showIn="@layout/activity_create_user">
 
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:textColorHint="@color/cor_branco"
         android:id="@+id/usernameTextInputLayoutCriarUsuario"
         android:hint="@string/hint_username">
 
@@ -18,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/cor_branco"
             android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
             android:maxLength="12"
             android:singleLine="true"
@@ -33,7 +36,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/touritImageViewCriarUsuario"
         android:layout_marginBottom="@dimen/marginBotaoCriarUsuario"
-        android:src="@drawable/teste_vetor2"/>
+        android:src="@drawable/teste_vetor4"/>
 
     <Button
         android:layout_width="wrap_content"

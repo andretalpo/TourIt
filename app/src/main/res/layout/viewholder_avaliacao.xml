@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         style="?android:attr/ratingBarStyleSmall"
         android:id="@+id/notaAvaliacaoViewHolderRatingBar"
-        android:progressTint="@color/cor_dourado"/>
+        android:progressTint="@color/colorPrimary"/>
 
     <TextView
         android:layout_width="match_parent"

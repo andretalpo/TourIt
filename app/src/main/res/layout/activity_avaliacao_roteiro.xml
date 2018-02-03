@@ -23,7 +23,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:maxLines="1"
-                android:textColor="@color/cor_branco"
                 android:maxLength="500"/>
 
         </android.support.design.widget.TextInputLayout>
