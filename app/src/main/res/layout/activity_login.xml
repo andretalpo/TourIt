@@ -18,7 +18,7 @@
         android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
-        android:src="@drawable/teste_vetor2" />
+        android:src="@drawable/teste_vetor3" />
 
     <Button
         android:id="@+id/loginButton"
