@@ -186,6 +186,7 @@ public class GooglePlacesServices {
                 local = new Local();
                 local.setIdPlaces(jsonLocal.getString("place_id"));
                 local.setNome(jsonLocal.getString("name"));
+                local.setNota(-1);
                 local.setNota((float)jsonLocal.getDouble("rating"));
                 local.setEndereco(jsonLocal.getString("formatted_address"));
 
@@ -230,7 +231,11 @@ public class GooglePlacesServices {
             e.printStackTrace();
         } finally {
             if(local != null){
-                listaLocais.add(local);
+                if(local.getNota() > -1) {
+                    if(local.getEndereco() != null) {
+                        listaLocais.add(local);
+                    }
+                }
             }
             return listaLocais;
         }

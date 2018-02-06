@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.marcus.fernanda.andre.tourit.evento.controler.CreateEventActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:hint="@string/nome_evento"
+            android:id="@+id/nomeEventoCreateEventActivityTextInputLayout">
+
+            <EditText
+                android:id="@+id/nomeEventoCreateEventActivityEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:maxLines="1"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_below="@id/nomeEventoCreateEventActivityTextInputLayout"
+            android:hint="@string/data_evento"
+            android:id="@+id/dataEventoCreateEventActivityTextInputLayout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/dataEventoCreateEventActivityEditText"
+                android:clickable="true"
+                android:gravity="center_horizontal"
+                android:focusable="false"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_below="@id/dataEventoCreateEventActivityTextInputLayout"
+            android:hint="@string/hora_inicio_evento"
+            android:id="@+id/horaInicioCreateEventActivityTextInputLayout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/horaInicioEventoCreateEventActivityEditText"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:clickable="true"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_below="@id/horaInicioCreateEventActivityTextInputLayout"
+            android:hint="@string/hora_fim_evento"
+            android:id="@+id/horaFimCreateEventActivityTextInputLayout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/horaFimEventoCreateEventActivityEditText"
+                android:focusable="false"
+                android:gravity="center_horizontal"
+                android:clickable="true"/>
+
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom|end"
+        android:id="@+id/criarEventoCreateEventActivityFab"/>
+
+</android.support.design.widget.CoordinatorLayout>

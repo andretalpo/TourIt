@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -48,6 +49,7 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.api.GoogleDirectionsServices;
+import br.com.marcus.fernanda.andre.tourit.evento.controler.CreateEventActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalListFragment;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
@@ -62,6 +64,7 @@ import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 import static br.com.marcus.fernanda.andre.tourit.R.id.alterarRoteiroDetailsActivityImageView;
+import static br.com.marcus.fernanda.andre.tourit.R.id.imagemRoteiroDetailsActivity;
 
 public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -124,6 +127,14 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             }
         });
 
+        ImageView criarEventoButton = (ImageView) findViewById(R.id.criarEventoRoteiroDetailsActivityImageView);
+        criarEventoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irParaCriacaoEvento();
+            }
+        });
+
         ImageView alterarButton = (ImageView) findViewById(alterarRoteiroDetailsActivityImageView);
         alterarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +146,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         ImageView publicarRoteiroButton = (ImageView) findViewById(R.id.publicarRoteiroDetailsActivityImageView);
         if(roteiro.isPublicado()){
             publicarRoteiroButton.setVisibility(View.GONE);
+            criarEventoButton.setVisibility(View.VISIBLE);
         } else{
             publicarRoteiroButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -277,6 +289,11 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
         new CarregarAvaliacoesRoteiroTask().execute(roteiro.getIdRoteiroFirebase());
 
+    }
+
+    private void irParaCriacaoEvento() {
+        Intent intent = new Intent(this, CreateEventActivity.class);
+        startActivity(intent);
     }
 
     private class CarregarAvaliacoesRoteiroTask extends AsyncTask<String, Void, List<AvaliacaoRoteiro>>{

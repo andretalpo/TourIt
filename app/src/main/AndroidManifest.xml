@@ -77,8 +77,8 @@
         <activity
             android:name=".roteiro.controller.MeusRoteirosActivity"
             android:label="@string/title_activity_meus_roteiros"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".roteiro.controller.PesquisaRoteirosActivity"
             android:label="@string/title_activity_pesquisa_roteiros"
@@ -90,6 +90,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".evento.controler.CreateEventActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

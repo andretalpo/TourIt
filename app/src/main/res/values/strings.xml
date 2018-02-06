@@ -269,4 +269,8 @@
     <string name="comentario_roteiro">Comentário</string>
     <string name="title_activity_avaliacao_roteiro">Avaliação Roteiro</string>
     <string name="registrando_avaliacao">Registrando avaliação</string>
+    <string name="nome_evento">Nome do evento</string>
+    <string name="data_evento">Data do evento</string>
+    <string name="hora_inicio_evento">Horário de início</string>
+    <string name="hora_fim_evento">Horário de término</string>
 </resources>

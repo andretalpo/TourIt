@@ -76,6 +76,7 @@ class ConstantesTipoLocal {
         tipos.put("museum", "Museu");
         tipos.put("movie_theater", "Cinema");
         tipos.put("mosque", "Mesquita");
+        tipos.put("natural_feature", "Natureza");
     }
 
     public Map<String, String> getTipos() {
