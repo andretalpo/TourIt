@@ -12,4 +12,6 @@
     <color name="cor_prata">#BDBDBD</color>
     <color name="backgroud_color_tourit">#ECEFF1</color>
     <color name="cor_fundo_menu">#4becfc</color>
+    <color name="cor_verde">#00CA77</color>
+    <color name="cor_amarelo">#ffe100</color>
 </resources>

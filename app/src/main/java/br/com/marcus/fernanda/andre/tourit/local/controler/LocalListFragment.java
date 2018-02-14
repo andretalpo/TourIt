@@ -33,10 +33,10 @@ public class LocalListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_local_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
         view.setTag(TAG);
 
-        RecyclerView locaisRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentLocalRecyclerView);
+        RecyclerView locaisRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentListRecyclerView);
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         locaisRecyclerView.setLayoutManager(layout);

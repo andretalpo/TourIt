@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
@@ -38,10 +37,10 @@ public class RoteiroListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_roteiro_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
         view.setTag(TAG);
 
-        RecyclerView roteirosRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentRoteiroRecyclerView);
+        RecyclerView roteirosRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentListRecyclerView);
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         roteirosRecyclerView.setLayoutManager(layout);
