@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@drawable/card_background"
+    android:layout_margin="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_geral"
+            android:layout_margin="3dp"
             android:id="@+id/pesquisaUsuarioViewHolderTextView"
             android:text="Miojo" />
 
@@ -34,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pesquisaUsuarioViewHolderTextView"
-            android:layout_margin="@dimen/padding_geral"
+            android:layout_margin="3dp"
             android:id="@+id/pesquisaUsuarioUsernameViewHolderTextView"
             android:text="Kirlian" />
 

@@ -14,6 +14,7 @@ public class Convite {
 
     private String usuarioConvidado;
     private String usernameUsuarioConvidado;
+    private String idUsuarioGoogleConvidado;
     private int respostaConvite;
     private transient Bitmap fotoConvidado;
 
@@ -34,6 +35,14 @@ public class Convite {
 
     public void setUsernameUsuarioConvidado(String usernameUsuarioConvidado) {
         this.usernameUsuarioConvidado = usernameUsuarioConvidado;
+    }
+
+    public String getIdUsuarioGoogleConvidado() {
+        return idUsuarioGoogleConvidado;
+    }
+
+    public void setIdUsuarioGoogleConvidado(String idUsuarioGoogleConvidado) {
+        this.idUsuarioGoogleConvidado = idUsuarioGoogleConvidado;
     }
 
     public int getRespostaConvite() {

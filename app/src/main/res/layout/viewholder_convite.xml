@@ -2,7 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background"
+    android:layout_margin="2dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,14 +28,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="André foi andar no bosque"
-            android:padding="@dimen/padding_geral"
+            android:padding="2dp"
             android:id="@+id/nomeConvidadoViewHolderTextView"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pois é"
-            android:padding="@dimen/padding_geral"
+            android:padding="2dp"
             android:id="@+id/usernameConvidadoViewHolderTextView"
             android:layout_below="@id/nomeConvidadoViewHolderTextView"/>
 
@@ -44,6 +46,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/respostaConviteViewHolderTextView"
         android:text="Andorinha"
+        android:visibility="gone"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/padding_geral"

@@ -181,7 +181,9 @@ public class UsuarioDAO {
     private static List<Usuario> filtrarBuscaUsuarios(List<Usuario> usuarios, String filtro) {
         List<Usuario> usuariosFiltrado = new ArrayList<>();
         for (Usuario usuario : usuarios) {
-            if(usuario.getUsername().contains(filtro)){
+            if(usuario.getUsername().contains(filtro.toLowerCase())){
+                usuariosFiltrado.add(usuario);
+            }else if(usuario.getNomeUsuario().toLowerCase().contains(filtro.toLowerCase())){
                 usuariosFiltrado.add(usuario);
             }
         }
@@ -421,4 +423,39 @@ public class UsuarioDAO {
         return null;
     }
 
+    public static List<Usuario> buscarUsuarios(String pesquisa) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Usuarios.json?");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return filtrarBuscaUsuarios(convertJSONToListaUsuarios(new JSONObject(builder.toString())), pesquisa);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
 }

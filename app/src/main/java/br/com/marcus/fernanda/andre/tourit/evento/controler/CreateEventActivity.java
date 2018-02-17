@@ -2,15 +2,19 @@ package br.com.marcus.fernanda.andre.tourit.evento.controler;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TimePicker;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,6 +22,7 @@ import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.usuario.controller.PesquisaUsuarioActivity;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -28,6 +33,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText horaFimEditText;
     private FloatingActionButton fab;
     private EditText nomeEventoEditText;
+    private FrameLayout convidadosEventoFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,18 @@ public class CreateEventActivity extends AppCompatActivity {
         horaInicioEditText = (EditText) findViewById(R.id.horaInicioEventoCreateEventActivityEditText);
         horaFimEditText = (EditText) findViewById(R.id.horaFimEventoCreateEventActivityEditText);
         fab = (FloatingActionButton) findViewById(R.id.criarEventoCreateEventActivityFab);
+        convidadosEventoFrameLayout = (FrameLayout) findViewById(R.id.listaConvidadosCreateEventActivityFrameLayout);
+
+        listaConvidadosEvento = new ArrayList<>();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ConviteListFragment conviteListFragment = new ConviteListFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("acao", "criacao");
+        conviteListFragment.setArguments(bundle);
+        transaction.replace(R.id.listaConvidadosCreateEventActivityFrameLayout, conviteListFragment);
+        transaction.commit();
 
         final DatePickerDialog.OnDateSetListener dateEventPicker = new DatePickerDialog.OnDateSetListener() {
 
@@ -93,7 +111,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 evento.setNomeEvento(nomeEventoEditText.getText().toString());
                 evento.setHoraInicio(horaInicioEditText.getText().toString());
                 evento.setHoraFim(horaFimEditText.getText().toString());
-                //evento.setConvidados();
+                evento.setConvidados(listaConvidadosEvento);
             }
         });
 
@@ -101,9 +119,14 @@ public class CreateEventActivity extends AppCompatActivity {
         adicionarConvidadoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                irParaTelaBuscaUsuario();
             }
         });
+    }
+
+    private void irParaTelaBuscaUsuario() {
+        Intent intent = new Intent(this, PesquisaUsuarioActivity.class);
+        startActivity(intent);
     }
 
     public static List<Convite> getListaConvidadosEvento() {

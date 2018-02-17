@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.evento.controler.CreateEventActivity;
+import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 
 /**
  * Created by André on 14/02/2018.
@@ -26,7 +28,7 @@ public class PesquisaUsuarioAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_convite, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_pesquisa_usuario, parent, false);
         PesquisaUsuarioViewHolder viewHolder = new PesquisaUsuarioViewHolder(view);
         return viewHolder;
     }
@@ -35,13 +37,22 @@ public class PesquisaUsuarioAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         PesquisaUsuarioViewHolder pesquisaUsuarioViewHolder = (PesquisaUsuarioViewHolder) holder;
         final Usuario usuario = usuarios.get(position);
-        pesquisaUsuarioViewHolder.usuarioImageView.setImageBitmap(usuario.getFotoUsuario());
+//        pesquisaUsuarioViewHolder.usuarioImageView.setImageBitmap(usuario.getFotoUsuario());
         pesquisaUsuarioViewHolder.nomeUsuarioTextView.setText(usuario.getNomeUsuario());
         pesquisaUsuarioViewHolder.usernameUsuarioTextView.setText(usuario.getUsername());
+        for(Convite convite : CreateEventActivity.getListaConvidadosEvento()){
+            if(convite.getIdUsuarioGoogleConvidado().equals(usuario.getIdGoogle())){
+                pesquisaUsuarioViewHolder.adicionarImageView.setVisibility(View.GONE);
+            }
+        }
         pesquisaUsuarioViewHolder.adicionarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                adicionarUsuarioNaListaDeConvites(); .e di
+                Convite convite = new Convite();
+                convite.setUsuarioConvidado(usuario.getNomeUsuario());
+                convite.setUsernameUsuarioConvidado(usuario.getUsername());
+                convite.setIdUsuarioGoogleConvidado(usuario.getIdGoogle());
+                CreateEventActivity.getListaConvidadosEvento().add(convite);
                 v.setVisibility(View.GONE);
             }
         });

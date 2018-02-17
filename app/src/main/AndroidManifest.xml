@@ -95,7 +95,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".usuario.controller.PesquisaUsuarioActivity"></activity>
+        <activity
+            android:name=".usuario.controller.PesquisaUsuarioActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

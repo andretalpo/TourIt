@@ -34,23 +34,32 @@ public class ConviteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         view.setTag(TAG);
 
-        RecyclerView roteirosRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentListRecyclerView);
+        RecyclerView convitesRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentListRecyclerView);
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        roteirosRecyclerView.setLayoutManager(layout);
+        convitesRecyclerView.setLayoutManager(layout);
 
         convites = new ArrayList<>();
 
         adapter = new ConviteAdapter(convites, getActivity());
-        roteirosRecyclerView.setAdapter(adapter);
+        convitesRecyclerView.setAdapter(adapter);
 
         bundle = getArguments();
         if(bundle.getString("acao").equals("consulta")) {
 //            carregarMeusRoteirosBanco();
         } else if(bundle.getString("acao").equals("criacao")){
-//            new PesquisaRoteirosTask().execute(bundle.getString("pesquisa"));
+            convites.addAll(CreateEventActivity.getListaConvidadosEvento());
+            adapter.notifyDataSetChanged();
         }
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        convites.clear();
+        convites.addAll(CreateEventActivity.getListaConvidadosEvento());
+        adapter.notifyDataSetChanged();
     }
 }
