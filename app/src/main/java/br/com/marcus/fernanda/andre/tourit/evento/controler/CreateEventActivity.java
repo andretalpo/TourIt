@@ -1,8 +1,10 @@
 package br.com.marcus.fernanda.andre.tourit.evento.controler;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,6 +24,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
+import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.PesquisaUsuarioActivity;
 
@@ -28,6 +32,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
     private static List<Convite> listaConvidadosEvento;
 
+    private ProgressDialog progressDialog;
     private EditText dataEditText;
     private EditText horaInicioEditText;
     private EditText horaFimEditText;
@@ -111,7 +116,9 @@ public class CreateEventActivity extends AppCompatActivity {
                 evento.setNomeEvento(nomeEventoEditText.getText().toString());
                 evento.setHoraInicio(horaInicioEditText.getText().toString());
                 evento.setHoraFim(horaFimEditText.getText().toString());
+                evento.setIdRoteiroFirebase(getIntent().getStringExtra("idRoteiro"));
                 evento.setConvidados(listaConvidadosEvento);
+                new CriarEventoTask().execute(evento);
             }
         });
 
@@ -127,6 +134,32 @@ public class CreateEventActivity extends AppCompatActivity {
     private void irParaTelaBuscaUsuario() {
         Intent intent = new Intent(this, PesquisaUsuarioActivity.class);
         startActivity(intent);
+    }
+
+    private class CriarEventoTask extends AsyncTask<Evento, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(CreateEventActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.salvando_evento));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Evento... evento) {
+            new EventoService(CreateEventActivity.this, MainActivity.idUsuarioGoogle).salvarEvento(evento[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_salvo_sucesso), Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     public static List<Convite> getListaConvidadosEvento() {

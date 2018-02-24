@@ -3,6 +3,7 @@ package br.com.marcus.fernanda.andre.tourit.evento.model;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import br.com.marcus.fernanda.andre.tourit.R;
@@ -17,6 +18,8 @@ public class ConviteViewHolder extends RecyclerView.ViewHolder{
     public TextView nomeConvidadoTextView;
     public TextView usernameConvidadoTextView;
     public TextView respostaConvidadoTextView;
+    public RelativeLayout cardConviteRelativeLayout;
+    public ImageView excluirConviteImageView;
 
     public ConviteViewHolder(View itemView) {
         super(itemView);
@@ -24,5 +27,7 @@ public class ConviteViewHolder extends RecyclerView.ViewHolder{
         this.nomeConvidadoTextView = (TextView) itemView.findViewById(R.id.nomeConvidadoViewHolderTextView);
         this.usernameConvidadoTextView = (TextView) itemView.findViewById(R.id.usernameConvidadoViewHolderTextView);
         this.respostaConvidadoTextView = (TextView) itemView.findViewById(R.id.respostaConviteViewHolderTextView);
+        this.cardConviteRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.cardViewHolderConviteRelativeLayout);
+        this.excluirConviteImageView = (ImageView) itemView.findViewById(R.id.excluirUsuarioConviteViewHolderImageView);
     }
 }

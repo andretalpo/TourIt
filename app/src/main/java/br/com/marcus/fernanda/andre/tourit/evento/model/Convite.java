@@ -2,6 +2,8 @@ package br.com.marcus.fernanda.andre.tourit.evento.model;
 
 import android.graphics.Bitmap;
 
+import com.google.firebase.database.Exclude;
+
 /**
  * Created by André on 06/02/2018.
  */
@@ -53,6 +55,7 @@ public class Convite {
         this.respostaConvite = respostaConvite;
     }
 
+    @Exclude
     public Bitmap getFotoConvidado() {
         return fotoConvidado;
     }

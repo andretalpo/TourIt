@@ -3,8 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/cardViewHolderConviteRelativeLayout"
     android:background="@drawable/card_background"
     android:layout_margin="2dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="2dp"
+        android:visibility="gone"
+        android:id="@+id/excluirUsuarioConviteViewHolderImageView"
+        android:src="@drawable/ic_delete"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,6 +22,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/excluirUsuarioConviteViewHolderImageView"
         android:src="@drawable/background_imagem_new"
         android:padding="@dimen/padding_geral"
         android:layout_marginEnd="10dp"

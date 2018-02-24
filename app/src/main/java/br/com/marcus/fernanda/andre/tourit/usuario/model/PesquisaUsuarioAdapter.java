@@ -6,6 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
@@ -20,6 +25,7 @@ public class PesquisaUsuarioAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<Usuario> usuarios;
+    private StorageReference storageReference;
 
     public PesquisaUsuarioAdapter(Context context, List<Usuario> usuarios) {
         this.context = context;
@@ -37,7 +43,8 @@ public class PesquisaUsuarioAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         PesquisaUsuarioViewHolder pesquisaUsuarioViewHolder = (PesquisaUsuarioViewHolder) holder;
         final Usuario usuario = usuarios.get(position);
-//        pesquisaUsuarioViewHolder.usuarioImageView.setImageBitmap(usuario.getFotoUsuario());
+        storageReference = FirebaseStorage.getInstance().getReference().child("imagemUsuario/" + usuario.getIdGoogle() + ".jpeg");
+        Glide.with(context).using(new FirebaseImageLoader()).load(storageReference).into(pesquisaUsuarioViewHolder.usuarioImageView);
         pesquisaUsuarioViewHolder.nomeUsuarioTextView.setText(usuario.getNomeUsuario());
         pesquisaUsuarioViewHolder.usernameUsuarioTextView.setText(usuario.getUsername());
         for(Convite convite : CreateEventActivity.getListaConvidadosEvento()){

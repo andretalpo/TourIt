@@ -274,4 +274,6 @@
     <string name="hora_inicio_evento">Horário de início</string>
     <string name="hora_fim_evento">Horário de término</string>
     <string name="adicionar_convidado">Adicionar convidados</string>
+    <string name="salvando_evento">Criando evento</string>
+    <string name="evento_salvo_sucesso">Evento criado com sucesso</string>
 </resources>

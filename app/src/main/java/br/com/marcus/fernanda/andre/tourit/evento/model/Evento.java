@@ -12,7 +12,9 @@ public class Evento {
     private String horaInicio;
     private String horaFim;
     private String criadorEvento;
-    private String idCriadorEvento; //???
+    private String idCriadorEvento;
+    private String idEventoFirebase;
+    private String idRoteiroFirebase;
     private List<Convite> convidados;
 
     public Evento() {
@@ -57,6 +59,22 @@ public class Evento {
 
     public void setIdCriadorEvento(String idCriadorEvento) {
         this.idCriadorEvento = idCriadorEvento;
+    }
+
+    public String getIdEventoFirebase() {
+        return idEventoFirebase;
+    }
+
+    public void setIdEventoFirebase(String idEventoFirebase) {
+        this.idEventoFirebase = idEventoFirebase;
+    }
+
+    public String getIdRoteiroFirebase() {
+        return idRoteiroFirebase;
+    }
+
+    public void setIdRoteiroFirebase(String idRoteiroFirebase) {
+        this.idRoteiroFirebase = idRoteiroFirebase;
     }
 
     public List<Convite> getConvidados() {

@@ -71,9 +71,6 @@ public class PesquisaUsuarioActivity extends AppCompatActivity {
         @Override
         protected List<Usuario> doInBackground(String... pesquisa) {
             List<Usuario> listaUsuarios = new UsuarioService().buscarUsuarioConvite(pesquisa[0]);
-            for(Usuario usuario: listaUsuarios) {
-                //new UsuarioService().buscarFotoUsuario(usuario.getIdGoogle());
-            }
             return listaUsuarios;
         }
 

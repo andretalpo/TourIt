@@ -293,6 +293,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
 
     private void irParaCriacaoEvento() {
         Intent intent = new Intent(this, CreateEventActivity.class);
+        intent.putExtra("idRoteiro", roteiro.getIdRoteiroFirebase());
         startActivity(intent);
     }
 
