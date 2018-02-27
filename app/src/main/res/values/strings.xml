@@ -276,4 +276,7 @@
     <string name="adicionar_convidado">Adicionar convidados</string>
     <string name="salvando_evento">Criando evento</string>
     <string name="evento_salvo_sucesso">Evento criado com sucesso</string>
+    <string name="title_activity_meus_eventos">MeusEventos</string>
+    <string name="meus_eventos_criados">Meus Eventos</string>
+    <string name="eventos_convidado">Convites</string>
 </resources>

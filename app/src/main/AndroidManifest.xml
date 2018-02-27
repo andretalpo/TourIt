@@ -98,7 +98,15 @@
         <activity
             android:name=".usuario.controller.PesquisaUsuarioActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".evento.controler.MeusEventosActivity"
+            android:label="@string/title_activity_meus_eventos"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".evento.controler.EventoDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -2,6 +2,8 @@ package br.com.marcus.fernanda.andre.tourit.evento.model;
 
 import android.content.Context;
 
+import java.util.List;
+
 import br.com.marcus.fernanda.andre.tourit.evento.dao.EventoDAO;
 
 /**
@@ -20,6 +22,13 @@ public class EventoService {
 
 
     public void salvarEvento(Evento evento) {
-        new EventoDAO(context, idGoogle).salvarEvento(evento);
+        EventoDAO eventoDAO = new EventoDAO(context, idGoogle);
+        eventoDAO.salvarEventoFirebase(evento);
+        eventoDAO.salvarEventoSQLite(evento);
+    }
+
+    public List<Evento> consultarMeusEventos() {
+        EventoDAO eventoDAO = new EventoDAO(context, idGoogle);
+        return eventoDAO.consultarMeusEventos();
     }
 }
