@@ -15,6 +15,7 @@ public class Evento {
     private String idCriadorEvento;
     private String idEventoFirebase;
     private String idRoteiroFirebase;
+    private String dataEvento;
     private List<Convite> convidados;
 
     public Evento() {
@@ -59,6 +60,14 @@ public class Evento {
 
     public void setIdCriadorEvento(String idCriadorEvento) {
         this.idCriadorEvento = idCriadorEvento;
+    }
+
+    public String getDataEvento() {
+        return dataEvento;
+    }
+
+    public void setDataEvento(String dataEvento) {
+        this.dataEvento = dataEvento;
     }
 
     public String getIdEventoFirebase() {
