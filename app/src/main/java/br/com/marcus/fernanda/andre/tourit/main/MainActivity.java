@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.evento.controler.MeusEventosActivity;
 import br.com.marcus.fernanda.andre.tourit.local.controler.LocalSearchFragment;
 import br.com.marcus.fernanda.andre.tourit.login.controller.LoginActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.controller.CreateRoteiroActivity;
@@ -141,6 +142,8 @@ public class MainActivity extends AppCompatActivity
             irParaTelaMeusRoteiros();
         } else if (id == R.id.drawerItemPesquisaRoteiros) {
             irParaTelaPesquisaRoteiros();
+        } else if (id == R.id.drawerItemMeusEventos) {
+            irParaTelaMeusEventos();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -211,6 +214,11 @@ public class MainActivity extends AppCompatActivity
 
     private void irParaTelaPesquisaRoteiros() {
         Intent intent = new Intent(this, PesquisaRoteirosActivity.class);
+        startActivity(intent);
+    }
+
+    private void irParaTelaMeusEventos() {
+        Intent intent = new Intent(this, MeusEventosActivity.class);
         startActivity(intent);
     }
 

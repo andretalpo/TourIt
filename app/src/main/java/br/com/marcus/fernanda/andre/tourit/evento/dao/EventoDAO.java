@@ -21,16 +21,14 @@ import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class EventoDAO {
 
-    private Context context;
-    private String idGoogle;
     private SQLiteDatabase sqLiteDatabase;
     private DBHelper dbHelper;
+    private String idGoogle;
 
     public EventoDAO(Context context, String idGoogle) {
-        this.context = context;
         dbHelper = new DBHelper(context, idGoogle);
+        this.idGoogle = idGoogle;
     }
-
 
     public void salvarEventoFirebase(Evento evento) {
         String key = FirebaseDatabase.getInstance().getReference().child("Eventos").push().getKey();

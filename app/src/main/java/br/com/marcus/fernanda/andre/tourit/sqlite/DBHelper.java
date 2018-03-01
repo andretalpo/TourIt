@@ -52,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_EVENTO = "evento";
     public static final String COLUMN_ID_EVENTO = "_id_evento";
-    public static final String COLUMN_NOME_EVENTO = "nome";
+    public static final String COLUMN_NOME_EVENTO = "nomeEvento";
     public static final String COLUMN_DATA_EVENTO = "data";
     public static final String COLUMN_ID_EVENTO_FIREBASE = "id_evento_firebase";
     public static final String COLUMN_HORA_INICIO_EVENTO = "hora_inicio";

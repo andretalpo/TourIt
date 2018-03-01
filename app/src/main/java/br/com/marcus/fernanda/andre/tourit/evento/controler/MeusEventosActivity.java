@@ -6,13 +6,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 
 public class MeusEventosActivity extends AppCompatActivity {
-
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -46,8 +43,16 @@ public class MeusEventosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meus_eventos);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigationEvento);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        EventoListFragment eventoFragment = new EventoListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("tipoEvento", "meusEventos");
+        eventoFragment.setArguments(bundle);
+        transaction.replace(R.id.fragmentMeusEventosFrameLayout, eventoFragment);
+        transaction.commit();
     }
 
 }

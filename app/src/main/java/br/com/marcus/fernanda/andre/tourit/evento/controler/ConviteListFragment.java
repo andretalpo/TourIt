@@ -83,4 +83,10 @@ public class ConviteListFragment extends Fragment {
         convites.addAll(CreateEventActivity.getListaConvidadosEvento());
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(broadcastReceiver);
+    }
 }

@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_search"
             android:title="@string/pesquisa_de_roteiros"/>
         <item
+            android:id="@+id/drawerItemMeusEventos"
+            android:icon="@drawable/ic_event"
+            android:title="@string/meus_eventos_criados"/>
+        <item
             android:id="@+id/drawerItemConfiguracoesUsuarioAdm"
             android:icon="@drawable/ic_person"
             android:visible="false"
