@@ -123,12 +123,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY autoincrement, " +
                 "%s INTEGER, " +//id evento
+                "%s VARCHAR, " +//id evento firebase
                 "%s VARCHAR, " +//id google
                 "%s VARCHAR, " +//nome usuario
                 "%s VARCHAR, " +//username
                 "%s INTEGER, " +// resposta
                 "%s BLOB, " + // foto
-                "FOREIGN KEY(%s) REFERENCES evento(%s) ON DELETE CASCADE);", TABLE_CONVITE, COLUMN_ID_CONVITE, COLUMN_ID_EVENTO, COLUMN_ID_USUARIO_GOOGLE, COLUMN_NOME_USUARIO, COLUMN_USERNAME, COLUMN_RESPOSTA_CONVITE, COLUMN_FOTO_USUARIO, COLUMN_ID_EVENTO, COLUMN_ID_EVENTO);
+                "FOREIGN KEY(%s) REFERENCES evento(%s) ON DELETE CASCADE);", TABLE_CONVITE, COLUMN_ID_CONVITE, COLUMN_ID_EVENTO, COLUMN_ID_EVENTO_FIREBASE, COLUMN_ID_USUARIO_GOOGLE, COLUMN_NOME_USUARIO, COLUMN_USERNAME, COLUMN_RESPOSTA_CONVITE, COLUMN_FOTO_USUARIO, COLUMN_ID_EVENTO, COLUMN_ID_EVENTO);
         tourItDB.execSQL(sql);
     }
 

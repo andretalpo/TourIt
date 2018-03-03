@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -36,7 +37,7 @@ public class EventoDAO {
         FirebaseDatabase.getInstance().getReference().child("Eventos").child(key).setValue(evento);
     }
 
-    public void salvarEventoSQLite (Evento evento){
+    public String salvarEventoSQLite (Evento evento){
         sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_ID_EVENTO_FIREBASE, evento.getIdEventoFirebase());
@@ -54,6 +55,7 @@ public class EventoDAO {
         for (Convite convite: convites) {
             ContentValues contentValuesConvite = new ContentValues();
             contentValuesConvite.put(DBHelper.COLUMN_ID_EVENTO, id);
+            contentValuesConvite.put(DBHelper.COLUMN_ID_EVENTO_FIREBASE, evento.getIdEventoFirebase());
             contentValuesConvite.put(DBHelper.COLUMN_ID_USUARIO_GOOGLE, convite.getIdUsuarioGoogleConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_NOME_USUARIO, convite.getUsuarioConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_USERNAME, convite.getUsernameUsuarioConvidado());
@@ -63,6 +65,7 @@ public class EventoDAO {
             sqLiteDatabase.insert(DBHelper.TABLE_CONVITE, null, contentValuesConvite);
         }
         sqLiteDatabase.close();
+        return evento.getIdEventoFirebase();
     }
 
 
@@ -105,6 +108,9 @@ public class EventoDAO {
                     convite.setUsernameUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_USERNAME)));
                     convite.setUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOME_USUARIO)));
                     convite.setRespostaConvite(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_RESPOSTA_CONVITE)));
+                    while(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO)) == null){
+                        //gamb
+                    }
                     convite.setFotoConvidado(ImageConverter.convertByteToBitmap(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO))));
                     convites.add(convite);
                 }while (cursor.moveToNext());
@@ -113,4 +119,11 @@ public class EventoDAO {
             }
             return null;
         }
+
+    public void salvarImagemConvite(byte[] imagemConvidado, String idUsuarioGoogleConvidado, String idEvento) {
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_FOTO_USUARIO, imagemConvidado);
+        sqLiteDatabase.update(DBHelper.TABLE_CONVITE, contentValues, DBHelper.COLUMN_ID_EVENTO_FIREBASE + "=? AND " + DBHelper.COLUMN_ID_USUARIO_GOOGLE + "=?" , new String[]{idEvento, idUsuarioGoogleConvidado});
+    }
 }

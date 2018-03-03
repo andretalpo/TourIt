@@ -1,5 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.evento.controler;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +30,7 @@ public class EventoListFragment extends Fragment {
     private List<Evento> listEventos;
     private Bundle bundle;
     private EventoAdapter adapter;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -46,22 +49,55 @@ public class EventoListFragment extends Fragment {
         eventosRecyclerView.setAdapter(adapter);
 
         bundle = getArguments();
-        if(bundle.getString("tipoEvento").equals("meusEventos")){
-            carregarMeusEventos();
-        }else if(bundle.getString("tipoEvento").equals("convites")){
+        if (bundle.getString("tipoEvento").equals("meusEventos")) {
+            new ConsultarEventoSqliteTask().execute();
+        } else if (bundle.getString("tipoEvento").equals("convites")) {
 
         }
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     private void carregarMeusEventos() {
         List<Evento> listaMeusEventos = new EventoService(EventoListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarMeusEventos();
         listEventos.clear();
 
-        if(listaMeusEventos != null){
+        if (listaMeusEventos != null) {
             listEventos.addAll(listaMeusEventos);
         }
-        adapter.notifyDataSetChanged();
+    }
+
+    private class ConsultarEventoSqliteTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(getContext(), R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.buscando_evento));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... aVoid) {
+            carregarMeusEventos();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            adapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
     }
 }

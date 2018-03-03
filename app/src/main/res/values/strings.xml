@@ -279,4 +279,5 @@
     <string name="title_activity_meus_eventos">MeusEventos</string>
     <string name="meus_eventos_criados">Meus Eventos</string>
     <string name="eventos_convidado">Convites</string>
+    <string name="buscando_evento">Buscando eventos</string>
 </resources>

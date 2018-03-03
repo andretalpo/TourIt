@@ -4,7 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,11 @@ import android.widget.FrameLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,6 +34,7 @@ import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.usuario.controller.PesquisaUsuarioActivity;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -150,7 +158,10 @@ public class CreateEventActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Evento... evento) {
-            new EventoService(CreateEventActivity.this, MainActivity.idUsuarioGoogle).salvarEvento(evento[0]);
+            String idEvento = new EventoService(CreateEventActivity.this, MainActivity.idUsuarioGoogle).salvarEvento(evento[0]);
+            for(Convite convite : evento[0].getConvidados()){
+                armazenarImagem(convite, idEvento);
+            }
             return null;
         }
 
@@ -160,6 +171,23 @@ public class CreateEventActivity extends AppCompatActivity {
             Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_salvo_sucesso), Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    public void armazenarImagem(final Convite convite, final String idEvento){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("imagemUsuario/" + convite.getIdUsuarioGoogleConvidado() + ".jpeg");
+
+        final long ONE_MEGABYTE = 300 * 300;
+        storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] imagemConvidado) {
+                new EventoService(CreateEventActivity.this, MainActivity.idUsuarioGoogle).salvarImagemConvite(imagemConvidado, convite.getIdUsuarioGoogleConvidado(), idEvento);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
     }
 
     public static List<Convite> getListaConvidadosEvento() {
