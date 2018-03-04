@@ -1,5 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.evento.model;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ public class Evento {
     private String idEventoFirebase;
     private String idRoteiroFirebase;
     private String dataEvento;
+    private long idEventoSqlite;
     private List<Convite> convidados;
 
     public Evento() {
@@ -92,5 +95,14 @@ public class Evento {
 
     public void setConvidados(List<Convite> convidados) {
         this.convidados = convidados;
+    }
+
+    @Exclude
+    public long getIdEventoSqlite() {
+        return idEventoSqlite;
+    }
+
+    public void setIdEventoSqlite(long idEventoSqlite) {
+        this.idEventoSqlite = idEventoSqlite;
     }
 }

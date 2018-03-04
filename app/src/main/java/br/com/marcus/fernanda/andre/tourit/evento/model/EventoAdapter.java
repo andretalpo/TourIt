@@ -1,6 +1,7 @@
 package br.com.marcus.fernanda.andre.tourit.evento.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.evento.controler.EventoDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
@@ -47,6 +49,14 @@ public class EventoAdapter extends RecyclerView.Adapter {
         eventoHolder.nomeEventoTextView.setText(evento.getNomeEvento());
         eventoHolder.nomeRoteiroTextView.setText(roteiro.getNomeRoteiro());
         eventoHolder.dataHoraEventoTextView.setText(evento.getDataEvento() + " - " + evento.getHoraInicio() + " a " + evento.getHoraFim());
+        eventoHolder.cardEventoRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), EventoDetailsActivity.class);
+                intent.putExtra("idEvento", evento.getIdEventoFirebase());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

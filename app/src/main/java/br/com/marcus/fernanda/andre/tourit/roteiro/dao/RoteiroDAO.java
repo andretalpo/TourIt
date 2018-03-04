@@ -347,6 +347,7 @@ public class RoteiroDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_PUBLICADO, 1);
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO_FIREBASE + "=?", new String[]{idRoteiroFirebase});
+        sqLiteDatabase.close();
     }
 
     public List<Roteiro> consultarRoteirosPublicados(String pesquisa) {

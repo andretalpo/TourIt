@@ -34,4 +34,23 @@ public class EventoService {
     public void salvarImagemConvite(byte[] imagemConvidado, String idUsuarioGoogleConvidado, String idEvento) {
         new EventoDAO(context, idGoogle).salvarImagemConvite(imagemConvidado, idUsuarioGoogleConvidado, idEvento);
     }
+
+    public void atualizarEvento(Evento evento){
+        new EventoDAO(context, idGoogle).atualizarEventoFirebase(evento);
+        new EventoDAO(context, idGoogle).atualizarEventoSqlite(evento);
+    }
+
+    public void excluirEvento(String idEvento){
+        EventoDAO eventoDAO = new EventoDAO(context, idGoogle);
+        eventoDAO.excluirEventoFirebase(idEvento);
+        eventoDAO.excluirEventoSqlite(idEvento);
+    }
+
+    public Evento consultarEventoPorIdFirebase(String idEvento) {
+        return new EventoDAO(context, idGoogle).consultarEventoPorIdFirebase(idEvento);
+    }
+
+    public List<Convite> consultarConvitesEvento(String idEvento) {
+        return new EventoDAO(context, idGoogle).consultarConvitesEvento(idEvento);
+    }
 }

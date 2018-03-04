@@ -202,9 +202,9 @@
             </LinearLayout>
 
             <FrameLayout
+                android:id="@+id/listaConvidadosEventoDetailsFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listaConvidadosEventoDetailsFrameLayout"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

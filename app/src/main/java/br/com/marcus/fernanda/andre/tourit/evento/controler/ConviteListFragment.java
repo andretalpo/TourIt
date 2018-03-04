@@ -19,6 +19,8 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.ConviteAdapter;
+import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
+import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 
 /**
  * Created by André on 14/02/2018.
@@ -54,7 +56,7 @@ public class ConviteListFragment extends Fragment {
 
         bundle = getArguments();
         if(bundle.getString("acao").equals("consulta")) {
-
+            new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEvento(bundle.getString("idEvento"));
         } else if(bundle.getString("acao").equals("criacao")){
             convites.addAll(CreateEventActivity.getListaConvidadosEvento());
             adapter.notifyDataSetChanged();
@@ -80,6 +82,7 @@ public class ConviteListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         convites.clear();
+        //colocar if de acao do bundle
         convites.addAll(CreateEventActivity.getListaConvidadosEvento());
         adapter.notifyDataSetChanged();
     }

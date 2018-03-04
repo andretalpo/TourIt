@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -71,6 +70,15 @@ public class CreateEventActivity extends AppCompatActivity {
         transaction.replace(R.id.listaConvidadosCreateEventActivityFrameLayout, conviteListFragment);
         transaction.commit();
 
+        if(getIntent().getStringExtra("idEvento") != null){
+            Evento evento = new EventoService(this, MainActivity.idUsuarioGoogle).consultarEventoPorIdFirebase(getIntent().getStringExtra("idEvento"));
+            nomeEventoEditText.setText(evento.getNomeEvento());
+            dataEditText.setText(evento.getDataEvento());
+            horaInicioEditText.setText(evento.getHoraInicio());
+            horaFimEditText.setText(evento.getHoraFim());
+            listaConvidadosEvento.addAll(evento.getConvidados());
+        }
+
         final DatePickerDialog.OnDateSetListener dateEventPicker = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -118,15 +126,21 @@ public class CreateEventActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//André vai validar
                 Evento evento = new Evento();
                 evento.setCriadorEvento(MainActivity.nomeUsuario);
                 evento.setIdCriadorEvento(MainActivity.idUsuarioGoogle);
                 evento.setNomeEvento(nomeEventoEditText.getText().toString());
                 evento.setHoraInicio(horaInicioEditText.getText().toString());
                 evento.setHoraFim(horaFimEditText.getText().toString());
+                evento.setDataEvento(dateEventPicker.toString());
                 evento.setIdRoteiroFirebase(getIntent().getStringExtra("idRoteiro"));
                 evento.setConvidados(listaConvidadosEvento);
-                new CriarEventoTask().execute(evento);
+                if(getIntent().getStringExtra("idEvento") == null){
+                    new CriarEventoTask().execute(evento);
+                }else {
+                    new AtualizarEventoTask().execute(evento);
+                }
             }
         });
 
@@ -196,5 +210,34 @@ public class CreateEventActivity extends AppCompatActivity {
 
     public static void setListaConvidadosEvento(List<Convite> listaConvidadosEvento) {
         CreateEventActivity.listaConvidadosEvento = listaConvidadosEvento;
+    }
+
+    private class AtualizarEventoTask extends AsyncTask<Evento, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(CreateEventActivity.this, R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.salvando_evento));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Evento... evento) {
+            new EventoService(CreateEventActivity.this, MainActivity.idUsuarioGoogle).atualizarEvento(evento[0]);
+            for(Convite convite : evento[0].getConvidados()){
+                armazenarImagem(convite, evento[0].getIdEventoFirebase());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_alterado_sucesso), Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 }
