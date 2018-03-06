@@ -16,53 +16,59 @@
         android:id="@+id/excluirUsuarioConviteViewHolderImageView"
         android:src="@drawable/ic_delete"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imagemConvidadoViewHolderImageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/excluirUsuarioConviteViewHolderImageView"
-        android:src="@drawable/background_imagem_new"
-        android:padding="@dimen/padding_geral"
-        android:layout_marginEnd="10dp"
-        app:civ_border_width="1dp"
-        app:civ_border_color="@color/cor_prata" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/imagemConvidadoViewHolderImageView"
-        android:layout_centerVertical="true">
+        android:layout_height="match_parent"
+        android:id="@+id/informacoesConviteViewHolderRelativeLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imagemConvidadoViewHolderImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/background_imagem_new"
+            android:padding="@dimen/padding_geral"
+            android:layout_marginEnd="10dp"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/cor_prata" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imagemConvidadoViewHolderImageView"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="André foi andar no bosque"
+                android:padding="2dp"
+                android:id="@+id/nomeConvidadoViewHolderTextView"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pois é"
+                android:padding="2dp"
+                android:id="@+id/usernameConvidadoViewHolderTextView"
+                android:layout_below="@id/nomeConvidadoViewHolderTextView"/>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="André foi andar no bosque"
-            android:padding="2dp"
-            android:id="@+id/nomeConvidadoViewHolderTextView"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pois é"
-            android:padding="2dp"
-            android:id="@+id/usernameConvidadoViewHolderTextView"
-            android:layout_below="@id/nomeConvidadoViewHolderTextView"/>
+            android:id="@+id/respostaConviteViewHolderTextView"
+            android:text="Andorinha"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/padding_geral"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/cor_vermelho"/>
 
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/respostaConviteViewHolderTextView"
-        android:text="Andorinha"
-        android:visibility="gone"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="@dimen/padding_geral"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="@color/cor_vermelho"/>
 
 </RelativeLayout>

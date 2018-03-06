@@ -6,7 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -28,6 +30,7 @@ public class ConviteAdapter extends RecyclerView.Adapter {
     private List<Convite> convites;
     private Context context;
     private StorageReference storageReference;
+    private boolean excluir;
 
     public ConviteAdapter(List<Convite> convites, Context context) {
         this.convites = convites;
@@ -45,11 +48,12 @@ public class ConviteAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ConviteViewHolder conviteHolder = (ConviteViewHolder) holder;
         final Convite convite = convites.get(position);
+        excluir = false;
+        conviteHolder.excluirConviteImageView.setVisibility(View.VISIBLE);
         storageReference = FirebaseStorage.getInstance().getReference().child("imagemUsuario/" + convite.getIdUsuarioGoogleConvidado() + ".jpeg");
         conviteHolder.convidadoImageView.setImageBitmap(convite.getFotoConvidado());
         conviteHolder.nomeConvidadoTextView.setText(convite.getUsuarioConvidado());
         conviteHolder.usernameConvidadoTextView.setText(convite.getUsernameUsuarioConvidado());
-        conviteHolder.excluirConviteImageView.setVisibility(View.GONE);
         Glide.with(context).using(new FirebaseImageLoader()).load(storageReference).into(conviteHolder.convidadoImageView);
         if(convite.getRespostaConvite() == Convite.ACEITO){
             conviteHolder.respostaConvidadoTextView.setText("Confirmado");
@@ -64,11 +68,12 @@ public class ConviteAdapter extends RecyclerView.Adapter {
         conviteHolder.cardConviteRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView botaoExcluir = (ImageView) v.findViewById(R.id.excluirUsuarioConviteViewHolderImageView);
-                if(botaoExcluir.getVisibility() == View.GONE) {
-                    botaoExcluir.setVisibility(View.VISIBLE);
+                if(excluir == false) {
+                    conviteHolder.infoCardRelativeLayout.animate().x(60f).y(0f);
+                    excluir = true;
                 }else{
-                    botaoExcluir.setVisibility(View.GONE);
+                    conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f);
+                    excluir = false;
                 }
             }
         });
@@ -76,8 +81,8 @@ public class ConviteAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 CreateEventActivity.getListaConvidadosEvento().remove(convite);
+                conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f);
                 Intent intent = new Intent("atualizarAdapter");
-                conviteHolder.excluirConviteImageView.setVisibility(View.GONE);
                 context.sendBroadcast(intent);
             }
         });

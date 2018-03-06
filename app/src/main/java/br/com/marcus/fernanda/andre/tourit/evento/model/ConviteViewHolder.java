@@ -20,6 +20,7 @@ public class ConviteViewHolder extends RecyclerView.ViewHolder{
     public TextView respostaConvidadoTextView;
     public RelativeLayout cardConviteRelativeLayout;
     public ImageView excluirConviteImageView;
+    public RelativeLayout infoCardRelativeLayout;
 
     public ConviteViewHolder(View itemView) {
         super(itemView);
@@ -29,5 +30,6 @@ public class ConviteViewHolder extends RecyclerView.ViewHolder{
         this.respostaConvidadoTextView = (TextView) itemView.findViewById(R.id.respostaConviteViewHolderTextView);
         this.cardConviteRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.cardViewHolderConviteRelativeLayout);
         this.excluirConviteImageView = (ImageView) itemView.findViewById(R.id.excluirUsuarioConviteViewHolderImageView);
+        this.infoCardRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.informacoesConviteViewHolderRelativeLayout);
     }
 }
