@@ -50,6 +50,7 @@ public class ConviteAdapter extends RecyclerView.Adapter {
         final Convite convite = convites.get(position);
         excluir = false;
         conviteHolder.excluirConviteImageView.setVisibility(View.VISIBLE);
+        conviteHolder.excluirConviteImageView.setClickable(excluir);
         storageReference = FirebaseStorage.getInstance().getReference().child("imagemUsuario/" + convite.getIdUsuarioGoogleConvidado() + ".jpeg");
         conviteHolder.convidadoImageView.setImageBitmap(convite.getFotoConvidado());
         conviteHolder.nomeConvidadoTextView.setText(convite.getUsuarioConvidado());
@@ -70,9 +71,11 @@ public class ConviteAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 if(excluir == false) {
                     conviteHolder.infoCardRelativeLayout.animate().x(60f).y(0f);
+                    conviteHolder.excluirConviteImageView.setClickable(true);
                     excluir = true;
                 }else{
                     conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f);
+                    conviteHolder.infoCardRelativeLayout.setClickable(false);
                     excluir = false;
                 }
             }
@@ -80,10 +83,18 @@ public class ConviteAdapter extends RecyclerView.Adapter {
         conviteHolder.excluirConviteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateEventActivity.getListaConvidadosEvento().remove(convite);
-                conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f);
-                Intent intent = new Intent("atualizarAdapter");
-                context.sendBroadcast(intent);
+                if(excluir) {
+                    CreateEventActivity.getListaConvidadosEvento().remove(convite);
+                    conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f).setDuration(0);
+                    conviteHolder.excluirConviteImageView.setClickable(false);
+                    excluir = false;
+                    Intent intent = new Intent("atualizarAdapter");
+                    context.sendBroadcast(intent);
+                }else {
+                    conviteHolder.infoCardRelativeLayout.animate().x(60f).y(0f);
+                    conviteHolder.excluirConviteImageView.setClickable(true);
+                    excluir = true;
+                }
             }
         });
     }
