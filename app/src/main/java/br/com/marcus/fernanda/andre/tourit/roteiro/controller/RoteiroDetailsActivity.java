@@ -20,7 +20,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -60,11 +59,9 @@ import br.com.marcus.fernanda.andre.tourit.roteiro.model.AvaliacaoRoteiroAdapter
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
-import br.com.marcus.fernanda.andre.tourit.local.model.AvaliacaoLocalAdapter;
 import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 import static br.com.marcus.fernanda.andre.tourit.R.id.alterarRoteiroDetailsActivityImageView;
-import static br.com.marcus.fernanda.andre.tourit.R.id.imagemRoteiroDetailsActivity;
 
 public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -108,7 +105,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         excluirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_excluir);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RoteiroDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_excluir_roteiro);
 
                 alertDialogBuilder.setCancelable(false);
                 alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {

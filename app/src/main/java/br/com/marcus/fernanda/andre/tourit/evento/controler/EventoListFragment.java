@@ -99,5 +99,45 @@ public class EventoListFragment extends Fragment {
         if(progressDialog != null){
             progressDialog.dismiss();
         }
+        if(bundle.getString("tipoEvento").equals("meusEventos")) {
+            carregarMeusEventos();
+        }else{
+            carregarMeusConvites();
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void carregarMeusConvites() {
+        List<Evento> listaConvites = new EventoService(EventoListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarEventosConvidado(MainActivity.idUsuarioGoogle);
+        listEventos.clear();
+
+        if (listaConvites != null) {
+            listEventos.addAll(listaConvites);
+        }
+    }
+
+    private class ConsultarConvitesFirebaseTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(getContext(), R.style.ProgressTheme);
+            progressDialog.setTitle(getResources().getString(R.string.buscando_evento));
+            progressDialog.setMessage(getResources().getString(R.string.aguarde));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... aVoid) {
+            carregarMeusConvites();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            adapter.notifyDataSetChanged();
+        }
     }
 }

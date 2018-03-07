@@ -213,7 +213,8 @@
     <string name="roteiros_seguidos">Roteiros Seguidos</string>
     <string name="aceitar">Aceitar</string>
     <string name="cancelar">Cancelar</string>
-    <string name="mensagem_excluir">Deseja excluir o roteiro?</string>
+    <string name="mensagem_excluir_roteiro">Deseja excluir o roteiro?</string>
+    <string name="mensagem_excluir_evento">Deseja excluir o evento?</string>
     <string name="mensagem_publicar">Deseja publicar o roteiro?</string>
     <string name="mensagem_seguir">Deseja seguir o roteiro?</string>
     <string name="mensagem_deixar_de_seguir">Deseja deixar de seguir o roteiro?</string>
@@ -281,4 +282,5 @@
     <string name="eventos_convidado">Convites</string>
     <string name="buscando_evento">Buscando eventos</string>
     <string name="evento_alterado_sucesso">Evento alterado com sucesso!</string>
+    <string name="evento_excluido_sucesso">Evento excluído com sucesso</string>
 </resources>

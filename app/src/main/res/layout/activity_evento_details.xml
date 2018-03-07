@@ -56,15 +56,24 @@
                     android:id="@+id/editarEventoDetailsActivityImageView"
                     android:layout_gravity="end|center_vertical"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_star"/>
+                    android:src="@drawable/ic_edit"/>
 
                 <ImageView
-                    android:id="@+id/responderConviteDetailsActivityImageView"
+                    android:id="@+id/responderSimConviteDetailsActivityImageView"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="end|center_vertical"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_download_branco"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/responderNaoConviteDetailsActivityImageView"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/ic_refuse"
                     android:visibility="gone" />
             </LinearLayout>
 

@@ -20,6 +20,7 @@ import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.evento.controler.CreateEventActivity;
+import br.com.marcus.fernanda.andre.tourit.evento.controler.EventoDetailsActivity;
 
 /**
  * Created by André on 14/02/2018.
@@ -30,7 +31,7 @@ public class ConviteAdapter extends RecyclerView.Adapter {
     private List<Convite> convites;
     private Context context;
     private StorageReference storageReference;
-    private boolean excluir;
+//    private boolean excluir;
 
     public ConviteAdapter(List<Convite> convites, Context context) {
         this.convites = convites;
@@ -48,9 +49,9 @@ public class ConviteAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ConviteViewHolder conviteHolder = (ConviteViewHolder) holder;
         final Convite convite = convites.get(position);
-        excluir = false;
+        conviteHolder.excluir = false;
         conviteHolder.excluirConviteImageView.setVisibility(View.VISIBLE);
-        conviteHolder.excluirConviteImageView.setClickable(excluir);
+        conviteHolder.excluirConviteImageView.setClickable(conviteHolder.excluir);
         storageReference = FirebaseStorage.getInstance().getReference().child("imagemUsuario/" + convite.getIdUsuarioGoogleConvidado() + ".jpeg");
         conviteHolder.convidadoImageView.setImageBitmap(convite.getFotoConvidado());
         conviteHolder.nomeConvidadoTextView.setText(convite.getUsuarioConvidado());
@@ -66,37 +67,40 @@ public class ConviteAdapter extends RecyclerView.Adapter {
             conviteHolder.respostaConvidadoTextView.setText("Recusado");
             conviteHolder.respostaConvidadoTextView.setTextColor(context.getResources().getColor(R.color.cor_vermelho));
         }
-        conviteHolder.cardConviteRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(excluir == false) {
-                    conviteHolder.infoCardRelativeLayout.animate().x(60f).y(0f);
-                    conviteHolder.excluirConviteImageView.setClickable(true);
-                    excluir = true;
-                }else{
-                    conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f);
-                    conviteHolder.infoCardRelativeLayout.setClickable(false);
-                    excluir = false;
+        if(!EventoDetailsActivity.isConsultando()) {
+            conviteHolder.cardConviteRelativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!conviteHolder.excluir) {
+                        conviteHolder.infoCardRelativeLayout.animate().x(80f).y(0f);
+                        conviteHolder.excluirConviteImageView.setClickable(true);
+                        conviteHolder.excluir = true;
+                    } else {
+                        conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f);
+                        conviteHolder.infoCardRelativeLayout.setClickable(false);
+                        conviteHolder.excluir = false;
+                    }
                 }
-            }
-        });
-        conviteHolder.excluirConviteImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(excluir) {
-                    CreateEventActivity.getListaConvidadosEvento().remove(convite);
-                    conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f).setDuration(0);
-                    conviteHolder.excluirConviteImageView.setClickable(false);
-                    excluir = false;
-                    Intent intent = new Intent("atualizarAdapter");
-                    context.sendBroadcast(intent);
-                }else {
-                    conviteHolder.infoCardRelativeLayout.animate().x(60f).y(0f);
-                    conviteHolder.excluirConviteImageView.setClickable(true);
-                    excluir = true;
+            });
+            conviteHolder.excluirConviteImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Colocar um if de caminho, pois será reutilizado no evento details
+                    if (conviteHolder.excluir) {
+                        CreateEventActivity.getListaConvidadosEvento().remove(convite);
+                        conviteHolder.infoCardRelativeLayout.animate().x(0f).y(0f);
+                        conviteHolder.excluirConviteImageView.setClickable(false);
+                        conviteHolder.excluir = false;
+                        Intent intent = new Intent("atualizarAdapter");
+                        context.sendBroadcast(intent);
+                    } else {
+                        conviteHolder.infoCardRelativeLayout.animate().x(80f).y(0f);
+                        conviteHolder.excluirConviteImageView.setClickable(true);
+                        conviteHolder.excluir = true;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

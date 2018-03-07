@@ -59,7 +59,11 @@ public class CreateEventActivity extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.criarEventoCreateEventActivityFab);
         convidadosEventoFrameLayout = (FrameLayout) findViewById(R.id.listaConvidadosCreateEventActivityFrameLayout);
 
-        listaConvidadosEvento = new ArrayList<>();
+        EventoDetailsActivity.setConsultando(false);
+
+        if(listaConvidadosEvento == null){
+            listaConvidadosEvento = new ArrayList<>();
+        }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ConviteListFragment conviteListFragment = new ConviteListFragment();
@@ -69,15 +73,6 @@ public class CreateEventActivity extends AppCompatActivity {
         conviteListFragment.setArguments(bundle);
         transaction.replace(R.id.listaConvidadosCreateEventActivityFrameLayout, conviteListFragment);
         transaction.commit();
-
-        if(getIntent().getStringExtra("idEvento") != null){
-            Evento evento = new EventoService(this, MainActivity.idUsuarioGoogle).consultarEventoPorIdFirebase(getIntent().getStringExtra("idEvento"));
-            nomeEventoEditText.setText(evento.getNomeEvento());
-            dataEditText.setText(evento.getDataEvento());
-            horaInicioEditText.setText(evento.getHoraInicio());
-            horaFimEditText.setText(evento.getHoraFim());
-            listaConvidadosEvento.addAll(evento.getConvidados());
-        }
 
         final DatePickerDialog.OnDateSetListener dateEventPicker = new DatePickerDialog.OnDateSetListener() {
 
@@ -123,6 +118,15 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+        if(getIntent().getStringExtra("idEvento") != null){
+            Evento evento = new EventoService(this, MainActivity.idUsuarioGoogle).consultarEventoPorIdFirebase(getIntent().getStringExtra("idEvento"));
+            nomeEventoEditText.setText(evento.getNomeEvento());
+            dataEditText.setText(evento.getDataEvento());
+            horaInicioEditText.setText(evento.getHoraInicio());
+            horaFimEditText.setText(evento.getHoraFim());
+            listaConvidadosEvento.addAll(evento.getConvidados());
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,12 +137,13 @@ public class CreateEventActivity extends AppCompatActivity {
                 evento.setNomeEvento(nomeEventoEditText.getText().toString());
                 evento.setHoraInicio(horaInicioEditText.getText().toString());
                 evento.setHoraFim(horaFimEditText.getText().toString());
-                evento.setDataEvento(dateEventPicker.toString());
+                evento.setDataEvento(dataEditText.getText().toString());
                 evento.setIdRoteiroFirebase(getIntent().getStringExtra("idRoteiro"));
                 evento.setConvidados(listaConvidadosEvento);
                 if(getIntent().getStringExtra("idEvento") == null){
                     new CriarEventoTask().execute(evento);
                 }else {
+                    evento.setIdEventoFirebase(getIntent().getStringExtra("idEvento"));
                     new AtualizarEventoTask().execute(evento);
                 }
             }
@@ -238,6 +243,22 @@ public class CreateEventActivity extends AppCompatActivity {
             progressDialog.dismiss();
             Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_alterado_sucesso), Toast.LENGTH_SHORT).show();
             finish();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(listaConvidadosEvento != null){
+            listaConvidadosEvento = null;
         }
     }
 }

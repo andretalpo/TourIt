@@ -53,4 +53,9 @@ public class EventoService {
     public List<Convite> consultarConvitesEvento(String idEvento) {
         return new EventoDAO(context, idGoogle).consultarConvitesEvento(idEvento);
     }
+
+    public List<Evento> consultarEventosConvidado(String idUsuarioGoogle) {
+//        return new EventoDAO(context, idUsuarioGoogle).consultarEventosConvidado(idUsuarioGoogle);
+        return null;
+    }
 }

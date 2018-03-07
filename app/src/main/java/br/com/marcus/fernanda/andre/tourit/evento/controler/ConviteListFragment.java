@@ -56,7 +56,8 @@ public class ConviteListFragment extends Fragment {
 
         bundle = getArguments();
         if(bundle.getString("acao").equals("consulta")) {
-            new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEvento(bundle.getString("idEvento"));
+            convites.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEvento(bundle.getString("idEvento")));
+            adapter.notifyDataSetChanged();
         } else if(bundle.getString("acao").equals("criacao")){
             convites.addAll(CreateEventActivity.getListaConvidadosEvento());
             adapter.notifyDataSetChanged();
@@ -83,7 +84,11 @@ public class ConviteListFragment extends Fragment {
         super.onResume();
         convites.clear();
         //colocar if de acao do bundle
-        convites.addAll(CreateEventActivity.getListaConvidadosEvento());
+        if(bundle.getString("acao").equals("criacao")){
+            convites.addAll(CreateEventActivity.getListaConvidadosEvento());
+        }else if(bundle.getString("acao").equals("consulta")){
+            convites.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEvento(bundle.getString("idEvento")));
+        }
         adapter.notifyDataSetChanged();
     }
 

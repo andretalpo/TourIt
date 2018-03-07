@@ -185,7 +185,8 @@ public class EventoDAO {
             evento.setIdCriadorEvento(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_USUARIO_GOOGLE)));
             evento.setDataEvento(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DATA_EVENTO)));
             evento.setIdEventoFirebase(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO_FIREBASE)));
-            evento.setConvidados(consultarConvidados(cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO))));
+            Long idEventoSqlite = cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO));
+            evento.setConvidados(consultarConvidados(idEventoSqlite));
         }
         sqLiteDatabase.close();
         return evento;
