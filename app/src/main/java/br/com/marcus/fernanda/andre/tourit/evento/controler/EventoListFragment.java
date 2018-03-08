@@ -100,7 +100,7 @@ public class EventoListFragment extends Fragment {
             progressDialog.dismiss();
         }
         if(bundle.getString("tipoEvento").equals("meusEventos")) {
-            carregarMeusEventos();
+            new ConsultarEventoSqliteTask().execute();
         }else{
             carregarMeusConvites();
         }
@@ -138,6 +138,14 @@ public class EventoListFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             progressDialog.dismiss();
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (progressDialog != null){
+            progressDialog.dismiss();
         }
     }
 }

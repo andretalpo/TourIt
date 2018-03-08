@@ -105,7 +105,7 @@ public class EventoDetailsActivity extends AppCompatActivity {
         alterarImageVIew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alterarEvento(evento.getIdEventoFirebase(), evento.getIdRoteiroFirebase());
+                alterarEvento(evento);
             }
         });
 
@@ -162,10 +162,11 @@ public class EventoDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void alterarEvento(String idEvento, String idRoteiro){
+    private void alterarEvento(Evento evento){
         Intent intent = new Intent(this, CreateEventActivity.class);
-        intent.putExtra("idEvento", idEvento);
-        intent.putExtra("idRoteiro", idRoteiro);
+        intent.putExtra("idEventoFirebase", evento.getIdEventoFirebase());
+        intent.putExtra("idEventoSqlite", evento.getIdEventoSqlite());
+        intent.putExtra("idRoteiro", evento.getIdRoteiroFirebase());
         startActivity(intent);
         finish();
     }

@@ -26,6 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
@@ -118,8 +119,8 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
-        if(getIntent().getStringExtra("idEvento") != null){
-            Evento evento = new EventoService(this, MainActivity.idUsuarioGoogle).consultarEventoPorIdFirebase(getIntent().getStringExtra("idEvento"));
+        if(getIntent().getStringExtra("idEventoFirebase") != null){
+            Evento evento = new EventoService(this, MainActivity.idUsuarioGoogle).consultarEventoPorIdFirebase(getIntent().getStringExtra("idEventoFirebase"));
             nomeEventoEditText.setText(evento.getNomeEvento());
             dataEditText.setText(evento.getDataEvento());
             horaInicioEditText.setText(evento.getHoraInicio());
@@ -140,10 +141,11 @@ public class CreateEventActivity extends AppCompatActivity {
                 evento.setDataEvento(dataEditText.getText().toString());
                 evento.setIdRoteiroFirebase(getIntent().getStringExtra("idRoteiro"));
                 evento.setConvidados(listaConvidadosEvento);
-                if(getIntent().getStringExtra("idEvento") == null){
+                if(getIntent().getStringExtra("idEventoFirebase") == null){
                     new CriarEventoTask().execute(evento);
                 }else {
-                    evento.setIdEventoFirebase(getIntent().getStringExtra("idEvento"));
+                    evento.setIdEventoFirebase(getIntent().getStringExtra("idEventoFirebase"));
+                    evento.setIdEventoSqlite(getIntent().getLongExtra("idEventoSqlite", 0));
                     new AtualizarEventoTask().execute(evento);
                 }
             }
@@ -240,6 +242,11 @@ public class CreateEventActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             progressDialog.dismiss();
             Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_alterado_sucesso), Toast.LENGTH_SHORT).show();
             finish();

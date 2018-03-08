@@ -83,7 +83,6 @@ public class ConviteListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         convites.clear();
-        //colocar if de acao do bundle
         if(bundle.getString("acao").equals("criacao")){
             convites.addAll(CreateEventActivity.getListaConvidadosEvento());
         }else if(bundle.getString("acao").equals("consulta")){

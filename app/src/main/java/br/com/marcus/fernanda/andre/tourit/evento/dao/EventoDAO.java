@@ -206,9 +206,9 @@ public class EventoDAO {
                 convite.setUsernameUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_USERNAME)));
                 convite.setUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOME_USUARIO)));
                 convite.setRespostaConvite(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_RESPOSTA_CONVITE)));
-//                    while(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO)) == null){
-//                        //gamb
-//                    }
+//                while(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO)) == null){
+//                    //gamb
+//                }
                 convite.setFotoConvidado(ImageConverter.convertByteToBitmap(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO))));
                 convites.add(convite);
             }while (cursor.moveToNext());
