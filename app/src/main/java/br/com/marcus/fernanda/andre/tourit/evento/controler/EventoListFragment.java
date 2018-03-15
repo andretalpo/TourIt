@@ -3,6 +3,7 @@ package br.com.marcus.fernanda.andre.tourit.evento.controler;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.evento.dao.EventoDAO;
+import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoAdapter;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
@@ -52,7 +60,7 @@ public class EventoListFragment extends Fragment {
         if (bundle.getString("tipoEvento").equals("meusEventos")) {
             new ConsultarEventoSqliteTask().execute();
         } else if (bundle.getString("tipoEvento").equals("convites")) {
-
+            new ConsultarConvitesFirebaseTask().execute();
         }
 
         return view;
@@ -102,18 +110,20 @@ public class EventoListFragment extends Fragment {
         if(bundle.getString("tipoEvento").equals("meusEventos")) {
             new ConsultarEventoSqliteTask().execute();
         }else{
-            carregarMeusConvites();
+            listEventos.clear();
+            listEventos.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarEventosConvidadoSqlite());
         }
         adapter.notifyDataSetChanged();
     }
 
-    private void carregarMeusConvites() {
+    private List<Evento> carregarMeusConvites() {
         List<Evento> listaConvites = new EventoService(EventoListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarEventosConvidado(MainActivity.idUsuarioGoogle);
         listEventos.clear();
 
         if (listaConvites != null) {
             listEventos.addAll(listaConvites);
         }
+        return listEventos;
     }
 
     private class ConsultarConvitesFirebaseTask extends AsyncTask<Void, Void, Void>{
@@ -121,7 +131,7 @@ public class EventoListFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(getContext(), R.style.ProgressTheme);
-            progressDialog.setTitle(getResources().getString(R.string.buscando_evento));
+            progressDialog.setTitle(getResources().getString(R.string.buscando_convites));
             progressDialog.setMessage(getResources().getString(R.string.aguarde));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
@@ -131,14 +141,36 @@ public class EventoListFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... aVoid) {
             carregarMeusConvites();
+            new EventoService(getContext(), MainActivity.idUsuarioGoogle).atualizarEventosConvidado(listEventos);
+            for(Evento evento: listEventos) {
+                for (Convite convite : evento.getConvidados()) {
+                    armazenarImagem(convite, evento.getIdEventoFirebase());
+                }
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            progressDialog.dismiss();
-            adapter.notifyDataSetChanged();
+            onResume();
         }
+    }
+
+    public void armazenarImagem(final Convite convite, final String idEvento){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("imagemUsuario/" + convite.getIdUsuarioGoogleConvidado() + ".jpeg");
+
+        final long ONE_MEGABYTE = 300 * 300;
+        storageReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] imagemConvidado) {
+                new EventoService(getContext(), MainActivity.idUsuarioGoogle).salvarImagemConvite(imagemConvidado, convite.getIdUsuarioGoogleConvidado(), idEvento);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
     }
 
     @Override

@@ -283,4 +283,6 @@
     <string name="buscando_evento">Buscando eventos</string>
     <string name="evento_alterado_sucesso">Evento alterado com sucesso!</string>
     <string name="evento_excluido_sucesso">Evento excluído com sucesso</string>
+    <string name="alterando_evento">Salvando alterações</string>
+    <string name="buscando_convites">Buscando convites</string>
 </resources>

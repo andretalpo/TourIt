@@ -8,8 +8,21 @@ import android.graphics.Bitmap;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
@@ -23,7 +36,6 @@ import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class EventoDAO {
 
-    private SQLiteDatabase sqLiteDatabase;
     private DBHelper dbHelper;
     private String idGoogle;
 
@@ -39,7 +51,7 @@ public class EventoDAO {
     }
 
     public String salvarEventoSQLite (Evento evento){
-        sqLiteDatabase = dbHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_ID_EVENTO_FIREBASE, evento.getIdEventoFirebase());
         contentValues.put(DBHelper.COLUMN_ID_USUARIO_GOOGLE, evento.getIdCriadorEvento());
@@ -66,12 +78,26 @@ public class EventoDAO {
             sqLiteDatabase.insert(DBHelper.TABLE_CONVITE, null, contentValuesConvite);
         }
         sqLiteDatabase.close();
+
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM convite WHERE id_google = ?", new String[]{idGoogle});
+        if (cursor != null && cursor.getCount() > 0) {
+            List<Convite> listaConvites = new ArrayList<>();
+            cursor.moveToFirst();
+            do {
+                Convite convite = new Convite();
+                convite.setUsernameUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_USERNAME)));
+                listaConvites.add(convite);
+            } while (cursor.moveToNext());
+            cursor.close();
+            sqLiteDatabase.close();
+        }
         return evento.getIdEventoFirebase();
     }
 
 
     public List<Evento> consultarMeusEventos() {
-        sqLiteDatabase = dbHelper.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_EVENTO + " WHERE " + DBHelper.COLUMN_ID_USUARIO_GOOGLE + " = ?", new String[]{idGoogle});
         if (cursor != null && cursor.getCount() > 0) {
             List<Evento> listaEventos = new ArrayList<>();
@@ -97,40 +123,45 @@ public class EventoDAO {
         return null;
     }
 
-        private List<Convite> consultarConvidados(long idEvento) {
-            List<Convite> convites = new ArrayList<>();
+    private List<Convite> consultarConvidados(long idEvento) {
+        List<Convite> convites = new ArrayList<>();
 
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONVITE + " WHERE " + DBHelper.COLUMN_ID_EVENTO + " = ?", new String[]{String.valueOf(idEvento)});
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONVITE + " WHERE " + DBHelper.COLUMN_ID_EVENTO + " = ?", new String[]{String.valueOf(idEvento)});
 
-            if(cursor != null && cursor.getCount() > 0){
-                cursor.moveToFirst();
-                do{
-                    Convite convite = new Convite();
-                    convite.setIdUsuarioGoogleConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_USUARIO_GOOGLE)));
-                    convite.setUsernameUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_USERNAME)));
-                    convite.setUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOME_USUARIO)));
-                    convite.setRespostaConvite(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_RESPOSTA_CONVITE)));
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            do{
+                Convite convite = new Convite();
+                convite.setIdUsuarioGoogleConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_USUARIO_GOOGLE)));
+                convite.setUsernameUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_USERNAME)));
+                convite.setUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOME_USUARIO)));
+                convite.setRespostaConvite(cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_RESPOSTA_CONVITE)));
 //                    while(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO)) == null){
 //                        //gamb
 //                    }
-                    convite.setFotoConvidado(ImageConverter.convertByteToBitmap(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO))));
-                    convites.add(convite);
-                }while (cursor.moveToNext());
-                cursor.close();
-                return convites;
-            }
-            return null;
+                byte[] foto = cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO));
+                if(foto != null && foto.length > 0) {
+                    convite.setFotoConvidado(ImageConverter.convertByteToBitmap(foto));
+                }
+                convites.add(convite);
+            }while (cursor.moveToNext());
+            cursor.close();
+            return convites;
         }
+        return null;
+    }
 
     public void salvarImagemConvite(byte[] imagemConvidado, String idUsuarioGoogleConvidado, String idEvento) {
-        sqLiteDatabase = dbHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_FOTO_USUARIO, imagemConvidado);
         sqLiteDatabase.update(DBHelper.TABLE_CONVITE, contentValues, DBHelper.COLUMN_ID_EVENTO_FIREBASE + "=? AND " + DBHelper.COLUMN_ID_USUARIO_GOOGLE + "=?" , new String[]{idEvento, idUsuarioGoogleConvidado});
+        sqLiteDatabase.close();
     }
 
     public void atualizarEventoSqlite(Evento evento){
-        sqLiteDatabase = dbHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBHelper.COLUMN_NOME_EVENTO, evento.getNomeEvento());
         contentValues.put(DBHelper.COLUMN_DATA_EVENTO, evento.getDataEvento());
@@ -161,7 +192,7 @@ public class EventoDAO {
     }
 
     public void excluirEventoSqlite(String idEvento){
-        sqLiteDatabase = dbHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         sqLiteDatabase.delete(DBHelper.TABLE_EVENTO, DBHelper.COLUMN_ID_EVENTO_FIREBASE + "=?", new String[] {idEvento});
         sqLiteDatabase.close();
     }
@@ -171,7 +202,7 @@ public class EventoDAO {
     }
 
     public Evento consultarEventoPorIdFirebase(String idEvento) {
-        sqLiteDatabase = dbHelper.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_EVENTO + " WHERE " + DBHelper.COLUMN_ID_EVENTO_FIREBASE + " = ?", new String[]{idEvento});
         Evento evento = new Evento();
         if (cursor != null && cursor.getCount() > 0) {
@@ -193,7 +224,7 @@ public class EventoDAO {
     }
 
     public List<Convite> consultarConvitesEvento(String idEvento) {
-        sqLiteDatabase = dbHelper.getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         List<Convite> convites = new ArrayList<>();
 
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_CONVITE + " WHERE " + DBHelper.COLUMN_ID_EVENTO_FIREBASE + " = ?", new String[]{String.valueOf(idEvento)});
@@ -218,5 +249,122 @@ public class EventoDAO {
         }
         sqLiteDatabase.close();
         return null;
+    }
+
+    public List<Evento> consultarEventosConvidado(String idUsuarioGoogle) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Eventos.json?");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                //Fazer filtro de data para excluir eventos encerrados
+                return filtrarEventosConvidado(convertJSONToListEventos(new JSONObject(builder.toString())));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private List<Evento> filtrarEventosConvidado(List<Evento> eventos) {
+        List<Evento> eventosConvidado = new ArrayList<>();
+        for (Evento evento: eventos) {
+            for(Convite convite: evento.getConvidados()){
+                if(convite.getIdUsuarioGoogleConvidado().equals(idGoogle)){
+                    eventosConvidado.add(evento);
+                }
+            }
+        }
+        return eventosConvidado;
+    }
+
+    private List<Evento> convertJSONToListEventos(JSONObject jsonEventos) {
+        try {
+            List<Evento> listaEventos = new ArrayList<>();
+            Iterator<String> iter = jsonEventos.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                JSONObject jsonEvento = jsonEventos.getJSONObject(key);
+                Gson gson = new Gson();
+                Evento evento = gson.fromJson(jsonEvento.toString(), Evento.class);
+                listaEventos.add(evento);
+            }
+            return listaEventos;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void excluirConvitesSQLite(String idGoogle) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT c." + DBHelper.COLUMN_ID_EVENTO_FIREBASE +
+                " FROM " + DBHelper.TABLE_EVENTO + " e JOIN " + DBHelper.TABLE_CONVITE + " c ON (e." + DBHelper.COLUMN_ID_EVENTO +
+                        "=c." + DBHelper.COLUMN_ID_EVENTO + ") WHERE c." + DBHelper.COLUMN_ID_USUARIO_GOOGLE + "=?", new String[]{idGoogle});
+        List<String> listaEventos = new ArrayList<>();
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                listaEventos.add(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO_FIREBASE)));
+            } while (cursor.moveToNext());
+            cursor.close();
+            sqLiteDatabase.close();
+        }
+
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        sqLiteDatabase.delete(DBHelper.TABLE_EVENTO, DBHelper.COLUMN_ID_EVENTO_FIREBASE + "=?", listaEventos.toArray(new String[0]));
+        sqLiteDatabase.delete(DBHelper.TABLE_CONVITE, DBHelper.COLUMN_ID_EVENTO_FIREBASE + "=?", listaEventos.toArray(new String[0]));
+        sqLiteDatabase.close();
+
+    }
+
+    public List<Evento> consultarEventosConvidadoSqlite() {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        List<Evento> eventos = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DBHelper.TABLE_EVENTO + " e JOIN " + DBHelper.TABLE_CONVITE +
+                " c ON(e." + DBHelper.COLUMN_ID_EVENTO + "=c." + DBHelper.COLUMN_ID_EVENTO + ")" +
+                " WHERE c." + DBHelper.COLUMN_ID_USUARIO_GOOGLE + " = ?", new String[]{idGoogle});
+        do {
+            Evento evento = new Evento();
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                evento.setNomeEvento(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOME_EVENTO)));
+                evento.setIdEventoSqlite(cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO)));
+                evento.setIdRoteiroFirebase(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_ROTEIRO_FIREBASE)));
+                evento.setCriadorEvento(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NOME_USUARIO)));
+                evento.setHoraFim(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_HORA_FIM_EVENTO)));
+                evento.setHoraInicio(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_HORA_INICIO_EVENTO)));
+                evento.setIdCriadorEvento(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_USUARIO_GOOGLE)));
+                evento.setDataEvento(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DATA_EVENTO)));
+                evento.setIdEventoFirebase(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO_FIREBASE)));
+                Long idEventoSqlite = cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO));
+                evento.setConvidados(consultarConvidados(idEventoSqlite));
+                eventos.add(evento);
+            }
+        }while (cursor.moveToNext());
+        sqLiteDatabase.close();
+        return eventos;
     }
 }

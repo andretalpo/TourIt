@@ -55,7 +55,19 @@ public class EventoService {
     }
 
     public List<Evento> consultarEventosConvidado(String idUsuarioGoogle) {
-//        return new EventoDAO(context, idUsuarioGoogle).consultarEventosConvidado(idUsuarioGoogle);
-        return null;
+        EventoDAO eventoDAO = new EventoDAO(context, idUsuarioGoogle);
+        List<Evento> eventosConvidado = eventoDAO.consultarEventosConvidado(idUsuarioGoogle);
+        return eventosConvidado;
+    }
+
+    public void atualizarEventosConvidado(List<Evento> eventos){
+        new EventoDAO(context, idGoogle).excluirConvitesSQLite(idGoogle);
+        for (Evento evento: eventos) {
+            new EventoDAO(context, idGoogle).salvarEventoSQLite(evento);
+        }
+    }
+
+    public List<Evento> consultarEventosConvidadoSqlite() {
+        return new EventoDAO(context, idGoogle).consultarEventosConvidadoSqlite();
     }
 }

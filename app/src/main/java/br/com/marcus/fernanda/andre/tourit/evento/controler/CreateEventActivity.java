@@ -224,7 +224,7 @@ public class CreateEventActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressDialog = new ProgressDialog(CreateEventActivity.this, R.style.ProgressTheme);
-            progressDialog.setTitle(getResources().getString(R.string.salvando_evento));
+            progressDialog.setTitle(getResources().getString(R.string.alterando_evento));
             progressDialog.setMessage(getResources().getString(R.string.aguarde));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);

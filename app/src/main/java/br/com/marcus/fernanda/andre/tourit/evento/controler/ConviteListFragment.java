@@ -70,9 +70,6 @@ public class ConviteListFragment extends Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent intent) {
-//                adapter = new ConviteAdapter(CreateEventActivity.getListaConvidadosEvento(), getActivity());
-//                convitesRecyclerView.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
                 onResume();
             }
         };
