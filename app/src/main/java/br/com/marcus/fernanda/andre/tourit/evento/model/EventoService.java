@@ -60,8 +60,11 @@ public class EventoService {
         return eventosConvidado;
     }
 
-    public void atualizarEventosConvidado(List<Evento> eventos){
+    public void excluirEventosConvidadoSqlite(String idGoogle){
         new EventoDAO(context, idGoogle).excluirConvitesSQLite(idGoogle);
+    }
+
+    public void atualizarEventosConvidado(List<Evento> eventos){
         for (Evento evento: eventos) {
             new EventoDAO(context, idGoogle).salvarEventoSQLite(evento);
         }

@@ -80,7 +80,16 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                dataEditText.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+                monthOfYear++;
+                if(monthOfYear <= 9 && dayOfMonth < 10) {
+                    dataEditText.setText("0" + dayOfMonth + "/" + "0" + monthOfYear + "/" + year);
+                }else if(dayOfMonth < 10){
+                    dataEditText.setText("0" + dayOfMonth + "/" + monthOfYear + "/" + year);
+                }else if(monthOfYear <= 9){
+                    dataEditText.setText(dayOfMonth + "/" + "0" + monthOfYear + "/" + year);
+                }else {
+                    dataEditText.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+                }
             }
         };
 
@@ -94,7 +103,15 @@ public class CreateEventActivity extends AppCompatActivity {
         final TimePickerDialog.OnTimeSetListener timeInicioEventPicker = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                horaInicioEditText.setText(hourOfDay + ":" + minute);
+                if(hourOfDay < 10 && minute < 10){
+                    horaInicioEditText.setText("0" + hourOfDay + ":" + "0" + minute);
+                }else if(hourOfDay < 10){
+                    horaInicioEditText.setText("0" + hourOfDay + ":" + minute);
+                }else if(minute < 10){
+                    horaInicioEditText.setText(hourOfDay + ":" + "0" + minute);
+                }else {
+                    horaInicioEditText.setText(hourOfDay + ":" + minute);
+                }
             }
         };
 
@@ -108,7 +125,15 @@ public class CreateEventActivity extends AppCompatActivity {
         final TimePickerDialog.OnTimeSetListener timeFimEventPicker = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                horaFimEditText.setText(hourOfDay + ":" + minute);
+                if(hourOfDay < 10 && minute < 10){
+                    horaFimEditText.setText("0" + hourOfDay + ":" + "0" + minute);
+                }else if(hourOfDay < 10){
+                    horaFimEditText.setText("0" + hourOfDay + ":" + minute);
+                }else if(minute < 10){
+                    horaFimEditText.setText(hourOfDay + ":" + "0" + minute);
+                }else {
+                    horaFimEditText.setText(hourOfDay + ":" + minute);
+                }
             }
         };
 

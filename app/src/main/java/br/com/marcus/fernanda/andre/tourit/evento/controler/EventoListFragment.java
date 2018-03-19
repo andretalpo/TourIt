@@ -39,6 +39,7 @@ public class EventoListFragment extends Fragment {
     private Bundle bundle;
     private EventoAdapter adapter;
     private ProgressDialog progressDialog;
+    private List<Evento> eventoLista;
 
     @Nullable
     @Override
@@ -109,9 +110,6 @@ public class EventoListFragment extends Fragment {
         }
         if(bundle.getString("tipoEvento").equals("meusEventos")) {
             new ConsultarEventoSqliteTask().execute();
-        }else{
-            listEventos.clear();
-            listEventos.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarEventosConvidadoSqlite());
         }
         adapter.notifyDataSetChanged();
     }
@@ -141,7 +139,9 @@ public class EventoListFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... aVoid) {
             carregarMeusConvites();
-            new EventoService(getContext(), MainActivity.idUsuarioGoogle).atualizarEventosConvidado(listEventos);
+            EventoService eventoService = new EventoService(getContext(), MainActivity.idUsuarioGoogle);
+            eventoService.excluirEventosConvidadoSqlite(MainActivity.idUsuarioGoogle);
+            eventoService.atualizarEventosConvidado(listEventos);
             for(Evento evento: listEventos) {
                 for (Convite convite : evento.getConvidados()) {
                     armazenarImagem(convite, evento.getIdEventoFirebase());
@@ -152,6 +152,8 @@ public class EventoListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            listEventos.clear();
+            listEventos.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarEventosConvidadoSqlite());
             onResume();
         }
     }
