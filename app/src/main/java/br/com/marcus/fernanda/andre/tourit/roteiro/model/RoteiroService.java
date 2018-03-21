@@ -59,6 +59,10 @@ public class RoteiroService {
         }
         roteiro.setIdRoteiroSqlite(id);
         roteiroDAO.incrementarNumSeguirdores(roteiro);
+        float nota = calcularNotaRoteiro(roteiro.getIdRoteiroFirebase());
+        roteiro.setNotaRoteiro(nota);
+        roteiroDAO.salvarNotaRoteiro(nota, roteiro.getIdRoteiroFirebase());
+        roteiroDAO.atualizarNotaSqlite(roteiro.getIdRoteiroFirebase(), nota);
 
         return roteiro;
     }
@@ -88,6 +92,10 @@ public class RoteiroService {
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         roteiroDAO.excluirRoteiroSqlite(roteiro.getIdRoteiroSqlite());
         roteiroDAO.decrementarNumSeguirdores(roteiro);
+        float nota = calcularNotaRoteiro(roteiro.getIdRoteiroFirebase());
+        roteiro.setNotaRoteiro(nota);
+        roteiroDAO.atualizarNotaSqlite(roteiro.getIdRoteiroFirebase(), nota);
+        roteiroDAO.salvarNotaRoteiro(nota, roteiro.getIdRoteiroFirebase());
         UsuarioDAO.excluirRoteiroSeguidoUsuario(roteiro.getIdRoteiroFirebase());
     }
 
@@ -98,13 +106,32 @@ public class RoteiroService {
         roteiroDAO.alterarRoteiroFirebase(roteiro);
     }
 
-    public float calcularNotaRoteiro(List<Local> listaLocais) {
+    public float calcularNotaRoteiro(String idRoteiro) {
         float nota = 0;
-        for (Local local : listaLocais) {
-            nota += local.getNota();
+        List<AvaliacaoRoteiro> avaliacaoRoteiroList = buscarAvalicoesRoteiro(idRoteiro);
+        int cont = 0;
+        for (AvaliacaoRoteiro avaliacao: avaliacaoRoteiroList) {
+            nota += avaliacao.getNota();
+            cont++;
         }
-
-        return nota/listaLocais.size();
+        if(cont != 0) {
+            nota = (nota / cont) - 1;
+            if(nota < 0){
+                nota = 0;
+            }
+        }
+        int seguidores = new RoteiroDAO(context, idUsuarioGoogle).consultarNumSeguidores(idRoteiro);
+        if(seguidores <= 1){
+            return nota;
+        }else if(seguidores <= 2){
+            return nota + 0.25f;
+        }else if(seguidores <= 3){
+            return nota + 0.5f;
+        }else if(seguidores <= 4){
+            return nota + 0.75f;
+        }else {
+            return nota + 1;
+        }
     }
 
     public void sincronizarRoteirosUsuario() {
@@ -182,6 +209,13 @@ public class RoteiroService {
 
     public void salvarAvaliacaoRoteiro(AvaliacaoRoteiro avaliacaoRoteiro) {
         new RoteiroDAO(context, idUsuarioGoogle).salvarAvaliacaoRoteiroFirebase(avaliacaoRoteiro);
+        float nota = calcularNotaRoteiro(avaliacaoRoteiro.getIdRoteiro());
+        salvarNotaRoteiros(nota , avaliacaoRoteiro.getIdRoteiro());
+        new RoteiroDAO(context, idUsuarioGoogle).atualizarNotaSqlite(avaliacaoRoteiro.getIdRoteiro(), nota);
+    }
+
+    public void salvarNotaRoteiros(Float nota, String idRoteiro){
+        new RoteiroDAO(context, idUsuarioGoogle).salvarNotaRoteiro(nota,idRoteiro);
     }
 
     public List<AvaliacaoRoteiro> buscarAvalicoesRoteiro(String idRoteiro) {

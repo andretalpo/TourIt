@@ -273,7 +273,7 @@ public class RoteiroDAO {
         FirebaseDatabase.getInstance().getReference().child("Roteiros").child(roteiro.getIdRoteiroFirebase()).setValue(roteiro);
     }
 
-    private int consultarNumSeguidores(String idRoteiroFirebase) {
+    public int consultarNumSeguidores(String idRoteiroFirebase) {
         URL url = null;
         try {
             url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22idRoteiroFirebase%22&equalTo=%22" + idRoteiroFirebase + "%22");
@@ -536,5 +536,16 @@ public class RoteiroDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void salvarNotaRoteiro(Float nota, String idRoteiro) {
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(idRoteiro).child("notaRoteiro").setValue(nota);
+    }
+
+    public void atualizarNotaSqlite(String idRoteiro, Float nota){
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nota", nota);
+        sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO_FIREBASE + "=?", new String[]{String.valueOf(idRoteiro)});
     }
 }

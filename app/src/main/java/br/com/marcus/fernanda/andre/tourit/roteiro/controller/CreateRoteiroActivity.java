@@ -191,6 +191,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual.setNomeLocaisRoteiro(nomeLocais);
                             RoteiroService roteiroService = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle);
                             roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
+                            roteiroAtual.setNotaRoteiro(0);
                             new SalvarRoteiroTask().execute(roteiroAtual);
                         }else{
                             Toast.makeText(CreateRoteiroActivity.this, getResources().getString(R.string.necessario_local), Toast.LENGTH_SHORT).show();
