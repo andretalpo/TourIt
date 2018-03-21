@@ -158,7 +158,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual.setIdLocaisRoteiro(idLocais);
                             roteiroAtual.setNomeLocaisRoteiro(nomeLocais);
                             RoteiroService roteiroService = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle);
-                            roteiroAtual.setNotaRoteiro(roteiroService.calcularNotaRoteiro(listaLocaisRoteiroAtual));
                             roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new AlterarRoteiroTask().execute(roteiroAtual);
                         }else{
@@ -191,7 +190,6 @@ public class CreateRoteiroActivity extends AppCompatActivity {
                             roteiroAtual.setIdLocaisRoteiro(idLocais);
                             roteiroAtual.setNomeLocaisRoteiro(nomeLocais);
                             RoteiroService roteiroService = new RoteiroService(CreateRoteiroActivity.this, MainActivity.idUsuarioGoogle);
-                            roteiroAtual.setNotaRoteiro(roteiroService.calcularNotaRoteiro(listaLocaisRoteiroAtual));
                             roteiroAtual.setImagemRoteiro(roteiroService.montarImagemRoteiro(listaLocaisRoteiroAtual));
                             new SalvarRoteiroTask().execute(roteiroAtual);
                         }else{
@@ -297,6 +295,7 @@ public class CreateRoteiroActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Roteiro... roteiro) {
+
             List<LatLng> latLngList = new ArrayList<>();
             for(Local local : listaLocaisRoteiroAtual){
                 latLngList.add(new LatLng(local.getLat(), local.getLng()));

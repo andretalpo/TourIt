@@ -39,7 +39,6 @@ public class EventoListFragment extends Fragment {
     private Bundle bundle;
     private EventoAdapter adapter;
     private ProgressDialog progressDialog;
-    private List<Evento> eventoLista;
 
     @Nullable
     @Override
@@ -116,7 +115,6 @@ public class EventoListFragment extends Fragment {
 
     private List<Evento> carregarMeusConvites() {
         List<Evento> listaConvites = new EventoService(EventoListFragment.this.getContext(), MainActivity.idUsuarioGoogle).consultarEventosConvidado(MainActivity.idUsuarioGoogle);
-        listEventos.clear();
 
         if (listaConvites != null) {
             listEventos.addAll(listaConvites);
@@ -138,13 +136,16 @@ public class EventoListFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... aVoid) {
+            listEventos.clear();
             carregarMeusConvites();
-            EventoService eventoService = new EventoService(getContext(), MainActivity.idUsuarioGoogle);
-            eventoService.excluirEventosConvidadoSqlite(MainActivity.idUsuarioGoogle);
-            eventoService.atualizarEventosConvidado(listEventos);
-            for(Evento evento: listEventos) {
-                for (Convite convite : evento.getConvidados()) {
-                    armazenarImagem(convite, evento.getIdEventoFirebase());
+            if(!listEventos.isEmpty()) {
+                EventoService eventoService = new EventoService(getContext(), MainActivity.idUsuarioGoogle);
+                eventoService.excluirEventosConvidadoSqlite(MainActivity.idUsuarioGoogle);
+                eventoService.atualizarEventosConvidado(listEventos);
+                for (Evento evento : listEventos) {
+                    for (Convite convite : evento.getConvidados()) {
+                        armazenarImagem(convite, evento.getIdEventoFirebase());
+                    }
                 }
             }
             return null;

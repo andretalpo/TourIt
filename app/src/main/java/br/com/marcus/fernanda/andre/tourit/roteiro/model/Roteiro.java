@@ -28,6 +28,7 @@ public class Roteiro implements Serializable, Comparable {
     private String rota;
     private int duracao;
     private int preco;
+    private int numSeguidores;
     private String dicas;
 
     public Roteiro() {
@@ -154,6 +155,14 @@ public class Roteiro implements Serializable, Comparable {
 
     public void setDicas(String dicas) {
         this.dicas = dicas;
+    }
+
+    public int getNumSeguidores() {
+        return numSeguidores;
+    }
+
+    public void setNumSeguidores(int numSeguidores) {
+        this.numSeguidores = numSeguidores;
     }
 
     @Override

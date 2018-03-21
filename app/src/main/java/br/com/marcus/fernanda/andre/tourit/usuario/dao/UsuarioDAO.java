@@ -136,14 +136,29 @@ public class UsuarioDAO {
         return null;
     }
 
-    private static Usuario convertJSONToUsuario(JSONObject jsonUusuarios) {
+    private static Usuario convertJSONToUsuario(JSONObject jsonUsuarios) {
         try {
-            Iterator<String> iter = jsonUusuarios.keys();
+            Iterator<String> iter = jsonUsuarios.keys();
             if (iter.hasNext()) {
                 String key = iter.next();
-                JSONObject jsonUusuario = jsonUusuarios.getJSONObject(key);
+                JSONObject jsonUsuario = jsonUsuarios.getJSONObject(key);
                 Gson gson = new Gson();
-                Usuario usuario = gson.fromJson(jsonUusuario.toString(), Usuario.class);
+                Usuario usuario = gson.fromJson(jsonUsuario.toString(), Usuario.class);
+//                Usuario usuario = new Usuario();
+//                usuario.setIdGoogle(jsonUsuario.getString("idGoogle"));
+//                usuario.setUsername(jsonUsuario.getString("username"));
+//                usuario.setNomeUsuario(jsonUsuario.getString("nomeUsuario"));
+//                usuario.setEmailUsuario(jsonUsuario.getString("emailUsuario"));
+//                usuario.setAdmnistrador(jsonUsuario.getBoolean("administrador"));
+//                usuario.setAtivo(jsonUsuario.getBoolean("ativo"));
+//                if(jsonUsuario.getJSONObject("meusRoteiros") != null){
+//                    Iterator<String> iterM = jsonUsuario.getJSONObject("meusRoteiros").keys();
+//                    if (iter.hasNext()) {
+//                        String keyM = iter.next();
+//                        JSONObject jsonStringRoteiro = jsonUsuario.ge
+//                        usuario.getMeusRoteiros().add();
+//                    }
+//                }
                 return usuario;
             }
         } catch (JSONException e) {

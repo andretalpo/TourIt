@@ -121,6 +121,7 @@ public class RoteiroDAO {
     public Roteiro salvarRoteiroFireBase(Roteiro roteiro) {
         String key = FirebaseDatabase.getInstance().getReference().child("Roteiros").push().getKey();
         roteiro.setIdRoteiroFirebase(key);
+        roteiro.setNumSeguidores(0);
         FirebaseDatabase.getInstance().getReference().child("Roteiros").child(key).setValue(roteiro);
         new UsuarioService().adicionarRoteiroUsuario(idUsuarioGoogle, key);
 
@@ -260,6 +261,56 @@ public class RoteiroDAO {
 
         StorageReference storage = FirebaseStorage.getInstance().getReference();
         storage.child("imagemRoteiro/" + roteiro.getIdRoteiroFirebase() + ".jpeg").putBytes(ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
+    }
+
+    public void decrementarNumSeguirdores(Roteiro roteiro){
+        roteiro.setNumSeguidores(consultarNumSeguidores(roteiro.getIdRoteiroFirebase()) - 1);
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(roteiro.getIdRoteiroFirebase()).child("numSeguidores").setValue(roteiro.getNumSeguidores());
+    }
+
+    public void incrementarNumSeguirdores(Roteiro roteiro){
+        roteiro.setNumSeguidores(consultarNumSeguidores(roteiro.getIdRoteiroFirebase()) + 1);
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(roteiro.getIdRoteiroFirebase()).setValue(roteiro);
+    }
+
+    private int consultarNumSeguidores(String idRoteiroFirebase) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22idRoteiroFirebase%22&equalTo=%22" + idRoteiroFirebase + "%22");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                JSONObject jsonObject = new JSONObject(builder.toString());
+                JSONObject jsonRoteiro = jsonObject.getJSONObject(idRoteiroFirebase);
+                int jsonSeguidores = jsonRoteiro.getInt("numSeguidores");
+                return jsonSeguidores;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return 0;
+
     }
 
     public void alterarRoteiroSQLite(Roteiro roteiro) {

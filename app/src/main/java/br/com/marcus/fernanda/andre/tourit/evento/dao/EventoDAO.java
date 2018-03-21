@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.sqlite.DBHelper;
@@ -121,7 +122,6 @@ public class EventoDAO {
                 evento.setDataEvento(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_DATA_EVENTO)));
                 evento.setIdEventoFirebase(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO_FIREBASE)));
                 evento.setConvidados(consultarConvidados(cursor.getLong(cursor.getColumnIndex(DBHelper.COLUMN_ID_EVENTO))));
-                //Validar data aqui
                 listaEventos.add(evento);
             }while (cursor.moveToNext());
             cursor.close();

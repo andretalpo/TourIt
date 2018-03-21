@@ -58,6 +58,7 @@ public class RoteiroService {
             throw new SQLException("Erro no armazenamento do roteiro");
         }
         roteiro.setIdRoteiroSqlite(id);
+        roteiroDAO.incrementarNumSeguirdores(roteiro);
 
         return roteiro;
     }
@@ -84,7 +85,9 @@ public class RoteiroService {
     }
 
     public void excluirRoteiroSeguido(Roteiro roteiro) {
-        new RoteiroDAO(context, idUsuarioGoogle).excluirRoteiroSqlite(roteiro.getIdRoteiroSqlite());
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+        roteiroDAO.excluirRoteiroSqlite(roteiro.getIdRoteiroSqlite());
+        roteiroDAO.decrementarNumSeguirdores(roteiro);
         UsuarioDAO.excluirRoteiroSeguidoUsuario(roteiro.getIdRoteiroFirebase());
     }
 
@@ -100,6 +103,7 @@ public class RoteiroService {
         for (Local local : listaLocais) {
             nota += local.getNota();
         }
+
         return nota/listaLocais.size();
     }
 
