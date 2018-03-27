@@ -534,7 +534,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
     private class InicializarBotaoSeguirTask extends AsyncTask<Roteiro, Void, Roteiro> {
         @Override
         protected Roteiro doInBackground(Roteiro... roteiro) {
-            return new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).consultarRoteiro(roteiro[0].getIdRoteiroFirebase());
+            return new RoteiroService(RoteiroDetailsActivity.this, MainActivity.idUsuarioGoogle).consultarRoteiroSQLite(roteiro[0].getIdRoteiroFirebase());
         }
 
         @Override

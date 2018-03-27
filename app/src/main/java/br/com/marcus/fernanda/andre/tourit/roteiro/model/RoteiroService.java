@@ -67,7 +67,7 @@ public class RoteiroService {
         return roteiro;
     }
 
-    public Roteiro consultarRoteiro(String idRoteiro) {
+    public Roteiro consultarRoteiroSQLite(String idRoteiro) {
         return new RoteiroDAO(context, idUsuarioGoogle).consultarRoteiroSqlite(idRoteiro);
     }
 
@@ -220,5 +220,23 @@ public class RoteiroService {
 
     public List<AvaliacaoRoteiro> buscarAvalicoesRoteiro(String idRoteiro) {
         return new RoteiroDAO(context, idUsuarioGoogle).buscarAvaliacoesRoteiro(idRoteiro);
+    }
+
+    public Roteiro salvarRoteiroSeguidoLocal(String idRoteiroFirebase) {
+        LocalService localService = new LocalService(context, idUsuarioGoogle);
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+
+        Roteiro roteiro = roteiroDAO.consultarRoteiroFirebase(idRoteiroFirebase);
+        roteiro.setSeguido(true);
+        Long idRoteiro = roteiroDAO.salvarRoteiroSqlite(roteiro);
+        List<Local> locais = new ArrayList<>();
+        for (String local : roteiro.getIdLocaisRoteiro()) {
+            locais.add(new LocalService(context, idUsuarioGoogle).buscarLocalFirebase(local));
+        }
+        localService.salvarLocais(locais, idRoteiro);
+        roteiro.setIdRoteiroSqlite(idRoteiro);
+        roteiro.setImagemRoteiro(montarImagemRoteiro(locais));
+        roteiroDAO.alterarRoteiroSQLite(roteiro);
+        return roteiro;
     }
 }

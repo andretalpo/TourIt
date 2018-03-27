@@ -27,6 +27,7 @@ import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoAdapter;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
 
 /**
  * Created by André on 27/02/2018.
@@ -139,12 +140,16 @@ public class EventoListFragment extends Fragment {
             listEventos.clear();
             carregarMeusConvites();
             if(!listEventos.isEmpty()) {
+                RoteiroService roteiroService = new RoteiroService(getContext(), MainActivity.idUsuarioGoogle);
                 EventoService eventoService = new EventoService(getContext(), MainActivity.idUsuarioGoogle);
                 eventoService.excluirEventosConvidadoSqlite(MainActivity.idUsuarioGoogle);
                 eventoService.atualizarEventosConvidado(listEventos);
                 for (Evento evento : listEventos) {
                     for (Convite convite : evento.getConvidados()) {
                         armazenarImagem(convite, evento.getIdEventoFirebase());
+                    }
+                    if(roteiroService.consultarRoteiroSQLite(evento.getIdRoteiroFirebase()) == null) {
+                        roteiroService.salvarRoteiroSeguidoLocal(evento.getIdRoteiroFirebase());
                     }
                 }
             }

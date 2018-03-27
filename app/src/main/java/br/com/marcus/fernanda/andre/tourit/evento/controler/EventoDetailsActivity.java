@@ -14,6 +14,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import br.com.marcus.fernanda.andre.tourit.R;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
@@ -25,6 +30,7 @@ public class EventoDetailsActivity extends AppCompatActivity {
 
     private Evento evento;
     private TextView nomeEventoTextView;
+    private TextView criadorEventoTextView;
     private TextView dataEventoTextView;
     private TextView horaInicioTextView;
     private TextView horaFimTextView;
@@ -33,9 +39,12 @@ public class EventoDetailsActivity extends AppCompatActivity {
     private ImageView roteiroImageView;
     private TextView nomeRoteiroTextView;
     private RatingBar notaRatingBar;
+    private TextView tipoRoteiro;
 
     private static boolean consultando = true;
     private ProgressDialog progressDialog;
+
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,7 @@ public class EventoDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_evento_details);
 
         nomeEventoTextView = (TextView) findViewById(R.id.nomeEventoEventoDetailsTextView);
+        criadorEventoTextView = (TextView) findViewById(R.id.criadorEventoEventoDetailsTextView);
         horaInicioTextView = (TextView) findViewById(R.id.horaInicioEventoEventoDetailsTextView);
         horaFimTextView = (TextView) findViewById(R.id.horaFimEventoEventoDetailsTextView);
         dataEventoTextView = (TextView) findViewById(R.id.dataEventoEventoDetailsTextView);
@@ -51,12 +61,19 @@ public class EventoDetailsActivity extends AppCompatActivity {
         roteiroImageView = (ImageView) findViewById(R.id.imagemRoteiroEventoDetailsImageView);
         nomeRoteiroTextView = (TextView) findViewById(R.id.nomeRoteiroEventoDetailsTextView);
         notaRatingBar = (RatingBar) findViewById(R.id.roteiroEventoDetailsRatingBar);
+        tipoRoteiro = (TextView) findViewById(R.id.tipoRoteiroEventoDetailsTextView);
 
         String id = getIntent().getStringExtra("idEvento");
         evento = new EventoService(this, MainActivity.idUsuarioGoogle).consultarEventoPorIdFirebase(getIntent().getStringExtra("idEvento"));
-        roteiro = new RoteiroService(this, MainActivity.idUsuarioGoogle).consultarRoteiro(evento.getIdRoteiroFirebase());
+        roteiro = new RoteiroService(this, MainActivity.idUsuarioGoogle).consultarRoteiroSQLite(evento.getIdRoteiroFirebase());
+
+        ImageView roteiroImageView = (ImageView) findViewById(R.id.imagemRoteiroEventoDetailsImageView);
+        storageReference = FirebaseStorage.getInstance().getReference().child("imagemRoteiro/" + roteiro.getIdRoteiroFirebase() + ".jpeg");
+        Glide.with(this).using(new FirebaseImageLoader()).load(storageReference).into(roteiroImageView);
+        //Buscar imagem pelo glide no sqlite
 
         nomeEventoTextView.setText(evento.getNomeEvento());
+        criadorEventoTextView.setText(evento.getCriadorEvento());
         dataEventoTextView.setText(evento.getDataEvento());
         horaFimTextView.setText(evento.getHoraFim());
         horaInicioTextView.setText(evento.getHoraInicio());
@@ -64,6 +81,12 @@ public class EventoDetailsActivity extends AppCompatActivity {
         roteiroImageView.setImageBitmap(roteiro.getImagemRoteiro());
         nomeRoteiroTextView.setText(roteiro.getNomeRoteiro());
         notaRatingBar.setRating(roteiro.getNotaRoteiro());
+        tipoRoteiro.setText(roteiro.getTipoRoteiro());
+
+        ImageView excluirImageView = (ImageView) findViewById(R.id.excluirEventoDetailsActivityImageView);
+        ImageView alterarImageVIew = (ImageView) findViewById(R.id.editarEventoDetailsActivityImageView);
+        ImageView aceitarImageView = (ImageView) findViewById(R.id.responderSimConviteDetailsActivityImageView);
+        ImageView recusarImageView = (ImageView) findViewById(R.id.responderNaoConviteDetailsActivityImageView);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ConviteListFragment conviteFragment = new ConviteListFragment();
@@ -74,11 +97,20 @@ public class EventoDetailsActivity extends AppCompatActivity {
         consultando = true;
         conviteFragment.setArguments(bundle);
 
+        if(MainActivity.idUsuarioGoogle.equals(evento.getIdCriadorEvento())){
+            aceitarImageView.setVisibility(View.GONE);
+            recusarImageView.setVisibility(View.GONE);
+            excluirImageView.setVisibility(View.VISIBLE);
+            alterarImageVIew.setVisibility(View.VISIBLE);
+        }else{
+            aceitarImageView.setVisibility(View.VISIBLE);
+            recusarImageView.setVisibility(View.VISIBLE);
+            excluirImageView.setVisibility(View.GONE);
+            alterarImageVIew.setVisibility(View.GONE);
+        }
+
         transaction.replace(R.id.listaConvidadosEventoDetailsFrameLayout, conviteFragment);
         transaction.commit();
-
-        ImageView excluirImageView = (ImageView) findViewById(R.id.excluirEventoDetailsActivityImageView);
-        ImageView alterarImageVIew = (ImageView) findViewById(R.id.editarEventoDetailsActivityImageView);
 
         excluirImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,9 +140,6 @@ public class EventoDetailsActivity extends AppCompatActivity {
                 alterarEvento(evento);
             }
         });
-
-        ImageView aceitarImageView = (ImageView) findViewById(R.id.responderSimConviteDetailsActivityImageView);
-        ImageView recusarImageView = (ImageView) findViewById(R.id.responderNaoConviteDetailsActivityImageView);
 
         aceitarImageView.setOnClickListener(new View.OnClickListener() {
             @Override

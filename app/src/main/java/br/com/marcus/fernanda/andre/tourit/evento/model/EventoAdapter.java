@@ -1,14 +1,14 @@
 package br.com.marcus.fernanda.andre.tourit.evento.model;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ import br.com.marcus.fernanda.andre.tourit.evento.controler.EventoDetailsActivit
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
-import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 /**
  * Created by André on 27/02/2018.
@@ -28,6 +27,12 @@ public class EventoAdapter extends RecyclerView.Adapter {
     private List<Evento> eventos;
     private Context context;
 
+    private Roteiro roteiro;
+    private EventoViewHolder eventoHolder;
+    private Evento evento;
+
+    private View view;
+
     public EventoAdapter(List<Evento> eventos, Context context) {
         this.eventos = eventos;
         this.context = context;
@@ -35,16 +40,17 @@ public class EventoAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_evento, parent, false);
+        view = LayoutInflater.from(context).inflate(R.layout.viewholder_evento, parent, false);
         EventoViewHolder viewHolder = new EventoViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final EventoViewHolder eventoHolder = (EventoViewHolder) holder;
-        final Evento evento = eventos.get(position);
-        Roteiro roteiro = new RoteiroService(context, MainActivity.idUsuarioGoogle).consultarRoteiro(evento.getIdRoteiroFirebase());
+        evento = eventos.get(position);
+        eventoHolder = (EventoViewHolder) holder;
+
+        roteiro = new RoteiroService(context, MainActivity.idUsuarioGoogle).consultarRoteiroSQLite(evento.getIdRoteiroFirebase());
         eventoHolder.fotoRoteiroEventoImageView.setImageBitmap(roteiro.getImagemRoteiro());
         eventoHolder.nomeEventoTextView.setText(evento.getNomeEvento());
         eventoHolder.nomeRoteiroTextView.setText(roteiro.getNomeRoteiro());
@@ -58,7 +64,6 @@ public class EventoAdapter extends RecyclerView.Adapter {
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return eventos.size();

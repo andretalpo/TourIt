@@ -548,4 +548,57 @@ public class RoteiroDAO {
         contentValues.put("nota", nota);
         sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO_FIREBASE + "=?", new String[]{String.valueOf(idRoteiro)});
     }
+
+    public Roteiro consultarRoteiroFirebase(String idRoteiroFirebase) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Roteiros.json?orderBy=%22idRoteiroFirebase%22&equalTo=%22" + idRoteiroFirebase + "%22");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToRoteiroBaixado(new JSONObject(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private Roteiro convertJSONToRoteiroBaixado(JSONObject jsonRoteiros) {
+
+        Iterator<String> iter = jsonRoteiros.keys();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            try {
+                JSONObject jsonRoteiro = jsonRoteiros.getJSONObject(key);
+                Gson gson = new Gson();
+                return gson.fromJson(jsonRoteiro.toString(), Roteiro.class);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 }
