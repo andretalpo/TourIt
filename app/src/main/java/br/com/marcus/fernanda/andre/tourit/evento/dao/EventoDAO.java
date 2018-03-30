@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -405,5 +406,60 @@ public class EventoDAO {
         cursor.close();
         sqLiteDatabase.close();
         return eventos;
+    }
+
+    public void aceitarConviteFirebase(String idEvento, List<Convite> convites) {
+        FirebaseDatabase.getInstance().getReference().child("Eventos").child(idEvento).child("convidados").setValue(convites);
+    }
+
+    public List<Convite> consultarConvitesEventoFirebase(String idEvento) {
+        URL url = null;
+        try {
+            url = new URL("https://tourit-176321.firebaseio.com/Eventos/" + idEvento + "/convidados.json?");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+            int response = connection.getResponseCode();
+            if (response == HttpURLConnection.HTTP_OK){
+                StringBuilder builder = new StringBuilder ();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
+                    String line;
+                    while ((line = reader.readLine()) != null){
+                        builder.append(line);
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                return convertJSONToListConvites(new JSONArray(builder.toString()));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            if (connection != null){
+                connection.disconnect();
+            }
+        }
+        return null;
+    }
+
+    private List<Convite> convertJSONToListConvites(JSONArray jsonConvites) {
+        List<Convite> listaConvites = new ArrayList<>();
+        for(int i = 0; i < jsonConvites.length(); i++){
+            try {
+                JSONObject jsonConvite = jsonConvites.getJSONObject(i);
+                Gson gson = new Gson();
+                Convite convite = gson.fromJson(jsonConvite.toString(), Convite.class);
+                listaConvites.add(convite);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return listaConvites;
     }
 }

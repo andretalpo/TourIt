@@ -1,11 +1,13 @@
 package br.com.marcus.fernanda.andre.tourit.evento.model;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.evento.dao.EventoDAO;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
+import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
+import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
 
 /**
  * Created by André on 24/02/2018.
@@ -72,5 +74,20 @@ public class EventoService {
 
     public List<Evento> consultarEventosConvidadoSqlite() {
         return new EventoDAO(context, idGoogle).consultarEventosConvidadoSqlite();
+    }
+
+    public void aceitarConvite(Evento evento) {
+        EventoDAO eventoDAO = new EventoDAO(context, idGoogle);
+        List<Convite> convites = eventoDAO.consultarConvitesEventoFirebase(evento.getIdEventoFirebase());
+        for(Convite convite: convites){
+            if(convite.getIdUsuarioGoogleConvidado().equals(idGoogle)){
+                convite.setRespostaConvite(Convite.ACEITO);
+            }
+        }
+        eventoDAO.aceitarConviteFirebase(evento.getIdEventoFirebase(), convites);
+        RoteiroService roteiroService = new RoteiroService(context, idGoogle);
+        Roteiro roteiro = roteiroService.consultarRoteiroSQLite(evento.getIdRoteiroFirebase());
+        roteiroService.setarRoteiroSeguidoSqlite(roteiro);
+        new UsuarioService().adicionarRoteiroSeguidoUsuario(idGoogle, roteiro.getIdRoteiroFirebase());
     }
 }

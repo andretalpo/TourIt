@@ -46,6 +46,12 @@ public class EventoDetailsActivity extends AppCompatActivity {
 
     private StorageReference storageReference;
 
+    //
+    //
+    // COLOCAR A RESPOSTA DA PESSOA, CASO JÁ TENHA DADO ELA
+    //
+    //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -144,17 +150,25 @@ public class EventoDetailsActivity extends AppCompatActivity {
         aceitarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                aceitarConvite(evento);
             }
         });
 
         recusarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                recusarConvite(evento.getIdEventoFirebase());
             }
         });
 
+    }
+
+    private void recusarConvite(String idEvento) {
+        //new RecusarConviteTask().execute(idEvento);//Colocar YES OR NO DIALOG
+    }
+
+    private void aceitarConvite(Evento evento) {
+        new AceitarConviteTask().execute(evento);
     }
 
     public static boolean isConsultando() {
@@ -163,6 +177,20 @@ public class EventoDetailsActivity extends AppCompatActivity {
 
     public static void setConsultando(boolean consultando) {
         EventoDetailsActivity.consultando = consultando;
+    }
+
+    private class AceitarConviteTask extends AsyncTask<Evento, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Evento... evento) {
+            new EventoService(EventoDetailsActivity.this, MainActivity.idUsuarioGoogle).aceitarConvite(evento[0]);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean sucesso) {
+            Toast.makeText(EventoDetailsActivity.this, getResources().getString(R.string.convite_aceito), Toast.LENGTH_SHORT).show();
+            EventoDetailsActivity.this.finish();
+        }
     }
 
     private class ExcluirEventoTask extends AsyncTask<String, Void, Boolean> {

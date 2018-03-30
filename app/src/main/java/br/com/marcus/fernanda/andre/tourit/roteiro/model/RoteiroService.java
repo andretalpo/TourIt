@@ -9,10 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.marcus.fernanda.andre.tourit.api.GooglePlacesServices;
 import br.com.marcus.fernanda.andre.tourit.local.model.Local;
 import br.com.marcus.fernanda.andre.tourit.local.model.LocalService;
-import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.dao.RoteiroDAO;
 import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
@@ -210,11 +208,11 @@ public class RoteiroService {
     public void salvarAvaliacaoRoteiro(AvaliacaoRoteiro avaliacaoRoteiro) {
         new RoteiroDAO(context, idUsuarioGoogle).salvarAvaliacaoRoteiroFirebase(avaliacaoRoteiro);
         float nota = calcularNotaRoteiro(avaliacaoRoteiro.getIdRoteiro());
-        salvarNotaRoteiros(nota , avaliacaoRoteiro.getIdRoteiro());
+        salvarNotaRoteiro(nota , avaliacaoRoteiro.getIdRoteiro());
         new RoteiroDAO(context, idUsuarioGoogle).atualizarNotaSqlite(avaliacaoRoteiro.getIdRoteiro(), nota);
     }
 
-    public void salvarNotaRoteiros(Float nota, String idRoteiro){
+    public void salvarNotaRoteiro(Float nota, String idRoteiro){
         new RoteiroDAO(context, idUsuarioGoogle).salvarNotaRoteiro(nota,idRoteiro);
     }
 
@@ -222,7 +220,7 @@ public class RoteiroService {
         return new RoteiroDAO(context, idUsuarioGoogle).buscarAvaliacoesRoteiro(idRoteiro);
     }
 
-    public Roteiro salvarRoteiroSeguidoLocal(String idRoteiroFirebase) {
+    public Roteiro salvarRoteiroConvidadoLocal(String idRoteiroFirebase) {
         LocalService localService = new LocalService(context, idUsuarioGoogle);
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
 
@@ -238,5 +236,14 @@ public class RoteiroService {
         roteiro.setImagemRoteiro(montarImagemRoteiro(locais));
         roteiroDAO.alterarRoteiroSQLite(roteiro);
         return roteiro;
+    }
+
+    public void setarRoteiroSeguidoSqlite(Roteiro roteiro) {
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+        roteiroDAO.setarRoteiroSeguidoSqlite(roteiro);
+        roteiroDAO.incrementarNumSeguirdores(roteiro);
+        float nota = calcularNotaRoteiro(roteiro.getIdRoteiroFirebase());
+        salvarNotaRoteiro(nota, roteiro.getIdRoteiroFirebase());
+        roteiroDAO.atualizarNotaSqlite(roteiro.getIdRoteiroFirebase(), nota);
     }
 }

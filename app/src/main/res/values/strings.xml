@@ -286,4 +286,5 @@
     <string name="alterando_evento">Salvando alterações</string>
     <string name="buscando_convites">Buscando convites</string>
     <string name="pattern_data">dd/MM/yyyy HH:mm</string>
+    <string name="convite_aceito">Convite aceito com sucesso!</string>
 </resources>

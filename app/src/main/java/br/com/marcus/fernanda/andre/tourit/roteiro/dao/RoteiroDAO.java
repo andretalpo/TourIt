@@ -601,4 +601,16 @@ public class RoteiroDAO {
         return null;
     }
 
+    public void setarRoteiroSeguidoSqlite(Roteiro roteiro) {
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        int seguido;
+        if(roteiro.isSeguido()){
+            seguido = 1;
+        }else{
+            seguido = 0;
+        }
+        contentValues.put(DBHelper.COLUMN_SEGUIDO, seguido);
+        sqLiteDatabase.update(DBHelper.TABLE_ROTEIRO, contentValues, DBHelper.COLUMN_ID_ROTEIRO + "=?", new String[]{String.valueOf(roteiro.getIdRoteiroSqlite())});
+    }
 }

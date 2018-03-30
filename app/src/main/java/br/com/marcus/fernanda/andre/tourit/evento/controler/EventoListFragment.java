@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.evento.dao.EventoDAO;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoAdapter;
@@ -149,7 +148,7 @@ public class EventoListFragment extends Fragment {
                         armazenarImagem(convite, evento.getIdEventoFirebase());
                     }
                     if(roteiroService.consultarRoteiroSQLite(evento.getIdRoteiroFirebase()) == null) {
-                        roteiroService.salvarRoteiroSeguidoLocal(evento.getIdRoteiroFirebase());
+                        roteiroService.salvarRoteiroConvidadoLocal(evento.getIdRoteiroFirebase());
                     }
                 }
             }
