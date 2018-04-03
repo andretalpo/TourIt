@@ -289,11 +289,13 @@ public class UsuarioDAO {
         Usuario usuario = consultarUsuario("idGoogle", MainActivity.idUsuarioGoogle);
         if(usuario != null) {
             List<String> listaRoteiros = usuario.getRoteirosSeguidos();
-            for (int i = 0; i < listaRoteiros.size(); i++) {
-                if (listaRoteiros.get(i).equals(idRoteiroFirebase)) {
-                    listaRoteiros.remove(i);
+            if(listaRoteiros != null) {
+                for (int i = 0; i < listaRoteiros.size(); i++) {
+                    if (listaRoteiros.get(i).equals(idRoteiroFirebase)) {
+                        listaRoteiros.remove(i);
+                    }
+                    FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteirosSeguidos").setValue(listaRoteiros);
                 }
-                FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(MainActivity.idUsuarioGoogle)).child("roteirosSeguidos").setValue(listaRoteiros);
             }
         }
     }

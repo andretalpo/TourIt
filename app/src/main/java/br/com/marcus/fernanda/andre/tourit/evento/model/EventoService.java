@@ -7,6 +7,7 @@ import java.util.List;
 import br.com.marcus.fernanda.andre.tourit.evento.dao.EventoDAO;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
+import br.com.marcus.fernanda.andre.tourit.usuario.dao.UsuarioDAO;
 import br.com.marcus.fernanda.andre.tourit.usuario.model.UsuarioService;
 
 /**
@@ -84,10 +85,25 @@ public class EventoService {
                 convite.setRespostaConvite(Convite.ACEITO);
             }
         }
-        eventoDAO.aceitarConviteFirebase(evento.getIdEventoFirebase(), convites);
+        eventoDAO.responderConviteFirebase(evento.getIdEventoFirebase(), convites);
         RoteiroService roteiroService = new RoteiroService(context, idGoogle);
         Roteiro roteiro = roteiroService.consultarRoteiroSQLite(evento.getIdRoteiroFirebase());
         roteiroService.setarRoteiroSeguidoSqlite(roteiro);
         new UsuarioService().adicionarRoteiroSeguidoUsuario(idGoogle, roteiro.getIdRoteiroFirebase());
+    }
+
+    public void recusarConvite(Evento evento) {
+        EventoDAO eventoDAO = new EventoDAO(context, idGoogle);
+        List<Convite> convites = eventoDAO.consultarConvitesEventoFirebase(evento.getIdEventoFirebase());
+        for(Convite convite: convites){
+            if(convite.getIdUsuarioGoogleConvidado().equals(idGoogle)){
+                convite.setRespostaConvite(Convite.RECUSADO);
+            }
+        }
+        eventoDAO.responderConviteFirebase(evento.getIdEventoFirebase(), convites);
+        RoteiroService roteiroService = new RoteiroService(context, idGoogle);
+        Roteiro roteiro = roteiroService.consultarRoteiroSQLite(evento.getIdRoteiroFirebase());
+        roteiroService.setarRoteiroNaoSeguidoSqlite(roteiro);
+        new UsuarioDAO(context, idGoogle).excluirRoteiroSeguidoUsuario(roteiro.getIdRoteiroFirebase());
     }
 }

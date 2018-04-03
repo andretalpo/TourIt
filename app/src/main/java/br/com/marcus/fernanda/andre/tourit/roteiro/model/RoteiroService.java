@@ -56,7 +56,7 @@ public class RoteiroService {
             throw new SQLException("Erro no armazenamento do roteiro");
         }
         roteiro.setIdRoteiroSqlite(id);
-        roteiroDAO.incrementarNumSeguirdores(roteiro);
+        roteiroDAO.incrementarNumSeguidores(roteiro);
         float nota = calcularNotaRoteiro(roteiro.getIdRoteiroFirebase());
         roteiro.setNotaRoteiro(nota);
         roteiroDAO.salvarNotaRoteiro(nota, roteiro.getIdRoteiroFirebase());
@@ -89,7 +89,7 @@ public class RoteiroService {
     public void excluirRoteiroSeguido(Roteiro roteiro) {
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         roteiroDAO.excluirRoteiroSqlite(roteiro.getIdRoteiroSqlite());
-        roteiroDAO.decrementarNumSeguirdores(roteiro);
+        roteiroDAO.decrementarNumSeguidores(roteiro);
         float nota = calcularNotaRoteiro(roteiro.getIdRoteiroFirebase());
         roteiro.setNotaRoteiro(nota);
         roteiroDAO.atualizarNotaSqlite(roteiro.getIdRoteiroFirebase(), nota);
@@ -241,7 +241,16 @@ public class RoteiroService {
     public void setarRoteiroSeguidoSqlite(Roteiro roteiro) {
         RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
         roteiroDAO.setarRoteiroSeguidoSqlite(roteiro);
-        roteiroDAO.incrementarNumSeguirdores(roteiro);
+        roteiroDAO.incrementarNumSeguidores(roteiro);
+        float nota = calcularNotaRoteiro(roteiro.getIdRoteiroFirebase());
+        salvarNotaRoteiro(nota, roteiro.getIdRoteiroFirebase());
+        roteiroDAO.atualizarNotaSqlite(roteiro.getIdRoteiroFirebase(), nota);
+    }
+
+    public void setarRoteiroNaoSeguidoSqlite(Roteiro roteiro) {
+        RoteiroDAO roteiroDAO = new RoteiroDAO(context, idUsuarioGoogle);
+        roteiroDAO.setarRoteiroSeguidoSqlite(roteiro);
+        roteiroDAO.decrementarNumSeguidores(roteiro);
         float nota = calcularNotaRoteiro(roteiro.getIdRoteiroFirebase());
         salvarNotaRoteiro(nota, roteiro.getIdRoteiroFirebase());
         roteiroDAO.atualizarNotaSqlite(roteiro.getIdRoteiroFirebase(), nota);

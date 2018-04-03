@@ -408,7 +408,7 @@ public class EventoDAO {
         return eventos;
     }
 
-    public void aceitarConviteFirebase(String idEvento, List<Convite> convites) {
+    public void responderConviteFirebase(String idEvento, List<Convite> convites) {
         FirebaseDatabase.getInstance().getReference().child("Eventos").child(idEvento).child("convidados").setValue(convites);
     }
 

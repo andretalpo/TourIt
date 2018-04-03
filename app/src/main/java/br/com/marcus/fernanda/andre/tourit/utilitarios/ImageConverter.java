@@ -22,7 +22,7 @@ public class ImageConverter {
     }
 
     public static Bitmap convertByteToBitmap(byte[] fotoByte){
-        if(fotoByte.length > 0) {
+        if(fotoByte != null && fotoByte.length > 0) {
             return BitmapFactory.decodeByteArray(fotoByte, 0, fotoByte.length);
         }
         return null;

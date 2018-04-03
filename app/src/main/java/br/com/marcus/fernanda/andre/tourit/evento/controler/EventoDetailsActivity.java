@@ -157,14 +157,29 @@ public class EventoDetailsActivity extends AppCompatActivity {
         recusarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recusarConvite(evento.getIdEventoFirebase());
+                recusarConvite(evento);
             }
         });
 
     }
 
-    private void recusarConvite(String idEvento) {
-        //new RecusarConviteTask().execute(idEvento);//Colocar YES OR NO DIALOG
+    private void recusarConvite(final Evento evento) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EventoDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_excluir_convite);
+
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton(R.string.aceitar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                new RecusarConviteTask().execute(evento);
+            }
+        });
+        alertDialogBuilder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     private void aceitarConvite(Evento evento) {
@@ -189,6 +204,20 @@ public class EventoDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean sucesso) {
             Toast.makeText(EventoDetailsActivity.this, getResources().getString(R.string.convite_aceito), Toast.LENGTH_SHORT).show();
+            EventoDetailsActivity.this.finish();
+        }
+    }
+
+    private class RecusarConviteTask extends AsyncTask<Evento, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Evento... evento) {
+            new EventoService(EventoDetailsActivity.this, MainActivity.idUsuarioGoogle).recusarConvite(evento[0]);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean sucesso) {
+            Toast.makeText(EventoDetailsActivity.this, getResources().getString(R.string.convite_recusado), Toast.LENGTH_SHORT).show();
             EventoDetailsActivity.this.finish();
         }
     }

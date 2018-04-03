@@ -263,14 +263,14 @@ public class RoteiroDAO {
         storage.child("imagemRoteiro/" + roteiro.getIdRoteiroFirebase() + ".jpeg").putBytes(ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
     }
 
-    public void decrementarNumSeguirdores(Roteiro roteiro){
+    public void decrementarNumSeguidores(Roteiro roteiro){
         roteiro.setNumSeguidores(consultarNumSeguidores(roteiro.getIdRoteiroFirebase()) - 1);
         FirebaseDatabase.getInstance().getReference().child("Roteiros").child(roteiro.getIdRoteiroFirebase()).child("numSeguidores").setValue(roteiro.getNumSeguidores());
     }
 
-    public void incrementarNumSeguirdores(Roteiro roteiro){
+    public void incrementarNumSeguidores(Roteiro roteiro){
         roteiro.setNumSeguidores(consultarNumSeguidores(roteiro.getIdRoteiroFirebase()) + 1);
-        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(roteiro.getIdRoteiroFirebase()).setValue(roteiro);
+        FirebaseDatabase.getInstance().getReference().child("Roteiros").child(roteiro.getIdRoteiroFirebase()).child("numSeguidores").setValue(roteiro.getNumSeguidores());
     }
 
     public int consultarNumSeguidores(String idRoteiroFirebase) {
