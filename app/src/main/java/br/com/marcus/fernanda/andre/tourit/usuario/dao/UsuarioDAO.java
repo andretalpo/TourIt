@@ -267,7 +267,9 @@ public class UsuarioDAO {
             if (listaRoteiros == null) {
                 listaRoteiros = new ArrayList<>();
             }
-            listaRoteiros.add(keyRoteiro);
+            if(!listaRoteiros.contains(keyRoteiro)) {
+                listaRoteiros.add(keyRoteiro);
+            }
             FirebaseDatabase.getInstance().getReference().child("Usuarios").child(buscarKeyUsuario(idUsuario)).child("roteirosSeguidos").setValue(listaRoteiros);
         }
     }

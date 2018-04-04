@@ -19,7 +19,11 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.List;
+
 import br.com.marcus.fernanda.andre.tourit.R;
+import br.com.marcus.fernanda.andre.tourit.evento.dao.EventoDAO;
+import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
@@ -45,12 +49,6 @@ public class EventoDetailsActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private StorageReference storageReference;
-
-    //
-    //
-    // COLOCAR A RESPOSTA DA PESSOA, CASO JÁ TENHA DADO ELA
-    //
-    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +91,7 @@ public class EventoDetailsActivity extends AppCompatActivity {
         ImageView alterarImageVIew = (ImageView) findViewById(R.id.editarEventoDetailsActivityImageView);
         ImageView aceitarImageView = (ImageView) findViewById(R.id.responderSimConviteDetailsActivityImageView);
         ImageView recusarImageView = (ImageView) findViewById(R.id.responderNaoConviteDetailsActivityImageView);
+        TextView respostaTextView = (TextView) findViewById(R.id.respostaConviteEventoDetailsTextView);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ConviteListFragment conviteFragment = new ConviteListFragment();
@@ -113,6 +112,8 @@ public class EventoDetailsActivity extends AppCompatActivity {
             recusarImageView.setVisibility(View.VISIBLE);
             excluirImageView.setVisibility(View.GONE);
             alterarImageVIew.setVisibility(View.GONE);
+            respostaTextView.setVisibility(View.VISIBLE);
+            inicializarRespostaConvite(respostaTextView);
         }
 
         transaction.replace(R.id.listaConvidadosEventoDetailsFrameLayout, conviteFragment);
@@ -163,6 +164,33 @@ public class EventoDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void inicializarRespostaConvite(TextView respostaTextView) {
+        List<Convite> convites =  new EventoService(this, MainActivity.idUsuarioGoogle).consultarConvitesEvento(evento.getIdEventoFirebase());
+        int resposta = Convite.AGUARDANDO_RESPOSTA;
+        if(convites != null) {
+            for (Convite convite : convites) {
+                if (convite.getIdUsuarioGoogleConvidado().equals(MainActivity.idUsuarioGoogle)) {
+                    resposta = convite.getRespostaConvite();
+                }
+            }
+        }
+
+        switch (resposta){
+            case 1:
+                respostaTextView.setText(getResources().getString(R.string.aceito));
+                respostaTextView.setTextColor(getResources().getColor(R.color.cor_verde));
+                break;
+            case -1:
+                respostaTextView.setText(getResources().getString(R.string.recusado));
+                respostaTextView.setTextColor(getResources().getColor(R.color.cor_vermelho));
+                break;
+            default:
+                respostaTextView.setText(getResources().getString(R.string.aguardando_resposta));
+                respostaTextView.setTextColor(getResources().getColor(R.color.cor_azul));
+                break;
+        }
+    }
+
     private void recusarConvite(final Evento evento) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EventoDetailsActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_excluir_convite);
 
@@ -204,6 +232,8 @@ public class EventoDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean sucesso) {
             Toast.makeText(EventoDetailsActivity.this, getResources().getString(R.string.convite_aceito), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent("atualizarListaEventos");
+            sendBroadcast(intent);
             EventoDetailsActivity.this.finish();
         }
     }
@@ -218,6 +248,8 @@ public class EventoDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean sucesso) {
             Toast.makeText(EventoDetailsActivity.this, getResources().getString(R.string.convite_recusado), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent("atualizarListaEventos");
+            sendBroadcast(intent);
             EventoDetailsActivity.this.finish();
         }
     }

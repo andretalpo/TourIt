@@ -14,4 +14,5 @@
     <color name="cor_fundo_menu">#4becfc</color>
     <color name="cor_verde">#00CA77</color>
     <color name="cor_amarelo">#ffe100</color>
+    <color name="cor_azul">#FF00B7FF</color>
 </resources>

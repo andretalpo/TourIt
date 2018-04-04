@@ -1,6 +1,10 @@
 package br.com.marcus.fernanda.andre.tourit.evento.controler;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,6 +43,7 @@ public class EventoListFragment extends Fragment {
     private Bundle bundle;
     private EventoAdapter adapter;
     private ProgressDialog progressDialog;
+    private BroadcastReceiver broadcastReceiver;
 
     @Nullable
     @Override
@@ -60,10 +65,33 @@ public class EventoListFragment extends Fragment {
         if (bundle.getString("tipoEvento").equals("meusEventos")) {
             new ConsultarEventoSqliteTask().execute();
         } else if (bundle.getString("tipoEvento").equals("convites")) {
+            registrarBroadcastReceiver();
             new ConsultarConvitesFirebaseTask().execute();
         }
 
         return view;
+    }
+
+    private void registrarBroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("atualizarListaEventos")) {
+                    new ConsultarConvitesFirebaseTask().execute();
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        };
+        getContext().registerReceiver(broadcastReceiver, new IntentFilter("atualizarListaEventos"));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(bundle.getString("tipoEvento").equals("convites")){
+            getContext().unregisterReceiver(broadcastReceiver);
+        }
     }
 
     private void carregarMeusEventos() {

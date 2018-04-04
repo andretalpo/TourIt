@@ -69,7 +69,11 @@ public class EventoService {
 
     public void atualizarEventosConvidado(List<Evento> eventos){
         for (Evento evento: eventos) {
-            new EventoDAO(context, idGoogle).salvarEventoSQLite(evento);
+            for(Convite convite : evento.getConvidados()){
+                if(convite.getIdUsuarioGoogleConvidado().equals(idGoogle) && convite.getRespostaConvite() != Convite.RECUSADO) {
+                    new EventoDAO(context, idGoogle).salvarEventoSQLite(evento);
+                }
+            }
         }
     }
 
