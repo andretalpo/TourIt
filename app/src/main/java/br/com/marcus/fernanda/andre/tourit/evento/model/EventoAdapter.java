@@ -29,7 +29,6 @@ public class EventoAdapter extends RecyclerView.Adapter {
 
     private Roteiro roteiro;
     private EventoViewHolder eventoHolder;
-    private Evento evento;
 
     private View view;
 
@@ -47,7 +46,7 @@ public class EventoAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        evento = eventos.get(position);
+        final Evento evento = eventos.get(position);
         eventoHolder = (EventoViewHolder) holder;
 
         roteiro = new RoteiroService(context, MainActivity.idUsuarioGoogle).consultarRoteiroSQLite(evento.getIdRoteiroFirebase());

@@ -53,7 +53,7 @@ public class EventoService {
         return new EventoDAO(context, idGoogle).consultarEventoPorIdFirebase(idEvento);
     }
 
-    public List<Convite> consultarConvitesEvento(String idEvento) {
+    public List<Convite> consultarConvitesEventoSqlite(String idEvento) {
         return new EventoDAO(context, idGoogle).consultarConvitesEvento(idEvento);
     }
 
@@ -109,5 +109,13 @@ public class EventoService {
         Roteiro roteiro = roteiroService.consultarRoteiroSQLite(evento.getIdRoteiroFirebase());
         roteiroService.setarRoteiroNaoSeguidoSqlite(roteiro);
         new UsuarioDAO(context, idGoogle).excluirRoteiroSeguidoUsuario(roteiro.getIdRoteiroFirebase());
+    }
+
+    public List<Convite> consultarConvitesEventoFirebase(String idEvento) {
+        return new EventoDAO(context, idGoogle).consultarConvitesEventoFirebase(idEvento);
+    }
+
+    public void atualizarConviteSqlite(String idEvento, Convite convite) {
+        new EventoDAO(context, idGoogle).atualizarConviteSqlite(idEvento, convite);
     }
 }

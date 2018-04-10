@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -56,7 +57,7 @@ public class ConviteListFragment extends Fragment {
 
         bundle = getArguments();
         if(bundle.getString("acao").equals("consulta")) {
-            convites.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEvento(bundle.getString("idEvento")));
+            new CarregarConvitesTask().execute(bundle.getString("idEvento"));
             adapter.notifyDataSetChanged();
         } else if(bundle.getString("acao").equals("criacao")){
             convites.addAll(CreateEventActivity.getListaConvidadosEvento());
@@ -76,6 +77,31 @@ public class ConviteListFragment extends Fragment {
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter("atualizarAdapter"));
     }
 
+    private class CarregarConvitesTask extends AsyncTask<String, Void, List<Convite>> {
+
+        @Override
+        protected List<Convite> doInBackground(String... idEvento) {
+            return new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEventoFirebase(idEvento[0]);
+        }
+
+        @Override
+        protected void onPostExecute(List<Convite> conviteList) {
+            convites.clear();
+            if(conviteList != null){
+                if(!conviteList.isEmpty()){
+                    convites.addAll(conviteList);
+                    EventoService eventoService = new EventoService(getContext(), MainActivity.idUsuarioGoogle);
+                    for (Convite convite : conviteList) {
+                        eventoService.atualizarConviteSqlite(bundle.getString("idEvento"), convite);
+                    }
+                }
+            }else {
+                convites.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEventoSqlite(bundle.getString("idEvento")));
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -83,7 +109,7 @@ public class ConviteListFragment extends Fragment {
         if(bundle.getString("acao").equals("criacao")){
             convites.addAll(CreateEventActivity.getListaConvidadosEvento());
         }else if(bundle.getString("acao").equals("consulta")){
-            convites.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEvento(bundle.getString("idEvento")));
+            convites.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarConvitesEventoSqlite(bundle.getString("idEvento")));
         }
         adapter.notifyDataSetChanged();
     }

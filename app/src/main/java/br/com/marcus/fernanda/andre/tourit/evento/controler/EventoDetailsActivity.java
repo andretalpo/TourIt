@@ -22,13 +22,14 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 import br.com.marcus.fernanda.andre.tourit.R;
-import br.com.marcus.fernanda.andre.tourit.evento.dao.EventoDAO;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Convite;
 import br.com.marcus.fernanda.andre.tourit.evento.model.Evento;
 import br.com.marcus.fernanda.andre.tourit.evento.model.EventoService;
 import br.com.marcus.fernanda.andre.tourit.main.MainActivity;
+import br.com.marcus.fernanda.andre.tourit.roteiro.controller.RoteiroDetailsActivity;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.Roteiro;
 import br.com.marcus.fernanda.andre.tourit.roteiro.model.RoteiroService;
+import br.com.marcus.fernanda.andre.tourit.utilitarios.ImageConverter;
 
 public class EventoDetailsActivity extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class EventoDetailsActivity extends AppCompatActivity {
 
     private Roteiro roteiro;
     private ImageView roteiroImageView;
+    private ImageView infoRoteiroImageView;
     private TextView nomeRoteiroTextView;
     private RatingBar notaRatingBar;
     private TextView tipoRoteiro;
@@ -92,6 +94,7 @@ public class EventoDetailsActivity extends AppCompatActivity {
         ImageView aceitarImageView = (ImageView) findViewById(R.id.responderSimConviteDetailsActivityImageView);
         ImageView recusarImageView = (ImageView) findViewById(R.id.responderNaoConviteDetailsActivityImageView);
         TextView respostaTextView = (TextView) findViewById(R.id.respostaConviteEventoDetailsTextView);
+        infoRoteiroImageView = (ImageView) findViewById(R.id.roteiroInfoEventoDetailsImageView);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ConviteListFragment conviteFragment = new ConviteListFragment();
@@ -162,10 +165,24 @@ public class EventoDetailsActivity extends AppCompatActivity {
             }
         });
 
+        infoRoteiroImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irParaRoteiroDetails();
+            }
+        });
+
+    }
+
+    private void irParaRoteiroDetails() {
+        Intent intent = new Intent(EventoDetailsActivity.this, RoteiroDetailsActivity.class);
+        intent.putExtra("imagemRoteiro", ImageConverter.convertBitmapToByte(roteiro.getImagemRoteiro()));
+        intent.putExtra("roteiro", roteiro);
+        startActivity(intent);
     }
 
     private void inicializarRespostaConvite(TextView respostaTextView) {
-        List<Convite> convites =  new EventoService(this, MainActivity.idUsuarioGoogle).consultarConvitesEvento(evento.getIdEventoFirebase());
+        List<Convite> convites =  new EventoService(this, MainActivity.idUsuarioGoogle).consultarConvitesEventoSqlite(evento.getIdEventoFirebase());
         int resposta = Convite.AGUARDANDO_RESPOSTA;
         if(convites != null) {
             for (Convite convite : convites) {

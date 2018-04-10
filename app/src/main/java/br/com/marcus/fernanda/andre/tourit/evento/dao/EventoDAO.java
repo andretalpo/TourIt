@@ -462,4 +462,12 @@ public class EventoDAO {
         }
         return listaConvites;
     }
+
+    public void atualizarConviteSqlite(String idEvento, Convite convite) {
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_RESPOSTA_CONVITE, convite.getRespostaConvite());
+        sqLiteDatabase.update(DBHelper.TABLE_CONVITE, contentValues, DBHelper.COLUMN_ID_EVENTO_FIREBASE + "=? AND " + DBHelper.COLUMN_ID_USUARIO_GOOGLE + "=?", new String[]{idEvento, convite.getIdUsuarioGoogleConvidado()});
+        sqLiteDatabase.close();
+    }
 }

@@ -60,12 +60,15 @@ public class ConviteAdapter extends RecyclerView.Adapter {
         if(convite.getRespostaConvite() == Convite.ACEITO){
             conviteHolder.respostaConvidadoTextView.setText("Confirmado");
             conviteHolder.respostaConvidadoTextView.setTextColor(context.getResources().getColor(R.color.cor_verde));
+            conviteHolder.respostaConvidadoTextView.setVisibility(View.VISIBLE);
         }else if(convite.getRespostaConvite() == Convite.AGUARDANDO_RESPOSTA){
             conviteHolder.respostaConvidadoTextView.setText("Aguardando");
             conviteHolder.respostaConvidadoTextView.setTextColor(context.getResources().getColor(R.color.cor_amarelo));
+            conviteHolder.respostaConvidadoTextView.setVisibility(View.VISIBLE);
         }else{
             conviteHolder.respostaConvidadoTextView.setText("Recusado");
             conviteHolder.respostaConvidadoTextView.setTextColor(context.getResources().getColor(R.color.cor_vermelho));
+            conviteHolder.respostaConvidadoTextView.setVisibility(View.VISIBLE);
         }
         if(!EventoDetailsActivity.isConsultando()) {
             conviteHolder.cardConviteRelativeLayout.setOnClickListener(new View.OnClickListener() {

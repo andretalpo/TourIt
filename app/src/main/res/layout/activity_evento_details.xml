@@ -88,10 +88,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:padding="@dimen/padding_geral"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_geral">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,13 +102,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Criador: "/>
+                    android:text="Criador: " />
 
                 <TextView
+                    android:id="@+id/criadorEventoEventoDetailsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/criadorEventoEventoDetailsTextView"
-                    android:text="someone"/>
+                    android:text="someone" />
 
             </LinearLayout>
 
@@ -122,74 +122,73 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_geral"
-                    android:text="Data: "/>
+                    android:text="Data: " />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_geral"
                     android:id="@+id/dataEventoEventoDetailsTextView"
-                    android:text="27/02/2018"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_geral"
+                    android:text="27/02/2018" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_geral"
-                    android:text="Início: "/>
+                    android:text="Início: " />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_geral"
                     android:id="@+id/horaInicioEventoEventoDetailsTextView"
-                    android:text="23:59"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_geral"
+                    android:text="23:59" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_geral"
-                    android:text="Fim: "/>
+                    android:text="Fim: " />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_geral"
                     android:id="@+id/horaFimEventoEventoDetailsTextView"
-                    android:text="00:00"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_geral"
+                    android:text="00:00" />
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/respostaConviteEventoDetailsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/respostaConviteEventoDetailsTextView"
-                android:text="Aguardando resposta"
-                android:visibility="gone"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/padding_geral"
-                android:textStyle="bold"
+                android:text="Aguardando resposta"
+                android:textColor="@color/cor_azul"
                 android:textSize="16sp"
-                android:textColor="@color/cor_azul"/>
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <LinearLayout
+                android:id="@+id/cardRoteiroEventoDetailsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:id="@+id/cardRoteiroEventoDetailsLinearLayout"
                 android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/imagemRoteiroEventoDetailsImageView"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/background_imagem_new"
-                    android:padding="@dimen/padding_geral"
                     android:layout_marginEnd="10dp"
-                    app:civ_border_width="1dp"
-                    app:civ_border_color="@color/cor_prata"/>
+                    android:padding="@dimen/padding_geral"
+                    android:src="@drawable/background_imagem_new"
+                    app:civ_border_color="@color/cor_prata"
+                    app:civ_border_width="1dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -198,28 +197,36 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/nomeRoteiroEventoDetailsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/nomeRoteiroEventoDetailsTextView"
-                        android:textSize="@dimen/textSizeListas"
                         android:text="qwert"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/textSizeListas"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tipoRoteiroEventoDetailsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tipoRoteiroEventoDetailsTextView"
-                        android:text="tipo"/>
+                        android:text="tipo" />
 
                     <RatingBar
+                        android:id="@+id/roteiroEventoDetailsRatingBar"
+                        style="@style/Base.Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Base.Widget.AppCompat.RatingBar.Small"
-                        android:id="@+id/roteiroEventoDetailsRatingBar"
-                        android:rating="5"
-                        android:progressTint="@color/colorPrimary"/>
+                        android:progressTint="@color/colorPrimary"
+                        android:rating="5" />
 
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/roteiroInfoEventoDetailsImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingStart="170dp"
+                    android:src="@drawable/ic_info" />
 
             </LinearLayout>
 

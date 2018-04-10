@@ -589,7 +589,8 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
                 if (marker != null) {
                     marker.remove();
                 }
-                marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+                Bitmap iconCurrentLocation = BitmapFactory.decodeResource(getResources(), R.drawable.marker_map_2);
+                marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).icon(BitmapDescriptorFactory.fromBitmap(iconCurrentLocation)));
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }
