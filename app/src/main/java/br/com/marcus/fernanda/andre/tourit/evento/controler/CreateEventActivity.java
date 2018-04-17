@@ -1,8 +1,10 @@
 package br.com.marcus.fernanda.andre.tourit.evento.controler;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -185,12 +187,38 @@ public class CreateEventActivity extends AppCompatActivity {
         });
     }
 
+    private void enviarNotificacoes(Evento evento) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        List<String> listaEmails = new ArrayList<>();
+        for (Convite convite: evento.getConvidados()){
+            listaEmails.add(convite.getEmailUsuarioConvidado());
+        }
+        String[] emails = new String[]{};
+        intent.putExtra(Intent.EXTRA_EMAIL  , listaEmails.toArray(emails));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Convite TourIt - " + evento.getNomeEvento());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Você foi convidado para o evento " + evento.getNomeEvento() + ".");
+        stringBuilder.append("\n\n");
+        stringBuilder.append("O usuário " + MainActivity.nomeUsuario + " ficará contente em com sua presença.");
+        stringBuilder.append("\n\n");
+        stringBuilder.append("Data: " + evento.getDataEvento() + "\nHorário: " + evento.getHoraInicio() + ".");
+        stringBuilder.append("\n\n");
+        stringBuilder.append("Acesse o aplicativo para mais informações!");
+        intent.putExtra(Intent.EXTRA_TEXT   , stringBuilder.toString());
+        try {
+            startActivity(Intent.createChooser(intent, "Notificação..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(CreateEventActivity.this, "Não há nenhum serviço de email instalado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void irParaTelaBuscaUsuario() {
         Intent intent = new Intent(this, PesquisaUsuarioActivity.class);
         startActivity(intent);
     }
 
-    private class CriarEventoTask extends AsyncTask<Evento, Void, Void> {
+    private class CriarEventoTask extends AsyncTask<Evento, Void, Evento> {
 
         @Override
         protected void onPreExecute() {
@@ -203,19 +231,40 @@ public class CreateEventActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Evento... evento) {
+        protected Evento doInBackground(Evento... evento) {
             String idEvento = new EventoService(CreateEventActivity.this, MainActivity.idUsuarioGoogle).salvarEvento(evento[0]);
             for(Convite convite : evento[0].getConvidados()){
                 armazenarImagem(convite, idEvento);
             }
-            return null;
+            return evento[0];
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(Evento evento) {
             progressDialog.dismiss();
-            Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_salvo_sucesso), Toast.LENGTH_SHORT).show();
-            finish();
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CreateEventActivity.this, R.style.DialogTheme).setMessage(R.string.mensagem_enviar_email);
+
+            final Evento eventoAuxiliar = evento;
+
+            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    enviarNotificacoes(eventoAuxiliar);
+                    Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_salvo_sucesso), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+            alertDialogBuilder.setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                    Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.evento_salvo_sucesso), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
         }
     }
 

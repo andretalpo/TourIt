@@ -60,6 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_CONVITE = "convite";
     public static final String COLUMN_ID_CONVITE = "_id_convite";
+    public static final String COLUMN_EMAIL_CONVIDADO = "email_convidado";
     public static final String COLUMN_RESPOSTA_CONVITE = "resposta";
 
     public DBHelper(Context context, String databaseName){
@@ -129,8 +130,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "%s VARCHAR, " +//nome usuario
                 "%s VARCHAR, " +//username
                 "%s INTEGER, " +// resposta
+                "%s VARCHAR, " +//email
                 "%s BLOB, " + // foto
-                "FOREIGN KEY(%s) REFERENCES evento(%s) ON DELETE CASCADE);", TABLE_CONVITE, COLUMN_ID_CONVITE, COLUMN_ID_EVENTO, COLUMN_ID_EVENTO_FIREBASE, COLUMN_ID_USUARIO_GOOGLE, COLUMN_NOME_USUARIO, COLUMN_USERNAME, COLUMN_RESPOSTA_CONVITE, COLUMN_FOTO_USUARIO, COLUMN_ID_EVENTO, COLUMN_ID_EVENTO);
+                "FOREIGN KEY(%s) REFERENCES evento(%s) ON DELETE CASCADE);", TABLE_CONVITE, COLUMN_ID_CONVITE, COLUMN_ID_EVENTO, COLUMN_ID_EVENTO_FIREBASE, COLUMN_ID_USUARIO_GOOGLE, COLUMN_NOME_USUARIO, COLUMN_USERNAME, COLUMN_RESPOSTA_CONVITE, COLUMN_EMAIL_CONVIDADO, COLUMN_FOTO_USUARIO, COLUMN_ID_EVENTO, COLUMN_ID_EVENTO);
         tourItDB.execSQL(sql);
     }
 

@@ -82,6 +82,7 @@ public class EventoDAO {
             contentValuesConvite.put(DBHelper.COLUMN_NOME_USUARIO, convite.getUsuarioConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_USERNAME, convite.getUsernameUsuarioConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_RESPOSTA_CONVITE, convite.getRespostaConvite());
+            contentValuesConvite.put(DBHelper.COLUMN_EMAIL_CONVIDADO, convite.getEmailUsuarioConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_FOTO_USUARIO, ImageConverter.convertBitmapToByte(convite.getFotoConvidado()));
 
             sqLiteDatabase.insert(DBHelper.TABLE_CONVITE, null, contentValuesConvite);
@@ -151,6 +152,7 @@ public class EventoDAO {
 //                    while(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO)) == null){
 //                        //gamb
 //                    }
+                convite.setEmailUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EMAIL_CONVIDADO)));
                 byte[] foto = cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO));
                 if(foto != null && foto.length > 0) {
                     convite.setFotoConvidado(ImageConverter.convertByteToBitmap(foto));
@@ -193,6 +195,7 @@ public class EventoDAO {
             contentValuesConvite.put(DBHelper.COLUMN_NOME_USUARIO, convite.getUsuarioConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_USERNAME, convite.getUsernameUsuarioConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_RESPOSTA_CONVITE, convite.getRespostaConvite());
+            contentValuesConvite.put(DBHelper.COLUMN_EMAIL_CONVIDADO, convite.getEmailUsuarioConvidado());
             contentValuesConvite.put(DBHelper.COLUMN_FOTO_USUARIO, ImageConverter.convertBitmapToByte(convite.getFotoConvidado()));
 
             sqLiteDatabase.insert(DBHelper.TABLE_CONVITE, null, contentValuesConvite);
@@ -254,6 +257,7 @@ public class EventoDAO {
 //                while(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO)) == null){
 //                    //gamb
 //                }
+                convite.setEmailUsuarioConvidado(cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_EMAIL_CONVIDADO)));
                 convite.setFotoConvidado(ImageConverter.convertByteToBitmap(cursor.getBlob(cursor.getColumnIndex(DBHelper.COLUMN_FOTO_USUARIO))));
                 convites.add(convite);
             }while (cursor.moveToNext());

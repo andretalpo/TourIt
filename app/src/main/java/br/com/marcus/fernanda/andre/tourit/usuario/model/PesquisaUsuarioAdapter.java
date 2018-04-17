@@ -59,6 +59,7 @@ public class PesquisaUsuarioAdapter extends RecyclerView.Adapter {
                 convite.setUsuarioConvidado(usuario.getNomeUsuario());
                 convite.setUsernameUsuarioConvidado(usuario.getUsername());
                 convite.setIdUsuarioGoogleConvidado(usuario.getIdGoogle());
+                convite.setEmailUsuarioConvidado(usuario.getEmailUsuario());
                 CreateEventActivity.getListaConvidadosEvento().add(convite);
                 v.setVisibility(View.GONE);
             }

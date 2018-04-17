@@ -292,4 +292,7 @@
     <string name="aceito">Aceito</string>
     <string name="recusado">Recusado</string>
     <string name="aguardando_resposta">Aguardando resposta</string>
+    <string name="mensagem_enviar_email">Gostaria de notificar os convidados por e-mail?</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
 </resources>

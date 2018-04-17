@@ -95,6 +95,7 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         TextView duracaoTextView = (TextView) findViewById(R.id.duracaoRoteiroRoteiroDetailsTextView);
         TextView precoTextView = (TextView) findViewById(R.id.precoRoteiroRoteiroDetailsTextView);
         TextView dicasTextView = (TextView) findViewById(R.id.dicasRoteiroRoteiroDetailsTextView);
+        TextView dicasLabelTextView = (TextView) findViewById(R.id.labelDicasRoteiroRoteiroDetailsTextView);
 
         roteiro = (Roteiro) getIntent().getSerializableExtra("roteiro");
 
@@ -261,7 +262,6 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
             precoTextView.setText("Até R$ " + String.valueOf(roteiro.getPreco()*25));
         }
         duracaoTextView.setText(String.valueOf(roteiro.getDuracao()) + " h");
-        dicasTextView.setText(roteiro.getDicas());
 
         ImageView mapaToggle = (ImageView) findViewById(R.id.toggleMapRoteiroDetailsImageView);
         final FrameLayout mapaLayout = (FrameLayout) findViewById(R.id.mapaRotaRoteiroDetailsFrameLayout);
@@ -285,6 +285,13 @@ public class RoteiroDetailsActivity extends AppCompatActivity implements OnMapRe
         avaliacoesRecyclerView.setAdapter(adapter);
 
         new CarregarAvaliacoesRoteiroTask().execute(roteiro.getIdRoteiroFirebase());
+
+        if(roteiro.getDicas().equals("")){
+            dicasTextView.setVisibility(View.GONE);
+            dicasLabelTextView.setVisibility(View.GONE);
+        }else{
+            dicasTextView.setText(roteiro.getDicas());
+        }
 
     }
 
