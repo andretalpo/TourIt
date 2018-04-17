@@ -44,11 +44,12 @@ public class EventoListFragment extends Fragment {
     private EventoAdapter adapter;
     private ProgressDialog progressDialog;
     private BroadcastReceiver broadcastReceiver;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        view = inflater.inflate(R.layout.fragment_list, container, false);
         view.setTag(TAG);
 
         RecyclerView eventosRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentListRecyclerView);
@@ -123,6 +124,12 @@ public class EventoListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            if(listEventos.isEmpty()){
+                view.getRootView().findViewById(R.id.fragmentMeusEventosFrameLayout).setVisibility(View.GONE);
+            }else{
+                view.getRootView().findViewById(R.id.fragmentMeusEventosFrameLayout).setVisibility(View.VISIBLE);
+            }
+
             progressDialog.dismiss();
             adapter.notifyDataSetChanged();
         }
@@ -187,6 +194,13 @@ public class EventoListFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             listEventos.clear();
             listEventos.addAll(new EventoService(getContext(), MainActivity.idUsuarioGoogle).consultarEventosConvidadoSqlite());
+
+            if(listEventos.isEmpty()){
+                view.getRootView().findViewById(R.id.fragmentMeusEventosFrameLayout).setVisibility(View.GONE);
+            }else{
+                view.getRootView().findViewById(R.id.fragmentMeusEventosFrameLayout).setVisibility(View.VISIBLE);
+            }
+
             onResume();
         }
     }

@@ -34,10 +34,11 @@ public class RoteiroListFragment extends Fragment {
     private RoteiroAdapter adapter;
     private Bundle bundle;
     private ProgressDialog progressDialog;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        view = inflater.inflate(R.layout.fragment_list, container, false);
         view.setTag(TAG);
 
         RecyclerView roteirosRecyclerView = (RecyclerView) view.findViewById(R.id.fragmentListRecyclerView);
@@ -70,6 +71,12 @@ public class RoteiroListFragment extends Fragment {
             listaRoteiros.addAll(listaRoteirosSeguidos);
         }
         adapter.notifyDataSetChanged();
+
+        if(listaRoteiros.isEmpty()){
+            getActivity().findViewById(R.id.fragmentMeusRoteirosFrameLayout).setVisibility(View.GONE);
+        }else{
+            getActivity().findViewById(R.id.fragmentMeusRoteirosFrameLayout).setVisibility(View.VISIBLE);
+        }
     }
 
     private void carregarMeusRoteirosBanco() {
@@ -80,6 +87,11 @@ public class RoteiroListFragment extends Fragment {
             listaRoteiros.addAll(listaMeusRoteiros);
         }
         adapter.notifyDataSetChanged();
+        if(listaRoteiros.isEmpty()){
+            getActivity().findViewById(R.id.fragmentMeusRoteirosFrameLayout).setVisibility(View.GONE);
+        }else{
+            getActivity().findViewById(R.id.fragmentMeusRoteirosFrameLayout).setVisibility(View.VISIBLE);
+        }
     }
 
     private class PesquisaRoteirosTask extends AsyncTask<String, Void, List<Roteiro>> {
@@ -113,11 +125,10 @@ public class RoteiroListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Roteiro> roteiros) {
-            if(listaRoteiros.isEmpty()){
-                Toast.makeText(RoteiroListFragment.this.getContext(), getResources().getString(R.string.nenhum_roteiro_encontrado), Toast.LENGTH_SHORT).show();
-            }
             progressDialog.dismiss();
             adapter.notifyDataSetChanged();
+
+            Toast.makeText(getContext(), getContext().getResources().getString(R.string.nenhum_roteiro_encontrado), Toast.LENGTH_SHORT).show();
         }
     }
 

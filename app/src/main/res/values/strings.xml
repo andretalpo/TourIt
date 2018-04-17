@@ -295,4 +295,7 @@
     <string name="mensagem_enviar_email">Gostaria de notificar os convidados por e-mail?</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
+    <string name="pesquisa_usuario">Nome/Username</string>
+    <string name="nao_existem_eventos">Não existem eventos</string>
+    <string name="nao_existem_roteiros">Não existem roteiros aqui</string>
 </resources>
