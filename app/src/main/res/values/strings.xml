@@ -298,4 +298,5 @@
     <string name="pesquisa_usuario">Nome/Username</string>
     <string name="nao_existem_eventos">Não existem eventos</string>
     <string name="nao_existem_roteiros">Não existem roteiros aqui</string>
+    <string name="preencha_todos_campos">Preencha todos os campos corretamente</string>
 </resources>

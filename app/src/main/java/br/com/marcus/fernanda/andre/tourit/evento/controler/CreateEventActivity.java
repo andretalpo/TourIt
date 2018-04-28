@@ -25,9 +25,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import br.com.marcus.fernanda.andre.tourit.R;
@@ -168,12 +171,33 @@ public class CreateEventActivity extends AppCompatActivity {
                 evento.setDataEvento(dataEditText.getText().toString());
                 evento.setIdRoteiroFirebase(getIntent().getStringExtra("idRoteiro"));
                 evento.setConvidados(listaConvidadosEvento);
-                if(getIntent().getStringExtra("idEventoFirebase") == null){
-                    new CriarEventoTask().execute(evento);
-                }else {
-                    evento.setIdEventoFirebase(getIntent().getStringExtra("idEventoFirebase"));
-                    evento.setIdEventoSqlite(getIntent().getLongExtra("idEventoSqlite", 0));
-                    new AtualizarEventoTask().execute(evento);
+                if(evento.getNomeEvento() != null && evento.getNomeEvento().length() > 4 && !evento.getNomeEvento().contains("pica")) {
+                    if (evento.getConvidados() != null && !evento.getConvidados().isEmpty()) {
+                        if (evento.getDataEvento() != null && evento.getDataEvento().length() != 0) {
+                            if(evento.getHoraInicio() != null && evento.getHoraInicio().length() != 0) {
+                                if(evento.getHoraFim() != null && evento.getHoraFim().length() != 0) {
+                                    Calendar calendar = Calendar.getInstance();
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+                                    try {
+                                        calendar.setTime(dateFormat.parse(evento.getDataEvento() + " " + evento.getHoraFim()));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if(calendar.getTime().after(Calendar.getInstance().getTime())) {
+                                        if (getIntent().getStringExtra("idEventoFirebase") == null) {
+                                            new CriarEventoTask().execute(evento);
+                                        } else {
+                                            evento.setIdEventoFirebase(getIntent().getStringExtra("idEventoFirebase"));
+                                            evento.setIdEventoSqlite(getIntent().getLongExtra("idEventoSqlite", 0));
+                                            new AtualizarEventoTask().execute(evento);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else{
+                    Toast.makeText(CreateEventActivity.this, getResources().getString(R.string.preencha_todos_campos), Toast.LENGTH_LONG).show();
                 }
             }
         });
