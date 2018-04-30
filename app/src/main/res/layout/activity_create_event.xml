@@ -50,48 +50,57 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
                 android:layout_below="@id/dataEventoCreateEventActivityTextInputLayout"
-                android:hint="@string/hora_inicio_evento"
-                android:id="@+id/horaInicioCreateEventActivityTextInputLayout">
+                android:id="@+id/horariosCreateEventLinearLayout"
+                android:orientation="horizontal">
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/horaInicioEventoCreateEventActivityEditText"
-                    android:focusable="false"
-                    android:gravity="center_horizontal"
-                    android:clickable="true"/>
+                    android:paddingTop="20dp"
+                    android:layout_weight="1"
+                    android:hint="@string/hora_inicio_evento"
+                    android:id="@+id/horaInicioCreateEventActivityTextInputLayout">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/horaInicioEventoCreateEventActivityEditText"
+                        android:focusable="false"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:layout_marginBottom="@dimen/marginTopButtonAdicionarConvidados"
-                android:layout_below="@id/horaInicioCreateEventActivityTextInputLayout"
-                android:hint="@string/hora_fim_evento"
-                android:id="@+id/horaFimCreateEventActivityTextInputLayout">
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/horaFimEventoCreateEventActivityEditText"
-                    android:focusable="false"
-                    android:gravity="center_horizontal"
-                    android:clickable="true"/>
+                    android:paddingTop="20dp"
+                    android:layout_marginBottom="@dimen/marginTopButtonAdicionarConvidados"
+                    android:layout_weight="1"
+                    android:hint="@string/hora_fim_evento"
+                    android:id="@+id/horaFimCreateEventActivityTextInputLayout">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/horaFimEventoCreateEventActivityEditText"
+                        android:focusable="false"
+                        android:gravity="center_horizontal"
+                        android:clickable="true"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/adicionarConvidadoCreateEventActivityButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/horaFimCreateEventActivityTextInputLayout"
+                android:layout_below="@id/horariosCreateEventLinearLayout"
                 android:layout_margin="4dp"
                 android:drawablePadding="@dimen/marginLocalDetails"
                 android:drawableEnd="@drawable/ic_add_3"
