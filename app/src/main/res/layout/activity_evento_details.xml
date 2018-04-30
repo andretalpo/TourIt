@@ -15,7 +15,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarEventoDetails"
             android:layout_width="match_parent"
-            android:layout_height="63dp"
+            android:layout_height="@dimen/dimen63dp"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -23,7 +23,7 @@
                 android:id="@+id/toolbarEventoDetailsRelativeLayout"
                 android:orientation="horizontal"
                 android:gravity="start"
-                android:layout_width="210dp"
+                android:layout_width="@dimen/dimen210dp"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -44,35 +44,35 @@
 
                 <ImageView
                     android:id="@+id/excluirEventoDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:src="@drawable/ic_delete_2" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:id="@+id/editarEventoDetailsActivityImageView"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:src="@drawable/ic_edit"/>
 
                 <ImageView
                     android:id="@+id/responderSimConviteDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:src="@drawable/ic_check"
                     android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/responderNaoConviteDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:src="@drawable/ic_refuse"
                     android:visibility="gone" />
             </LinearLayout>
@@ -88,15 +88,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dimen20dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="@dimen/padding_geral">
+            android:padding="@dimen/dimen6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:elevation="@dimen/dimen5dp"
                 android:background="@drawable/card_background">
 
                 <LinearLayout
@@ -108,14 +109,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="Criador: " />
 
                     <TextView
                         android:id="@+id/criadorEventoEventoDetailsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="someone" />
 
                 </LinearLayout>
@@ -129,14 +130,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="Data: " />
 
                     <TextView
                         android:id="@+id/dataEventoEventoDetailsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="27/02/2018" />
 
                 </LinearLayout>
@@ -150,27 +151,27 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="Início: " />
 
                     <TextView
                         android:id="@+id/horaInicioEventoEventoDetailsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="23:59" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="Fim: " />
 
                     <TextView
                         android:id="@+id/horaFimEventoEventoDetailsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_geral"
+                        android:padding="@dimen/dimen6dp"
                         android:text="00:00" />
 
                 </LinearLayout>
@@ -183,10 +184,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="@dimen/padding_geral"
+                android:layout_margin="@dimen/dimen6dp"
                 android:text="Aguardando resposta"
                 android:textColor="@color/cor_azul"
-                android:textSize="16sp"
+                android:textSize="@dimen/dimen16sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
@@ -194,19 +195,20 @@
                 android:id="@+id/cardRoteiroEventoDetailsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:elevation="@dimen/dimen5dp"
                 android:background="@drawable/card_background"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="@dimen/dimen20dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/imagemRoteiroEventoDetailsImageView"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="@dimen/dimen60dp"
+                    android:layout_height="@dimen/dimen60dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp"
-                    android:padding="@dimen/padding_geral"
+                    android:layout_marginEnd="@dimen/dimen10dp"
+                    android:padding="@dimen/dimen6dp"
                     android:src="@drawable/background_imagem_new"
                     app:civ_border_color="@color/cor_prata"
-                    app:civ_border_width="1dp" />
+                    app:civ_border_width="@dimen/dimen1dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -220,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="qwert"
-                        android:textSize="@dimen/textSizeListas"
+                        android:textSize="@dimen/dimen18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -246,7 +248,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="8dp"
+                    android:padding="@dimen/dimen8dp"
                     android:src="@drawable/ic_info" />
 
             </RelativeLayout>

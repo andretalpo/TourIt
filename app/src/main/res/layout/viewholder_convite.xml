@@ -5,15 +5,15 @@
     android:layout_height="wrap_content"
     android:id="@+id/cardViewHolderConviteRelativeLayout"
     android:background="@drawable/card_background"
-    android:layout_margin="3dp"
-    android:padding="4dp"
-    android:elevation="3dp">
+    android:layout_margin="@dimen/dimen3dp"
+    android:padding="@dimen/dimen4dp"
+    android:elevation="@dimen/dimen3dp">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_margin="2dp"
+        android:layout_margin="@dimen/dimen2dp"
         android:visibility="gone"
         android:id="@+id/excluirUsuarioConviteViewHolderImageView"
         android:src="@drawable/ic_delete"/>
@@ -26,12 +26,12 @@
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imagemConvidadoViewHolderImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/dimen60dp"
+            android:layout_height="@dimen/dimen60dp"
             android:layout_centerVertical="true"
-            android:padding="@dimen/padding_geral"
-            android:layout_marginEnd="10dp"
-            app:civ_border_width="1dp"
+            android:padding="@dimen/dimen6dp"
+            android:layout_marginEnd="@dimen/dimen10dp"
+            app:civ_border_width="@dimen/dimen1dp"
             app:civ_border_color="@color/cor_prata" />
 
         <RelativeLayout
@@ -44,14 +44,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="André foi andar no bosque"
-                android:padding="2dp"
+                android:padding="@dimen/dimen2dp"
                 android:id="@+id/nomeConvidadoViewHolderTextView"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pois é"
-                android:padding="2dp"
+                android:padding="@dimen/dimen2dp"
                 android:id="@+id/usernameConvidadoViewHolderTextView"
                 android:layout_below="@id/nomeConvidadoViewHolderTextView"/>
 
@@ -65,9 +65,9 @@
             android:visibility="gone"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/padding_geral"
+            android:layout_margin="@dimen/dimen6dp"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="@dimen/dimen16sp"
             android:textColor="@color/cor_vermelho"/>
 
     </RelativeLayout>

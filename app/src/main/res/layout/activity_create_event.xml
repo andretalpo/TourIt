@@ -17,7 +17,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:paddingTop="@dimen/dimen20dp"
                 android:hint="@string/nome_evento"
                 android:id="@+id/nomeEventoCreateEventActivityTextInputLayout">
 
@@ -35,7 +35,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:paddingTop="@dimen/dimen20dp"
                 android:layout_below="@id/nomeEventoCreateEventActivityTextInputLayout"
                 android:hint="@string/data_evento"
                 android:id="@+id/dataEventoCreateEventActivityTextInputLayout">
@@ -60,7 +60,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
+                    android:paddingTop="@dimen/dimen20dp"
                     android:layout_weight="1"
                     android:hint="@string/hora_inicio_evento"
                     android:id="@+id/horaInicioCreateEventActivityTextInputLayout">
@@ -78,8 +78,8 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:layout_marginBottom="@dimen/marginTopButtonAdicionarConvidados"
+                    android:paddingTop="@dimen/dimen20dp"
+                    android:layout_marginBottom="@dimen/dimen10dp"
                     android:layout_weight="1"
                     android:hint="@string/hora_fim_evento"
                     android:id="@+id/horaFimCreateEventActivityTextInputLayout">
@@ -101,16 +101,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/horariosCreateEventLinearLayout"
-                android:layout_margin="4dp"
-                android:drawablePadding="@dimen/marginLocalDetails"
+                android:layout_margin="@dimen/dimen4dp"
+                android:drawablePadding="@dimen/dimen10dp"
                 android:drawableEnd="@drawable/ic_add_3"
                 android:drawableTint="@color/cor_branco"
                 android:background="@color/colorAccent"
-                android:paddingEnd="5dp"
+                android:paddingEnd="@dimen/dimen5dp"
                 android:gravity="center"
-                android:paddingStart="30dp"
-                android:textSize="15sp"
-                android:layout_marginTop="@dimen/marginTopButtonAdicionarConvidados"
+                android:paddingStart="@dimen/dimen30dp"
+                android:textSize="@dimen/dimen15sp"
+                android:layout_marginTop="@dimen/dimen10dp"
                 android:textColor="@color/cor_branco"
                 android:text="@string/adicionar_convidado"
                 android:textStyle="bold" />
@@ -118,8 +118,8 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginStart="@dimen/dimen4dp"
+                android:layout_marginEnd="@dimen/dimen4dp"
                 android:id="@+id/listaConvidadosCreateEventActivityFrameLayout"
                 android:layout_below="@id/adicionarConvidadoCreateEventActivityButton"/>
 
@@ -130,7 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_check"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="@dimen/dimen16dp"
         android:layout_gravity="bottom|end"
         android:id="@+id/criarEventoCreateEventActivityFab"/>
 

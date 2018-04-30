@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_geral">
+    android:padding="@dimen/dimen6dp">
 
     <TextView
         android:id="@+id/usuariosAdmUsernameLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/dimen2dp"
+        android:paddingTop="@dimen/dimen2dp"
         android:text="@string/username"
         android:textStyle="bold" />
 
@@ -18,8 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/usuariosAdmUsernameLabelTextView"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/dimen2dp"
+        android:paddingTop="@dimen/dimen2dp"
         android:text="@string/nome"
         android:textStyle="bold" />
 
@@ -28,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/usuariosAdmNomeLabelTextView"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/dimen2dp"
+        android:paddingTop="@dimen/dimen2dp"
         android:text="@string/email"
         android:textStyle="bold" />
 
@@ -37,9 +37,9 @@
         android:id="@+id/usuariosAdmUsernameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/dimen2dp"
         android:layout_toRightOf="@id/usuariosAdmUsernameLabelTextView"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:paddingTop="@dimen/dimen2dp"
         android:text="username" />
 
     <TextView
@@ -48,9 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/usuariosAdmUsernameTextView"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/dimen2dp"
         android:layout_toRightOf="@id/usuariosAdmNomeLabelTextView"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:paddingTop="@dimen/dimen2dp"
         android:text="nome" />
 
     <TextView
@@ -59,9 +59,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/usuariosAdmNomeTextView"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/dimen2dp"
         android:layout_toRightOf="@id/usuariosAdmEmailLabelTextView"
-        android:paddingTop="@dimen/marginItensBuscaUsuariosAdm"
+        android:paddingTop="@dimen/dimen2dp"
         android:text="e-mail" />
 
     <Switch
@@ -71,7 +71,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:layout_margin="@dimen/marginItensBuscaUsuariosAdm"
+        android:layout_margin="@dimen/dimen2dp"
         android:gravity="center" />
 
 </RelativeLayout>

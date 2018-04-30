@@ -35,7 +35,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="@dimen/dimen170dp"
                 android:orientation="vertical">
 
                 <Button
@@ -44,22 +44,22 @@
                     android:background="@drawable/bests"
                     android:text="@string/melhores_roteiros"
                     android:id="@+id/melhoresPesquisaRoteiroActivityButton"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen20sp"
                     android:textStyle="bold"
                     android:textColor="@color/cor_branco"
-                    android:layout_marginStart="12dp"
-                    android:elevation="@dimen/elevation_geral"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="@dimen/padding_geral"/>
+                    android:layout_marginStart="@dimen/dimen12dp"
+                    android:elevation="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen12dp"
+                    android:layout_marginEnd="@dimen/dimen12dp"
+                    android:layout_marginBottom="@dimen/dimen6dp"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_marginStart="@dimen/padding_geral"
-                android:layout_marginEnd="@dimen/padding_geral"
+                android:layout_height="@dimen/dimen170dp"
+                android:layout_marginStart="@dimen/dimen6dp"
+                android:layout_marginEnd="@dimen/dimen6dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -67,34 +67,34 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/cultural"
                     android:text="@string/cultural"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen20sp"
                     android:id="@+id/culturalPesquisaRoteiroActivityButton"
                     android:textStyle="bold"
                     android:textColor="@color/cor_branco"
                     android:layout_weight="1"
-                    android:elevation="@dimen/elevation_geral"
-                    android:layout_margin="@dimen/padding_geral"/>
+                    android:elevation="@dimen/dimen5dp"
+                    android:layout_margin="@dimen/dimen6dp"/>
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/aventura"
                     android:text="@string/aventura"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen20sp"
                     android:textStyle="bold"
                     android:id="@+id/aventuraPesquisaRoteiroActivityButton"
-                    android:elevation="@dimen/elevation_geral"
+                    android:elevation="@dimen/dimen5dp"
                     android:textColor="@color/cor_branco"
                     android:layout_weight="1"
-                    android:layout_margin="@dimen/padding_geral"/>
+                    android:layout_margin="@dimen/dimen6dp"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_marginStart="@dimen/padding_geral"
-                android:layout_marginEnd="@dimen/padding_geral"
+                android:layout_height="@dimen/dimen170dp"
+                android:layout_marginStart="@dimen/dimen6dp"
+                android:layout_marginEnd="@dimen/dimen6dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -102,35 +102,35 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/gastronomia"
                     android:text="@string/gastronomia"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen20sp"
                     android:textStyle="bold"
                     android:id="@+id/gastronomiaPesquisaRoteiroActivityButton"
                     android:textColor="@color/cor_branco"
                     android:layout_weight="1"
-                    android:elevation="@dimen/elevation_geral"
-                    android:layout_margin="@dimen/padding_geral"/>
+                    android:elevation="@dimen/dimen5dp"
+                    android:layout_margin="@dimen/dimen6dp"/>
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/natureza"
                     android:text="@string/natureza"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen20sp"
                     android:textStyle="bold"
                     android:id="@+id/naturezaPesquisaRoteiroActivityButton"
                     android:textColor="@color/cor_branco"
                     android:layout_weight="1"
-                    android:elevation="@dimen/elevation_geral"
-                    android:layout_margin="@dimen/padding_geral"/>
+                    android:elevation="@dimen/dimen5dp"
+                    android:layout_margin="@dimen/dimen6dp"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_marginStart="@dimen/padding_geral"
-                android:layout_marginEnd="@dimen/padding_geral"
-                android:layout_marginBottom="@dimen/padding_geral"
+                android:layout_height="@dimen/dimen170dp"
+                android:layout_marginStart="@dimen/dimen6dp"
+                android:layout_marginEnd="@dimen/dimen6dp"
+                android:layout_marginBottom="@dimen/dimen6dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -138,26 +138,26 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/romantico"
                     android:text="@string/romantico"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen20sp"
                     android:textStyle="bold"
                     android:id="@+id/romanticoPesquisaRoteiroActivityButton"
                     android:textColor="@color/cor_branco"
                     android:layout_weight="1"
-                    android:elevation="@dimen/elevation_geral"
-                    android:layout_margin="@dimen/padding_geral"/>
+                    android:elevation="@dimen/dimen5dp"
+                    android:layout_margin="@dimen/dimen6dp"/>
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/diversos"
                     android:text="@string/diversos"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/dimen20sp"
                     android:textStyle="bold"
                     android:id="@+id/diversosPesquisaRoteiroActivityButton"
                     android:textColor="@color/cor_branco"
                     android:layout_weight="1"
-                    android:elevation="@dimen/elevation_geral"
-                    android:layout_margin="@dimen/padding_geral"/>
+                    android:elevation="@dimen/dimen5dp"
+                    android:layout_margin="@dimen/dimen6dp"/>
 
             </LinearLayout>
 

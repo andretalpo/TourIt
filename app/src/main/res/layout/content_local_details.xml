@@ -16,7 +16,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_frame_layout"
+            android:paddingTop="@dimen/dimen16dp"
             android:background="@color/colorPrimary"
             android:id="@+id/layoutBarLocalDetailsActivity">
 
@@ -25,14 +25,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:paddingStart="@dimen/paddingLeftTextViewLocalDetailsActivity"
-                android:paddingEnd="@dimen/paddingLeftTextViewLocalDetailsActivity"
+                android:paddingStart="@dimen/dimen10dp"
+                android:paddingEnd="@dimen/dimen10dp"
                 android:textStyle="bold"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="@dimen/dimen50dp"
                 android:textColor="@color/cor_branco"
                 android:layout_alignParentStart="true"
-                android:paddingBottom="4dp"
-                android:textSize="@dimen/textSizeLocalDetails" />
+                android:paddingBottom="@dimen/dimen4dp"
+                android:textSize="@dimen/dimen16sp" />
 
             <RatingBar
                 android:id="@+id/localDetailsRatingBar"
@@ -40,9 +40,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:progressTint="@color/cor_branco"
-                android:layout_margin="@dimen/marginLocalDetails"
+                android:layout_margin="@dimen/dimen10dp"
                 android:layout_below="@id/tipoLocalDetailsTextView"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/dimen15dp"
                 android:rating="4" />
 
             <TextView
@@ -53,8 +53,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/cor_branco"
                 android:visibility="gone"
-                android:textSize="@dimen/textSizeLocalDetails"
-                android:layout_margin="@dimen/marginLocalDetails"
+                android:textSize="@dimen/dimen16sp"
+                android:layout_margin="@dimen/dimen10dp"
                 android:text="5.0"/>
 
         </RelativeLayout>
@@ -64,12 +64,12 @@
             android:id="@+id/mapLocalDetails"
             android:layout_below="@id/layoutBarLocalDetailsActivity"
             android:layout_width="match_parent"
-            android:layout_height="150dp"/>
+            android:layout_height="@dimen/dimen150dp"/>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_frame_layout"
+            android:padding="@dimen/dimen16dp"
             android:id="@+id/frameLayoutEnderecoLocalDetailsActivity"
             android:layout_below="@id/mapLocalDetails">
 
@@ -86,17 +86,17 @@
                 android:id="@+id/enderecoLocalDetailsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/marginLeftEnderecoTextViewLocalDetailsActivity"
-                android:layout_marginTop="@dimen/marginTopEnderecoTextViewLocalDetailsActivity"
+                android:layout_marginStart="@dimen/dimen40dp"
+                android:layout_marginTop="@dimen/dimen5dp"
                 android:text="Amora é bom"
-                android:textSize="@dimen/textSizeLocalDetails" />
+                android:textSize="@dimen/dimen16sp" />
 
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_frame_layout"
+            android:padding="@dimen/dimen16dp"
             android:id="@+id/frameLayoutHorarioLocalDetailsActivity"
             android:layout_below="@id/frameLayoutEnderecoLocalDetailsActivity">
 
@@ -113,10 +113,10 @@
                 android:id="@+id/horarioLocalDetailsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/marginLeftEnderecoTextViewLocalDetailsActivity"
-                android:layout_marginTop="@dimen/marginTopEnderecoTextViewLocalDetailsActivity"
+                android:layout_marginStart="@dimen/dimen40dp"
+                android:layout_marginTop="@dimen/dimen5dp"
                 android:text="Amora é bom"
-                android:textSize="@dimen/textSizeLocalDetails" />
+                android:textSize="@dimen/dimen16sp" />
 
         </FrameLayout>
 
@@ -125,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/frameLayoutHorarioLocalDetailsActivity"
-            android:layout_margin="@dimen/marginLocalDetails"
+            android:layout_margin="@dimen/dimen10dp"
             tools:listitem="@layout/viewholder_avaliacao" />
 
     </RelativeLayout>

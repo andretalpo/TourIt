@@ -12,7 +12,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="@dimen/dimen20dp"
             android:hint="@string/comentario_roteiro"
             android:textColorHint="@color/cor_branco"
             android:id="@+id/comentarioAvaliacaoRoteiroTextInputLayout">
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/comentarioAvaliacaoRoteiroTextInputLayout"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/dimen10dp"
             android:stepSize="1"
             android:max="5"
             android:id="@+id/avaliacaoRoteiroActivityRatingBar"/>
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_check"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="@dimen/dimen16dp"
         android:layout_gravity="bottom|end"
         android:id="@+id/salvarAvalicaoRoteiroActivityFab"/>
 

@@ -15,7 +15,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarRoteiroDetails"
             android:layout_width="match_parent"
-            android:layout_height="63dp"
+            android:layout_height="@dimen/dimen63dp"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -23,7 +23,7 @@
                 android:id="@+id/toolbarRoteiroDetailsRelativeLayout"
                 android:orientation="horizontal"
                 android:gravity="start"
-                android:layout_width="210dp"
+                android:layout_width="@dimen/dimen210dp"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -44,52 +44,52 @@
 
                 <ImageView
                     android:id="@+id/excluirRoteiroDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:src="@drawable/ic_delete_2" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:id="@+id/avaliarRoteiroDetailsActivityImageView"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:visibility="gone"
                     android:src="@drawable/ic_star"/>
 
                 <ImageView
                     android:id="@+id/seguirRoteiroDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:src="@drawable/ic_download_branco"
                     android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/alterarRoteiroDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:src="@drawable/ic_edit" />
 
                 <ImageView
                     android:id="@+id/publicarRoteiroDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/ic_publicar" />
 
                 <ImageView
                     android:id="@+id/criarEventoRoteiroDetailsActivityImageView"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:visibility="gone"
                     android:src="@drawable/ic_event"/>
             </LinearLayout>
@@ -115,25 +115,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/card_background"
-                android:layout_margin="2dp"
+                android:layout_margin="@dimen/dimen2dp"
+                android:elevation="@dimen/dimen5dp"
                 android:id="@+id/cardInfosRoteiroDetailsRelativeLayout">
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/imagemRoteiroDetailsActivity"
-                    android:layout_width="140dp"
-                    android:layout_height="120dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="@dimen/padding_geral"
+                    android:layout_width="@dimen/dimen140dp"
+                    android:layout_height="@dimen/dimen120dp"
+                    android:layout_marginEnd="@dimen/dimen10dp"
+                    android:layout_marginTop="@dimen/dimen10dp"
+                    android:padding="@dimen/dimen6dp"
                     android:src="@drawable/teste_vetor2"
                     app:civ_border_color="@color/cor_prata"
-                    app:civ_border_width="1dp" />
+                    app:civ_border_width="@dimen/dimen1dp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/dimen24dp"
+                    android:layout_height="@dimen/dimen24dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/dimen8dp"
                     android:tint="@color/colorPrimary"
                     android:id="@+id/toggleMapRoteiroDetailsImageView"
                     android:src="@drawable/ic_menu_roteiro"/>
@@ -143,8 +144,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
-                    android:layout_marginTop="20dp"
-                    android:padding="1dp"
+                    android:layout_marginTop="@dimen/dimen20dp"
+                    android:padding="@dimen/dimen1dp"
                     android:layout_centerHorizontal="true"
                     android:orientation="horizontal">
 
@@ -153,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:paddingEnd="@dimen/padding_fim_texto"
+                        android:paddingEnd="@dimen/dimen3dp"
                         android:text="@string/criador" />
 
                     <TextView
@@ -172,7 +173,7 @@
                     android:layout_below="@id/criadorRoteiroDetailsLinearLayout"
                     android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                     android:layout_centerHorizontal="true"
-                    android:padding="1dp"
+                    android:padding="@dimen/dimen1dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -180,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:paddingEnd="@dimen/padding_fim_texto"
+                        android:paddingEnd="@dimen/dimen3dp"
                         android:text="@string/tipo" />
 
                     <TextView
@@ -198,7 +199,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tipoRoteiroDetailsLinearLayout"
                     android:layout_centerHorizontal="true"
-                    android:padding="1dp"
+                    android:padding="@dimen/dimen1dp"
                     android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                     android:orientation="horizontal">
 
@@ -206,7 +207,7 @@
                         android:id="@+id/labelDuracaoRoteiroRoteiroDetailsTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="@dimen/padding_fim_texto"
+                        android:paddingEnd="@dimen/dimen3dp"
                         android:textStyle="bold"
                         android:text="@string/duracao_roteiro" />
 
@@ -225,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/duracaoRoteiroDetailsLinearLayout"
                     android:layout_centerHorizontal="true"
-                    android:padding="1dp"
+                    android:padding="@dimen/dimen1dp"
                     android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                     android:orientation="horizontal">
 
@@ -234,7 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:paddingEnd="@dimen/padding_fim_texto"
+                        android:paddingEnd="@dimen/dimen3dp"
                         android:text="@string/preco_roteiro" />
 
                     <TextView
@@ -251,7 +252,7 @@
                     style="@style/Base.Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="1dp"
+                    android:padding="@dimen/dimen3dp"
                     android:layout_toEndOf="@id/imagemRoteiroDetailsActivity"
                     android:layout_below="@id/precoRoteiroDetailsLinearLayout"
                     android:rating="5" />
@@ -263,7 +264,7 @@
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/imagemRoteiroDetailsActivity"
-                    android:paddingEnd="@dimen/padding_fim_texto"
+                    android:paddingEnd="@dimen/dimen3dp"
                     android:text="@string/dicas_roteiro_2" />
 
                 <LinearLayout
@@ -271,8 +272,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/labelDicasRoteiroRoteiroDetailsTextView"
-                    android:padding="@dimen/padding_geral"
-                    android:layout_marginStart="10dp"
+                    android:padding="@dimen/dimen6dp"
+                    android:layout_marginStart="@dimen/dimen10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -291,14 +292,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/cardInfosRoteiroDetailsRelativeLayout"
-                android:padding="@dimen/padding_geral" />
+                android:padding="@dimen/dimen6dp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/avaliacoesRoteiroDetailsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/listaLocaisRoteiroDetailsFrameLayout"
-                android:padding="@dimen/marginLocalDetails"
+                android:padding="@dimen/dimen10dp"
                 tools:listitem="@layout/viewholder_avaliacao" />
 
         </RelativeLayout>

@@ -12,13 +12,13 @@
         android:layout_centerVertical="true"
         android:text="@string/desativar_usuario"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/marginBotaoCriarUsuario"
+        android:layout_marginTop="@dimen/dimen96dp"
         android:background="@drawable/bordas_botao"
         android:gravity="center"
-        android:paddingLeft="@dimen/paddingLateralBotao"
-        android:paddingRight="@dimen/paddingLateralBotao"
+        android:paddingLeft="@dimen/dimen30dp"
+        android:paddingRight="@dimen/dimen30dp"
         android:textStyle="bold"
         android:textAllCaps="true"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="@dimen/tamanhoFonteBotaoCriarUsuario" />
+        android:textSize="@dimen/dimen20sp" />
 </RelativeLayout>

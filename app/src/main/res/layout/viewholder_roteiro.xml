@@ -4,21 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/card_background"
-    android:layout_margin="4dp"
-    android:padding="4dp"
-    android:elevation="@dimen/elevation_geral"
+    android:layout_margin="@dimen/dimen4dp"
+    android:padding="@dimen/dimen4dp"
+    android:elevation="@dimen/dimen5dp"
     android:id="@+id/roteiroViewHolderLayout">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imagemRoteiroViewHolderImageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/dimen80dp"
+        android:layout_height="@dimen/dimen80dp"
         android:layout_centerVertical="true"
         android:src="@drawable/background_imagem_new"
-        android:padding="@dimen/padding_geral"
-        android:layout_marginEnd="10dp"
-        app:civ_border_width="1dp"
+        android:padding="@dimen/dimen6dp"
+        android:layout_marginEnd="@dimen/dimen10dp"
+        app:civ_border_width="@dimen/dimen1dp"
         app:civ_border_color="@color/cor_prata"/>
 
     <LinearLayout
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/nomeRoteiroViewHolderTextView"
-            android:textSize="@dimen/textSizeListas"
+            android:textSize="@dimen/dimen18sp"
             android:text="qwert"
             android:textStyle="bold"/>
 

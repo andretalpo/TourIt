@@ -5,20 +5,20 @@
     android:layout_height="wrap_content"
     android:id="@+id/cardViewHolderEventoRelativeLayout"
     android:background="@drawable/card_background"
-    android:padding="4dp"
-    android:elevation="5dp"
-    android:layout_margin="4dp">
+    android:padding="@dimen/dimen4dp"
+    android:elevation="@dimen/dimen5dp"
+    android:layout_margin="@dimen/dimen4dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imagemRoteiroEventoViewHolderImageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/dimen170dp"
+        android:layout_height="@dimen/dimen170dp"
         android:layout_centerVertical="true"
         android:src="@drawable/background_imagem_new"
-        android:padding="@dimen/padding_geral"
-        android:layout_marginEnd="10dp"
-        app:civ_border_width="1dp"
+        android:padding="@dimen/dimen6dp"
+        android:layout_marginEnd="@dimen/dimen10dp"
+        app:civ_border_width="@dimen/dimen1dp"
         app:civ_border_color="@color/cor_prata" />
 
     <RelativeLayout
@@ -32,23 +32,23 @@
             android:layout_height="wrap_content"
             android:text="André foi andar no bosque"
             android:textStyle="bold"
-            android:textSize="15sp"
-            android:paddingStart="2dp"
+            android:textSize="@dimen/dimen15sp"
+            android:paddingStart="@dimen/dimen2dp"
             android:id="@+id/nomeEventoViewHolderTextView"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pois é"
-            android:padding="2dp"
+            android:padding="@dimen/dimen2dp"
             android:id="@+id/nomeRoteiroEventoViewHolderTextView"
             android:layout_below="@id/nomeEventoViewHolderTextView"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="2dp"
-            android:paddingBottom="2dp"
+            android:paddingStart="@dimen/dimen2dp"
+            android:paddingBottom="@dimen/dimen2dp"
             android:layout_below="@id/nomeRoteiroEventoViewHolderTextView">
 
             <TextView

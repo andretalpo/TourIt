@@ -17,7 +17,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:paddingTop="@dimen/dimen20dp"
                 android:hint="@string/nome_roteiro"
                 android:id="@+id/nomeRoteiroRoteiroActivityTextInputLayout">
 
@@ -36,7 +36,7 @@
                 android:id="@+id/tipoRoteiroActivitySpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/padding_geral"
+                android:layout_marginBottom="@dimen/dimen6dp"
                 android:layout_below="@id/nomeRoteiroRoteiroActivityTextInputLayout"
                 android:backgroundTint="@color/colorAccent" />
 
@@ -44,25 +44,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tipoRoteiroActivitySpinner"
-                android:padding="@dimen/padding_geral"
+                android:padding="@dimen/dimen6dp"
                 android:id="@+id/duracaoCreateRoteiroRelativeLayout">
 
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="@dimen/dimen72dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/duracaoCreateRoteiroTextView"
                     android:text="@string/duracao_roteiro"
-                    android:textSize="16sp"
-                    android:paddingStart="@dimen/padding_geral"/>
+                    android:textSize="@dimen/dimen16sp"
+                    android:paddingStart="@dimen/dimen6dp"/>
 
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="@dimen/dimen72dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/valorDuracaoCreateRoteiroTextView"
                     android:text="12 h"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/dimen16sp"
                     android:gravity="center"
-                    android:paddingEnd="@dimen/padding_geral"
+                    android:paddingEnd="@dimen/dimen6dp"
                     android:layout_alignParentEnd="true"/>
 
                 <SeekBar
@@ -80,26 +80,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/duracaoCreateRoteiroRelativeLayout"
-                android:padding="@dimen/padding_geral"
+                android:padding="@dimen/dimen6dp"
                 android:id="@+id/precoCreateRoteiroRelativeLayout">
 
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="@dimen/dimen72dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/precoCreateRoteiroTextView"
                     android:text="@string/preco_roteiro"
-                    android:textSize="16sp"
-                    android:paddingStart="@dimen/padding_geral"/>
+                    android:textSize="@dimen/dimen16sp"
+                    android:paddingStart="@dimen/dimen6dp"/>
 
                 <TextView
-                    android:layout_width="72dp"
+                    android:layout_width="@dimen/dimen72dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/valorPrecoCreateRoteiroTextView"
                     android:text="Gratuito"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/dimen16sp"
                     android:layout_alignParentEnd="true"
                     android:gravity="center"
-                    android:paddingEnd="@dimen/padding_geral"/>
+                    android:paddingEnd="@dimen/dimen6dp"/>
 
                 <SeekBar
                     android:layout_width="match_parent"
@@ -115,7 +115,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:paddingTop="@dimen/dimen20dp"
                 android:hint="@string/dicas_roteiro"
                 android:layout_below="@id/precoCreateRoteiroRelativeLayout"
                 android:id="@+id/dicasRoteiroRoteiroActivityTextInputLayout">
@@ -134,22 +134,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dicasRoteiroRoteiroActivityTextInputLayout"
-                android:layout_margin="4dp"
-                android:drawablePadding="@dimen/marginLocalDetails"
+                android:layout_margin="@dimen/dimen4dp"
+                android:drawablePadding="@dimen/dimen10dp"
                 android:drawableEnd="@drawable/ic_add_3"
                 android:drawableTint="@color/cor_branco"
                 android:background="@color/colorAccent"
-                android:paddingEnd="5dp"
+                android:paddingEnd="@dimen/dimen5dp"
                 android:gravity="center"
-                android:paddingStart="30dp"
-                android:textSize="15sp"
+                android:paddingStart="@dimen/dimen30dp"
+                android:textSize="@dimen/dimen15sp"
                 android:textColor="@color/cor_branco"
                 android:text="@string/adicionar_local"
                 android:textStyle="bold" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="@dimen/dimen240dp"
                 android:id="@+id/listaLocaisRoteiroActivityFrameLayout"
                 android:layout_below="@id/adicionarLocalRoteiroActivityButton"/>
 
@@ -161,7 +161,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="@dimen/dimen16dp"
         android:src="@drawable/ic_check"
         android:id="@+id/salvarRoteiroActivityFab"/>
 
