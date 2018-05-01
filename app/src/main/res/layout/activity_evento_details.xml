@@ -194,17 +194,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/respostaConviteEventoDetailsTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen6dp"
-                android:text="Aguardando resposta"
-                android:textColor="@color/cor_azul"
-                android:textSize="@dimen/dimen16sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
             <RelativeLayout
                 android:id="@+id/cardRoteiroEventoDetailsLinearLayout"
                 android:layout_width="match_parent"
@@ -213,6 +202,7 @@
                 android:layout_marginEnd="@dimen/dimen1dp"
                 android:layout_marginStart="@dimen/dimen1dp"
                 android:layout_marginBottom="@dimen/dimen5dp"
+                android:padding="@dimen/dimen4dp"
                 android:background="@drawable/card_background"
                 android:layout_marginTop="@dimen/dimen5dp">
 
@@ -269,6 +259,17 @@
                     android:src="@drawable/ic_info" />
 
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/respostaConviteEventoDetailsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen6dp"
+                android:text="Aguardando resposta"
+                android:textColor="@color/cor_azul"
+                android:textSize="@dimen/dimen16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <FrameLayout
                 android:id="@+id/listaConvidadosEventoDetailsFrameLayout"
