@@ -97,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_margin="@dimen/dimen1dp"
                 android:elevation="@dimen/dimen5dp"
                 android:background="@drawable/card_background">
 
@@ -196,6 +197,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/dimen5dp"
+                android:layout_marginEnd="@dimen/dimen1dp"
+                android:layout_marginStart="@dimen/dimen1dp"
+                android:layout_marginBottom="@dimen/dimen20dp"
                 android:background="@drawable/card_background"
                 android:layout_marginTop="@dimen/dimen20dp">
 

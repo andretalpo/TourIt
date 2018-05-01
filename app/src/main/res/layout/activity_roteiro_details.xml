@@ -115,7 +115,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/card_background"
-                android:layout_margin="@dimen/dimen2dp"
+                android:layout_marginStart="@dimen/dimen10dp"
+                android:layout_marginEnd="@dimen/dimen10dp"
+                android:layout_marginBottom="@dimen/dimen6dp"
+                android:layout_marginTop="@dimen/dimen6dp"
                 android:elevation="@dimen/dimen5dp"
                 android:id="@+id/cardInfosRoteiroDetailsRelativeLayout">
 

@@ -12,8 +12,8 @@
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imagemRoteiroEventoViewHolderImageView"
-        android:layout_width="@dimen/dimen170dp"
-        android:layout_height="@dimen/dimen170dp"
+        android:layout_width="@dimen/dimen80dp"
+        android:layout_height="@dimen/dimen80dp"
         android:layout_centerVertical="true"
         android:src="@drawable/background_imagem_new"
         android:padding="@dimen/dimen6dp"
