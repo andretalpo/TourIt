@@ -88,7 +88,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen20dp"
+            android:layout_marginTop="@dimen/dimen10dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="@dimen/dimen6dp">
@@ -97,7 +97,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/dimen1dp"
+                android:layout_marginStart="@dimen/dimen1dp"
+                android:layout_marginEnd="@dimen/dimen1dp"
+                android:layout_marginTop="@dimen/dimen1dp"
+                android:layout_marginBottom="@dimen/dimen5dp"
                 android:elevation="@dimen/dimen5dp"
                 android:background="@drawable/card_background">
 
@@ -110,7 +113,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dimen6dp"
+                        android:textStyle="bold"
+                        android:paddingBottom="@dimen/dimen6dp"
+                        android:paddingTop="@dimen/dimen6dp"
+                        android:paddingStart="@dimen/dimen6dp"
                         android:text="Criador: " />
 
                     <TextView
@@ -131,7 +137,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dimen6dp"
+                        android:paddingStart="@dimen/dimen6dp"
+                        android:paddingTop="@dimen/dimen6dp"
+                        android:paddingBottom="@dimen/dimen6dp"
+                        android:textStyle="bold"
                         android:text="Data: " />
 
                     <TextView
@@ -152,7 +161,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dimen6dp"
+                        android:textStyle="bold"
+                        android:paddingStart="@dimen/dimen6dp"
+                        android:paddingTop="@dimen/dimen6dp"
+                        android:paddingBottom="@dimen/dimen6dp"
                         android:text="Início: " />
 
                     <TextView
@@ -165,7 +177,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/dimen6dp"
+                        android:textStyle="bold"
+                        android:paddingBottom="@dimen/dimen6dp"
+                        android:paddingStart="@dimen/dimen6dp"
+                        android:paddingTop="@dimen/dimen6dp"
                         android:text="Fim: " />
 
                     <TextView
@@ -183,8 +198,6 @@
                 android:id="@+id/respostaConviteEventoDetailsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/dimen6dp"
                 android:text="Aguardando resposta"
                 android:textColor="@color/cor_azul"
@@ -199,9 +212,9 @@
                 android:elevation="@dimen/dimen5dp"
                 android:layout_marginEnd="@dimen/dimen1dp"
                 android:layout_marginStart="@dimen/dimen1dp"
-                android:layout_marginBottom="@dimen/dimen20dp"
+                android:layout_marginBottom="@dimen/dimen5dp"
                 android:background="@drawable/card_background"
-                android:layout_marginTop="@dimen/dimen20dp">
+                android:layout_marginTop="@dimen/dimen5dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/imagemRoteiroEventoDetailsImageView"
