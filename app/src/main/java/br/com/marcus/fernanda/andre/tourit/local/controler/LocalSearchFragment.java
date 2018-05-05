@@ -73,6 +73,7 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback 
     private Location currentLocation = null; //PODE DAR NULLPOINTER
     private static final int REQUEST_GPS = 1;
     private Marker marker;
+    private Bitmap iconCurrentLocation;
 
     @Nullable
     @Override
@@ -85,6 +86,8 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback 
         abertoAgora = false;
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        iconCurrentLocation = BitmapFactory.decodeResource(getResources(), R.drawable.marker_map_2);
 
         filtroImageView = (ImageView) view.findViewById(R.id.filtroLocalSearchImageView);
         filtroImageView.setOnClickListener(new View.OnClickListener() {
@@ -333,7 +336,6 @@ public class LocalSearchFragment extends Fragment implements OnMapReadyCallback 
             if(marker != null){
                 marker.remove();
             }
-            Bitmap iconCurrentLocation = BitmapFactory.decodeResource(getResources(), R.drawable.marker_map_2);
             marker = map.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).icon(BitmapDescriptorFactory.fromBitmap(iconCurrentLocation)));
         }
 
