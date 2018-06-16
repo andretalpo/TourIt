@@ -128,7 +128,9 @@ public class RoteiroListFragment extends Fragment {
             progressDialog.dismiss();
             adapter.notifyDataSetChanged();
 
-            Toast.makeText(getContext(), getContext().getResources().getString(R.string.nenhum_roteiro_encontrado), Toast.LENGTH_SHORT).show();
+            if(roteiros.isEmpty()) {
+                Toast.makeText(getContext(), getContext().getResources().getString(R.string.nenhum_roteiro_encontrado), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
