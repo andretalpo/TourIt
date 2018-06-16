@@ -110,6 +110,7 @@ public class EventoDetailsActivity extends AppCompatActivity {
             recusarImageView.setVisibility(View.GONE);
             excluirImageView.setVisibility(View.VISIBLE);
             alterarImageVIew.setVisibility(View.VISIBLE);
+            respostaTextView.setVisibility(View.GONE);
         }else{
             aceitarImageView.setVisibility(View.VISIBLE);
             recusarImageView.setVisibility(View.VISIBLE);
